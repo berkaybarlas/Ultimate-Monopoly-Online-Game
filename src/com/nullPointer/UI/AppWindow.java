@@ -1,5 +1,7 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Controller.CommunicationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,10 @@ public class AppWindow extends JFrame {
     private JButton button = null;
     private JButton joinButton = null;
     private JButton serverButton = null;
+    private JButton messageButton = null;
+    private JButton menuButton = null;
+    private JButton gameButton = null;
+    private CommunicationController communicationController = CommunicationController.getInstance();
 
     public AppWindow() {
         super("Ultimate Monopoly");
@@ -47,7 +53,10 @@ public class AppWindow extends JFrame {
         serverButton.setToolTipText("Start the game server");
         serverButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //startServer();
+                communicationController.startServer();
+                communicationController.createClient();
+                serverButton.setEnabled(false);
+                joinButton.setEnabled(false);
             }
         });
         toolBar.add(serverButton);
@@ -56,10 +65,40 @@ public class AppWindow extends JFrame {
         joinButton.setToolTipText("Join the game server");
         joinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //joinServer();
+                communicationController.createClient();
+                serverButton.setEnabled(false);
+                joinButton.setEnabled(false);
             }
         });
         toolBar.add(joinButton);
+
+        messageButton = new JButton("Send Message");
+        messageButton.setToolTipText("Join the game server");
+        messageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                communicationController.sendClientMessage("hello");
+            }
+        });
+        toolBar.add(messageButton);
+
+        menuButton = new JButton("Menu");
+        menuButton.setToolTipText("Join the game server");
+        menuButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                communicationController.createClient();
+            }
+        });
+        toolBar.add(menuButton);
+
+        gameButton = new JButton("Game");
+        gameButton.setToolTipText("Join the game server");
+        gameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                communicationController.createClient();
+
+            }
+        });
+        toolBar.add(gameButton);
 
         button = new JButton("Quit");
         button.setToolTipText("Quit the program");
