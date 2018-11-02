@@ -35,13 +35,14 @@ public class AppWindow extends JFrame {
         gameWindow = new GameWindow();
 
         JScrollPane scrollPane = new JScrollPane(gameWindow);
-
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.setPreferredSize(new Dimension(1300, 800));
         contentPane.add(toolBar, BorderLayout.NORTH);
         contentPane.add(scrollPane, BorderLayout.CENTER);
         setContentPane(contentPane);
+        MessageBox msg=new MessageBox();
+        contentPane.add(msg,BorderLayout.EAST);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
