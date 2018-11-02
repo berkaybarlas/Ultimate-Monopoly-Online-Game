@@ -3,11 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MessageBox extends JPanel{
+public class MessageBoxDisplay extends JPanel{
 	private JScrollPane scrollPane;
 	private JTextField textEnter;
 	private JButton submit;
-	public MessageBox(){
+	public MessageBoxDisplay(){
 		this.setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();

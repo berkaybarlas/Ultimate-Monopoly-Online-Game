@@ -41,7 +41,7 @@ public class AppWindow extends JFrame {
         contentPane.add(toolBar, BorderLayout.NORTH);
         contentPane.add(scrollPane, BorderLayout.CENTER);
         setContentPane(contentPane);
-        MessageBox msg=new MessageBox();
+        MessageBoxDisplay msg=new MessageBoxDisplay();
         contentPane.add(msg,BorderLayout.EAST);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
