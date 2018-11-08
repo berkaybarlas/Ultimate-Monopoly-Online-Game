@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Board {
 	private BufferedImage image; 
-	private File imageSrc = new File("C:\\Users\\azorlu\\Documents\\comp302_git\\302_2018_project_nullpointer\\src\\com\\nullPointer\\UI\\ultimate_monopoly.png");		
+	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
     private Color color = new Color(187, 229, 206);
     private Point position = new Point(550,50);

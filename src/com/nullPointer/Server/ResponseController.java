@@ -10,11 +10,11 @@ import java.util.ArrayList;
 //Observer
 public class ResponseController {
     private static ResponseController _instance;
-    private ArrayList<Socket> clientSocket;
+    private ArrayList<Socket> listenerClients;
     private PrintWriter out;
 
     private ResponseController() {
-        this.clientSocket = new ArrayList<>();
+        this.listenerClients = new ArrayList<>();
     }
 
     public static ResponseController getInstance() {
@@ -25,12 +25,12 @@ public class ResponseController {
     }
 
     public void addSocket(Socket socket){
-        clientSocket.add(socket);
+        listenerClients.add(socket);
     }
 
     public void sendResponse(String message) {
 
-        clientSocket.forEach(socket -> {
+        listenerClients.forEach(socket -> {
             try {
                 out =
                         new PrintWriter(socket.getOutputStream(), true);
