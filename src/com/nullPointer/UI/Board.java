@@ -11,7 +11,6 @@ import java.io.IOException;
 public class Board {
 	private BufferedImage image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
-
 	
     private Color color = new Color(187, 229, 206);
     private Point position = new Point(550,50);
@@ -37,6 +36,6 @@ public class Board {
     public void paint(Graphics g) {
         //g.setColor(color);
         //g.fillRect(position.x, position.y, length, length);
-        g.drawImage(image, 10, 10, 900, 900, null);
+        g.drawImage(image, 10, 10, 1000, 1000, null);
     }
 }
