@@ -5,8 +5,7 @@ import com.nullPointer.UI.AppWindow;
 public class Main {
 
     public static void main(String[] args) {
-        AppWindow frame = new AppWindow();
-    	       
+        AppWindow frame = new AppWindow();       
         frame.pack();
         frame.setVisible(true);
     }

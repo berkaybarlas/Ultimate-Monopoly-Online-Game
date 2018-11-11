@@ -16,7 +16,6 @@ public class MessageBoxDisplay extends JPanel{
 
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
 		scrollPane = new JScrollPane(panel);
 		JPanel contentPane = new JPanel(null);
 		contentPane.setPreferredSize(new Dimension(500, 200));
