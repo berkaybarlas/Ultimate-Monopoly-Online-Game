@@ -34,7 +34,7 @@ class ClientHandler extends Thread
             out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
             while (true) {
                 if ((inputLine = in.readLine()) != null) {
-                    System.out.println("[ClientHandler]: Client -> " + inputLine);
+                    //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     outputLine = protocol.processInput(inputLine);
                     responseController.sendResponse(outputLine);
                     System.out.println("[ClientHandler]: Server -> " + outputLine);

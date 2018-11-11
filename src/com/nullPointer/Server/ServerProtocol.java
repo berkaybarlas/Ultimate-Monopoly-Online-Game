@@ -6,10 +6,10 @@ public class ServerProtocol {
     private static final int END = 2;
     private static final int ANOTHER = 3;
 
-    private int state = WAITING;
+    private int state = STARTED;
 
-    private String[] request = { "start","rollDice", "buy", "makeAction"};
-    private String[] response = { "start","roll", "bought", "act","Game Ended" };
+    private String[] request = { "start","rollDice", "buy", "makeAction","message"};
+    private String[] response = { "start","roll", "bought", "act","Game Ended","message"};
 
     public String processInput(String theInput) {
         String theOutput = null;

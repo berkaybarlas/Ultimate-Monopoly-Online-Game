@@ -32,8 +32,7 @@ public class ResponseController {
 
         listenerClients.forEach(socket -> {
             try {
-                out =
-                        new PrintWriter(socket.getOutputStream(), true);
+                out = new PrintWriter(socket.getOutputStream(), true);
                 out.println(message);
             } catch (IOException e) {
                 e.printStackTrace();

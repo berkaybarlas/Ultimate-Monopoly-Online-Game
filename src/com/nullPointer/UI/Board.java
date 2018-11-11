@@ -13,11 +13,11 @@ public class Board {
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
     private Color color = new Color(187, 229, 206);
-    private Point position = new Point(550,50);
+    private Point position = new Point(10,10);
     private int length = 700;
     
     private int width, height;
-    
+
     public Board(Point position, int length) {
     	try {
 			image = ImageIO.read(imageSrc);
@@ -27,7 +27,7 @@ public class Board {
 		}
         this.position = position;
         this.length = length;
-        
+
         width = image.getWidth(null);
         height = image.getHeight(null);
         
@@ -36,6 +36,6 @@ public class Board {
     public void paint(Graphics g) {
         //g.setColor(color);
         //g.fillRect(position.x, position.y, length, length);
-        g.drawImage(image, 10, 10, 1000, 1000, null);
+        g.drawImage(image, position.x, position.y, length, length, null);
     }
 }

@@ -11,12 +11,15 @@ import java.awt.event.WindowEvent;
 
 public class AppWindow extends JFrame {
     private GameWindow gameWindow;
+    private MenuWindow menuWindow;
+    private JPanel currentFrame;
     private JButton button = null;
     private JButton joinButton = null;
     private JButton serverButton = null;
     private JButton messageButton = null;
     private JButton menuButton = null;
     private JButton gameButton = null;
+    private JScrollPane scrollPane = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
 
     public AppWindow() {
@@ -32,9 +35,10 @@ public class AppWindow extends JFrame {
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
+        menuWindow = new MenuWindow();
         gameWindow = new GameWindow();
 
-        JScrollPane scrollPane = new JScrollPane(gameWindow);
+        scrollPane = new JScrollPane(menuWindow);
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.setPreferredSize(new Dimension(1300, 800));
@@ -83,20 +87,21 @@ public class AppWindow extends JFrame {
         toolBar.add(messageButton);
 
         menuButton = new JButton("Menu");
-        menuButton.setToolTipText("Join the game server");
+        menuButton.setToolTipText("Menu window");
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.createClient();
+                currentFrame = new MenuWindow();
+                scrollPane = new JScrollPane(menuWindow);
             }
         });
         toolBar.add(menuButton);
 
         gameButton = new JButton("Game");
-        gameButton.setToolTipText("Join the game server");
+        gameButton.setToolTipText("Game window");
         gameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.createClient();
-
+                currentFrame = gameWindow;
+                scrollPane = new JScrollPane(gameWindow);
             }
         });
         toolBar.add(gameButton);

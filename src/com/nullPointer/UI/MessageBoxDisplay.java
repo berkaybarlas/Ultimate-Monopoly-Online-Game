@@ -1,4 +1,6 @@
 package com.nullPointer.UI;
+import com.nullPointer.Controller.CommunicationController;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,10 +9,12 @@ public class MessageBoxDisplay extends JPanel{
 	private JScrollPane scrollPane;
 	private JTextField textEnter;
 	private JButton submit;
+	private JPanel panel;
+	private CommunicationController communicationController = CommunicationController.getInstance();
 	public MessageBoxDisplay(){
 		this.setLayout(new BorderLayout());
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		scrollPane = new JScrollPane(panel);
@@ -34,21 +38,24 @@ public class MessageBoxDisplay extends JPanel{
 
 		submit.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				//client sends textEnter.getText().toString() to Server
+				//client sends textEnter.getText()to Server
 				//now client waits for the message from server
 				//then when message comes, it is written to the label and
 				//added to the scrollable panel
-				Label message=new Label();
-				message.setText(textEnter.getText().toString());
-				panel.add(message);
+                communicationController.sendClientMessage("message/" + textEnter.getText());
+
 				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				panel.validate();
 
 			} 
 		} );
-
 		this.setVisible(true);
-
 	}
+
+	public void addMessage(String msg) {
+        Label message=new Label();
+        message.setText(msg);
+        panel.add(message);
+    }
 }

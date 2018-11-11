@@ -12,7 +12,7 @@ public class GameWindow extends JPanel {
 
     public GameWindow() {
         super();
-        board = new Board(new Point(550,50),700);
+        board = new Board(new Point(10,10),1000);
         buttonPanel = new ButtonPanel();
        this.add(buttonPanel, BorderLayout.SOUTH);
        
