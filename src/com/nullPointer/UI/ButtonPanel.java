@@ -11,14 +11,15 @@ public class ButtonPanel extends JPanel{
     
 	public ButtonPanel(){
 		
-		this.setLayout(new BorderLayout());
+		//this.setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
+		
 		JPanel contentPane = new JPanel(null);
-		contentPane.setPreferredSize(new Dimension(200, 200));
+		contentPane.setPreferredSize(new Dimension(100, 100));
 	
+		contentPane.setLayout(new BorderLayout());
 		this.add(contentPane, BorderLayout.SOUTH);
 
 		purchaseButton = new JButton("Purchase Card");
@@ -53,6 +54,6 @@ public class ButtonPanel extends JPanel{
 		} );
 		
 		this.setVisible(true);
-
+		
 	}
 }
