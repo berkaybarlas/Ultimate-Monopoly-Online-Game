@@ -3,6 +3,7 @@ package com.nullPointer.UI;
 import com.nullPointer.Controller.CommunicationController;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import java.awt.event.WindowEvent;
 public class AppWindow extends JFrame {
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
+    private ServerWindow serverWindow;
     private JPanel currentFrame;
     private JButton button = null;
     private JButton joinButton = null;
@@ -21,6 +23,10 @@ public class AppWindow extends JFrame {
     private JButton gameButton = null;
     private JScrollPane scrollPane = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
+
+    private final CardLayout mainLayout = new CardLayout();
+    private final JPanel panels = new JPanel(mainLayout);
+    private final Border border = BorderFactory.createEmptyBorder(-10, 60, 60, 60);
 
     public AppWindow() {
         super("Ultimate Monopoly");
@@ -37,16 +43,33 @@ public class AppWindow extends JFrame {
 
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow();
+        serverWindow = new ServerWindow();
+        //scrollPane = new JScrollPane(gameWindow);
 
-        scrollPane = new JScrollPane(menuWindow);
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.setPreferredSize(new Dimension(1300, 800));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setPreferredSize(new Dimension(1600, 1000));
         contentPane.add(toolBar, BorderLayout.NORTH);
-        contentPane.add(scrollPane, BorderLayout.CENTER);
+
         setContentPane(contentPane);
-        MessageBoxDisplay msg=new MessageBoxDisplay();
-        contentPane.add(msg,BorderLayout.EAST);
+
+        JPanel menuPanel = menuWindow;
+        menuPanel.setBorder(border);
+        menuPanel.add(new JLabel("Menu"));
+        panels.add(menuPanel, "Menu Panel");
+
+        JPanel gamePanel = gameWindow;
+        gamePanel.setBorder(border);
+        gamePanel.add(new JLabel("Card 2"));
+        panels.add(gamePanel, "Game Panel");
+
+        JPanel serverPanel = serverWindow;
+        serverPanel.setBorder(border);
+        serverPanel.add(new JLabel("Server"));
+        panels.add(serverPanel, "Second Panel");
+
+        contentPane.add(panels, BorderLayout.CENTER);
+
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -90,8 +113,7 @@ public class AppWindow extends JFrame {
         menuButton.setToolTipText("Menu window");
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currentFrame = new MenuWindow();
-                scrollPane = new JScrollPane(menuWindow);
+                mainLayout.next(panels);
             }
         });
         toolBar.add(menuButton);
@@ -100,8 +122,7 @@ public class AppWindow extends JFrame {
         gameButton.setToolTipText("Game window");
         gameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                currentFrame = gameWindow;
-                scrollPane = new JScrollPane(gameWindow);
+                mainLayout.next(panels);
             }
         });
         toolBar.add(gameButton);
