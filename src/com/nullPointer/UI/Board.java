@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Board {
+public class Board extends JPanel{
 	private BufferedImage image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
@@ -27,9 +27,10 @@ public class Board {
 		}
         this.position = position;
         this.length = length;
-
         width = image.getWidth(null);
         height = image.getHeight(null);
+
+        setPreferredSize(new Dimension(length,length));
         
     }
 

@@ -12,17 +12,28 @@ public class GameWindow extends JPanel {
 
     public GameWindow() {
         super();
+
+        JPanel contentPane = new JPanel();
+
         board = new Board(new Point(10,10),1000);
+        contentPane.add(board, BorderLayout.LINE_START);
+
+        MessageBoxDisplay msg=new MessageBoxDisplay();
+        contentPane.add(msg, BorderLayout.LINE_END);
+
+        this.add(contentPane);
+
+
         buttonPanel = new ButtonPanel();
-       this.add(buttonPanel, BorderLayout.SOUTH);
-       
-       diceDisplay = new DiceDisplay();
-       this.add(diceDisplay, BorderLayout.NORTH);     
-       
+        //this.add(buttonPanel, BorderLayout.SOUTH);
+
+        diceDisplay = new DiceDisplay();
+        //this.add(diceDisplay, BorderLayout.NORTH);
+
     }
 
     public void paint(Graphics g) {
         super.paint(g);
-        board.paint(g);
+        //board.paint(g);
     }
 }

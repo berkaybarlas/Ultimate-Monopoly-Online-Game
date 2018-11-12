@@ -17,17 +17,17 @@ public class MessageBoxDisplay extends JPanel{
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		scrollPane = new JScrollPane(panel);
+		scrollPane.setBounds(0, 0,500,200);
 		JPanel contentPane = new JPanel(null);
 		contentPane.setPreferredSize(new Dimension(500, 200));
-		scrollPane.setBounds(0, 0,500,200);
-		this.add(contentPane,BorderLayout.NORTH);
 		contentPane.add(scrollPane);
+		this.add(contentPane,BorderLayout.NORTH);
 
 		JPanel enterPane = new JPanel(null);
 		enterPane.setPreferredSize(new Dimension(100, 200));
 		this.add(enterPane,BorderLayout.SOUTH);
 
-		submit=new JButton();
+		submit = new JButton();
 		submit.setBounds(401,0,100,30);
 		submit.setText("Submit");
 		textEnter=new JTextField();
