@@ -6,10 +6,12 @@ public class ServerProtocol {
     private static final int END = 2;
     private static final int ANOTHER = 3;
 
-    private int state = STARTED;
+    private int state = WAITING;
 
-    private String[] request = { "start","rollDice", "buy", "makeAction","message"};
+    private String[] request = { "game/start","rollDice", "buy", "makeAction","message"};
     private String[] response = { "start","roll", "bought", "act","Game Ended","message"};
+    /// Make Hashtable or enum
+
 
     public String processInput(String theInput) {
         String theOutput = null;
@@ -27,6 +29,8 @@ public class ServerProtocol {
                 theOutput = response[2];
             } else if (theInput.equalsIgnoreCase(request[3])) {
                 theOutput = response[3];
+            } else if (theInput.indexOf("message")!=-1) {
+                theOutput = theInput;
             } else {
                 theOutput = "Response is not accepted: 500";
             }
@@ -43,4 +47,6 @@ public class ServerProtocol {
         }
         return theOutput;
     }
+
+
 }
