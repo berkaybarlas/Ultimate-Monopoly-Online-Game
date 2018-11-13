@@ -2,8 +2,6 @@ package com.nullPointer.UI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameWindow extends JPanel {
     private Board board;
@@ -18,7 +16,7 @@ public class GameWindow extends JPanel {
         board = new Board(new Point(10,10),1000);
         contentPane.add(board, BorderLayout.LINE_START);
 
-        MessageBoxDisplay msg=new MessageBoxDisplay();
+        MessageBox msg=new MessageBox();
         contentPane.add(msg, BorderLayout.LINE_END);
 
         this.add(contentPane);

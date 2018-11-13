@@ -23,6 +23,7 @@ public class AppWindow extends JFrame {
     private JButton gameButton = null;
     private JScrollPane scrollPane = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private Navigator navigator = Navigator.getInstance();
 
     private final CardLayout mainLayout = new CardLayout();
     private final JPanel panels = new JPanel(mainLayout);
@@ -54,51 +55,29 @@ public class AppWindow extends JFrame {
         setContentPane(contentPane);
 
         JPanel menuPanel = menuWindow;
-        menuPanel.setBorder(border);
-        menuPanel.add(new JLabel("Menu"));
-        panels.add(menuPanel, "Menu Panel");
+        //menuPanel.setBorder(border);
+        //menuPanel.add(new JLabel("Menu"));
+        panels.add(menuPanel, "Menu Panel" );
 
         JPanel gamePanel = gameWindow;
         gamePanel.setBorder(border);
-        gamePanel.add(new JLabel("Card 2"));
+        //gamePanel.add(new JLabel("Game Screen"));
         panels.add(gamePanel, "Game Panel");
 
         JPanel serverPanel = serverWindow;
         serverPanel.setBorder(border);
-        serverPanel.add(new JLabel("Server"));
-        panels.add(serverPanel, "Second Panel");
+        //serverPanel.add(new JLabel("Server Screen"));
+        panels.add(serverPanel, "Server Panel");
 
         contentPane.add(panels, BorderLayout.CENTER);
-
+        navigator.setLayout(mainLayout);
+        navigator.setPanels(panels);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
     protected void addButtons(JToolBar toolBar) {
-
-        serverButton = new JButton("Start Server");
-        serverButton.setToolTipText("Start the game server");
-        serverButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                communicationController.startServer();
-                communicationController.createClient();
-                serverButton.setEnabled(false);
-                joinButton.setEnabled(false);
-            }
-        });
-        toolBar.add(serverButton);
-
-        joinButton = new JButton("Join Server");
-        joinButton.setToolTipText("Join the game server");
-        joinButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                communicationController.createClient();
-                serverButton.setEnabled(false);
-                joinButton.setEnabled(false);
-            }
-        });
-        toolBar.add(joinButton);
 
         messageButton = new JButton("Send Message");
         messageButton.setToolTipText("Join the game server");
@@ -113,7 +92,7 @@ public class AppWindow extends JFrame {
         menuButton.setToolTipText("Menu window");
         menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainLayout.next(panels);
+                navigator.menuScreen();
             }
         });
         toolBar.add(menuButton);
@@ -122,7 +101,7 @@ public class AppWindow extends JFrame {
         gameButton.setToolTipText("Game window");
         gameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainLayout.next(panels);
+                navigator.gameScreen();
             }
         });
         toolBar.add(gameButton);

@@ -5,13 +5,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MessageBoxDisplay extends JPanel{
+public class MessageBox extends JPanel{
 	private JScrollPane scrollPane;
 	private JTextField textEnter;
 	private JButton submit;
 	private JPanel panel;
 	private CommunicationController communicationController = CommunicationController.getInstance();
-	public MessageBoxDisplay(){
+
+	public MessageBox(){
 		this.setLayout(new BorderLayout());
 
 		panel = new JPanel();
@@ -35,20 +36,14 @@ public class MessageBoxDisplay extends JPanel{
 		enterPane.add(submit);
 		enterPane.add(textEnter);
 
-		submit.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) {
-				//client sends textEnter.getText()to Server
-				//now client waits for the message from server
-				//then when message comes, it is written to the label and
-				//added to the scrollable panel
-                communicationController.sendClientMessage("message/" + textEnter.getText());
+		//wrong
+		communicationController.setMessageBox(this);
+		//wrong
 
-				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-				scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				panel.validate();
-
-			} 
-		} );
+		submit.addActionListener(e -> {
+		    communicationController.sendClientMessage("message/" + textEnter.getText());
+		    textEnter.setText("");
+        });
 		this.setVisible(true);
 	}
 
@@ -56,5 +51,8 @@ public class MessageBoxDisplay extends JPanel{
         Label message=new Label();
         message.setText(msg);
         panel.add(message);
+        panel.validate();
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 }

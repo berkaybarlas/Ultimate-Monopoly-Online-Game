@@ -1,5 +1,7 @@
 package com.nullPointer.Server;
 
+import com.nullPointer.Controller.CommunicationController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ public class Client extends Thread{
     private int portNumber = 4000;
     private PrintWriter out;
     private BufferedReader in;
+    private CommunicationController communicationController = CommunicationController.getInstance();
 
     public Client(String name) {
         threadName = name;
@@ -36,6 +39,7 @@ public class Client extends Thread{
             while (true) {
                 if ((fromServer = in.readLine()) != null) {
                     System.out.println("[Client]: Server -> " + fromServer);
+                    communicationController.processInput(fromServer);
                 }
             }
         } catch (UnknownHostException er) {
@@ -46,7 +50,7 @@ public class Client extends Thread{
                     hostName);
             System.exit(1);
         } finally {
-            System.out.println("[Client]: Client not listening anymore");
+            System.out.println("[Client]: Client is not listening anymore");
         }
     }
 

@@ -9,8 +9,8 @@ import java.net.Socket;
 class ClientHandler extends Thread
 {
     private Socket clientSocket;
-
     private ResponseController responseController;
+    private static ServerProtocol protocol = new ServerProtocol();
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -21,7 +21,7 @@ class ClientHandler extends Thread
          PrintWriter out;
          BufferedReader in;
          String inputLine, outputLine;
-         ServerProtocol protocol;
+
         try {
             out =
                     new PrintWriter(clientSocket.getOutputStream(), true);
@@ -30,14 +30,14 @@ class ClientHandler extends Thread
             //oOut = new ObjectOutputStream(clientSocket.getOutputStream());
             //oin = new ObjectInputStream(clientSocket.getInputStream());
 
-            protocol = new ServerProtocol();
+
             out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
             while (true) {
                 if ((inputLine = in.readLine()) != null) {
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
+                    System.out.println("[ClientHandler]: Client -> " + inputLine);
                     outputLine = protocol.processInput(inputLine);
                     responseController.sendResponse(outputLine);
-                    System.out.println("[ClientHandler]: Server -> " + outputLine);
                 }
             }
         }catch (IOException e) {
