@@ -1,10 +1,7 @@
 package com.nullPointer.Model;
 
-import java.util.Random;
-
 public class SpeedDie extends Die {
     private static SpeedDie _instance;
-    Random randomGen = new Random();
     private SpeedDie(){
 
     }
@@ -14,5 +11,8 @@ public class SpeedDie extends Die {
             _instance = new SpeedDie();
         }
         return _instance;
+    }
+    public void roll(){
+    	roll(1);
     }
 }
