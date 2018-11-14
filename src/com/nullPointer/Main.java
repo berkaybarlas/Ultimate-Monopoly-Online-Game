@@ -6,12 +6,12 @@ import com.nullPointer.UI.AppWindow;
 public class Main {
 
     public static void main(String[] args) {
-    	GameEngine g=new GameEngine();
-        AppWindow frame = new AppWindow(g);       
+
+        AppWindow frame = new AppWindow();       
         frame.pack();
         frame.setVisible(true);
         
-        new Thread(g).start();
+        new Thread(GameEngine.getInstance()).start();
     }
 }
  

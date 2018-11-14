@@ -30,7 +30,7 @@ public class AppWindow extends JFrame implements Observer{
     private final JPanel panels = new JPanel(mainLayout);
     private final Border border = BorderFactory.createEmptyBorder(-10, 60, 60, 60);
 
-    public AppWindow(GameEngine gameEngine) {
+    public AppWindow() {
         super("Ultimate Monopoly");
 
         addWindowListener(new WindowAdapter() {
@@ -39,7 +39,7 @@ public class AppWindow extends JFrame implements Observer{
             }
         });
 
-        initialize(gameEngine);
+        initialize();
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
@@ -117,12 +117,13 @@ public class AppWindow extends JFrame implements Observer{
         toolBar.add(button);
     }
 
-    public void initialize(GameEngine g) {
-		g.addListener(this);
+    public void initialize() {
+    	GameEngine.getInstance().addListener(this);
 	}
 	@Override
 	public void onEvent(String message) {
 		System.out.println("Event came");
+		
 		JLabel label=new JLabel("Hello");
 		this.add(label);
 		this.setVisible(true);

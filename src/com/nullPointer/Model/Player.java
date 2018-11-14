@@ -1,6 +1,7 @@
 package com.nullPointer.Model;
-import java.awt.*;
 import java.util.List;
+
+import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
 
 import java.util.*;
@@ -10,7 +11,7 @@ public class Player {
 	private String name;
 	private int position;
 	private int money;
-	private HashMap<Color, List<Square>> propertyCardsMap;
+	private HashMap<String, List<PropertySquare>> propertyCardsMap;
 	private List<Card> otherCards;
 	private Pawn pawn;
 	private boolean inJail;
@@ -41,10 +42,10 @@ public class Player {
 		money=newmoney;
 	}
 
-	public HashMap<Color, List<Square>> getPropertyCardsMap() {
+	public HashMap<String, List<PropertySquare>> getPropertyCardsMap() {
 		return propertyCardsMap;
 	}
-
+	
 	public List<Card> getOtherCards() {
 		return otherCards;
 	}
