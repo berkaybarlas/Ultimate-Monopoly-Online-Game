@@ -5,7 +5,7 @@ import com.nullPointer.Model.PropertySquare;
 public class PlayerController {
     private static PlayerController _instance;
     private ArrayList<Player> players=new ArrayList<Player>(12);
-    private int currentPlayer;
+	private int currentPlayer;
 
     private PlayerController(){
 
@@ -35,5 +35,8 @@ public class PlayerController {
     public void removeProperty(PropertySquare propertySquare){
     	players.get(currentPlayer).getPropertyCardsMap().remove(propertySquare.getColor(),propertySquare);
     }
+    public ArrayList<Player> getPlayers() {
+		return players;
+	}
 
 }
