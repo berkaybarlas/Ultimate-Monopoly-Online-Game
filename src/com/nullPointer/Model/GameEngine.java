@@ -19,7 +19,7 @@ public class GameEngine implements Runnable{
     private static GameEngine _instance;
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
-    public GameEngine() {
+    private GameEngine() {
 
     }
 
@@ -67,6 +67,7 @@ public class GameEngine implements Runnable{
 
     public void buyProperty(PropertySquare pSquare, Player player) {
     		pSquare.setOwner(player);
+    		playerController.upgradeInventory(pSquare, player);
     		moneyController.decreaseMoney(player, pSquare.getPrice());
     }
 
