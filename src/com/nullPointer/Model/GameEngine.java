@@ -103,6 +103,6 @@ public class GameEngine implements Runnable{
 
 	public void publishEvent(String message) {
 		observers.forEach(listener->listener.onEvent(message));
-		System.out.println("Published");
+		
 	}
 }

@@ -120,9 +120,7 @@ public class AppWindow extends JFrame implements Observer{
 	public void onEvent(String message) {
 		System.out.println("Event came");
 		
-		JLabel label=new JLabel("Hello");
-		this.add(label);
-		this.setVisible(true);
+		
 		
 	}
 }
