@@ -39,7 +39,7 @@ public class AppWindow extends JFrame implements Observer{
             }
         });
 
-        initialize();
+        GameEngine.getInstance().addListener(this);
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
@@ -116,10 +116,6 @@ public class AppWindow extends JFrame implements Observer{
         });
         toolBar.add(button);
     }
-
-    public void initialize() {
-    	GameEngine.getInstance().addListener(this);
-	}
 	@Override
 	public void onEvent(String message) {
 		System.out.println("Event came");
