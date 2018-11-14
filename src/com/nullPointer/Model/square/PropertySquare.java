@@ -1,4 +1,6 @@
-package com.nullPointer.Model;
+package com.nullPointer.Model.square;
+
+import com.nullPointer.Model.Player;
 
 public class PropertySquare extends Square {
 	private Player owner;
@@ -36,4 +38,14 @@ public class PropertySquare extends Square {
 		// TODO Auto-generated method stub
 
 	}
+	public int getPrice() {
+		return price;
+	}
+	public Player getOwner() {
+		return owner;
+	}
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+	
 }
