@@ -8,7 +8,9 @@ public class PropertySquare extends Square {
 	private int price;
 	private int rent;
 	private String color;
-	//inventory ??
+	//inventory=1 if 1 house, 2 if 2 houses, 3 if 3 houses, 4 if 4 houses
+	//5 if hotel, 6 if skyscraper
+	private int inventory;
 	private boolean isMortgaged;
 	public PropertySquare(String n, String t, int p, int r) {
 		super(n, t);
@@ -16,6 +18,7 @@ public class PropertySquare extends Square {
 		price=p;
 		rent=r;
 		isMortgaged=false;
+		inventory=0;
 
 	}
 	public String getColor(){
