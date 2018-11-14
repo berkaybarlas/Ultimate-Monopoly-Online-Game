@@ -17,6 +17,7 @@ public class Board extends JPanel{
     private int length = 700;
     
     private int width, height;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public Board(Point position, int length) {
     	try {
