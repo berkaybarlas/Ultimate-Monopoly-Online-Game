@@ -1,4 +1,5 @@
 package com.nullPointer.Model;
+import com.nullPointer.UI.Observer;
 import java.util.*;
 
 import com.nullPointer.Controller.CommunicationController;
@@ -8,7 +9,7 @@ import com.nullPointer.Model.square.PropertySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
 
-public class GameEngine {
+public class GameEngine implements Runnable{
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
@@ -16,8 +17,9 @@ public class GameEngine {
     private Navigator navigator = Navigator.getInstance();
 
     private static GameEngine _instance;
+    ArrayList<Observer> observers=new ArrayList<Observer>();
 
-    private GameEngine() {
+    public GameEngine() {
 
     }
 
@@ -75,4 +77,27 @@ public class GameEngine {
     public void sendToJail() {
     		playerController.putInJail();
     }
+    public void run() {
+		
+		  Random random  = new Random();
+		  
+	      while (true) {
+	    	  
+	    	  try {
+				Thread.sleep(random.nextInt(10000));
+			  } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			  }
+	    	  publishAlarmEvent(); 
+	      }
+	}
+    public void addAlarmListener(Observer listener ){
+		observers.add(listener);
+	}
+	
+	public void publishAlarmEvent() {
+		observers.forEach(listener->listener.onAlarmEvent());
+		System.out.println("Published");
+	}
 }

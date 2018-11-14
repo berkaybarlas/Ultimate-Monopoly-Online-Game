@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class AppWindow extends JFrame {
+public class AppWindow extends JFrame implements Observer{
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
@@ -29,7 +30,7 @@ public class AppWindow extends JFrame {
     private final JPanel panels = new JPanel(mainLayout);
     private final Border border = BorderFactory.createEmptyBorder(-10, 60, 60, 60);
 
-    public AppWindow() {
+    public AppWindow(GameEngine gameEngine) {
         super("Ultimate Monopoly");
 
         addWindowListener(new WindowAdapter() {
@@ -38,7 +39,7 @@ public class AppWindow extends JFrame {
             }
         });
 
-
+        initialize(gameEngine);
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
@@ -115,4 +116,16 @@ public class AppWindow extends JFrame {
         });
         toolBar.add(button);
     }
+
+    public void initialize(GameEngine g) {
+		g.addAlarmListener(this);
+	}
+	@Override
+	public void onAlarmEvent() {
+		System.out.println("event came");
+		JLabel label=new JLabel("Hello");
+		this.add(label);
+		this.setVisible(true);
+		
+	}
 }
