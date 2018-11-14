@@ -1,8 +1,10 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,9 +12,10 @@ import java.awt.event.ActionListener;
 public class ServerWindow extends JPanel {
     private JButton startGame;
     private JButton quitServer;
-
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
+
+    ClientDisplay clientDisplay;
 
     public ServerWindow() {
 
@@ -21,6 +24,9 @@ public class ServerWindow extends JPanel {
         buttonPanel.add(new JLabel("Server Screen"));
         this.add(buttonPanel);
         addButtons(buttonPanel);
+
+        clientDisplay = new ClientDisplay("client1");
+
     }
 
     private void addButtons(JPanel panel) {
@@ -51,4 +57,24 @@ public class ServerWindow extends JPanel {
         communicationController.sendClientMessage("game/start");
     }
 
+    public void paint(Graphics g) {
+        super.paint(g);
+        clientDisplay.paint(g);
+    }
+
+}
+
+ class ClientDisplay {
+    ClientDisplay(String name) {
+
+    }
+
+    public void paint(Graphics g) {
+        Color color = new Color(0, 0,0);
+        g.setColor(color);
+        g.fillRect(300, 300, 200, 200);
+
+        g.drawString("",  200 + 20, 200);
+
+    }
 }

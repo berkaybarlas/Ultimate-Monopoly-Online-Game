@@ -59,6 +59,12 @@ public class CommunicationController {
             messageBox.repaint();
         }
 
+        if(includes(input,"client")){
+            if(includes(second(input), "create")){
+                gameEngine.newClient();
+            }
+        }
+
     }
 
     private String second(String word) {
@@ -66,5 +72,9 @@ public class CommunicationController {
         if(words.length>1)
             return words[1];
         return word;
+    }
+
+    private boolean includes(String sentence, String word) {
+        return (sentence.indexOf(word) != -1);
     }
 }

@@ -78,25 +78,29 @@ public class GameEngine implements Runnable{
     public void sendToJail() {
     		playerController.putInJail();
     }
+
+    public void newClient() {
+
+    }
     public void run() {
-		
+
 		  Random random  = new Random();
-		  
+
 	      while (true) {
-	    	  
+
 	    	  try {
 				Thread.sleep(random.nextInt(10000));
 			  } catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			  }
-	    	  publishEvent(""); 
+	    	  publishEvent("");
 	      }
 	}
     public void addListener(Observer listener){
 		observers.add(listener);
 	}
-	
+
 	public void publishEvent(String message) {
 		observers.forEach(listener->listener.onEvent(message));
 		System.out.println("Published");

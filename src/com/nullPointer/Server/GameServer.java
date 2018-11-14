@@ -25,7 +25,9 @@ public class GameServer extends Thread{
             while (true) {
                 Socket socket = serverSocket.accept();
                 responseController.addSocket(socket);
+                responseController.sendResponse("client/create");
                 new ClientHandler(socket).start();
+
             }
         } catch (IOException e) {
             System.out.println("[Server]: Exception caught when trying to listen on port "
