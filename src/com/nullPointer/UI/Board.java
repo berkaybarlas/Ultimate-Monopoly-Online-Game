@@ -40,3 +40,4 @@ public class Board extends JPanel{
         g.drawImage(image, position.x, position.y, length, length, null);
     }
 }
+
