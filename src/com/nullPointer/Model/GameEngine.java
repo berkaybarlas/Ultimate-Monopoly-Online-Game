@@ -5,7 +5,7 @@ import java.util.*;
 import com.nullPointer.Controller.CommunicationController;
 import com.nullPointer.Controller.MoneyController;
 import com.nullPointer.Controller.PlayerController;
-import com.nullPointer.Model.square.PropertySquare;
+import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
 
@@ -66,10 +66,8 @@ public class GameEngine implements Runnable{
     }
 
     public void buyProperty(PropertySquare pSquare, Player player) {
-    		if(moneyController.hasEnoughMoney(player, pSquare.getPrice())) {
-    			pSquare.setOwner(player);
-        		moneyController.decreaseMoney(player, pSquare.getPrice());
-    		}
+    		pSquare.setOwner(player);
+    		moneyController.decreaseMoney(player, pSquare.getPrice());
     }
 
     public void nextTurn() {

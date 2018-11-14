@@ -1,4 +1,4 @@
-package com.nullPointer.Model.square;
+package com.nullPointer.Model.Square;
 import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Model.Player;
 

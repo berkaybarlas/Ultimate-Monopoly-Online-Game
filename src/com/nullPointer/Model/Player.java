@@ -1,8 +1,7 @@
 package com.nullPointer.Model;
 import java.awt.*;
 import java.util.List;
-
-import com.nullPointer.Model.square.Square;
+import com.nullPointer.Model.Square.Square;
 
 import java.util.*;
 
