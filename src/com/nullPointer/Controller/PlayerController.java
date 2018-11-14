@@ -1,7 +1,7 @@
 package com.nullPointer.Controller;
 import java.util.*;
 import com.nullPointer.Model.Player;
-import com.nullPointer.Model.PropertySquare;
+import com.nullPointer.Model.square.PropertySquare;
 public class PlayerController {
     private static PlayerController _instance;
     private ArrayList<Player> players=new ArrayList<Player>(12);

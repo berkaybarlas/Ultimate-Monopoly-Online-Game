@@ -4,6 +4,7 @@ import java.util.*;
 import com.nullPointer.Controller.CommunicationController;
 import com.nullPointer.Controller.MoneyController;
 import com.nullPointer.Controller.PlayerController;
+import com.nullPointer.Model.square.PropertySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
 
@@ -62,8 +63,9 @@ public class GameEngine {
 
     }
 
-    public void buyProperty() {
-
+    public void buyProperty(PropertySquare pSquare, Player player) {
+    	pSquare.setOwner(player);
+    	moneyController.decreaseMoney(player, pSquare.getPrice());
     }
 
     public void nextTurn() {

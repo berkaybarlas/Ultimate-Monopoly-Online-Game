@@ -1,4 +1,6 @@
-package com.nullPointer.Model;
+package com.nullPointer.Model.square;
+
+import com.nullPointer.Model.Player;
 
 public abstract class Square {
 	private String name;
