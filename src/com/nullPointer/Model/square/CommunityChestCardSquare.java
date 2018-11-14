@@ -1,5 +1,5 @@
 package com.nullPointer.Model.square;
-
+import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Model.Player;
 
 public class CommunityChestCardSquare extends Square {
@@ -9,8 +9,9 @@ public class CommunityChestCardSquare extends Square {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	@Override
-	public void evaluateSquare(int diceValue, int speedDieValue, Player player) {
+	public void evaluateSquare(GameEngine gameEngine, int diceValue, int speedDieValue, Player player) {
 		// TODO Auto-generated method stub
 		
 	}
