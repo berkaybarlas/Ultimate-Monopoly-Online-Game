@@ -1,5 +1,4 @@
 package com.nullPointer.Model.square;
-
 import com.nullPointer.Model.Player;
 
 public class BonusSquare extends Square {
