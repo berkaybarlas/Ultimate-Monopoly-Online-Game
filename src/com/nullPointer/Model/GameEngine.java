@@ -64,8 +64,8 @@ public class GameEngine {
     }
 
     public void buyProperty(PropertySquare pSquare, Player player) {
-    	pSquare.setOwner(player);
-    	moneyController.decreaseMoney(player, pSquare.getPrice());
+    		pSquare.setOwner(player);
+    		moneyController.decreaseMoney(player, pSquare.getPrice());
     }
 
     public void nextTurn() {
@@ -73,6 +73,6 @@ public class GameEngine {
     }
 
     public void sendToJail() {
-    	playerController.putInJail();
+    		playerController.putInJail();
     }
 }
