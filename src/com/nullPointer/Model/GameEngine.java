@@ -66,8 +66,10 @@ public class GameEngine implements Runnable{
     }
 
     public void buyProperty(PropertySquare pSquare, Player player) {
-    		pSquare.setOwner(player);
-    		moneyController.decreaseMoney(player, pSquare.getPrice());
+    		if(moneyController.hasEnoughMoney(player, pSquare.getPrice())) {
+    			pSquare.setOwner(player);
+        		moneyController.decreaseMoney(player, pSquare.getPrice());
+    		}
     }
 
     public void nextTurn() {

@@ -1,5 +1,4 @@
 package com.nullPointer.Model.square;
-
 import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Model.Player;
 
@@ -11,7 +10,7 @@ public class GoToJailSquare extends Square {
 	}
 	
 	@Override
-	public void evaluateSquare(GameEngine gameEngine, int diceValue, int speedDieValue, Player player) {
+	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
 		
 	}

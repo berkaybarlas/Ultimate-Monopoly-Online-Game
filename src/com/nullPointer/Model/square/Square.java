@@ -17,5 +17,5 @@ public abstract class Square {
 	public String getType(){
 		return type;
 	}
-	public abstract void evaluateSquare(GameEngine gameEngine, int diceValue, int speedDieValue, Player player);
+	public abstract void evaluateSquare(GameEngine gameEngine);
 }

@@ -10,7 +10,7 @@ public class BonusSquare extends Square {
 	}
 
 	@Override
-	public void evaluateSquare(GameEngine gameEngine, int diceValue, int speedDieValue, Player player) {
+	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
 		
 	}

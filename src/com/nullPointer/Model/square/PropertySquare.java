@@ -38,8 +38,12 @@ public class PropertySquare extends Square {
 		//change inventory
 	}
 	@Override
-	public void evaluateSquare(GameEngine gameEngine, int diceValue, int speedDieValue, Player player) {
-		// TODO Auto-generated method stub
+	public void evaluateSquare(GameEngine gameEngine) {
+		if(this.getOwner() == null) {
+			gameEngine.publishAlarmEvent();
+		} else {
+			
+		}
 		
 	}
 	public int getPrice() {

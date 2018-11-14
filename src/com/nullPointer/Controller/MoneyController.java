@@ -53,6 +53,12 @@ public class MoneyController {
 		this.poolMoney = poolMoney;
 	}
     
-    
+    public boolean hasEnoughMoney(Player player, int amount) {
+    		if(player.getMoney()>=amount) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    }
     
 }
