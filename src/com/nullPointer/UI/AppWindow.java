@@ -118,11 +118,11 @@ public class AppWindow extends JFrame implements Observer{
     }
 
     public void initialize(GameEngine g) {
-		g.addAlarmListener(this);
+		g.addListener(this);
 	}
 	@Override
-	public void onAlarmEvent() {
-		System.out.println("event came");
+	public void onEvent(String message) {
+		System.out.println("Event came");
 		JLabel label=new JLabel("Hello");
 		this.add(label);
 		this.setVisible(true);

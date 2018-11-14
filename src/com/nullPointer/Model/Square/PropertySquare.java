@@ -40,7 +40,7 @@ public class PropertySquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		if(this.getOwner() == null) {
-			gameEngine.publishAlarmEvent();
+			gameEngine.publishEvent("buy");
 		} else {
 			
 		}

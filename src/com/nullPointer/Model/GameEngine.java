@@ -89,15 +89,15 @@ public class GameEngine implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			  }
-	    	  publishAlarmEvent(); 
+	    	  publishEvent(""); 
 	      }
 	}
-    public void addAlarmListener(Observer listener ){
+    public void addListener(Observer listener){
 		observers.add(listener);
 	}
 	
-	public void publishAlarmEvent() {
-		observers.forEach(listener->listener.onAlarmEvent());
+	public void publishEvent(String message) {
+		observers.forEach(listener->listener.onEvent(message));
 		System.out.println("Published");
 	}
 }
