@@ -27,7 +27,7 @@ public class ServerWindow extends JPanel {
 
         JPanel clientPanel = new JPanel();
         clientDisplay = new ClientDisplay("client1");
-
+        this.add(clientPanel);
     }
 
     private void addButtons(JPanel panel) {

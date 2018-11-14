@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Board extends JPanel{
-	private BufferedImage image; 
+	private Image image;
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
     private Color color = new Color(187, 229, 206);
@@ -21,7 +21,9 @@ public class Board extends JPanel{
 
     public Board(Point position, int length) {
     	try {
-			image = ImageIO.read(imageSrc);
+            image = ImageIO.read(imageSrc);
+            //image = image.getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+            //image = image.SCALE_SMOOTH
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,13 +34,16 @@ public class Board extends JPanel{
         height = image.getHeight(null);
 
         setPreferredSize(new Dimension(length,length));
-        
+
+        //JLabel picLabel = new JLabel(new ImageIcon(image));
+        //this.add(picLabel);
     }
 
     public void paint(Graphics g) {
+        super.paint(g);
         //g.setColor(color);
         //g.fillRect(position.x, position.y, length, length);
-        g.drawImage(image, position.x, position.y, length, length, null);
+        g.drawImage(image, position.x, position.y, length, length, this);
     }
 }
 

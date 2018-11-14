@@ -8,7 +8,7 @@ public class PlayerPanel extends JPanel {
 
 	public PlayerPanel() {
 		panel = new JPanel();
-		panel.setSize(500,300);
+		panel.setPreferredSize(new Dimension(500 ,500 ));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
 
