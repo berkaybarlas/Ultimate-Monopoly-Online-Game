@@ -44,8 +44,8 @@ public class Player {
         return targetPosition;
     }
 
-    public void setTargetPosition(int targetPosition) {
-        this.targetPosition = targetPosition;
+    public void setTargetPosition(int amount) {
+        this.targetPosition = position + amount;
     }
 
     public int getMoney() {
