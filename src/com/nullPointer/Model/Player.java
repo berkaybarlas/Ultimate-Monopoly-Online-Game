@@ -11,7 +11,8 @@ public class Player {
 	
 	private String name;
 	private int position;
-	private int money;
+	private int targetPosition;
+	private int money = 3200;
 	private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
 	private ArrayList<UtilitySquare> utilityList;
 	private ArrayList<Card> otherCards;
@@ -41,6 +42,7 @@ public class Player {
 	public int getMoney() {
 		return money;
 	}
+
 	public void setMoney(int newmoney) {
 		money=newmoney;
 	}
@@ -56,9 +58,11 @@ public class Player {
 	public Pawn getPawn() {
 		return pawn;
 	}
+
 	public boolean isInJail() {
 		return inJail;
 	}
+
 	public void setinJail(boolean b) {
 		inJail=b;
 	}
