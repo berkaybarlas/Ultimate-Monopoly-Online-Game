@@ -20,6 +20,7 @@ public class Board extends JPanel implements Runnable{
 
 	private int[] lastXPositions=new int[12];
 	private int[] lastYPositions=new int[12];
+	private int eachmove;
 
 	public Board(Point position, int length) {
 		try {
@@ -36,6 +37,7 @@ public class Board extends JPanel implements Runnable{
 		setPreferredSize(new Dimension(length,length));
 		lastXPositions[0]=14*58;
 		lastYPositions[0]=14*58;
+		eachmove=length/17;
 	}
 
 	public void paint(Graphics g) {
@@ -48,8 +50,8 @@ public class Board extends JPanel implements Runnable{
 	}
 	public void move(int amount) throws InterruptedException{
 		while(amount>0){	
-			if(lastXPositions[0]>4*58 && lastYPositions[0]==14*58){
-				for(int j=0;j<58;j++){
+			if(lastXPositions[0]>4*eachmove && lastYPositions[0]==14*eachmove){
+				for(int j=0;j<eachmove;j++){
 					lastXPositions[0]--;
 					this.repaint();
 					Thread.sleep(10);
@@ -58,9 +60,9 @@ public class Board extends JPanel implements Runnable{
 				Thread.sleep(100);
 			}
 			//breaking point
-			else if(lastXPositions[0]==4*58 && lastYPositions[0]==14*58){
+			else if(lastXPositions[0]==4*eachmove && lastYPositions[0]==14*eachmove){
 				lastYPositions[0]--;
-				for(int j=0;j<58-1;j++){
+				for(int j=0;j<eachmove-1;j++){
 					lastYPositions[0]--;
 					this.repaint();
 					Thread.sleep(10);
@@ -68,8 +70,8 @@ public class Board extends JPanel implements Runnable{
 				amount--;
 				Thread.sleep(100);
 			}
-			else if(lastXPositions[0]==4*58 && lastYPositions[0]<14*58 && lastYPositions[0]>4*58){
-				for(int j=0;j<58;j++){
+			else if(lastXPositions[0]==4*eachmove && lastYPositions[0]<14*eachmove && lastYPositions[0]>4*eachmove){
+				for(int j=0;j<eachmove;j++){
 					lastYPositions[0]--;
 					this.repaint();
 					Thread.sleep(10);
@@ -78,9 +80,9 @@ public class Board extends JPanel implements Runnable{
 				Thread.sleep(100);
 			}
 			//breaking point
-			else if(lastXPositions[0]==4*58 && lastYPositions[0]==4*58){
+			else if(lastXPositions[0]==4*eachmove && lastYPositions[0]==4*eachmove){
 				lastXPositions[0]++;
-				for(int j=0;j<58-1;j++){
+				for(int j=0;j<eachmove-1;j++){
 					lastXPositions[0]++;
 					this.repaint();
 					Thread.sleep(10);
@@ -88,8 +90,8 @@ public class Board extends JPanel implements Runnable{
 				amount--;
 				Thread.sleep(100);
 			}
-			else if(lastXPositions[0]>4*58 && lastXPositions[0]<14*58 && lastYPositions[0]==4*58){
-				for(int j=0;j<58;j++){
+			else if(lastXPositions[0]>4*eachmove && lastXPositions[0]<14*eachmove && lastYPositions[0]==4*eachmove){
+				for(int j=0;j<eachmove;j++){
 					lastXPositions[0]++;
 					this.repaint();
 					Thread.sleep(10);
@@ -98,9 +100,9 @@ public class Board extends JPanel implements Runnable{
 				Thread.sleep(100);
 			}
 			//breaking point
-			else if(lastXPositions[0]==14*58 && lastYPositions[0]==4*58){
+			else if(lastXPositions[0]==14*eachmove && lastYPositions[0]==4*eachmove){
 				lastYPositions[0]++;
-				for(int j=0;j<58-1;j++){
+				for(int j=0;j<eachmove-1;j++){
 					lastYPositions[0]++;
 					this.repaint();
 					Thread.sleep(10);
@@ -108,8 +110,8 @@ public class Board extends JPanel implements Runnable{
 				amount--;
 				Thread.sleep(100);
 			}
-			else if(lastXPositions[0]==14*58 && lastYPositions[0]>4*58){
-				for(int j=0;j<58;j++){
+			else if(lastXPositions[0]==14*eachmove && lastYPositions[0]>4*eachmove){
+				for(int j=0;j<eachmove;j++){
 					lastYPositions[0]++;
 					this.repaint();
 					Thread.sleep(10);
@@ -119,7 +121,6 @@ public class Board extends JPanel implements Runnable{
 			}
 		}
 	}
-
 	@Override
 	public void run() {
 		while (true) {
