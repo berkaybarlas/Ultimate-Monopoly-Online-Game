@@ -20,9 +20,8 @@ public class Player {
 	public Player(){
 		this.name="";
 	}
-	public Player(String name, Pawn pawn) {
+	public Player(String name) {
 		this.name = name;
-		this.pawn = pawn;
 	}
 
 	public String getName() {
