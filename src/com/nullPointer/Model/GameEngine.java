@@ -10,7 +10,7 @@ import com.nullPointer.Model.Square.UtilitySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
 
-public class GameEngine implements Runnable{
+public class GameEngine{
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
@@ -91,21 +91,7 @@ public class GameEngine implements Runnable{
     public void newClient() {
 
     }
-    public void run() {
-
-		  Random random  = new Random();
-
-	      while (true) {
-
-	    	  try {
-				Thread.sleep(random.nextInt(10000));
-			  } catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			  }
-	    	  publishEvent("");
-	      }
-	}
+    
     public void addListener(Observer listener){
 		observers.add(listener);
 	}
