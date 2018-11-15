@@ -61,7 +61,7 @@ public class GameEngine{
 
     }
 
-    public void movePlayer(int newPosition) {
+    public void movePlayer() {
     		playerController.movePlayer(newPosition);
     }
 
