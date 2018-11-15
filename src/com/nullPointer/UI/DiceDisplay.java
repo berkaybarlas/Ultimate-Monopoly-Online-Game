@@ -20,7 +20,7 @@ public class DiceDisplay extends JPanel{
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
     	JPanel contentPane = new JPanel(null); 
-    	contentPane.setPreferredSize(new Dimension(200, 200));
+    	//contentPane.setPreferredSize(new Dimension(200, 200));
     	this.add(contentPane, BorderLayout.NORTH);
 	
     	rollDiceButton = new JButton("Roll Dice");

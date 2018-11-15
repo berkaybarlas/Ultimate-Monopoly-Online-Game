@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class GameWindow extends JPanel {
@@ -8,16 +9,20 @@ public class GameWindow extends JPanel {
     private DiceDisplay diceDisplay;
     private ButtonPanel buttonPanel;
 
-    public GameWindow() {
+    public GameWindow(int width, int height) {
         super();
 
+        int offset = 50;
+
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-        board = new Board(new Point(100,0),1000);
+        //contentPane.setLayout(new BoxLayout(contentPane, BorderLayout));
+        board = new Board(new Point(0,0), height - offset);
+
+        contentPane.setBorder( new EmptyBorder(0,0,0,0) );
         contentPane.add(board, BorderLayout.LINE_START);
 
         buttonPanel = new ButtonPanel();
-        contentPane.add(buttonPanel);
+        contentPane.add(buttonPanel, BorderLayout.CENTER);
 
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
@@ -26,7 +31,7 @@ public class GameWindow extends JPanel {
         rightSide.add(playerPanel);
         MessageBox msg=new MessageBox();
         rightSide.add(msg);
-        contentPane.add(rightSide);
+        contentPane.add(rightSide, BorderLayout.LINE_END);
 
         diceDisplay = new DiceDisplay();
         contentPane.add(diceDisplay);

@@ -13,22 +13,23 @@ public class Board extends JPanel{
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
     private Color color = new Color(187, 229, 206);
-    private Point position = new Point(10,10);
-    private int length = 700;
+    private Point position;
+    private int length;
     
     private int width, height;
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
 
     public Board(Point position, int length) {
     	try {
-            image = ImageIO.read(imageSrc);
-            //image = image.getScaledInstance(500, 500, Image.SCALE_DEFAULT);
-            //image = image.SCALE_SMOOTH
+    	    image = ImageIO.read(imageSrc);
+            image = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        this.position = position;
+
+		System.out.println(image.getHeight(null) + " | " + image.getWidth(null) );
+    	this.position = position;
         this.length = length;
         width = image.getWidth(null);
         height = image.getHeight(null);
@@ -41,9 +42,9 @@ public class Board extends JPanel{
 
     public void paint(Graphics g) {
         super.paint(g);
-        //g.setColor(color);
-        //g.fillRect(position.x, position.y, length, length);
-        g.drawImage(image, position.x, position.y, length, length, this);
+        g.setColor(color);
+        g.drawImage(image, position.x, position.y, length, length, null);
+        g.fillRect(position.x, position.y, 300, 300);
     }
 }
 
