@@ -24,11 +24,11 @@ public class GameWindow extends JPanel {
 
         JPanel middleSide = new JPanel();
         middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));
-        
-        buttonPanel = new ButtonPanel();
-        middleSide.add(buttonPanel);
+
         diceDisplay = new DiceDisplay();
         middleSide.add(diceDisplay);
+        buttonPanel = new ButtonPanel();
+        middleSide.add(buttonPanel);
         contentPane.add(middleSide, BorderLayout.CENTER);
         
         JPanel rightSide = new JPanel();
@@ -39,9 +39,6 @@ public class GameWindow extends JPanel {
         MessageBox msg=new MessageBox();
         rightSide.add(msg);
         contentPane.add(rightSide, BorderLayout.LINE_END);
-
-       
-        this.add(diceDisplay, BorderLayout.NORTH);
 
         this.add(contentPane);
 
