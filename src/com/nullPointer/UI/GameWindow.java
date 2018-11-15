@@ -44,14 +44,10 @@ public class GameWindow extends JPanel {
         this.add(contentPane);
 
     }
-    
-    
 
     public ButtonPanel getButtonPanel() {
 		return buttonPanel;
 	}
-
-
 
 	public void paint(Graphics g) {
         super.paint(g);
