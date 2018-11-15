@@ -18,9 +18,9 @@ public class PlayerPanel extends JPanel {
 //		this.setLayout(null);
         userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.Y_AXIS));
-        userPanel.setBounds(0, 0, 90, 600);
-		scrollPane = new JScrollPane(userPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(0, 0, 90, 300);
+        userPanel.setBounds(0, 0, 120, 600);
+		scrollPane = new JScrollPane(userPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(0, 0, 120, 300);
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(100 ,300));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -33,10 +33,6 @@ public class PlayerPanel extends JPanel {
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Baran Berkay"));
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Tumay"));
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Alihan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Furkan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Furkan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("kan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Fn"));
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Fun"));
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Fur"));
 		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Frkn"));
@@ -47,7 +43,7 @@ public class PlayerPanel extends JPanel {
 		
 		for(int i=0;i<pList.size();i++) {
 			pButtons.add(new JButton("Player"+(i+1)));
-			pButtons.get(i).setPreferredSize(new Dimension(90,50));
+			pButtons.get(i).setPreferredSize(new Dimension(100,100));
 			int currentPlayerIndex = i;
 			pButtons.get(i).addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) {

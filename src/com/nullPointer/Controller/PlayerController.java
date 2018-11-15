@@ -4,6 +4,7 @@ import java.util.*;
 import com.nullPointer.Model.Player;
 import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
+import com.nullPointer.Model.Square.UtilitySquare;
 public class PlayerController {
 	private static PlayerController _instance;
 	private ArrayList<Player> players=new ArrayList<Player>(12);
@@ -40,12 +41,12 @@ public class PlayerController {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-	public void upgradeInventory(PropertySquare property, Player player){
+	public void upgradePropertyList(PropertySquare property, Player player){
 		Iterator it = player.getPropertyCardsMap().entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry)it.next();
 			if(pair.getKey()==property.getColor()){
-				List<PropertySquare> propertiesList=player.getPropertyCardsMap().get(pair.getKey());
+				ArrayList<PropertySquare> propertiesList=player.getPropertyCardsMap().get(pair.getKey());
 				propertiesList.add(property);
 				player.getPropertyCardsMap().remove(pair.getKey());
 				player.getPropertyCardsMap().put((String) pair.getKey(), propertiesList);
@@ -55,6 +56,9 @@ public class PlayerController {
 		ArrayList<PropertySquare> list=new ArrayList<PropertySquare>();
 		list.add(property);
 		player.getPropertyCardsMap().put(property.getColor(), list);
+	}
+	public void upgradeUtilityList(UtilitySquare utility, Player player) {
+		player.getUtilityList().add(utility);
 	}
 
 }

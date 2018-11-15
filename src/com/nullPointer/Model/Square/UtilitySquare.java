@@ -18,7 +18,7 @@ public class UtilitySquare extends Square {
 			gameEngine.publishEvent("buy");
 		} else {
 			int multiplier = 0;
-			switch(GameEngine.getOwnedUtilities()) {
+			switch(GameEngine.getInstance().getPlayerController().getCurrentPlayer().getUtilityList().size()) {
 			case 1:
 				multiplier = 4;
 			case 2:
