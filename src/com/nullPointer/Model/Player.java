@@ -1,6 +1,7 @@
 package com.nullPointer.Model;
 import java.util.List;
 
+import com.nullPointer.Model.Cards.Card;
 import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
 import com.nullPointer.Model.Square.UtilitySquare;

@@ -57,12 +57,9 @@ public class GameEngine{
 
 	    	return list;
     }
-    public void playCard() {
-
-    }
 
     public void movePlayer() {
-    		playerController.movePlayer(newPosition);
+    		playerController.movePlayer();
     }
 
     public void drawCard() {
