@@ -12,6 +12,9 @@ public class Roll3CardSquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
+		// make them draw some card? 
+		// maybe we can keep a roll 3 card deck here, and make the player draw a card and call its playCard()
+		// open to suggestions
 		
 	}
 

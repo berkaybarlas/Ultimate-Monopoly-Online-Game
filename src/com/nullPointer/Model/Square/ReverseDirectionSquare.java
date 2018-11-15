@@ -11,8 +11,8 @@ public class ReverseDirectionSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		
+		gameEngine.getPlayerController().getCurrentPlayer().setDirection(!gameEngine.getPlayerController().getCurrentPlayer().getDirection());
+		// Moving the player should be done according to the direction boolean.
 	}
 
 }
