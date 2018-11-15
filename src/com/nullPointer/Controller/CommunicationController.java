@@ -5,6 +5,7 @@ import com.nullPointer.Model.RegularDie;
 import com.nullPointer.Model.SpeedDie;
 import com.nullPointer.Server.Client;
 import com.nullPointer.Server.GameServer;
+import com.nullPointer.UI.DiceDisplay;
 import com.nullPointer.UI.MessageBox;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class CommunicationController {
     private SpeedDie speedDie = SpeedDie.getInstance();
     ///yanlis
     private MessageBox messageBox;
-
     public void setMessageBox(MessageBox messageBox){
         this.messageBox = messageBox;
     }
@@ -83,6 +83,7 @@ public class CommunicationController {
             speedDice.add(Integer.parseInt(values[3]));
             regularDie.setLastValues(regularDice);
             speedDie.setLastValues(speedDice);
+            gameEngine.movePlayer();
         }
     }
 
