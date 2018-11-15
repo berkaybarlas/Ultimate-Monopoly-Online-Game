@@ -29,9 +29,13 @@ public class AppWindow extends JFrame implements Observer{
     private final CardLayout mainLayout = new CardLayout();
     private final JPanel panels = new JPanel(mainLayout);
     private final Border border = BorderFactory.createEmptyBorder(-10, 60, 60, 60);
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public AppWindow() {
         super("Ultimate Monopoly");
+
+        int width = screenSize.width - 15;
+        int height = screenSize.height - 30;
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -44,13 +48,13 @@ public class AppWindow extends JFrame implements Observer{
         addButtons(toolBar);
 
         menuWindow = new MenuWindow();
-        gameWindow = new GameWindow();
+        gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.setPreferredSize(new Dimension(1600, 1000));
+        contentPane.setPreferredSize(new Dimension(width , height));
         contentPane.add(toolBar, BorderLayout.NORTH);
 
         setContentPane(contentPane);
@@ -118,7 +122,9 @@ public class AppWindow extends JFrame implements Observer{
     }
 	@Override
 	public void onEvent(String message) {
-	
+		if(message.equals("buy")) {
+			
+		}
 			
 	}
 }

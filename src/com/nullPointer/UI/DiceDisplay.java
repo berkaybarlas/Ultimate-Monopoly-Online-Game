@@ -8,29 +8,31 @@ import javax.swing.*;
 import com.nullPointer.Model.GameEngine;
 
 public class DiceDisplay extends JPanel{
-    private JButton rollDiceButton;
+
+    private JLabel diceValues;
     
     public DiceDisplay() {
-		// TODO Auto-generated constructor stub
-    	JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
-    	JPanel contentPane = new JPanel(null); 
-    	contentPane.setPreferredSize(new Dimension(200, 200));
-    	this.add(contentPane, BorderLayout.NORTH);
-	
-    	rollDiceButton = new JButton("Roll Dice");
-    	rollDiceButton.setBounds(150,15,100,30);
-    	
-    	this.add(contentPane, BorderLayout.NORTH);
-    	
-        rollDiceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //rollDice();
-        		ArrayList<Integer> dice=GameEngine.getInstance().rollDice();
-        		//add(new JLabel(""+dice.get(0)));
-            }
-        });
-        this.setVisible(true);
+
+		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //this.setPreferredSize(new Dimension(50 ,50 ));
+        //JPanel contentPane = new JPanel(null);
+    	//contentPane.setPreferredSize(new Dimension(200, 200));
+    	//this.add(contentPane, BorderLayout.NORTH);
+
+    	this.setBounds(0,0,100,300);
+        this.setBackground(Color.WHITE);
+
+    	diceValues=new JLabel("Dice Values");
+    	diceValues.setLocation(0,0);
+    	this.add(diceValues);
+    	this.setVisible(true);
+
+        
 	}
+
+    public void paint() {
+        ArrayList<Integer> dice=GameEngine.getInstance().rollDice();
+        diceValues.setText("Total of dice: "+dice.get(0));
+        //repaint();
+    }
 }

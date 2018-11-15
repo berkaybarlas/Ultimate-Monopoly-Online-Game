@@ -1,43 +1,43 @@
 package com.nullPointer.UI;
+import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class ButtonPanel extends JPanel{
 
-    private JButton purchaseButton;
-    private JButton actionButton;
-    private JButton startButton;
-    
+    protected JButton purchaseButton;
+    protected JButton actionButton;
+    protected JButton rollDice;
+    private GameEngine gameEngine = GameEngine.getInstance();
+    private CommunicationController communicationController = CommunicationController.getInstance();
+
 	public ButtonPanel(){
-		
-		//this.setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
-		JPanel contentPane = new JPanel(null);
-		contentPane.setPreferredSize(new Dimension(100, 100));
-	
-		contentPane.setLayout(new BorderLayout());
-		this.add(contentPane, BorderLayout.SOUTH);
 
-		purchaseButton = new JButton("Purchase Card");
+		purchaseButton = new JButton("Buy Property");
 		actionButton = new JButton("Make action");
-		startButton = new JButton("Start Game");
+		rollDice = new JButton("Roll Dice");
 		
 		purchaseButton.setBounds(150,0,100,30);
 		actionButton.setBounds(150,35,100,30);
-		startButton.setBounds(150,70,100,30);
-	
-		contentPane.add(purchaseButton);
-		contentPane.add(actionButton);
-		contentPane.add(startButton);
-		
+		rollDice.setBounds(150,70,100,30);
+
+		panel.add(rollDice);
+		panel.add(purchaseButton, BorderLayout.CENTER);
+		panel.add(actionButton);
+
+        this.add(panel);
 
 		purchaseButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("purchase");
+				// GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
+				// also need to make a distinction between buying a utility and buying a property
 			} 
 		} );
 
@@ -47,10 +47,12 @@ public class ButtonPanel extends JPanel{
 			} 
 		} );
 		
-		startButton.addActionListener(new ActionListener() { 
+		rollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("start");
-			} 
+				System.out.println("roll dice");
+				gameEngine.rollDice();
+				communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+			}
 		} );
 		
 		this.setVisible(true);

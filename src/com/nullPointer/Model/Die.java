@@ -18,4 +18,8 @@ public ArrayList<Integer> getLastValues(){
 	return lastValues;
 }
 
+public void setLastValues(ArrayList<Integer> list) {
+    lastValues = list;
+}
+
 }
