@@ -1,9 +1,13 @@
 package com.nullPointer.Controller;
 
 import com.nullPointer.Model.GameEngine;
+import com.nullPointer.Model.RegularDie;
+import com.nullPointer.Model.SpeedDie;
 import com.nullPointer.Server.Client;
 import com.nullPointer.Server.GameServer;
 import com.nullPointer.UI.MessageBox;
+
+import java.util.ArrayList;
 
 public class CommunicationController {
 
@@ -11,7 +15,8 @@ public class CommunicationController {
     private GameServer gameServer;
     private Client client;
     private GameEngine gameEngine = GameEngine.getInstance();
-
+    private RegularDie regularDie = RegularDie.getInstance();
+    private SpeedDie speedDie = SpeedDie.getInstance();
     ///yanlis
     private MessageBox messageBox;
 
@@ -50,28 +55,43 @@ public class CommunicationController {
 
     public void processInput(String input) {
 
-        if(input.equals("start")) {
-            gameEngine.startGame();
+        if(includes(input, "game")) {
+            if(includes(rest(input), "start")) {
+                gameEngine.startGame();
+            }
         }
 
         if(input.indexOf("message")!=-1){
-            messageBox.addMessage(second(input));
+            //wrong
+            messageBox.addMessage(rest(input));
             messageBox.repaint();
+            //yanlis
         }
 
-        if(includes(input,"client")){
-            if(includes(second(input), "create")){
+        if(includes(input,"client")) {
+            if(includes(rest(input), "create")){
                 gameEngine.newClient();
             }
         }
 
+        if(includes(input, "dice")) {
+            ArrayList<Integer> regularDice = new ArrayList<>();
+            ArrayList<Integer> speedDice = new ArrayList<>();
+            String[] values = input.split("/");
+            regularDice.add(Integer.parseInt(values[1]));
+            regularDice.add(Integer.parseInt(values[2]));
+            speedDice.add(Integer.parseInt(values[3]));
+            regularDie.setLastValues(regularDice);
+            speedDie.setLastValues(speedDice);
+        }
     }
 
-    private String second(String word) {
+    private String rest(String word) {
         String[] words = word.split("/");
-        if(words.length>1)
-            return words[1];
-        return word;
+        int slashIndex = word.indexOf('/');
+        if(slashIndex==-1)
+            return word;
+        return word.substring(slashIndex+1);
     }
 
     private boolean includes(String sentence, String word) {

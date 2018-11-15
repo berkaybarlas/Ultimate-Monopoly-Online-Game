@@ -44,6 +44,8 @@ public class Board extends JPanel implements Runnable {
 		
 	}
 
+	
+
 	public void paint(Graphics g) {
 		//g.setColor(color);
 		//g.fillRect(position.x, position.y, length, length);

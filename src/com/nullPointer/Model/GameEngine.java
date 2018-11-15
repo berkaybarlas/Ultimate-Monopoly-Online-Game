@@ -31,22 +31,26 @@ public class GameEngine{
     }
 
 
-    public void initPlayers() {
-
+    public void initPlayers(int playerNumber) {
+        for(int i=0; i<playerNumber; i++) {
+            playerController.addPlayer();
+        }
     }
 
     public void startGame() {
         navigator.gameScreen();
+        initPlayers(1);
     }
 
     
     public ArrayList<Integer> rollDice() {
-	    	regularDie.roll();
-	    	speedDie.roll();
-	    	ArrayList<Integer> list=new ArrayList<Integer>(2);
+	    	regularDie.roll(2);
+	    	speedDie.roll(1);
+	    	ArrayList<Integer> list=new ArrayList<Integer>(3);
 	    	list.add(regularDie.getLastValues().get(0));
 	    	list.add(regularDie.getLastValues().get(1));
 	    	list.add(speedDie.getLastValues().get(0));
+
 	    	return list;
     }
 
@@ -125,6 +129,8 @@ public class GameEngine{
 		return speedDie;
 	}
 	
-	
+	public String getLastDiceValues() {
+        return regularDie.getLastValues().get(0) + "/" + regularDie.getLastValues().get(1) + "/" + speedDie.getLastValues().get(0);
+    }
 	
 }

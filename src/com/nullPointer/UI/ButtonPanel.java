@@ -1,4 +1,7 @@
 package com.nullPointer.UI;
+import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,7 +11,9 @@ public class ButtonPanel extends JPanel{
     protected JButton purchaseButton;
     protected JButton actionButton;
     protected JButton rollDice;
-    
+    private GameEngine gameEngine = GameEngine.getInstance();
+    private CommunicationController communicationController = CommunicationController.getInstance();
+
 	public ButtonPanel(){
 
 		JPanel panel = new JPanel();
@@ -45,7 +50,9 @@ public class ButtonPanel extends JPanel{
 		rollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("roll dice");
-			} 
+				gameEngine.rollDice();
+				communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+			}
 		} );
 		
 		this.setVisible(true);
