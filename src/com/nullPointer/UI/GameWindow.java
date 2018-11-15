@@ -14,8 +14,9 @@ public class GameWindow extends JPanel {
         JPanel contentPane = new JPanel();
 
         board = new Board(new Point(10,10),1000);
+      
         contentPane.add(board, BorderLayout.LINE_START);
-
+        new Thread(board).start();
         MessageBox msg=new MessageBox();
         contentPane.add(msg, BorderLayout.LINE_END);
 
