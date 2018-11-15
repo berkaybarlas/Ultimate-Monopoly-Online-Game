@@ -118,6 +118,19 @@ public class AppWindow extends JFrame implements Observer{
     }
 	@Override
 	public void onEvent(String message) {
+		switch(message) {
+			case "buy":
+				JButton buyButton = new JButton("Buy");
+				this.getContentPane().add(buyButton);
+				buyButton.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+//		            		GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
+		            }
+		        });
+			case "bankrupt":
+				
+		}
+				
 		System.out.println("Event came");
 		
 		

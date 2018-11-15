@@ -11,7 +11,9 @@ public class PayDaySquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
+		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), 400);
+		// Not so sure about this. The explanations aren't clear enough, but it says that if someone moves directly to this square,
+		// they should collect $400.
 		
 	}
 

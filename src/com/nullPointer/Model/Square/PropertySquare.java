@@ -27,6 +27,9 @@ public class PropertySquare extends Square {
 	public void setRent(int newAmount){
 		rent=newAmount;
 	}
+	public int getRent() {
+		return rent;
+	}
 	public void mortgage(){
 		if(!isMortgaged)
 			isMortgaged=true;
@@ -42,7 +45,7 @@ public class PropertySquare extends Square {
 		if(this.getOwner() == null) {
 			gameEngine.publishEvent("buy");
 		} else {
-			
+			gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getRent());
 		}
 		
 	}
