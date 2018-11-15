@@ -15,6 +15,8 @@ public class Player {
 	private List<Card> otherCards;
 	private Pawn pawn;
 	private boolean inJail;
+	private boolean direction = true;
+	
 	public Player(){
 		this.name="";
 	}
@@ -58,6 +60,13 @@ public class Player {
 	}
 	public void setinJail(boolean b) {
 		inJail=b;
+	}
+	
+	public boolean getDirection() {
+		return direction;
+	}
+	public void setDirection(boolean direction) {
+		this.direction = direction;
 	}
 	
 }

@@ -12,6 +12,8 @@ public class GoToJailSquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
+		gameEngine.getPlayerController().putInJail();
+		// also need a method to put the player on Jail square.
 		
 	}
 }

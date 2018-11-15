@@ -9,14 +9,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class Board extends JPanel implements Runnable{
-	private BufferedImage image; 
+public class Board extends JPanel implements Runnable {
+	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
-
-	private Color color = new Color(187, 229, 206);
-	private Point position = new Point(10,10);
-	private int length = 700;
-	private int width, height;
+	
+    private Color color = new Color(187, 229, 206);
+    private Point position = new Point(10,10);
+    private int length;
+    
+    private int width, height;
 
 	private int[] lastXPositions=new int[12];
 	private int[] lastYPositions=new int[12];
@@ -25,14 +26,17 @@ public class Board extends JPanel implements Runnable{
 	public Board(Point position, int length) {
 		try {
 			image = ImageIO.read(imageSrc);
+            image = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.position = position;
-		this.length = length;
-		width = image.getWidth(null);
-		height = image.getHeight(null);
+
+		System.out.println(image.getHeight(null) + " | " + image.getWidth(null) );
+    	this.position = position;
+        this.length = length;
+        width = image.getWidth(null);
+        height = image.getHeight(null);
 
 		setPreferredSize(new Dimension(length,length));
 		eachmove=length/17;

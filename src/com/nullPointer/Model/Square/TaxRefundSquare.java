@@ -12,7 +12,7 @@ public class TaxRefundSquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
-		
+		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), gameEngine.getMoneyController().getPoolMoney()/2);
 	}
 
 }
