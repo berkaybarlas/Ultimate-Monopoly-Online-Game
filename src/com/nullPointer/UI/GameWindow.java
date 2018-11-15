@@ -33,11 +33,17 @@ public class GameWindow extends JPanel {
 
         this.add(contentPane);
 
-
-
     }
+    
+    
 
-    public void paint(Graphics g) {
+    public ButtonPanel getButtonPanel() {
+		return buttonPanel;
+	}
+
+
+
+	public void paint(Graphics g) {
         super.paint(g);
 
         //board.paint(g);
