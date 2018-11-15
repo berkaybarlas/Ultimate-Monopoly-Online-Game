@@ -19,11 +19,6 @@ public class Board extends JPanel implements Runnable {
     
     private int width, height;
 
-	private Color color = new Color(187, 229, 206);
-	private Point position = new Point(10,10);
-	private int length = 700;
-	private int width, height;
-
 	private int[] lastXPositions=new int[12];
 	private int[] lastYPositions=new int[12];
 	private int eachmove;
