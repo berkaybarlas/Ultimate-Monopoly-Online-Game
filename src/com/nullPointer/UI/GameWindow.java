@@ -20,6 +20,7 @@ public class GameWindow extends JPanel {
 
         contentPane.setBorder( new EmptyBorder(0,0,0,0) );
         contentPane.add(board, BorderLayout.LINE_START);
+        new Thread(board).start();
 
         buttonPanel = new ButtonPanel();
         contentPane.add(buttonPanel, BorderLayout.CENTER);

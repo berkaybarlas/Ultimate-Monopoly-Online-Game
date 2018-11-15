@@ -122,16 +122,7 @@ public class AppWindow extends JFrame implements Observer{
     }
 	@Override
 	public void onEvent(String message) {
-		switch(message) {
-			case "buy":
-				gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
-			case "bankrupt":
-				
-		}
-				
-		System.out.println("Event came");
-		
-		
-		
+	
+			
 	}
 }

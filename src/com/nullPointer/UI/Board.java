@@ -7,21 +7,30 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
-public class Board extends JPanel{
-	private Image image;
+public class Board extends JPanel implements Runnable {
+	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
     private Color color = new Color(187, 229, 206);
-    private Point position;
+    private Point position = new Point(10,10);
     private int length;
     
     private int width, height;
 
+	private Color color = new Color(187, 229, 206);
+	private Point position = new Point(10,10);
+	private int length = 700;
+	private int width, height;
 
-    public Board(Point position, int length) {
-    	try {
-    	    image = ImageIO.read(imageSrc);
+	private int[] lastXPositions=new int[12];
+	private int[] lastYPositions=new int[12];
+	private int eachmove;
+
+	public Board(Point position, int length) {
+		try {
+			image = ImageIO.read(imageSrc);
             image = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -34,17 +43,106 @@ public class Board extends JPanel{
         width = image.getWidth(null);
         height = image.getHeight(null);
 
-        setPreferredSize(new Dimension(length,length));
+		setPreferredSize(new Dimension(length,length));
+		eachmove=length/17;
+		lastXPositions[0]=14*eachmove-20;
+		lastYPositions[0]=14*eachmove-20;
+		
+	}
 
-        //JLabel picLabel = new JLabel(new ImageIcon(image));
-        //this.add(picLabel);
-    }
+	public void paint(Graphics g) {
+		//g.setColor(color);
+		//g.fillRect(position.x, position.y, length, length);
+		g.drawImage(image, position.x, position.y, length, length, null);
+		g.setColor(Color.RED);
+		g.fillOval(lastXPositions[0], lastYPositions[0], 20, 20);
 
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.setColor(color);
-        g.drawImage(image, position.x, position.y, length, length, null);
-        g.fillRect(position.x, position.y, 300, 300);
-    }
+	}
+	public void move(int amount) throws InterruptedException{
+		while(amount>0){	
+			if(lastXPositions[0]>4*eachmove-20 && lastYPositions[0]==14*eachmove-20){
+				for(int j=0;j<eachmove;j++){
+					lastXPositions[0]--;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			//breaking point
+			else if(lastXPositions[0]==4*eachmove-20 && lastYPositions[0]==14*eachmove-20){
+				lastYPositions[0]--;
+				for(int j=0;j<eachmove-1;j++){
+					lastYPositions[0]--;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			else if(lastXPositions[0]==4*eachmove-20 && lastYPositions[0]<14*eachmove-20 && lastYPositions[0]>4*eachmove-20){
+				for(int j=0;j<eachmove;j++){
+					lastYPositions[0]--;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			//breaking point
+			else if(lastXPositions[0]==4*eachmove-20 && lastYPositions[0]==4*eachmove-20){
+				lastXPositions[0]++;
+				for(int j=0;j<eachmove-1;j++){
+					lastXPositions[0]++;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			else if(lastXPositions[0]>4*eachmove-20 && lastXPositions[0]<14*eachmove-20 && lastYPositions[0]==4*eachmove-20){
+				for(int j=0;j<eachmove;j++){
+					lastXPositions[0]++;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			//breaking point
+			else if(lastXPositions[0]==14*eachmove-20 && lastYPositions[0]==4*eachmove-20){
+				lastYPositions[0]++;
+				for(int j=0;j<eachmove-1;j++){
+					lastYPositions[0]++;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+			else if(lastXPositions[0]==14*eachmove-20 && lastYPositions[0]>4*eachmove-20){
+				for(int j=0;j<eachmove;j++){
+					lastYPositions[0]++;
+					this.repaint();
+					Thread.sleep(10);
+				}
+				amount--;
+				Thread.sleep(100);
+			}
+		}
+	}
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(100);
+				move(3);
+			} catch (InterruptedException e) {
+				System.out.println("Program Interrupted");
+				System.exit(0);
+			}
+			repaint();
+		}
+
+	}
 }
-
