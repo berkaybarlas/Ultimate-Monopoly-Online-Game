@@ -17,7 +17,6 @@ public class GameEngine{
     private MoneyController moneyController = MoneyController.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private static int ownedUtilities=0;
-    
     private static GameEngine _instance;
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
