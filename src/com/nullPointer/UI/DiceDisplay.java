@@ -1,41 +1,41 @@
 package com.nullPointer.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Random;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import com.nullPointer.Model.GameEngine;
 
 public class DiceDisplay extends JPanel{
     private JButton rollDiceButton;
-    private Random diceValue;
+    private JLabel diceValues;
     
     public DiceDisplay() {
 		// TODO Auto-generated constructor stub
     	JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.add(Box.createVerticalGlue());
 		
-    	JPanel contentPane = new JPanel(null); 
-    	//contentPane.setPreferredSize(new Dimension(200, 200));
-    	this.add(contentPane, BorderLayout.NORTH);
 	
+    	//JPanel contentPane = new JPanel(null); 
+    	//contentPane.setPreferredSize(new Dimension(200, 200));
+    	//this.add(contentPane, BorderLayout.NORTH);
     	rollDiceButton = new JButton("Roll Dice");
-    	rollDiceButton.setBounds(150,15,100,30);
-    	
-    	this.add(contentPane, BorderLayout.NORTH);
+    	//rollDiceButton.setBounds(150,15,100,30);
+    	this.add(rollDiceButton);
+    	diceValues=new JLabel("Dice Values");
+    	this.add(diceValues);
+    	this.setVisible(true);
     	
         rollDiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //rollDice();
-        		diceValue = new Random();
-        		System.out.println(1+diceValue.nextInt(6));
+        		ArrayList<Integer> dice=GameEngine.getInstance().rollDice();
+        		diceValues.setText("Total of dice: "+dice.get(0));
+        		
+        		repaint();
             }
         });
         
-        this.setVisible(true);
 	}
 }

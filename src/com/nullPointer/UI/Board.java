@@ -1,6 +1,8 @@
 package com.nullPointer.UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Utils.ColorSet;
 
 import java.awt.*;
@@ -14,7 +16,6 @@ public class Board extends JPanel implements Runnable {
 	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
-    private Color color = new Color(187, 229, 206);
     private Point position;
     private int length;
 
@@ -143,4 +144,5 @@ public class Board extends JPanel implements Runnable {
 		}
 
 	}
+
 }

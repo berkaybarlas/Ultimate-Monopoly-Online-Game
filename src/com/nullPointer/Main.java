@@ -10,8 +10,6 @@ public class Main {
         AppWindow frame = new AppWindow();       
         frame.pack();
         frame.setVisible(true);
-        
-        new Thread(GameEngine.getInstance()).start();
     }
 }
  
