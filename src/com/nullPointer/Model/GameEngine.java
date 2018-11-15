@@ -16,7 +16,6 @@ public class GameEngine{
     private PlayerController playerController = PlayerController.getInstance();
     private MoneyController moneyController = MoneyController.getInstance();
     private Navigator navigator = Navigator.getInstance();
-    private static int ownedUtilities=0;
     private static GameEngine _instance;
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
@@ -69,15 +68,16 @@ public class GameEngine{
 
     public void buyProperty(PropertySquare pSquare, Player player) {
     		pSquare.setOwner(player);
-    		playerController.upgradeInventory(pSquare, player);
+    		playerController.upgradePropertyList(pSquare, player);
     		moneyController.decreaseMoney(player, pSquare.getPrice());
+    		publishEvent("refresh");
     }
     
     public void buyUtility(UtilitySquare uSquare, Player player) {
     		uSquare.setOwner(player);
-		// playerController.upgradeInventory(uSquare, player); should this add utilities too?
+		playerController.upgradeUtilityList(uSquare, player);
 		moneyController.decreaseMoney(player, uSquare.getPrice());
-		ownedUtilities++;
+		publishEvent("refresh");
     }
 
     public void nextTurn() {
@@ -115,10 +115,6 @@ public class GameEngine{
 		if(player.getMoney()<0) {
 			publishEvent("bankrupt");
 		}
-	}
-
-	public static int getOwnedUtilities() {
-		return ownedUtilities;
 	}
 
 	public RegularDie getRegularDie() {
