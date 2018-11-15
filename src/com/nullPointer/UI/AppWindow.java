@@ -120,13 +120,7 @@ public class AppWindow extends JFrame implements Observer{
 	public void onEvent(String message) {
 		switch(message) {
 			case "buy":
-				JButton buyButton = new JButton("Buy");
-				this.getContentPane().add(buyButton);
-				buyButton.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent e) {
-//		            		GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
-		            }
-		        });
+				gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
 			case "bankrupt":
 				
 		}

@@ -5,9 +5,9 @@ import javax.swing.*;
 
 public class ButtonPanel extends JPanel{
 
-    private JButton purchaseButton;
-    private JButton actionButton;
-    private JButton rollDice;
+    protected JButton purchaseButton;
+    protected JButton actionButton;
+    protected JButton rollDice;
     
 	public ButtonPanel(){
 
@@ -32,6 +32,8 @@ public class ButtonPanel extends JPanel{
 		purchaseButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("purchase");
+				// GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
+				// also need to make a distinction between buying a utility and buying a property
 			} 
 		} );
 
