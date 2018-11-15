@@ -14,7 +14,6 @@ public class GameWindow extends JPanel {
         JPanel contentPane = new JPanel();
 
         board = new Board(new Point(10,10),1000);
-      
         contentPane.add(board, BorderLayout.LINE_START);
         new Thread(board).start();
         MessageBox msg=new MessageBox();
@@ -27,7 +26,7 @@ public class GameWindow extends JPanel {
         //this.add(buttonPanel, BorderLayout.SOUTH);
 
         diceDisplay = new DiceDisplay();
-        //this.add(diceDisplay, BorderLayout.NORTH);
+        this.add(diceDisplay, BorderLayout.NORTH);
 
     }
 

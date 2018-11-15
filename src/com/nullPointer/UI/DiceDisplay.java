@@ -1,18 +1,14 @@
 package com.nullPointer.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Random;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import com.nullPointer.Model.GameEngine;
 
 public class DiceDisplay extends JPanel{
     private JButton rollDiceButton;
-    private Random diceValue;
     
     public DiceDisplay() {
 		// TODO Auto-generated constructor stub
@@ -31,11 +27,10 @@ public class DiceDisplay extends JPanel{
         rollDiceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //rollDice();
-        		diceValue = new Random();
-        		System.out.println(1+diceValue.nextInt(6));
+        		ArrayList<Integer> dice=GameEngine.getInstance().rollDice();
+        		//add(new JLabel(""+dice.get(0)));
             }
         });
-        
         this.setVisible(true);
 	}
 }
