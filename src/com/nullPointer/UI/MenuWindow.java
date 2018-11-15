@@ -36,8 +36,7 @@ public class MenuWindow extends JPanel {
                 navigator.serverScreen();
                 
                 String playerNumberString = (String) JOptionPane.showInputDialog(panel, "Please choose the number of players \n",
-        				"Player No Window", JOptionPane.PLAIN_MESSAGE, null, playerNumOptions, "2");
-                System.out.println(playerNumberString);
+        				"Player No Window", JOptionPane.PLAIN_MESSAGE, null, playerNumOptions, "2");      
             }
         });
         serverCreateButton.setVisible(true);
