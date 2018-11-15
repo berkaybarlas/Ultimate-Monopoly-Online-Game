@@ -6,6 +6,7 @@ import com.nullPointer.Controller.CommunicationController;
 import com.nullPointer.Controller.MoneyController;
 import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.Square.PropertySquare;
+import com.nullPointer.Model.Square.Square;
 import com.nullPointer.Model.Square.UtilitySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
@@ -72,18 +73,20 @@ public class GameEngine{
 
     }
 
-    public void buyProperty(PropertySquare pSquare, Player player) {
-    		pSquare.setOwner(player);
-    		playerController.upgradePropertyList(pSquare, player);
-    		moneyController.decreaseMoney(player, pSquare.getPrice());
-    		publishEvent("refresh");
-    }
-    
-    public void buyUtility(UtilitySquare uSquare, Player player) {
-    		uSquare.setOwner(player);
-		playerController.upgradeUtilityList(uSquare, player);
-		moneyController.decreaseMoney(player, uSquare.getPrice());
-		publishEvent("refresh");
+    public void buy() {
+    	Player currentPlayer = playerController.getCurrentPlayer();
+    	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
+    	
+    	if(square.getType().equals("PropertySquare")) {
+        	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
+        	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
+    	}
+    	else if(square.getType().equals("UtilitySquare")) {
+    		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
+        	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
+    	}	
+
+    	publishEvent("refresh");
     }
 
     public void nextTurn() {
