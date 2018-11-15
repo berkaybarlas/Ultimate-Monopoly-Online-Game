@@ -17,12 +17,13 @@ public class GameEngine{
     private MoneyController moneyController = MoneyController.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private static int ownedUtilities=0;
+    private DomainBoard domainBoard;
     
     private static GameEngine _instance;
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
     private GameEngine() {
-
+    	domainBoard=new DomainBoard();
     }
 
     public static GameEngine getInstance() {
@@ -50,7 +51,6 @@ public class GameEngine{
 	    	list.add(speedDie.getLastValues().get(0));
 	    	return list;
     }
-
     public void playCard() {
 
     }
