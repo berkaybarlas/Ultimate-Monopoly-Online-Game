@@ -13,9 +13,8 @@ public class ButtonPanel extends JPanel{
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		//panel.setPreferredSize(new Dimension(300, 800));
 
-		purchaseButton = new JButton("Purchase Card");
+		purchaseButton = new JButton("Buy Property");
 		actionButton = new JButton("Make action");
 		rollDice = new JButton("Roll Dice");
 		
