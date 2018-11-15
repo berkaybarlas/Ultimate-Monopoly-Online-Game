@@ -39,7 +39,15 @@ public class Player {
 		position=newPosition;
 	}
 
-	public int getMoney() {
+    public int getTargetPosition() {
+        return targetPosition;
+    }
+
+    public void setTargetPosition(int targetPosition) {
+        this.targetPosition = targetPosition;
+    }
+
+    public int getMoney() {
 		return money;
 	}
 
