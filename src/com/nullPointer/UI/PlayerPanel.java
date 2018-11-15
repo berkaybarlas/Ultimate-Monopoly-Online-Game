@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-public class PlayerPanel extends JPanel {
+public class PlayerPanel extends JPanel implements Observer {
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel userPanel, displayPanel;
@@ -27,28 +27,20 @@ public class PlayerPanel extends JPanel {
         panel.setBackground(Color.black);	
 		textField = new JTextField();
 		textField.setPreferredSize(new Dimension(300, 300));
-
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Furkan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Berkay"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Baran Berkay"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Tumay"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Alihan"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Fun"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Fur"));
-		GameEngine.getInstance().getPlayerController().getPlayers().add(new Player("Frkn"));
+		textField.setEditable(false);
 		
 		
 		ArrayList<Player> pList = GameEngine.getInstance().getPlayerController().getPlayers();
 		ArrayList<JButton> pButtons = new ArrayList<JButton>();
 		
 		for(int i=0;i<pList.size();i++) {
-			pButtons.add(new JButton("Player"+(i+1)));
+			pButtons.add(new JButton(pList.get(i).getName()));
 			pButtons.get(i).setPreferredSize(new Dimension(100,100));
 			int currentPlayerIndex = i;
 			pButtons.get(i).addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(pList.get(currentPlayerIndex).getName());
-					textField.setText(pList.get(currentPlayerIndex).getName());
+					textField.setText(pList.get(currentPlayerIndex).getName()+"\n"+pList.get(currentPlayerIndex).getMoney());
 				} 
 			} );
 			userPanel.add(pButtons.get(i));
@@ -63,5 +55,12 @@ public class PlayerPanel extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawRect(800,800,1000,100);
+	}
+
+	@Override
+	public void onEvent(String message) {
+		if(message.equals("refresh")) {
+			this.repaint();
+		}
 	}
 }

@@ -24,7 +24,15 @@ public class GameEngine{
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
     private GameEngine() {
-    	domainBoard=new DomainBoard();
+    		domainBoard=new DomainBoard();
+    		playerController.getPlayers().add(new Player("Furkan"));
+    		playerController.getPlayers().add(new Player("Berkay"));
+    		playerController.getPlayers().add(new Player("Baran Berkay"));
+    		playerController.getPlayers().add(new Player("Tumay"));
+    		playerController.getPlayers().add(new Player("Alihan"));
+    		playerController.getPlayers().add(new Player("Fun"));
+    		playerController.getPlayers().add(new Player("Fur"));
+    		playerController.getPlayers().add(new Player("Frkn"));
     }
 
     public static GameEngine getInstance() {
