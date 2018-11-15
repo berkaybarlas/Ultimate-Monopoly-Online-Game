@@ -12,6 +12,7 @@ public class MenuWindow extends JPanel {
     private JButton serverCreateButton = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
+	private static String[] playerNumOptions = {"2","3","4","5","6","7","8","9","10", "11", "12"};
 
     public MenuWindow() {
 
@@ -19,6 +20,7 @@ public class MenuWindow extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.add(new JLabel("Menu"));
         this.add(buttonPanel);
+        
         addButtons(buttonPanel);
 
     }
@@ -32,7 +34,10 @@ public class MenuWindow extends JPanel {
                 communicationController.startServer();
                 communicationController.createClient();
                 navigator.serverScreen();
-
+                
+                String playerNumberString = (String) JOptionPane.showInputDialog(panel, "Please choose the number of players \n",
+        				"Player No Window", JOptionPane.PLAIN_MESSAGE, null, playerNumOptions, "2");
+                System.out.println(playerNumberString);
             }
         });
         serverCreateButton.setVisible(true);
@@ -44,6 +49,8 @@ public class MenuWindow extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 communicationController.createClient();
                 navigator.serverScreen();
+                
+                
             }
         });
         panel.add(joinButton);

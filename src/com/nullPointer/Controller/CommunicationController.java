@@ -26,6 +26,7 @@ public class CommunicationController {
     //wrong
 
     private CommunicationController() {
+    	
     }
 
     public static CommunicationController getInstance() {

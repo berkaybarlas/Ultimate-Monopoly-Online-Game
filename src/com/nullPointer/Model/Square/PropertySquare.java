@@ -42,6 +42,7 @@ public class PropertySquare extends Square {
 	}
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
+		// mortgagelanmýþ square'a gelirse hiçbir þey yapma else'i ekle
 		if(this.getOwner() == null) {
 			gameEngine.publishEvent("buy");
 		} else {
