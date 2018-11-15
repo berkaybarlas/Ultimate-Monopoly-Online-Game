@@ -2,7 +2,8 @@ package com.nullPointer.Model;
 
 public class SpeedDie extends Die {
     private static SpeedDie _instance;
-    private SpeedDie(){
+
+    private SpeedDie() {
 
     }
 

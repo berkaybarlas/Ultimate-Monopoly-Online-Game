@@ -20,24 +20,31 @@ public class PlayerController {
 		}
 		return _instance;
 	}
+
 	public Player getCurrentPlayer(){
 		return players.get(currentPlayer);
 	}
+
 	public Player nextPlayer(){
 		return players.get(currentPlayer+1);
 	}
+
 	public void putInJail(){
 		players.get(currentPlayer).setinJail(true);
 	}
+
 	public void getOutFromJail(){
 		players.get(currentPlayer).setinJail(false);
 	}
+
 	public void movePlayer(int newPosition){
 		players.get(currentPlayer).setPosition(newPosition);
 	}
+
 	public void removeProperty(PropertySquare propertySquare){
 		players.get(currentPlayer).getPropertyCardsMap().remove(propertySquare.getColor(),propertySquare);
 	}
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -60,5 +67,9 @@ public class PlayerController {
 	public void upgradeUtilityList(UtilitySquare utility, Player player) {
 		player.getUtilityList().add(utility);
 	}
+
+	public void addPlayer() {
+	    players.add(new Player());
+    }
 
 }
