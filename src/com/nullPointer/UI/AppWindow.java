@@ -1,20 +1,41 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class AppWindow extends JFrame {
+public class AppWindow extends JFrame implements Observer{
     private GameWindow gameWindow;
+    private MenuWindow menuWindow;
+    private ServerWindow serverWindow;
+    private JPanel currentFrame;
     private JButton button = null;
     private JButton joinButton = null;
     private JButton serverButton = null;
+    private JButton messageButton = null;
+    private JButton menuButton = null;
+    private JButton gameButton = null;
+    private JScrollPane scrollPane = null;
+    private CommunicationController communicationController = CommunicationController.getInstance();
+    private Navigator navigator = Navigator.getInstance();
+
+    private final CardLayout mainLayout = new CardLayout();
+    private final JPanel panels = new JPanel(mainLayout);
+    private final Border border = BorderFactory.createEmptyBorder(-10, 60, 60, 60);
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public AppWindow() {
         super("Ultimate Monopoly");
+
+        int width = screenSize.width - 15;
+        int height = screenSize.height - 30;
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -22,21 +43,40 @@ public class AppWindow extends JFrame {
             }
         });
 
-
+        GameEngine.getInstance().addListener(this);
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
-        gameWindow = new GameWindow();
+        menuWindow = new MenuWindow();
+        gameWindow = new GameWindow(width, height);
+        serverWindow = new ServerWindow();
+        //scrollPane = new JScrollPane(gameWindow);
 
-        JScrollPane scrollPane = new JScrollPane(gameWindow);
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.setPreferredSize(new Dimension(1300, 800));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setPreferredSize(new Dimension(width , height));
         contentPane.add(toolBar, BorderLayout.NORTH);
-        contentPane.add(scrollPane, BorderLayout.CENTER);
+
         setContentPane(contentPane);
-        MessageBox msg=new MessageBox();
-        contentPane.add(msg,BorderLayout.EAST);
+
+        JPanel menuPanel = menuWindow;
+        //menuPanel.setBorder(border);
+        //menuPanel.add(new JLabel("Menu"));
+        panels.add(menuPanel, "Menu Panel" );
+
+        JPanel gamePanel = gameWindow;
+        gamePanel.setBorder(border);
+        //gamePanel.add(new JLabel("Game Screen"));
+        panels.add(gamePanel, "Game Panel");
+
+        JPanel serverPanel = serverWindow;
+        serverPanel.setBorder(border);
+        //serverPanel.add(new JLabel("Server Screen"));
+        panels.add(serverPanel, "Server Panel");
+
+        contentPane.add(panels, BorderLayout.CENTER);
+        navigator.setLayout(mainLayout);
+        navigator.setPanels(panels);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -44,23 +84,32 @@ public class AppWindow extends JFrame {
 
     protected void addButtons(JToolBar toolBar) {
 
-        serverButton = new JButton("Start Server");
-        serverButton.setToolTipText("Start the game server");
-        serverButton.addActionListener(new ActionListener() {
+        messageButton = new JButton("Send Message");
+        messageButton.setToolTipText("Join the game server");
+        messageButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //startServer();
+                communicationController.sendClientMessage("hello");
             }
         });
-        toolBar.add(serverButton);
+        toolBar.add(messageButton);
 
-        joinButton = new JButton("Join Server");
-        joinButton.setToolTipText("Join the game server");
-        joinButton.addActionListener(new ActionListener() {
+        menuButton = new JButton("Menu");
+        menuButton.setToolTipText("Menu window");
+        menuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //joinServer();
+                navigator.menuScreen();
             }
         });
-        toolBar.add(joinButton);
+        toolBar.add(menuButton);
+
+        gameButton = new JButton("Game");
+        gameButton.setToolTipText("Game window");
+        gameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigator.gameScreen();
+            }
+        });
+        toolBar.add(gameButton);
 
         button = new JButton("Quit");
         button.setToolTipText("Quit the program");
@@ -71,4 +120,11 @@ public class AppWindow extends JFrame {
         });
         toolBar.add(button);
     }
+	@Override
+	public void onEvent(String message) {
+		if(message.equals("buy")) {
+			
+		}
+			
+	}
 }

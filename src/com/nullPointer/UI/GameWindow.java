@@ -1,68 +1,60 @@
 package com.nullPointer.UI;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameWindow extends JPanel {
     private Board board;
     private DiceDisplay diceDisplay;
-    private JButton rollDiceButton;
-    private JButton purchaseButton;
-    private JButton actionButton;
-    private JButton startButton;
-    public GameWindow() {
+    private ButtonPanel buttonPanel;
+
+    public GameWindow(int width, int height) {
         super();
-        board = new Board(new Point(550,50),700);
-        setButtons();
-    }
 
-    public void setButtons() {
-        rollDiceButton = new JButton("Roll Dice");
-        rollDiceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //rollDice();
-            }
-        });
-        this.add(rollDiceButton);
-        rollDiceButton.setEnabled(false);
+        int offset = 50;
 
-        purchaseButton = new JButton("Purchase Card");
-        purchaseButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //purchaseCard();
-            }
-        });
-        this.add(purchaseButton);
-        purchaseButton.setEnabled(false);
+        JPanel contentPane = new JPanel();
+        //contentPane.setLayout(new BoxLayout(contentPane, BorderLayout));
+        board = new Board(new Point(0,0), height - offset);
 
-        actionButton = new JButton("Make action");
-        actionButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //makeAction();
-            }
-        });
-        this.add(actionButton);
-        actionButton.setEnabled(false);
+        contentPane.setBorder( new EmptyBorder(0,0,0,0) );
+        contentPane.add(board, BorderLayout.LINE_START);
+        new Thread(board).start();
 
-        startButton = new JButton("Start Game");
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //start();
-            }
-        });
-        this.add(startButton);
-        startButton.setEnabled(true);
+        JPanel middleSide = new JPanel();
+        middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));
+
+        diceDisplay = new DiceDisplay();
+        middleSide.add(diceDisplay);
+        buttonPanel = new ButtonPanel();
+        middleSide.add(buttonPanel);
+        contentPane.add(middleSide, BorderLayout.CENTER);
+        
+        JPanel rightSide = new JPanel();
+        rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
+
+        PlayerPanel playerPanel = new PlayerPanel();
+        rightSide.add(playerPanel);
+        MessageBox msg=new MessageBox();
+        rightSide.add(msg);
+        contentPane.add(rightSide, BorderLayout.LINE_END);
+
+        this.add(contentPane);
 
     }
+    
+    
 
-    public void paint(Graphics g) {
+    public ButtonPanel getButtonPanel() {
+		return buttonPanel;
+	}
+
+
+
+	public void paint(Graphics g) {
         super.paint(g);
-        board.paint(g);
-        rollDiceButton.setLocation(424,200);
-        purchaseButton.setLocation(424,250);
-        actionButton.setLocation(424,300);
-        startButton.setLocation(424,400);
+
+        //board.paint(g);
     }
 }
