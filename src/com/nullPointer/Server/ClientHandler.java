@@ -37,7 +37,8 @@ class ClientHandler extends Thread
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     System.out.println("[ClientHandler]: Client -> " + inputLine);
                     outputLine = protocol.processInput(inputLine);
-                    responseController.sendResponse(outputLine);
+                    //responseController.sendResponse(outputLine);
+                    responseController.sendResponse(inputLine);
                 }
             }
         }catch (IOException e) {
