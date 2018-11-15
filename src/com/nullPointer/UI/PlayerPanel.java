@@ -14,6 +14,7 @@ public class PlayerPanel extends JPanel implements Observer {
 	private JScrollPane scrollPane;
 	private JPanel userPanel, displayPanel;
 	private JTextField textField;
+	private GameEngine gameEngine = GameEngine.getInstance();
 	public PlayerPanel() {
 //		this.setLayout(null);
         userPanel = new JPanel();
@@ -28,7 +29,6 @@ public class PlayerPanel extends JPanel implements Observer {
 		textField = new JTextField();
 		textField.setPreferredSize(new Dimension(300, 300));
 		textField.setEditable(false);
-		
 		
 		ArrayList<Player> pList = GameEngine.getInstance().getPlayerController().getPlayers();
 		ArrayList<JButton> pButtons = new ArrayList<JButton>();

@@ -46,6 +46,10 @@ public class GameEngine{
         observers.add(observer);
     }
 
+    public void publishEvent(String message) {
+        observers.forEach(listener->listener.onEvent(message));
+    }
+
     public void initPlayers(int playerNumber) {
         for(int i=0; i<playerNumber; i++) {
             playerController.addPlayer();
@@ -118,11 +122,6 @@ public class GameEngine{
     
     public void addListener(Observer listener){
 		observers.add(listener);
-	}
-
-	public void publishEvent(String message) {
-		observers.forEach(listener->listener.onEvent(message));
-		
 	}
 
 	public PlayerController getPlayerController() {
