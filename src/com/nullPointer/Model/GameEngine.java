@@ -34,6 +34,9 @@ public class GameEngine{
         return _instance;
     }
 
+    public void subscribe(Observer observer) {
+        observers.add(observer);
+    }
 
     public void initPlayers(int playerNumber) {
         for(int i=0; i<playerNumber; i++) {
@@ -43,7 +46,7 @@ public class GameEngine{
 
     public void startGame() {
         navigator.gameScreen();
-        initPlayers(1);
+        initPlayers(2);
     }
 
     
@@ -59,7 +62,14 @@ public class GameEngine{
     }
 
     public void movePlayer() {
-    		playerController.movePlayer();
+            playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
+    }
+
+    public int calculateMoveAmount(){
+        int total = 0;
+        total+=regularDie.getLastValues().get(0);
+        total+=regularDie.getLastValues().get(1);
+        return total;
     }
 
     public void drawCard() {

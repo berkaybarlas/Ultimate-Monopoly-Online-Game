@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Utils.ColorSet;
 
@@ -23,6 +24,7 @@ public class Board extends JPanel implements Runnable {
 
 	private int smallSide;
 	private Point initialPosition;
+    private PlayerController playerController = PlayerController.getInstance();
 
 	public Board(Point position, int length) {
 		try {
@@ -38,12 +40,15 @@ public class Board extends JPanel implements Runnable {
 		setPreferredSize(new Dimension(length,length));
 
 		pawnList = new ArrayList<>();
-		smallSide = length/17;
 
-		initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
-		
+        smallSide = length/17;
+        initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
+
 	}
 
+	public void initializePawns(){
+	    playerController.getPlayers().forEach(player -> addPawn());
+    }
 	
 
 	public void paint(Graphics g) {
@@ -131,13 +136,22 @@ public class Board extends JPanel implements Runnable {
 			}
 		}
 	}
+
 	@Override
 	public void run() {
+        initializePawns();
 		while (true) {
 			try {
 				Thread.sleep(100);
-				addPawn();
-				movePlayer(0,3);
+                    playerController.getPlayers().forEach(player -> {
+                        if(player.getPosition() != player.getTargetPosition()) {
+                            try {
+                                movePlayer(playerController.getPlayers().indexOf(player) ,1 );
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 			} catch (InterruptedException e) {
 				System.out.println("Program Interrupted");
 				System.exit(0);
