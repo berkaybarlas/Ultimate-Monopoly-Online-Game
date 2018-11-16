@@ -88,7 +88,7 @@ public class PropertySquare extends Square {
     public void setColor(String color) {
         this.color = color;
     }
-    
+
     public boolean getMortgaged() {
         return isMortgaged;
     }
@@ -172,11 +172,11 @@ public class PropertySquare extends Square {
         if (this.getOwner() == null) {
             gameEngine.publishEvent("buy");
         } else {
-            gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getOwner(), this.getRent());
-            System.out.println("CurrentPlayer paid rent");
+            Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+            gameEngine.payRent(currentPlayer, this.getOwner(), this.getRent());
+            System.out.println("CurrentPlayer " + currentPlayer+ " paid rent to " + this.getOwner());
             gameEngine.nextTurn();
         }
-
     }
 
     @Override

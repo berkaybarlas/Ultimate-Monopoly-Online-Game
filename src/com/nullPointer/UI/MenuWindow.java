@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class MenuWindow extends JPanel {
     private JButton joinButton = null;
@@ -59,11 +60,32 @@ public class MenuWindow extends JPanel {
     }
 
     private boolean validateIP(String string){
-        if(string.length()>3)
-        return true;
-
-        return false;
+        ////127.0.0.1
+        boolean result = false;
+        String[] stringList = string.split("\\.");
+        if(stringList.length == 4){
+            String notInteger = Arrays.stream(stringList).filter(part->!isInteger(part)).findFirst().orElse(null);
+            if(notInteger == null)
+            result = true;
+        }
+        System.out.println("Validation result " + result);
+        return result;
     }
 
+    public static boolean isInteger(String s) {
+        return isInteger(s,10);
+    }
+
+    public static boolean isInteger(String s, int radix) {
+        if(s.isEmpty()) return false;
+        for(int i = 0; i < s.length(); i++) {
+            if(i == 0 && s.charAt(i) == '-') {
+                if(s.length() == 1) return false;
+                else continue;
+            }
+            if(Character.digit(s.charAt(i),radix) < 0) return false;
+        }
+        return true;
+    }
 }
 
