@@ -15,14 +15,10 @@ public class AppWindow extends JFrame implements Observer{
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
-    private JPanel currentFrame;
     private JButton button = null;
-    private JButton joinButton = null;
-    private JButton serverButton = null;
     private JButton messageButton = null;
     private JButton menuButton = null;
     private JButton gameButton = null;
-    private JScrollPane scrollPane = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
@@ -125,8 +121,6 @@ public class AppWindow extends JFrame implements Observer{
     }
 	@Override
 	public void onEvent(String message) {
-		if(message.equals("buy")) {
-			gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
-		}
+
 	}
 }
