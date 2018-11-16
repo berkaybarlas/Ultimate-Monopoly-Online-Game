@@ -87,7 +87,7 @@ public class CommunicationController {
         }
         
         if(input.contains("purchase")) {
-        	gameEngine.buy();
+        		gameEngine.buy();
         }
     }
 

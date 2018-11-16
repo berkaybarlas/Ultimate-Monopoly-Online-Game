@@ -15,8 +15,9 @@ public class PlayerPanel extends JPanel implements Observer {
 	private JPanel userPanel, displayPanel;
 	private JTextField textField;
 	private GameEngine gameEngine = GameEngine.getInstance();
+	private JTextArea textArea;
 	public PlayerPanel() {
-//		this.setLayout(null);
+
         userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.Y_AXIS));
         userPanel.setBounds(0, 0, 120, 600);
@@ -26,9 +27,12 @@ public class PlayerPanel extends JPanel implements Observer {
 		panel.setPreferredSize(new Dimension(100 ,300));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);	
-		textField = new JTextField();
-		textField.setPreferredSize(new Dimension(300, 300));
-		textField.setEditable(false);
+//		textField = new JTextField();
+//		textField.setPreferredSize(new Dimension(300, 300));
+//		textField.setEditable(false);
+		textArea = new JTextArea();
+		textArea.setPreferredSize(new Dimension(390, 300));
+		textArea.setEditable(false);
 		
 		ArrayList<Player> pList = GameEngine.getInstance().getPlayerController().getPlayers();
 		ArrayList<JButton> pButtons = new ArrayList<JButton>();
@@ -40,15 +44,19 @@ public class PlayerPanel extends JPanel implements Observer {
 			pButtons.get(i).addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) {
 					System.out.println(pList.get(currentPlayerIndex).getName());
-					textField.setText(pList.get(currentPlayerIndex).getName()+"\n"+pList.get(currentPlayerIndex).getMoney());
+//					textField.setText();
+//					textArea.append(pList.get(currentPlayerIndex).toString());
+					textArea.setText(pList.get(currentPlayerIndex).toString());
 				} 
 			} );
 			userPanel.add(pButtons.get(i));
 			userPanel.validate();
 		}
+		
 		panel.add(scrollPane);
 		this.add(panel);
-		this.add(textField);
+//		this.add(textField);
+		this.add(textArea);
 		
 	}
 

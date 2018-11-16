@@ -87,5 +87,13 @@ public class Player {
 	public ArrayList<UtilitySquare> getUtilityList() {
 		return this.utilityList;
 	}
+	@Override
+	public String toString() {
+		String temp = "";
+		return 	"Player name: " + name + "\n"+ 
+				"Money: " + money + "\n"+
+				"Owned properties: " + propertyCardsMap + "\n"+
+				"Owned utilities: " + utilityList;
+	}
 	
 }
