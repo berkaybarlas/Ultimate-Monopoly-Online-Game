@@ -84,7 +84,7 @@ public class ButtonPanel extends JPanel{
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 			} 
 		} );
-		purchaseButton.setEnabled(false);
+		//purchaseButton.setEnabled(false);
 		this.setVisible(true);
 		
 	}
