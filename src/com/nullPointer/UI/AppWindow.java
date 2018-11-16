@@ -24,6 +24,7 @@ public class AppWindow extends JFrame implements Observer{
     private JButton gameButton = null;
     private JScrollPane scrollPane = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
 
     private final CardLayout mainLayout = new CardLayout();
@@ -78,6 +79,8 @@ public class AppWindow extends JFrame implements Observer{
         navigator.setLayout(mainLayout);
         navigator.setPanels(panels);
 
+        gameEngine.subscribe(this::onEvent);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -122,7 +125,8 @@ public class AppWindow extends JFrame implements Observer{
     }
 	@Override
 	public void onEvent(String message) {
-	
-			
+		if(message.equals("buy")) {
+			gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
+		}
 	}
 }

@@ -6,6 +6,7 @@ import com.nullPointer.Controller.CommunicationController;
 import com.nullPointer.Controller.MoneyController;
 import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.Square.PropertySquare;
+import com.nullPointer.Model.Square.Square;
 import com.nullPointer.Model.Square.UtilitySquare;
 import com.nullPointer.UI.Board;
 import com.nullPointer.UI.Navigator;
@@ -23,7 +24,15 @@ public class GameEngine{
     ArrayList<Observer> observers=new ArrayList<Observer>();
 
     private GameEngine() {
-    	domainBoard=new DomainBoard();
+    		domainBoard=new DomainBoard();
+    		playerController.getPlayers().add(new Player("Furkan"));
+    		playerController.getPlayers().add(new Player("Berkay"));
+    		playerController.getPlayers().add(new Player("Baran Berkay"));
+    		playerController.getPlayers().add(new Player("Tumay"));
+    		playerController.getPlayers().add(new Player("Alihan"));
+    		playerController.getPlayers().add(new Player("Fun"));
+    		playerController.getPlayers().add(new Player("Fur"));
+    		playerController.getPlayers().add(new Player("Frkn"));
     }
 
     public static GameEngine getInstance() {
@@ -33,30 +42,48 @@ public class GameEngine{
         return _instance;
     }
 
+    public void subscribe(Observer observer) {
+        observers.add(observer);
+    }
 
-    public void initPlayers() {
+    public void publishEvent(String message) {
+        observers.forEach(listener->listener.onEvent(message));
+    }
 
+    public void initPlayers(int playerNumber) {
+        for(int i=0; i<playerNumber; i++) {
+            playerController.addPlayer();
+        }
+        publishEvent("refreshPawnNumber");
     }
 
     public void startGame() {
         navigator.gameScreen();
+        initPlayers(2);
     }
 
     
     public ArrayList<Integer> rollDice() {
-	    	regularDie.roll();
-	    	speedDie.roll();
-	    	ArrayList<Integer> list=new ArrayList<Integer>(2);
-	    	list.add(regularDie.getLastValues().get(0)+regularDie.getLastValues().get(1));
+	    	regularDie.roll(2);
+	    	speedDie.roll(1);
+	    	ArrayList<Integer> list=new ArrayList<Integer>(3);
+	    	list.add(regularDie.getLastValues().get(0));
+	    	list.add(regularDie.getLastValues().get(1));
 	    	list.add(speedDie.getLastValues().get(0));
+
 	    	return list;
     }
-    public void playCard() {
 
+    public void movePlayer() {
+        publishEvent("refresh");
+        playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
     }
 
-    public void movePlayer(int newPosition) {
-    		playerController.movePlayer(newPosition);
+    public int calculateMoveAmount(){
+        int total = 0;
+        total+=regularDie.getLastValues().get(0);
+        total+=regularDie.getLastValues().get(1);
+        return total;
     }
 
     public void drawCard() {
@@ -67,17 +94,20 @@ public class GameEngine{
 
     }
 
-    public void buyProperty(PropertySquare pSquare, Player player) {
-    		pSquare.setOwner(player);
-    		playerController.upgradeInventory(pSquare, player);
-    		moneyController.decreaseMoney(player, pSquare.getPrice());
-    }
-    
-    public void buyUtility(UtilitySquare uSquare, Player player) {
-    		uSquare.setOwner(player);
-		// playerController.upgradeInventory(uSquare, player); should this add utilities too?
-		moneyController.decreaseMoney(player, uSquare.getPrice());
-		ownedUtilities++;
+    public void buy() {
+    	Player currentPlayer = playerController.getCurrentPlayer();
+    	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
+    	
+    	if(square.getType().equals("PropertySquare")) {
+        	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
+        	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
+    	}
+    	else if(square.getType().equals("UtilitySquare")) {
+    		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
+        	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
+    	}	
+
+    	publishEvent("refresh");
     }
 
     public void nextTurn() {
@@ -96,11 +126,6 @@ public class GameEngine{
 		observers.add(listener);
 	}
 
-	public void publishEvent(String message) {
-		observers.forEach(listener->listener.onEvent(message));
-		
-	}
-
 	public PlayerController getPlayerController() {
 		return playerController;
 	}
@@ -117,10 +142,6 @@ public class GameEngine{
 		}
 	}
 
-	public static int getOwnedUtilities() {
-		return ownedUtilities;
-	}
-
 	public RegularDie getRegularDie() {
 		return regularDie;
 	}
@@ -129,6 +150,8 @@ public class GameEngine{
 		return speedDie;
 	}
 	
-	
+	public String getLastDiceValues() {
+        return regularDie.getLastValues().get(0) + "/" + regularDie.getLastValues().get(1) + "/" + speedDie.getLastValues().get(0);
+    }
 	
 }

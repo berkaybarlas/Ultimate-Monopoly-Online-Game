@@ -33,6 +33,12 @@ public class MessageBox extends JPanel{
 		submit.setText("Submit");
 		textEnter=new JTextField();
 		textEnter.setBounds(0,0, 400, 30);
+		textEnter.addActionListener(e -> {
+			if(textEnter.getText() != "") {
+				communicationController.sendClientMessage("message/" + textEnter.getText());
+				textEnter.setText("");
+			}
+		});
 		enterPane.add(submit);
 		enterPane.add(textEnter);
 
@@ -41,8 +47,10 @@ public class MessageBox extends JPanel{
 		//wrong
 
 		submit.addActionListener(e -> {
-		    communicationController.sendClientMessage("message/" + textEnter.getText());
-		    textEnter.setText("");
+			if(textEnter.getText() != "") {
+				communicationController.sendClientMessage("message/" + textEnter.getText());
+				textEnter.setText("");
+			}
         });
 		this.setVisible(true);
 	}

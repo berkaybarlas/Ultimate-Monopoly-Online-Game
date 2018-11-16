@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Utils.ColorSet;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-public class Board extends JPanel implements Runnable {
+public class Board extends JPanel implements Runnable, Observer {
 	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
@@ -23,6 +24,8 @@ public class Board extends JPanel implements Runnable {
 
 	private int smallSide;
 	private Point initialPosition;
+    private PlayerController playerController = PlayerController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
 
 	public Board(Point position, int length) {
 		try {
@@ -38,11 +41,17 @@ public class Board extends JPanel implements Runnable {
 		setPreferredSize(new Dimension(length,length));
 
 		pawnList = new ArrayList<>();
-		smallSide = length/17;
 
-		initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
-		
+        smallSide = length/17;
+        initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
+
+        gameEngine.subscribe(this);
 	}
+
+	public void initializePawns(){
+	    playerController.getPlayers().forEach(player -> addPawn());
+    }
+	
 
 	public void paint(Graphics g) {
 		//g.setColor(color);
@@ -129,13 +138,22 @@ public class Board extends JPanel implements Runnable {
 			}
 		}
 	}
+
 	@Override
 	public void run() {
 		while (true) {
 			try {
 				Thread.sleep(100);
-				addPawn();
-				movePlayer(0,3);
+                    playerController.getPlayers().forEach(player -> {
+                        if(player.getPosition() != player.getTargetPosition()) {
+                            try {
+                                movePlayer(playerController.getPlayers().indexOf(player) ,1 );
+                                player.setPosition(player.getPosition() + 1 );
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 			} catch (InterruptedException e) {
 				System.out.println("Program Interrupted");
 				System.exit(0);
@@ -145,4 +163,11 @@ public class Board extends JPanel implements Runnable {
 
 	}
 
+    @Override
+    public void onEvent(String message) {
+        if(message.equals("refreshPawnNumber")) {
+            initializePawns();
+            repaint();
+        }
+    }
 }

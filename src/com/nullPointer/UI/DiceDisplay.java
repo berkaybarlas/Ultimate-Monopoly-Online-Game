@@ -5,37 +5,50 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+import com.nullPointer.Controller.CommunicationController;
 import com.nullPointer.Model.GameEngine;
+import com.nullPointer.Model.RegularDie;
+import com.nullPointer.Model.SpeedDie;
 
-public class DiceDisplay extends JPanel{
-    private JButton rollDiceButton;
+public class DiceDisplay extends JPanel implements Observer{
+
     private JLabel diceValues;
-    
+    private JLabel label;
+    private RegularDie regularDie = RegularDie.getInstance();
+    private SpeedDie speedDie = SpeedDie.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
+
     public DiceDisplay() {
-		// TODO Auto-generated constructor stub
-    	JPanel panel = new JPanel();
+
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.add(Box.createVerticalGlue());
-		
-	
-    	//JPanel contentPane = new JPanel(null); 
+        //this.setPreferredSize(new Dimension(50 ,50 ));
+        //JPanel contentPane = new JPanel(null);
     	//contentPane.setPreferredSize(new Dimension(200, 200));
     	//this.add(contentPane, BorderLayout.NORTH);
-    	rollDiceButton = new JButton("Roll Dice");
-    	//rollDiceButton.setBounds(150,15,100,30);
-    	this.add(rollDiceButton);
-    	diceValues=new JLabel("Dice Values");
-    	this.add(diceValues);
+
+    	this.setBounds(0,0,100,300);
+        this.setBackground(Color.WHITE);
+
+        label=new JLabel("Dice Values");
+        label.setLocation(0,0);
+    	this.add(label);
+    	diceValues = new JLabel();
+        diceValues.setText("Total of dice: "+ regularDie.getLastValues().toString());
+        diceValues.setLocation(0,30);
+        this.add(diceValues);
     	this.setVisible(true);
-    	
-        rollDiceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-        		ArrayList<Integer> dice=GameEngine.getInstance().rollDice();
-        		diceValues.setText("Total of dice: "+dice.get(0));
-        		
-        		repaint();
-            }
-        });
-        
+        gameEngine.subscribe(this::onEvent);
 	}
+
+    public void paint() {
+        diceValues.setText("Total of dice: "+ regularDie.getLastValues().toString());
+        repaint();
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if(message.equals("refresh")) {
+            this.paint();
+        }
+    }
 }
