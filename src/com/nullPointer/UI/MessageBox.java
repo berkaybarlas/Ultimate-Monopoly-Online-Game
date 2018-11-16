@@ -44,10 +44,6 @@ public class MessageBox extends JPanel implements Observer{
 		enterPane.add(submit);
 		enterPane.add(textEnter);
 
-		//wrong
-		communicationController.setMessageBox(this);
-		//wrong
-
 		submit.addActionListener(e -> {
 			if(textEnter.getText() != "") {
 				communicationController.sendClientMessage("message/" + textEnter.getText());
