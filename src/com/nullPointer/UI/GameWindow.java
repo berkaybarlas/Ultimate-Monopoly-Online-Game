@@ -1,14 +1,18 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Model.GameEngine;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class GameWindow extends JPanel {
+public class GameWindow extends JPanel implements Observer {
     protected Board board;
     protected DiceDisplay diceDisplay;
     protected ButtonPanel buttonPanel;
     protected PlayerPanel playerPanel;
+
+    private GameEngine gameEngine = GameEngine.getInstance();
 
     public GameWindow(int width, int height) {
         super();
@@ -42,7 +46,7 @@ public class GameWindow extends JPanel {
         contentPane.add(rightSide, BorderLayout.LINE_END);
 
         this.add(contentPane);
-
+        gameEngine.subscribe(this);
     }
 
     public ButtonPanel getButtonPanel() {
@@ -53,5 +57,12 @@ public class GameWindow extends JPanel {
         super.paint(g);
 
         //board.paint(g);
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if(message.equals("buy")) {
+            buttonPanel.purchaseButton.setEnabled(true);
+        }
     }
 }
