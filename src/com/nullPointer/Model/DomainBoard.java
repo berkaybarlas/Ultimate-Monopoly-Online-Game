@@ -5,6 +5,8 @@ import com.nullPointer.Model.Cards.Card;
 import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
 
+import sun.security.util.Length;
+
 public class DomainBoard {
 
 	private ArrayList<Square> squares;
@@ -36,8 +38,8 @@ public class DomainBoard {
 		squares=new ArrayList<Square>();
 		ArrayList<Integer> list=new ArrayList<Integer>();
 		list.add(1);
-		for(int i=0;i<15;i++)
-		squares.add(new PropertySquare("First Property","PropertySquare",100,"Blue",list));
+		//for(int i=0;i<15;i++)
+		//squares.add(new PropertySquare("First Property","PropertySquare",100,"Blue",list));
 		cards=new LinkedList<Card>();
 	}
 	
@@ -48,6 +50,11 @@ public class DomainBoard {
 	
 	public void createBoard()
 	{
+		for(int i=0; i<squareNames_middle.length;i++) {
+			ArrayList<Integer> list=new ArrayList<Integer>();
+			list.add(1);
+			addSquare(new PropertySquare(squareNames_middle[i], "PropertySquare", 100, "Blue", list));
+		}
 		//addSquare(new GoSquare("Go", "T"));
 		//addSquare(new PropertySquare("Mediterranian Avenue", "T", 0, 0));
 //		addSquare(new GoSquare("Go", "T"));
