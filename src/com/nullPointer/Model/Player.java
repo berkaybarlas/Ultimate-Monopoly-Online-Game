@@ -72,6 +72,10 @@ public class Player {
 	public ArrayList<Card> getOtherCards() {
 		return otherCards;
 	}
+	
+	public void setOtherCards(ArrayList<Card> otherCards) {
+		this.otherCards = otherCards;
+	}
 
 	public Pawn getPawn() {
 		return pawn;

@@ -30,6 +30,9 @@ public class GameEngine{
     		playerController.getPlayers().add(new Player("Baran Berkay"));
     		playerController.getPlayers().add(new Player("Tumay"));
     		playerController.getPlayers().add(new Player("Alihan"));
+    		playerController.getPlayers().add(new Player("Fun"));
+    		playerController.getPlayers().add(new Player("Fur"));
+    		playerController.getPlayers().add(new Player("Frkn"));
     }
 
     public static GameEngine getInstance() {
@@ -74,8 +77,6 @@ public class GameEngine{
     public void movePlayer() {
         publishEvent("refresh");
         playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
-        //change in future
-        nextTurn();
     }
 
     public int calculateMoveAmount(){
@@ -108,9 +109,17 @@ public class GameEngine{
 
     	publishEvent("refresh");
     }
+    
+
+	public void makeAction() {
+		Player currentPlayer = playerController.getCurrentPlayer();
+    	
+		
+	}
+	
 
     public void nextTurn() {
-        playerController.nextPlayer();
+
     }
 
     public void sendToJail() {
@@ -152,5 +161,5 @@ public class GameEngine{
 	public String getLastDiceValues() {
         return regularDie.getLastValues().get(0) + "/" + regularDie.getLastValues().get(1) + "/" + speedDie.getLastValues().get(0);
     }
-	
+
 }
