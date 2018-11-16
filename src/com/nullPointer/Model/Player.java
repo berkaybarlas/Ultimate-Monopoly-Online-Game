@@ -11,8 +11,9 @@ import java.util.*;
 public class Player {
 	
 	private String name;
-	private int position;
-	private int targetPosition;
+	private int position = 0;
+	private int layer = 1;
+	private int targetPosition = 0;
 	private int money = 3200;
 	private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
 	private ArrayList<UtilitySquare> utilityList;
@@ -40,7 +41,15 @@ public class Player {
 		position=newPosition;
 	}
 
-    public int getTargetPosition() {
+	public int getLayer() {
+		return layer;
+	}
+
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+
+	public int getTargetPosition() {
         return targetPosition;
     }
 

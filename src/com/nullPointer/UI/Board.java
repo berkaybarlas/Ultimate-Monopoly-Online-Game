@@ -4,10 +4,9 @@ import javax.swing.*;
 
 import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.GameEngine;
-import com.nullPointer.Utils.ColorSet;
+import com.nullPointer.Model.Player;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -19,8 +18,9 @@ public class Board extends JPanel implements Runnable, Observer {
 	
     private Point position;
     private int length;
-
+    private int sleepTime = 3;
     private List<Pawn> pawnList;
+    private List<Player> playerList = new ArrayList<>();
 
 	private int smallSide;
 	private Point initialPosition;
@@ -43,13 +43,14 @@ public class Board extends JPanel implements Runnable, Observer {
 		pawnList = new ArrayList<>();
 
         smallSide = length/17;
-        initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
+        initialPosition = new Point(14 * smallSide - 20,14 * smallSide - 20);
 
         gameEngine.subscribe(this);
 	}
 
 	public void initializePawns(){
-	    playerController.getPlayers().forEach(player -> addPawn());
+	    playerList = playerController.getPlayers();
+	    playerList.forEach(player -> addNewPawn());
     }
 	
 
@@ -58,10 +59,10 @@ public class Board extends JPanel implements Runnable, Observer {
 		//g.fillRect(position.x, position.y, length, length);
 		g.drawImage(image, position.x, position.y, length, length, null);
 		g.setColor(Color.RED);
-		pawnList.forEach(pawn -> g.fillOval(pawn.getPosition().x, pawn.getPosition().y , 20, 20));
+		pawnList.forEach(pawn -> pawn.paint(g));
 	}
 
-	public void addPawn() {
+	public void addNewPawn() {
 		pawnList.add(new Pawn(initialPosition));
 	}
 
@@ -71,10 +72,9 @@ public class Board extends JPanel implements Runnable, Observer {
 				for(int j=0;j<smallSide ;j++){
 					pawnList.get(playerIndex).changeX(-1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			//breaking point
 			else if(pawnList.get(playerIndex).getPosition().x == 4*smallSide -20 && pawnList.get(playerIndex).getPosition().y == 14 * smallSide -20){
@@ -82,19 +82,17 @@ public class Board extends JPanel implements Runnable, Observer {
 				for(int j=0; j<smallSide -1; j++){
 					pawnList.get(playerIndex).changeY(-1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			else if(pawnList.get(playerIndex).getPosition().x == 4*smallSide -20 && pawnList.get(playerIndex).getPosition().y < 14*smallSide -20 && pawnList.get(playerIndex).getPosition().y >4*smallSide -20){
 				for(int j=0; j<smallSide ; j++){
 					pawnList.get(playerIndex).changeY(-1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			//breaking point
 			else if(pawnList.get(playerIndex).getPosition().x == 4*smallSide -20 && pawnList.get(playerIndex).getPosition().y == 4*smallSide -20){
@@ -102,19 +100,17 @@ public class Board extends JPanel implements Runnable, Observer {
 				for(int j=0;j<smallSide -1;j++){
 					pawnList.get(playerIndex).changeX(+1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			else if(pawnList.get(playerIndex).getPosition().x > 4*smallSide -20 && pawnList.get(playerIndex).getPosition().x < 14*smallSide -20 && pawnList.get(playerIndex).getPosition().y ==4*smallSide -20){
 				for(int j=0;j<smallSide ;j++){
 					pawnList.get(playerIndex).changeX(+1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			//breaking point
 			else if(pawnList.get(playerIndex).getPosition().x==14*smallSide -20 && pawnList.get(playerIndex).getPosition().y ==4*smallSide -20){
@@ -122,19 +118,17 @@ public class Board extends JPanel implements Runnable, Observer {
 				for(int j=0;j<smallSide -1;j++){
 					pawnList.get(playerIndex).changeY(+1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 			else if(pawnList.get(playerIndex).getPosition().x==14*smallSide -20 && pawnList.get(playerIndex).getPosition().y >4*smallSide -20){
 				for(int j=0;j<smallSide ;j++){
 					pawnList.get(playerIndex).changeY(+1);
 					this.repaint();
-					Thread.sleep(10);
+					Thread.sleep(sleepTime);
 				}
 				amount--;
-				Thread.sleep(100);
 			}
 		}
 	}
@@ -143,17 +137,18 @@ public class Board extends JPanel implements Runnable, Observer {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(100);
-                    playerController.getPlayers().forEach(player -> {
-                        if(player.getPosition() != player.getTargetPosition()) {
-                            try {
-                                movePlayer(playerController.getPlayers().indexOf(player) ,1 );
-                                player.setPosition(player.getPosition() + 1 );
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+				Thread.sleep(10);
+				for(int i = 0; i<playerList.size(); i++){
+				    Player currentPlayer = playerList.get(i);
+                    if(currentPlayer.getPosition() != currentPlayer.getTargetPosition()) {
+                        try {
+                            movePlayer(i ,1 );
+                            currentPlayer.setPosition(currentPlayer.getPosition() + 1 );
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    });
+                    }
+                }
 			} catch (InterruptedException e) {
 				System.out.println("Program Interrupted");
 				System.exit(0);

@@ -7,7 +7,7 @@ public class Pawn {
     private int positionIndex;
 
     public Pawn(Point point) {
-        this.position = point;
+        this.position = new Point(point.x, point.y);
     }
 
     public Point getPosition() {
@@ -19,11 +19,11 @@ public class Pawn {
     }
 
     public void changeX(int x) {
-        position.x = position.x + x;
+        position.x += x;
     }
 
     public void changeY(int y) {
-        position.y = position.y + y;
+        position.y += y;
     }
 
     public int getPositionIndex() {
@@ -32,5 +32,9 @@ public class Pawn {
 
     public void setPositionIndex(int positionIndex) {
         this.positionIndex = positionIndex;
+    }
+
+    public void paint(Graphics g) {
+        g.fillOval(position.x, position.y , 20, 20);
     }
 }
