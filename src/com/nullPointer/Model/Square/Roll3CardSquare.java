@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class Roll3CardSquare extends Square {
 
-	public Roll3CardSquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public Roll3CardSquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 

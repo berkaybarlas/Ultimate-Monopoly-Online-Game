@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class TaxRefundSquare extends Square {
 
-	public TaxRefundSquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public TaxRefundSquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 

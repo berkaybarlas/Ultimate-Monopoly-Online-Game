@@ -28,11 +28,11 @@ public class PropertySquare extends Square {
     private ArrayList<Integer> priceList;
     private boolean isMortgaged;
 
-    public PropertySquare(String name, String type, int position, int layer, int price, String color, ArrayList<Integer> rentList) {
-        super(name, type, position, layer);
+    public PropertySquare(String n, String t, int p, String color, ArrayList<Integer> priceList) {
+        super(n, t);
         setOwner(null);
-        setPrice(price);
-        setRentList(rentList);
+        setPrice(p);
+        setPriceList(priceList);
         setMortgage(false);
         setPriceListIndex(0);
         setRentFactor(1);

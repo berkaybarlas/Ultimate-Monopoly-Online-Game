@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class PayDaySquare extends Square {
 
-	public PayDaySquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public PayDaySquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 
