@@ -11,7 +11,7 @@ public class ButtonPanel extends JPanel{
     protected JButton purchaseButton;
     protected JButton drawButton;
     protected JButton playCardButton;
-    protected JButton upgradeButton;
+    protected JButton improveButton;
     protected JButton rollDice;
     
     private CommunicationController communicationController = CommunicationController.getInstance();
@@ -24,20 +24,20 @@ public class ButtonPanel extends JPanel{
 		purchaseButton = new JButton("Buy Property");
 		drawButton = new JButton("Draw card");
 		playCardButton = new JButton("Play card");
-		upgradeButton = new JButton("Upgrade Property");
+		improveButton = new JButton("improve Property");
 		rollDice = new JButton("Roll Dice");
 		
 		purchaseButton.setBounds(150,0,100,30);
 		drawButton.setBounds(150,35,100,30);
 		playCardButton.setBounds(150,70,100,30);
-		upgradeButton.setBounds(150,105,100,30);
+		improveButton.setBounds(150,105,100,30);
 		rollDice.setBounds(150,140,100,30);
 
 		panel.add(rollDice);
 		panel.add(purchaseButton, BorderLayout.CENTER);
 		panel.add(drawButton);
 		panel.add(playCardButton);
-		panel.add(upgradeButton);
+		panel.add(improveButton);
 
         this.add(panel);
         
@@ -69,10 +69,10 @@ public class ButtonPanel extends JPanel{
 			} 
 		} );
 		
-		upgradeButton.addActionListener(new ActionListener() { 
+		improveButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("upgradeProperty");
-				communicationController.sendClientMessage("upgradeProperty");
+				System.out.println("improveProperty");
+				communicationController.sendClientMessage("improveProperty");
 				purchaseButton.setEnabled(false);
 			} 
 		} );

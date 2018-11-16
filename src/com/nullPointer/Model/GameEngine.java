@@ -110,13 +110,6 @@ public class GameEngine{
     	publishEvent("refresh");
     }
 
-	public void makeAction() {
-		Player currentPlayer = playerController.getCurrentPlayer();
-    	
-		
-	}
-	
-
     public void nextTurn() {
 
     }
@@ -156,5 +149,10 @@ public class GameEngine{
 	public String getLastDiceValues() {
         return regularDie.getLastValues().get(0) + "/" + regularDie.getLastValues().get(1) + "/" + speedDie.getLastValues().get(0);
     }
+
+	public void playCard() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
