@@ -126,7 +126,7 @@ public class AppWindow extends JFrame implements Observer{
 	@Override
 	public void onEvent(String message) {
 		if(message.equals("buy")) {
-			//gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
+			gameWindow.getButtonPanel().purchaseButton.setEnabled(true);
 		}
 	}
 }

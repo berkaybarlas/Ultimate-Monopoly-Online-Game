@@ -94,6 +94,7 @@ public class GameEngine{
     public void buy() {
     	
     	Player currentPlayer = playerController.getCurrentPlayer();
+    	System.out.println(currentPlayer.getName());
     	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
     	if(square.getType().equals("PropertySquare")) {
     		System.out.println(currentPlayer.getName());
