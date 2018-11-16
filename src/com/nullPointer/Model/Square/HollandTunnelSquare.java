@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class HollandTunnelSquare extends Square {
 
-	public HollandTunnelSquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public HollandTunnelSquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 

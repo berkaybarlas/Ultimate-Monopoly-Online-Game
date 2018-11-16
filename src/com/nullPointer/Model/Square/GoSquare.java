@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class GoSquare extends Square {
 
-	public GoSquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public GoSquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 

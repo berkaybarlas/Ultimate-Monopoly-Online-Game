@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class RailRoadTransitStationsSquare extends Square {
 
-	public RailRoadTransitStationsSquare(String name, String type, int position, int layer) {
-		super(name, type, position, layer);
+	public RailRoadTransitStationsSquare(String n, String t) {
+		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
 
