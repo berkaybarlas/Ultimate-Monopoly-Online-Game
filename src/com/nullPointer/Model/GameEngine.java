@@ -25,11 +25,6 @@ public class GameEngine{
 
     private GameEngine() {
     		domainBoard=new DomainBoard();
-    		/*playerController.getPlayers().add(new Player("Furkan"));
-    		playerController.getPlayers().add(new Player("Berkay"));
-    		playerController.getPlayers().add(new Player("Baran Berkay"));
-    		playerController.getPlayers().add(new Player("Tumay"));
-    		playerController.getPlayers().add(new Player("Alihan"));*/
     }
 
     public static GameEngine getInstance() {
@@ -94,7 +89,6 @@ public class GameEngine{
     public void buy() {
     	
     	Player currentPlayer = playerController.getCurrentPlayer();
-    	System.out.println(currentPlayer.getName());
     	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
     	if(square.getType().equals("PropertySquare")) {
     		System.out.println(currentPlayer.getName());
@@ -106,7 +100,7 @@ public class GameEngine{
     		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
     	}	
-
+        playerController.nextPlayer();
     	publishEvent("refresh");
     }
 
