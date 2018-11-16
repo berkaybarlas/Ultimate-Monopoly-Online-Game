@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class ReverseDirectionSquare extends Square {
 
-	public ReverseDirectionSquare(String n, String t) {
-		super(n, t);
+	public ReverseDirectionSquare(String name, String type, int position, int layer) {
+		super(name, type, position, layer);
 		// TODO Auto-generated constructor stub
 	}
 

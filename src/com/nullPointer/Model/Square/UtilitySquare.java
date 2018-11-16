@@ -7,8 +7,8 @@ public class UtilitySquare extends Square {
 	private Player owner;
 	private int price;
 	
-	public UtilitySquare(String n, String t) {
-		super(n, t);
+	public UtilitySquare(String name, String type, int position, int layer) {
+		super(name, type, position, layer);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -2,8 +2,16 @@ package com.nullPointer.Model;
 import java.util.*;
 
 import com.nullPointer.Model.Cards.Card;
+import com.nullPointer.Model.Square.ChanceCardSquare;
+import com.nullPointer.Model.Square.CommunityChestCardSquare;
+import com.nullPointer.Model.Square.GoSquare;
+import com.nullPointer.Model.Square.HollandTunnelSquare;
 import com.nullPointer.Model.Square.PropertySquare;
+import com.nullPointer.Model.Square.ReverseDirectionSquare;
 import com.nullPointer.Model.Square.Square;
+import com.nullPointer.Model.Square.SubwaySquare;
+import com.nullPointer.Model.Square.TaxRefundSquare;
+import com.nullPointer.Model.Square.UtilitySquare;
 
 import sun.security.util.Length;
 
@@ -48,13 +56,37 @@ public class DomainBoard {
 	}
 	
 	public void createSquares() {
-		for(int i=0; i<squareNames_middle.length;i++) {
-			ArrayList<Integer> list=new ArrayList<Integer>();
-			list.add(1);
-			//addSquare(new PropertySquare(squareNames_middle[i], "PropertySquare", 100, "Blue", list));
+		ArrayList<Integer> list=new ArrayList<Integer>();
+		list.add(1);
+		
+		for (int i = 0; i < squareNames_inner.length ; i++) {
+			if(i== 0){
+		//		squares.add(i, new SquareSqueezePlay(squareNames_middle[i], "SqueezePlay", i, 2));
+			}else if(i == 9 || i == 21 ){
+				squares.add(new SubwaySquare(squareNames_middle[i], "SubwaySquare", i, 2));
+			}else if(i == 4){
+				squares.add(new CommunityChestCardSquare(squareNames_middle[i], "CommunityChestCard", i, 2));
+			}else if(i == 16 ){
+				squares.add(new ChanceCardSquare(squareNames_middle[i], "ChanceCard", i, 2));
+			}else if(i == 3 || i == 15  ){
+				squares.add(new UtilitySquare(squareNames_middle[i], "Utility", i, 2));			
+			}else if(i == 6){
+				squares.add(new GoSquare(squareNames_middle[i], "Go", i, 2));
+			//}else if(i == 12){
+			//	squares.add(i, new SquareStock(squareNames_middle[i], "Stock", i, 2));
+				//stock exchange
+			}else if(i == 14 ){
+				squares.add(new TaxRefundSquare(squareNames_middle[i], "TaxRefund", i, 2));
+			}else if(i == 18 ){
+				squares.add(new HollandTunnelSquare(squareNames_middle[i], "Tunnel", i, 2));
+			}else if(i == 22){
+				squares.add(new ReverseDirectionSquare(squareNames_middle[i], "Reverse", i, 2));
+			}else{ //  price, color & rent will be added. Now price = 100, color = "BLUE"
+				squares.add(new PropertySquare(squareNames_middle[i], "Property", i, 2, 100 , "BLUE", list));
+			}
 		}
+
 	}
-	
 	
 
 	public ArrayList<Square> getSquares() {

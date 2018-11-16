@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class CommunityChestCardSquare extends Square {
 
-	public CommunityChestCardSquare(String n, String t) {
-		super(n, t);
+	public CommunityChestCardSquare(String name, String type, int position, int layer) {
+		super(name, type, position, layer);
 		// TODO Auto-generated constructor stub
 	}
 

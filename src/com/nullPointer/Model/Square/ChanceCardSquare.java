@@ -4,8 +4,8 @@ import com.nullPointer.Model.Player;
 
 public class ChanceCardSquare extends Square {
 
-	public ChanceCardSquare(String n, String t) {
-		super(n, t);
+	public ChanceCardSquare(String name, String type, int position, int layer) {
+		super(name, type, position, layer);
 		// TODO Auto-generated constructor stub
 	}
 
