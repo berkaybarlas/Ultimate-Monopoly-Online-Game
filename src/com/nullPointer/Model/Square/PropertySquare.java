@@ -24,53 +24,51 @@ public class PropertySquare extends Square {
      * priceList(7) = mortgage value
      * ps: not sure if mortgage value should be kept in that list
      */
-    private int priceListIndex;
-    private ArrayList<Integer> priceList;
+    private int rentListIndex;
+    private ArrayList<Integer> rentList;
     private boolean isMortgaged;
 
-    public PropertySquare(String n, String t, int p, String color, ArrayList<Integer> priceList) {
+    public PropertySquare(String n, String t, int p, String color, ArrayList<Integer> rentList) {
         super(n, t);
         setOwner(null);
         setPrice(p);
-        setPriceList(priceList);
+        setRentList(rentList);
         setMortgage(false);
-        setPriceListIndex(0);
+        setRentListIndex(0);
         setRentFactor(1);
         setColor(color);
     }
-
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
 
     public int getRent() {
         return calculateRent();
     }
 
     private int calculateRent() {
-        if (getPriceListIndex() <= 6) return rentFactor * priceList.get(getPriceListIndex());
+        if (getRentListIndex() <= 6) return rentFactor * rentList.get(getRentListIndex());
         else return 0;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public int numHouses() {
-        if (getPriceListIndex() <= 4) return getPriceListIndex();
+        if (getRentListIndex() <= 4) return getRentListIndex();
         else return 0;
     }
 
     public boolean hasHotel() {
-        return (getPriceListIndex() == 5);
+        return (getRentListIndex() == 5);
     }
 
     public boolean hasSkyscraper() {
-        return (getPriceListIndex() == 6);
+        return (getRentListIndex() == 6);
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+    
     public boolean getMortgaged() {
         return isMortgaged;
     }
@@ -78,14 +76,14 @@ public class PropertySquare extends Square {
     public void mortgage() {
         if (!isMortgaged) {
             setMortgage(true);
-            priceListIndex = 7;
+            rentListIndex = 7;
         }
     }
 
     public void removeMortgage() {
         if (isMortgaged) {
             setMortgage(false);
-            priceListIndex = 0;
+            rentListIndex = 0;
         }
     }
 
@@ -93,22 +91,29 @@ public class PropertySquare extends Square {
         this.isMortgaged = mortgageVal;
     }
 
+
     public boolean canBeImproved() {
-        return (getPriceListIndex() < 6);
+        return (getRentListIndex() < 6);
     }
 
     public boolean canBeDowngraded() {
-        return (getPriceListIndex() > 0);
+        return (getRentListIndex() > 0);
     }
 
-    public void improve() {
-        //change inventory
-        if (canBeImproved()) setPriceListIndex(priceListIndex + 1);
+    private int getRentListIndex() {
+        return rentListIndex;
     }
 
-    public void downgrade() {
-        //change inventory
-        if (canBeDowngraded()) setPriceListIndex(priceListIndex - 1);
+    private void setRentListIndex(int rentListIndex) {
+        this.rentListIndex = rentListIndex;
+    }
+
+    public ArrayList<Integer> getRentList() {
+        return rentList;
+    }
+
+    public void setRentList(ArrayList<Integer> rentList) {
+        this.rentList = rentList;
     }
 
     public int getPrice() {
@@ -135,22 +140,6 @@ public class PropertySquare extends Square {
         this.rentFactor = rentFactor;
     }
 
-    private int getPriceListIndex() {
-        return priceListIndex;
-    }
-
-    private void setPriceListIndex(int priceListIndex) {
-        this.priceListIndex = priceListIndex;
-    }
-
-    public ArrayList<Integer> getPriceList() {
-        return priceList;
-    }
-
-    public void setPriceList(ArrayList<Integer> priceList) {
-        this.priceList = priceList;
-    }
-
     public boolean isOwned() {
         return owner != null;
     }
@@ -160,7 +149,7 @@ public class PropertySquare extends Square {
         if (this.getOwner() == null) {
             gameEngine.publishEvent("buy");
         } else {
-            gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getOwner() , this.getRent());
+            gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getOwner(), this.getRent());
             System.out.println("CurrentPlayer paid rent");
             gameEngine.nextTurn();
         }
