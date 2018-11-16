@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 public class PlayerPanel extends JPanel implements Observer {
+
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel userPanel, displayPanel;

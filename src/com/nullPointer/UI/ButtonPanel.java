@@ -32,7 +32,7 @@ public class ButtonPanel extends JPanel{
 		panel.add(actionButton);
 
         this.add(panel);
-
+        
 		purchaseButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("purchase");
@@ -56,7 +56,7 @@ public class ButtonPanel extends JPanel{
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 			} 
 		} );
-		purchaseButton.setEnabled(false);
+		//purchaseButton.setEnabled(false);
 		this.setVisible(true);
 		
 	}
