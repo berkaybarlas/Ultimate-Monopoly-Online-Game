@@ -52,24 +52,24 @@ public class ButtonPanel extends JPanel{
 		drawButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("drawCard");
-				communicationController.sendClientMessage("drawCard");
-				purchaseButton.setEnabled(false);
+				//communicationController.sendClientMessage("drawCard");
+				//purchaseButton.setEnabled(false);
 			} 
 		} );
 		
 		playCardButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("playCard");
-				communicationController.sendClientMessage("playCard");
-				purchaseButton.setEnabled(false);
+				//communicationController.sendClientMessage("playCard");
+				//playCardButton.setEnabled(false);
 			} 
 		} );
 		
 		improveButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("improveProperty");
-				communicationController.sendClientMessage("improveProperty");
-				purchaseButton.setEnabled(false);
+				//communicationController.sendClientMessage("improveProperty");
+				//improveButton.setEnabled(false);
 			} 
 		} );
 		

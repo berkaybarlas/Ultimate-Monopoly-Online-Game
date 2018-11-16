@@ -106,7 +106,7 @@ public class GameEngine{
     		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
     	}	
-
+        playerController.nextPlayer();
     	publishEvent("refresh");
     }
 
