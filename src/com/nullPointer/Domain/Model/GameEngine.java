@@ -151,7 +151,7 @@ public class GameEngine{
 
 	public void evaluateSquare() {
         Player currentPlayer = playerController.getCurrentPlayer();
-        Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
+        Square square = domainBoard.getSquares().get(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
     }
 

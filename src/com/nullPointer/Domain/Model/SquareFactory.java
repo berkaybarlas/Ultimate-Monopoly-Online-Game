@@ -107,6 +107,7 @@ public class SquareFactory {
                 return new PropertySquare(squareNames_middle[index], "PropertySquare", StatesPrice, StatesColor, StatesAveList);
             case 14:
                 return new PropertySquare(squareNames_inner[index], "PropertySquare", VirginiaPrice, VirginiaColor, VirginiaAveList);
+
             default:
                 return null;
         }
