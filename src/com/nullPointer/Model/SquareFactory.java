@@ -83,33 +83,33 @@ public class SquareFactory {
             case 0:
                 return new GoSquare(squareNames_middle[index], "GoSquare");
             case 1:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", MediterranianPrice, MediterranianColor, MediterranianAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", MediterranianPrice, MediterranianColor, MediterranianAveList);
             case 2:
                 return new CommunityChestCardSquare(squareNames_middle[index], "CommunityChestCardSquare");
             case 3:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", BalticPrice, BalticColor, BalticAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", BalticPrice, BalticColor, BalticAveList);
             case 4:
                 return new IncomeTaxSquare(squareNames_middle[index], "IncomeTaxSquare");
             case 5:
                 return new RailRoadTransitStationsSquare(squareNames_middle[index], "RailroadTransitSquare");
             case 6:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", OrientalPrice, OrientalColor, OrientalAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", OrientalPrice, OrientalColor, OrientalAveList);
             case 7:
                 return new ChanceCardSquare(squareNames_middle[index], "ChanceCardSquare");
             case 8:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", VermontPrice, VermontColor, VermontAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", VermontPrice, VermontColor, VermontAveList);
             case 9:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", ConnecticutPrice, ConnecticutColor, MediterranianAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", ConnecticutPrice, ConnecticutColor, MediterranianAveList);
             case 10:
                 return new EmptySquare(squareNames_middle[index], "JailSquare");
             case 11:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", StCharlesPrice, StCharlesColor, StCharlesList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", StCharlesPrice, StCharlesColor, StCharlesList);
             case 12:
-                return new UtilitySquare(squareNames_middle[index], "Utility");
+                return new UtilitySquare(squareNames_middle[index], "UtilitySquare");
             case 13:
-                return new PropertySquare(squareNames_middle[index], "PropertyCard", StatesPrice, StatesColor, StatesAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", StatesPrice, StatesColor, StatesAveList);
             case 14:
-                return new PropertySquare(squareNames_inner[index], "PropertyCard", VirginiaPrice, VirginiaColor, VirginiaAveList);
+                return new PropertySquare(squareNames_inner[index], "PropertySquare", VirginiaPrice, VirginiaColor, VirginiaAveList);
             default:
                 return null;
         }
