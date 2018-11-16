@@ -3,6 +3,7 @@ import java.util.*;
 
 import com.nullPointer.Model.Cards.Card;
 import com.nullPointer.Model.Square.Square;
+
 public class DomainBoard {
 
 	private ArrayList<Square> squares;
