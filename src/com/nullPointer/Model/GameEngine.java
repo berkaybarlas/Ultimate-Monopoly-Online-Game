@@ -25,15 +25,11 @@ public class GameEngine{
 
     private GameEngine() {
     		domainBoard=new DomainBoard();
-    		//static
-    		playerController.getPlayers().add(new Player("Furkan"));
+    		/*playerController.getPlayers().add(new Player("Furkan"));
     		playerController.getPlayers().add(new Player("Berkay"));
     		playerController.getPlayers().add(new Player("Baran Berkay"));
     		playerController.getPlayers().add(new Player("Tumay"));
-    		playerController.getPlayers().add(new Player("Alihan"));
-    		playerController.getPlayers().add(new Player("Fun"));
-    		playerController.getPlayers().add(new Player("Fur"));
-    		playerController.getPlayers().add(new Player("Frkn"));
+    		playerController.getPlayers().add(new Player("Alihan"));*/
     }
 
     public static GameEngine getInstance() {
@@ -88,7 +84,7 @@ public class GameEngine{
     }
 
     public void drawCard() {
-
+    	domainBoard.getCards().element();
     }
 
     public void improveProperty() {
@@ -96,12 +92,14 @@ public class GameEngine{
     }
 
     public void buy() {
+    	
     	Player currentPlayer = playerController.getCurrentPlayer();
     	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
-    	
     	if(square.getType().equals("PropertySquare")) {
+    		System.out.println(currentPlayer.getName());
         	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
+        	System.out.println(currentPlayer.getMoney());
     	}
     	else if(square.getType().equals("UtilitySquare")) {
     		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
@@ -131,10 +129,6 @@ public class GameEngine{
 
     }
     
-    public void addListener(Observer listener){
-		observers.add(listener);
-	}
-
 	public PlayerController getPlayerController() {
 		return playerController;
 	}

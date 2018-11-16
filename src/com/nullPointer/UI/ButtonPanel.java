@@ -20,7 +20,7 @@ public class ButtonPanel extends JPanel{
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		purchaseButton = new JButton("Buy Property");
-		actionButton = new JButton("Make action");
+		actionButton = new JButton("Draw Card");
 		rollDice = new JButton("Roll Dice");
 		
 		purchaseButton.setBounds(150,0,100,30);
@@ -38,8 +38,10 @@ public class ButtonPanel extends JPanel{
 				System.out.println("purchase");
 				communicationController.sendClientMessage("purchase");
 				purchaseButton.setEnabled(false);
-				// GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
+				 //GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
 				// also need to make a distinction between buying a utility and buying a property
+			//gameEngine.getInstance().buy();
+			//communicationController.sendClientMessage("purchase/");
 			} 
 		} );
 
