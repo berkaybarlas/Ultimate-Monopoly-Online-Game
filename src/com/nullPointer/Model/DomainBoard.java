@@ -51,7 +51,7 @@ public class DomainBoard {
 		for(int i=0; i<squareNames_middle.length;i++) {
 			ArrayList<Integer> list=new ArrayList<Integer>();
 			list.add(1);
-			addSquare(new PropertySquare(squareNames_middle[i], "PropertySquare", 100, "Blue", list));
+			//addSquare(new PropertySquare(squareNames_middle[i], "PropertySquare", 100, "Blue", list));
 		}
 	}
 	
