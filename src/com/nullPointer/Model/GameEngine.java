@@ -108,7 +108,6 @@ public class GameEngine{
 
     	publishEvent("refresh");
     }
-    
 
 	public void makeAction() {
 		Player currentPlayer = playerController.getCurrentPlayer();
