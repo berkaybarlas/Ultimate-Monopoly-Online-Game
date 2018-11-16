@@ -38,6 +38,27 @@ public class DomainBoard {
 		squares.add(new PropertySquare("First Property","PropertySquare",100,40));
 		cards=new LinkedList<Card>();
 	}
+	
+	public void addSquare(Square sq)
+	{
+		squares.add(sq);
+	}
+	
+	public void createBoard()
+	{
+		addSquare(new GoSquare("Go", "T"));
+		//addSquare(new PropertySquare("Mediterranian Avenue", "T", 0, 0));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+//		addSquare(new GoSquare("Go", "T"));
+	}
+	
+	
 
 	public ArrayList<Square> getSquares() {
 		return squares;
