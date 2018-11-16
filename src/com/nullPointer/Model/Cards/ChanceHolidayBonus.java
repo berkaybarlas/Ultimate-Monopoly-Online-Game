@@ -12,7 +12,7 @@ public class ChanceHolidayBonus extends ChanceCard {
 	@Override
 	public void playCard(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
-		
+		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), 100);
 	}
 
 }

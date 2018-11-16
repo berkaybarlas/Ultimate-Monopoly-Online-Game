@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-public class Board extends JPanel implements Runnable {
+public class Board extends JPanel implements Runnable, Observer {
 	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 	
@@ -25,6 +25,7 @@ public class Board extends JPanel implements Runnable {
 	private int smallSide;
 	private Point initialPosition;
     private PlayerController playerController = PlayerController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
 
 	public Board(Point position, int length) {
 		try {
@@ -44,6 +45,7 @@ public class Board extends JPanel implements Runnable {
         smallSide = length/17;
         initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
 
+        gameEngine.subscribe(this);
 	}
 
 	public void initializePawns(){
@@ -139,7 +141,6 @@ public class Board extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-        initializePawns();
 		while (true) {
 			try {
 				Thread.sleep(100);
@@ -147,6 +148,7 @@ public class Board extends JPanel implements Runnable {
                         if(player.getPosition() != player.getTargetPosition()) {
                             try {
                                 movePlayer(playerController.getPlayers().indexOf(player) ,1 );
+                                player.setPosition(player.getPosition() + 1 );
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -161,4 +163,11 @@ public class Board extends JPanel implements Runnable {
 
 	}
 
+    @Override
+    public void onEvent(String message) {
+        if(message.equals("refreshPawnNumber")) {
+            initializePawns();
+            repaint();
+        }
+    }
 }
