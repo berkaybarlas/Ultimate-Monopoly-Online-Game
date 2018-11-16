@@ -48,16 +48,7 @@ public class DomainBoard {
 	
 	public void createBoard()
 	{
-		//addSquare(new GoSquare("Go", "T"));
-		//addSquare(new PropertySquare("Mediterranian Avenue", "T", 0, 0));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
+		
 	}
 	
 	
