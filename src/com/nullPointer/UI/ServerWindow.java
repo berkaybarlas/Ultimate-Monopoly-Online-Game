@@ -1,7 +1,6 @@
 package com.nullPointer.UI;
 
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Utils.ColorSet;
+import com.nullPointer.Domain.Controller.CommunicationController;
 
 import javax.swing.*;
 import java.awt.*;

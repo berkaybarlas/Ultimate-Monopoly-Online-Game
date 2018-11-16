@@ -1,9 +1,8 @@
 package com.nullPointer.UI;
 
-import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.CommunicationController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;

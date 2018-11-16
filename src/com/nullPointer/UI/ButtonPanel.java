@@ -3,8 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Model.GameEngine;
+import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 public class ButtonPanel extends JPanel{
 

@@ -1,6 +1,6 @@
 package com.nullPointer.UI;
 
-import com.nullPointer.Model.GameEngine;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

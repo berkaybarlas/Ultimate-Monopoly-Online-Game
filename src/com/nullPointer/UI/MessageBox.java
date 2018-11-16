@@ -1,9 +1,8 @@
 package com.nullPointer.UI;
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Model.GameEngine;
+import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class MessageBox extends JPanel implements Observer{
