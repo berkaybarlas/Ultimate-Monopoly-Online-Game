@@ -38,8 +38,7 @@ public class DomainBoard {
 		squares=new ArrayList<Square>();
 		ArrayList<Integer> list=new ArrayList<Integer>();
 		list.add(1);
-		//for(int i=0;i<15;i++)
-		//squares.add(new PropertySquare("First Property","PropertySquare",100,"Blue",list));
+		createSquares();
 		cards=new LinkedList<Card>();
 	}
 	
@@ -48,23 +47,12 @@ public class DomainBoard {
 		squares.add(sq);
 	}
 	
-	public void createBoard()
-	{
+	public void createSquares() {
 		for(int i=0; i<squareNames_middle.length;i++) {
 			ArrayList<Integer> list=new ArrayList<Integer>();
 			list.add(1);
 			addSquare(new PropertySquare(squareNames_middle[i], "PropertySquare", 100, "Blue", list));
 		}
-		//addSquare(new GoSquare("Go", "T"));
-		//addSquare(new PropertySquare("Mediterranian Avenue", "T", 0, 0));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
-//		addSquare(new GoSquare("Go", "T"));
 	}
 	
 	

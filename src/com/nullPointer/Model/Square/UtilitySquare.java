@@ -37,7 +37,8 @@ public class UtilitySquare extends Square {
 				multiplier = 150;
 			}
 			int diceVal = gameEngine.getRegularDie().getLastValues().get(0) + gameEngine.getRegularDie().getLastValues().get(1) + gameEngine.getSpeedDie().getLastValues().get(0);
-			gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), diceVal*multiplier);
+			gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getOwner(), diceVal * multiplier);
+			gameEngine.nextTurn();
 		}
 		
 	}

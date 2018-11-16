@@ -108,7 +108,7 @@ public class Player {
 		return this.utilityList;
 	}
 	
-	public void addSquare (PropertySquare propertySquare) {
+	public void addSquare(PropertySquare propertySquare) {
        // propertyCardsMap.put(propertySquare)
         propertySquares.add(propertySquare);
     }

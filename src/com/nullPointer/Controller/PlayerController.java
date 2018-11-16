@@ -31,7 +31,7 @@ public class PlayerController {
 	}
 
 	public Player nextPlayer(){
-		currentPlayer++;
+		currentPlayer = (currentPlayer + 1) % players.size();
 		return players.get(currentPlayer);
 	}
 
@@ -54,15 +54,17 @@ public class PlayerController {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+
 	public void upgradePropertyList(PropertySquare property, Player player){
 		player.addSquare(property);
 	}
+
 	public void upgradeUtilityList(UtilitySquare utility, Player player) {
 		player.getUtilityList().add(utility);
 	}
 
 	public void addPlayer() {
-	    players.add(new Player());
+	    //players.add(new Player());
     }
 
 }

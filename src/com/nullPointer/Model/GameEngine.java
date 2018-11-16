@@ -69,6 +69,7 @@ public class GameEngine{
     public void movePlayer() {
         publishEvent("refresh");
         playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
+        evaluateSquare();
     }
 
     public int calculateMoveAmount(){
@@ -90,22 +91,22 @@ public class GameEngine{
     	
     	Player currentPlayer = playerController.getCurrentPlayer();
     	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
-    	if(square.getType().equals("PropertySquare")) {
-    		System.out.println(currentPlayer.getName());
+    	if(square.getType().equals("PropertySquare") && ((PropertySquare) square).getOwner() == null) {
         	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
-        	System.out.println(currentPlayer.getMoney());
+        	((PropertySquare) square).setOwner(currentPlayer);
     	}
     	else if(square.getType().equals("UtilitySquare")) {
     		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
     	}	
-        playerController.nextPlayer();
-    	publishEvent("refresh");
+        nextTurn();
     }
 
     public void nextTurn() {
-
+        playerController.nextPlayer();
+        publishEvent("rollDice");
+        publishEvent("refresh");
     }
 
     public void sendToJail() {
@@ -125,8 +126,9 @@ public class GameEngine{
 	}
 	
 	
-	public void payRent(Player player, int amount) {
+	public void payRent(Player player, Player owner, int amount) {
 		moneyController.decreaseMoney(player, amount);
+		moneyController.increaseMoney(owner, amount);
 		if(player.getMoney()<0) {
 			publishEvent("bankrupt");
 		}
@@ -148,5 +150,11 @@ public class GameEngine{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void evaluateSquare() {
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
+        square.evaluateSquare(this);
+    }
 
 }

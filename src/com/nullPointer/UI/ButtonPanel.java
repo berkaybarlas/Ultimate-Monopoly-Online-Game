@@ -53,7 +53,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("drawCard");
 				//communicationController.sendClientMessage("drawCard");
-				//purchaseButton.setEnabled(false);
+				purchaseButton.setEnabled(false);
 			} 
 		} );
 		
@@ -61,7 +61,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("playCard");
 				//communicationController.sendClientMessage("playCard");
-				//playCardButton.setEnabled(false);
+				playCardButton.setEnabled(false);
 			} 
 		} );
 		
@@ -69,7 +69,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("improveProperty");
 				//communicationController.sendClientMessage("improveProperty");
-				//improveButton.setEnabled(false);
+				improveButton.setEnabled(false);
 			} 
 		} );
 		
@@ -78,9 +78,13 @@ public class ButtonPanel extends JPanel{
 				System.out.println("roll dice");
                 gameEngine.rollDice();
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+				rollDice.setEnabled(false);
 			} 
 		} );
-		//purchaseButton.setEnabled(false);
+		purchaseButton.setEnabled(false);
+		drawButton.setEnabled(false);
+		playCardButton.setEnabled(false);
+		improveButton.setEnabled(false);
 		this.setVisible(true);
 		
 	}
