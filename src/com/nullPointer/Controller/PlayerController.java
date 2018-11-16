@@ -55,25 +55,7 @@ public class PlayerController {
 		return players;
 	}
 	public void upgradePropertyList(PropertySquare property, Player player){
-		/*boolean flag=false;
-		Iterator it = player.getPropertyCardsMap().entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry)it.next();
-			if(pair.getKey()==property.getColor()){
-				flag=true;
-				ArrayList<PropertySquare> propertiesList=player.getPropertyCardsMap().get(pair.getKey());
-				propertiesList.add(property);
-				player.getPropertyCardsMap().remove(pair.getKey());
-				player.getPropertyCardsMap().put((String) pair.getKey(), propertiesList);
-			}
-			it.remove();
-		}
-		if(!flag){
-		ArrayList<PropertySquare> list=new ArrayList<PropertySquare>();
-		list.add(property);
-		player.getPropertyCardsMap().put(property.getColor(), list);
-		}*/
-		player.getPropertySquares().add(property);
+		player.addSquare(property);
 	}
 	public void upgradeUtilityList(UtilitySquare utility, Player player) {
 		player.getUtilityList().add(utility);

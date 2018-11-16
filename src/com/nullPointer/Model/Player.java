@@ -19,7 +19,6 @@ public class Player {
 	private ArrayList<PropertySquare> propertySquares;
 	private ArrayList<UtilitySquare> utilityList;
 	private ArrayList<Card> otherCards;
-	private Pawn pawn;
 	private boolean inJail;
 	private boolean direction = true;
 	
@@ -88,11 +87,7 @@ public class Player {
 	public void propertySquares(ArrayList<PropertySquare> properties) {
 		this.propertySquares = properties;
 	}
-
-	public Pawn getPawn() {
-		return pawn;
-	}
-
+	
 	public boolean isInJail() {
 		return inJail;
 	}
@@ -112,6 +107,11 @@ public class Player {
 	public ArrayList<UtilitySquare> getUtilityList() {
 		return this.utilityList;
 	}
+	
+	public void addSquare (PropertySquare propertySquare) {
+       // propertyCardsMap.put(propertySquare)
+        propertySquares.add(propertySquare);
+    }
 	@Override
 	public String toString() {
 		String temp = "";
