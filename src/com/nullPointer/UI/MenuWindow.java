@@ -46,10 +46,9 @@ public class MenuWindow extends JPanel {
         joinButton.setToolTipText("Join the game server");
         joinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.createClient();
-                navigator.serverScreen();
-                
-                
+                //communicationController.createClient();
+                String ip = JOptionPane.showInputDialog(panel, "Enter the IP address you'd like to join.","IP address needed.");
+                //navigator.serverScreen();
             }
         });
         panel.add(joinButton);
