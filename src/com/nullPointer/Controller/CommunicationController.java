@@ -86,13 +86,18 @@ public class CommunicationController {
         if(input.contains("purchase")) {
         	gameEngine.buy();
         }
-        if(input.contains("action")) {
-        	gameEngine.makeAction();
+        if(input.contains("drawCard")) {
+        	gameEngine.drawCard();
+        }
+        if(input.contains("playCard")) {
+        	gameEngine.playCard();
+        }
+        if(input.contains("improveProperty")) {
+        	gameEngine.improveProperty();
         }
     }
 
     private String rest(String word) {
-        String[] words = word.split("/");
         int slashIndex = word.indexOf('/');
         if(slashIndex==-1)
             return word;
