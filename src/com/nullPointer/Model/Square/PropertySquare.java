@@ -147,7 +147,7 @@ public class PropertySquare extends Square {
         return priceList;
     }
 
-    public void setPriceList(ArrayList<Integer> priceList) {
+    public void setRentList(ArrayList<Integer> priceList) {
         this.priceList = priceList;
     }
 
