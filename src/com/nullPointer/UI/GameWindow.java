@@ -5,9 +5,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class GameWindow extends JPanel {
-    private Board board;
-    private DiceDisplay diceDisplay;
-    private ButtonPanel buttonPanel;
+    protected Board board;
+    protected DiceDisplay diceDisplay;
+    protected ButtonPanel buttonPanel;
+    protected PlayerPanel playerPanel;
 
     public GameWindow(int width, int height) {
         super();
@@ -34,7 +35,7 @@ public class GameWindow extends JPanel {
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
 
-        PlayerPanel playerPanel = new PlayerPanel();
+        playerPanel = new PlayerPanel();
         rightSide.add(playerPanel);
         MessageBox msg=new MessageBox();
         rightSide.add(msg);
@@ -43,14 +44,10 @@ public class GameWindow extends JPanel {
         this.add(contentPane);
 
     }
-    
-    
 
     public ButtonPanel getButtonPanel() {
 		return buttonPanel;
 	}
-
-
 
 	public void paint(Graphics g) {
         super.paint(g);

@@ -1,6 +1,7 @@
 package com.nullPointer.Model;
 import java.util.List;
 
+import com.nullPointer.Model.Cards.Card;
 import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
 import com.nullPointer.Model.Square.UtilitySquare;
@@ -10,8 +11,9 @@ import java.util.*;
 public class Player {
 	
 	private String name;
-	private int position;
-	private int targetPosition;
+	private int position = 0;
+	private int layer = 1;
+	private int targetPosition = 0;
 	private int money = 3200;
 	private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
 	private ArrayList<UtilitySquare> utilityList;
@@ -39,12 +41,20 @@ public class Player {
 		position=newPosition;
 	}
 
-    public int getTargetPosition() {
+	public int getLayer() {
+		return layer;
+	}
+
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+
+	public int getTargetPosition() {
         return targetPosition;
     }
 
-    public void setTargetPosition(int targetPosition) {
-        this.targetPosition = targetPosition;
+    public void setTargetPosition(int amount) {
+        this.targetPosition = position + amount;
     }
 
     public int getMoney() {
@@ -85,6 +95,14 @@ public class Player {
 	
 	public ArrayList<UtilitySquare> getUtilityList() {
 		return this.utilityList;
+	}
+	@Override
+	public String toString() {
+		String temp = "";
+		return 	"Player name: " + name + "\n"+ 
+				"Money: " + money + "\n"+
+				"Owned properties: " + propertyCardsMap + "\n"+
+				"Owned utilities: " + utilityList;
 	}
 	
 }

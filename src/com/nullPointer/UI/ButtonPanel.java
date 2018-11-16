@@ -1,19 +1,19 @@
 package com.nullPointer.UI;
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Model.GameEngine;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
 
 public class ButtonPanel extends JPanel{
 
     protected JButton purchaseButton;
     protected JButton actionButton;
     protected JButton rollDice;
-    private GameEngine gameEngine = GameEngine.getInstance();
+    
     private CommunicationController communicationController = CommunicationController.getInstance();
-
+    private GameEngine gameEngine = GameEngine.getInstance();
 	public ButtonPanel(){
 
 		JPanel panel = new JPanel();
@@ -32,10 +32,12 @@ public class ButtonPanel extends JPanel{
 		panel.add(actionButton);
 
         this.add(panel);
-
+        
 		purchaseButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("purchase");
+				communicationController.sendClientMessage("purchase");
+				purchaseButton.setEnabled(false);
 				// GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
 				// also need to make a distinction between buying a utility and buying a property
 			} 
@@ -50,11 +52,11 @@ public class ButtonPanel extends JPanel{
 		rollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("roll dice");
-				gameEngine.rollDice();
-				communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
-			}
+                gameEngine.rollDice();
+                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+			} 
 		} );
-		
+		//purchaseButton.setEnabled(false);
 		this.setVisible(true);
 		
 	}

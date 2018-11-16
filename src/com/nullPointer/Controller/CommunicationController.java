@@ -26,6 +26,7 @@ public class CommunicationController {
     //wrong
 
     private CommunicationController() {
+    	
     }
 
     public static CommunicationController getInstance() {
@@ -55,7 +56,7 @@ public class CommunicationController {
 
     public void processInput(String input) {
 
-        if(includes(input, "game")) {
+        if(input.contains("game")) {
             if(includes(rest(input), "start")) {
                 gameEngine.startGame();
             }
@@ -68,13 +69,13 @@ public class CommunicationController {
             //yanlis
         }
 
-        if(includes(input,"client")) {
+        if(input.contains("client")) {
             if(includes(rest(input), "create")){
                 gameEngine.newClient();
             }
         }
 
-        if(includes(input, "dice")) {
+        if(input.contains("dice")) {
             ArrayList<Integer> regularDice = new ArrayList<>();
             ArrayList<Integer> speedDice = new ArrayList<>();
             String[] values = input.split("/");
@@ -84,6 +85,10 @@ public class CommunicationController {
             regularDie.setLastValues(regularDice);
             speedDie.setLastValues(speedDice);
             gameEngine.movePlayer();
+        }
+        
+        if(input.contains("purchase")) {
+        		gameEngine.buy();
         }
     }
 
