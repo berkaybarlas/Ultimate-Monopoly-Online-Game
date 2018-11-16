@@ -1,5 +1,5 @@
 package com.nullPointer.Model;
 
-public class SquareFactory {
+public class Board {
 	
 }
