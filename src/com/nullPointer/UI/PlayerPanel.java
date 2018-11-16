@@ -64,11 +64,14 @@ public class PlayerPanel extends JPanel implements Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawRect(800,800,1000,100);
+		textArea.setText(GameEngine.getInstance().getPlayerController().getCurrentPlayer().toString());
 	}
 
 	@Override
 	public void onEvent(String message) {
 		if(message.equals("refresh")) {
+			System.out.println(GameEngine.getInstance().getPlayerController().getCurrentPlayer().toString());
+			
 			this.repaint();
 		}
 	}

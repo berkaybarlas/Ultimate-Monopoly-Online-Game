@@ -12,7 +12,11 @@ public class PlayerController {
 	private int currentPlayer = 0;
 
 	private PlayerController(){
-
+		players.add(new Player("Furkan"));
+		players.add(new Player("Tumay"));
+		players.add(new Player("Berkay"));
+		players.add(new Player("Baran"));
+		players.add(new Player("Alihan"));
 	}
 
 	public static PlayerController getInstance() {
