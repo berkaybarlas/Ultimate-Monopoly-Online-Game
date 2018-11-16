@@ -36,6 +36,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("purchase");
 				communicationController.sendClientMessage("purchase");
+				purchaseButton.setEnabled(false);
 				// GameEngine.getInstance().buyProperty(pSquare, GameEngine.getInstance().getPlayerController().getCurrentPlayer());
 				// also need to make a distinction between buying a utility and buying a property
 			} 
