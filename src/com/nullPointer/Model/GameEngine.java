@@ -54,6 +54,7 @@ public class GameEngine{
         for(int i=0; i<playerNumber; i++) {
             playerController.addPlayer();
         }
+        publishEvent("refreshPawnNumber");
     }
 
     public void startGame() {
@@ -74,7 +75,8 @@ public class GameEngine{
     }
 
     public void movePlayer() {
-            playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
+        publishEvent("refresh");
+        playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
     }
 
     public int calculateMoveAmount(){

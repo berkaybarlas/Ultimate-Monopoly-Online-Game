@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
 
 public class ButtonPanel extends JPanel{
 
@@ -12,7 +13,7 @@ public class ButtonPanel extends JPanel{
     protected JButton rollDice;
     
     private CommunicationController communicationController = CommunicationController.getInstance();
-    
+    private GameEngine gameEngine = GameEngine.getInstance();
 	public ButtonPanel(){
 
 		JPanel panel = new JPanel();
@@ -50,6 +51,8 @@ public class ButtonPanel extends JPanel{
 		rollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("roll dice");
+                gameEngine.rollDice();
+                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 			} 
 		} );
 		
