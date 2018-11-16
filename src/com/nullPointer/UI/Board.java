@@ -4,10 +4,9 @@ import javax.swing.*;
 
 import com.nullPointer.Controller.PlayerController;
 import com.nullPointer.Model.GameEngine;
-import com.nullPointer.Utils.ColorSet;
+import com.nullPointer.Model.Player;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -21,6 +20,7 @@ public class Board extends JPanel implements Runnable, Observer {
     private int length;
 
     private List<Pawn> pawnList;
+    private List<Player> playerList = new ArrayList<>();
 
 	private int smallSide;
 	private Point initialPosition;
@@ -43,13 +43,14 @@ public class Board extends JPanel implements Runnable, Observer {
 		pawnList = new ArrayList<>();
 
         smallSide = length/17;
-        initialPosition = new Point(14*smallSide - 20,14*smallSide - 20);
+        initialPosition = new Point(14 * smallSide - 20,14 * smallSide - 20);
 
         gameEngine.subscribe(this);
 	}
 
 	public void initializePawns(){
-	    playerController.getPlayers().forEach(player -> addPawn());
+	    playerList = playerController.getPlayers();
+	    playerList.forEach(player -> addNewPawn());
     }
 	
 
@@ -58,10 +59,10 @@ public class Board extends JPanel implements Runnable, Observer {
 		//g.fillRect(position.x, position.y, length, length);
 		g.drawImage(image, position.x, position.y, length, length, null);
 		g.setColor(Color.RED);
-		pawnList.forEach(pawn -> g.fillOval(pawn.getPosition().x, pawn.getPosition().y , 20, 20));
+		pawnList.forEach(pawn -> pawn.paint(g));
 	}
 
-	public void addPawn() {
+	public void addNewPawn() {
 		pawnList.add(new Pawn(initialPosition));
 	}
 
@@ -144,16 +145,18 @@ public class Board extends JPanel implements Runnable, Observer {
 		while (true) {
 			try {
 				Thread.sleep(100);
-                    playerController.getPlayers().forEach(player -> {
-                        if(player.getPosition() != player.getTargetPosition()) {
-                            try {
-                                movePlayer(playerController.getPlayers().indexOf(player) ,1 );
-                                player.setPosition(player.getPosition() + 1 );
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+				for(int i = 0; i<playerList.size(); i++){
+				    Player currentPlayer = playerList.get(i);
+                    if(currentPlayer.getPosition() != currentPlayer.getTargetPosition()) {
+                        System.out.println("Move player " + i + " . Total pawnList " + pawnList.size());
+                        try {
+                            movePlayer(i ,1 );
+                            currentPlayer.setPosition(currentPlayer.getPosition() + 1 );
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    });
+                    }
+                }
 			} catch (InterruptedException e) {
 				System.out.println("Program Interrupted");
 				System.exit(0);

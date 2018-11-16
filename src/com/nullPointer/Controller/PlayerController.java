@@ -6,9 +6,10 @@ import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.Square;
 import com.nullPointer.Model.Square.UtilitySquare;
 public class PlayerController {
+
 	private static PlayerController _instance;
 	private ArrayList<Player> players=new ArrayList<Player>(12);
-	private int currentPlayer;
+	private int currentPlayer = 0;
 
 	private PlayerController(){
 
@@ -26,7 +27,8 @@ public class PlayerController {
 	}
 
 	public Player nextPlayer(){
-		return players.get(currentPlayer+1);
+		currentPlayer++;
+		return players.get(currentPlayer);
 	}
 
 	public void putInJail(){
