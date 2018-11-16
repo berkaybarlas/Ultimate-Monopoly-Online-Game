@@ -17,6 +17,7 @@ public class PlayerPanel extends JPanel implements Observer {
 	private JTextField textField;
 	private GameEngine gameEngine = GameEngine.getInstance();
 	private JTextArea textArea;
+	ArrayList<Player> pList;
 	public PlayerPanel() {
 
         userPanel = new JPanel();
@@ -35,7 +36,7 @@ public class PlayerPanel extends JPanel implements Observer {
 		textArea.setPreferredSize(new Dimension(390, 300));
 		textArea.setEditable(false);
 		
-		ArrayList<Player> pList = GameEngine.getInstance().getPlayerController().getPlayers();
+		pList = GameEngine.getInstance().getPlayerController().getPlayers();
 		ArrayList<JButton> pButtons = new ArrayList<JButton>();
 		
 		for(int i=0;i<pList.size();i++) {
@@ -64,14 +65,11 @@ public class PlayerPanel extends JPanel implements Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawRect(800,800,1000,100);
-		textArea.setText(GameEngine.getInstance().getPlayerController().getCurrentPlayer().toString());
 	}
 
 	@Override
 	public void onEvent(String message) {
 		if(message.equals("refresh")) {
-			System.out.println(GameEngine.getInstance().getPlayerController().getCurrentPlayer().toString());
-			
 			this.repaint();
 		}
 	}

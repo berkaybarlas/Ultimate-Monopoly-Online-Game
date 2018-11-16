@@ -16,6 +16,7 @@ public class Player {
 	private int targetPosition = 0;
 	private int money = 3200;
 	private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
+	private ArrayList<PropertySquare> propertySquares;
 	private ArrayList<UtilitySquare> utilityList;
 	private ArrayList<Card> otherCards;
 	private Pawn pawn;
@@ -24,9 +25,13 @@ public class Player {
 	
 	public Player(){
 		this.name="";
+		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
+		propertySquares = new ArrayList<PropertySquare>();
 	}
 	public Player(String name) {
 		this.name = name;
+		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
+		propertySquares = new ArrayList<PropertySquare>();
 	}
 
 	public String getName() {
@@ -76,6 +81,13 @@ public class Player {
 	public void setOtherCards(ArrayList<Card> otherCards) {
 		this.otherCards = otherCards;
 	}
+	public ArrayList<PropertySquare> getPropertySquares() {
+		return propertySquares;
+	}
+	
+	public void propertySquares(ArrayList<PropertySquare> properties) {
+		this.propertySquares = properties;
+	}
 
 	public Pawn getPawn() {
 		return pawn;
@@ -105,7 +117,7 @@ public class Player {
 		String temp = "";
 		return 	"Player name: " + name + "\n"+ 
 				"Money: " + money + "\n"+
-				"Owned properties: " + propertyCardsMap + "\n"+
+				"Owned properties: " + propertySquares.toString() + "\n"+
 				"Owned utilities: " + utilityList;
 	}
 	
