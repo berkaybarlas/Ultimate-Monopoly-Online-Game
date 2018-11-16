@@ -10,12 +10,13 @@ import com.nullPointer.Model.GameEngine;
 import com.nullPointer.Model.RegularDie;
 import com.nullPointer.Model.SpeedDie;
 
-public class DiceDisplay extends JPanel{
+public class DiceDisplay extends JPanel implements Observer{
 
     private JLabel diceValues;
     private JLabel label;
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
 
     public DiceDisplay() {
 
@@ -36,11 +37,18 @@ public class DiceDisplay extends JPanel{
         diceValues.setLocation(0,30);
         this.add(diceValues);
     	this.setVisible(true);
-
+        gameEngine.subscribe(this::onEvent);
 	}
 
     public void paint() {
         diceValues.setText("Total of dice: "+ regularDie.getLastValues().toString());
         repaint();
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if(message.equals("refresh")) {
+            this.paint();
+        }
     }
 }
