@@ -5,6 +5,7 @@ import com.nullPointer.Model.Cards.Card;
 import com.nullPointer.Model.Square.ChanceCardSquare;
 import com.nullPointer.Model.Square.CommunityChestCardSquare;
 import com.nullPointer.Model.Square.GoSquare;
+import com.nullPointer.Model.Square.GoToJailSquare;
 import com.nullPointer.Model.Square.HollandTunnelSquare;
 import com.nullPointer.Model.Square.PropertySquare;
 import com.nullPointer.Model.Square.ReverseDirectionSquare;
@@ -61,33 +62,62 @@ public class DomainBoard {
 		
 		for (int i = 0; i < squareNames_inner.length ; i++) {
 			if(i== 0){
-		//		squares.add(i, new SquareSqueezePlay(squareNames_middle[i], "SqueezePlay", i, 2));
+		//		addSquare(i, new SquareSqueezePlay(squareNames_middle[i], "SqueezePlay", i, 2));
 			}else if(i == 9 || i == 21 ){
-				squares.add(new SubwaySquare(squareNames_middle[i], "SubwaySquare", i, 2));
+				addSquare(new SubwaySquare(squareNames_middle[i], "SubwaySquare", i, 2));
 			}else if(i == 4){
-				squares.add(new CommunityChestCardSquare(squareNames_middle[i], "CommunityChestCard", i, 2));
+				addSquare(new CommunityChestCardSquare(squareNames_middle[i], "CommunityChestCard", i, 2));
 			}else if(i == 16 ){
-				squares.add(new ChanceCardSquare(squareNames_middle[i], "ChanceCard", i, 2));
+				addSquare(new ChanceCardSquare(squareNames_middle[i], "ChanceCard", i, 2));
 			}else if(i == 3 || i == 15  ){
-				squares.add(new UtilitySquare(squareNames_middle[i], "Utility", i, 2));			
+				addSquare(new UtilitySquare(squareNames_middle[i], "Utility", i, 2));			
 			}else if(i == 6){
-				squares.add(new GoSquare(squareNames_middle[i], "Go", i, 2));
+				addSquare(new GoSquare(squareNames_middle[i], "Go", i, 2));
 			//}else if(i == 12){
-			//	squares.add(i, new SquareStock(squareNames_middle[i], "Stock", i, 2));
+			//	addSquare(i, new SquareStock(squareNames_middle[i], "Stock", i, 2));
 				//stock exchange
 			}else if(i == 14 ){
-				squares.add(new TaxRefundSquare(squareNames_middle[i], "TaxRefund", i, 2));
+				addSquare(new TaxRefundSquare(squareNames_middle[i], "TaxRefund", i, 2));
 			}else if(i == 18 ){
-				squares.add(new HollandTunnelSquare(squareNames_middle[i], "Tunnel", i, 2));
+				addSquare(new HollandTunnelSquare(squareNames_middle[i], "Tunnel", i, 2));
 			}else if(i == 22){
-				squares.add(new ReverseDirectionSquare(squareNames_middle[i], "Reverse", i, 2));
+				addSquare(new ReverseDirectionSquare(squareNames_middle[i], "Reverse", i, 2));
 			}else{ //  price, color & rent will be added. Now price = 100, color = "BLUE"
-				squares.add(new PropertySquare(squareNames_middle[i], "Property", i, 2, 100 , "BLUE", list));
+				addSquare(new PropertySquare(squareNames_middle[i], "Property", i, 2, 100 , "BLUE", list));
+			}
+		}
+		
+		for (int i = 0; i < squareNames_outer.length; i++) {
+			if (i == 0 || i == 5 || i == 48){
+			//	addSquare(new SquareFree(squareNames_outer[i], "Free", i, 3));
+			}else if(i == 15 ){
+			//	addSquare(new SquareAuction(squareNames_outer[i], "Auction",names[2][j],j + 64,j,2);
+			}else if(i == 7 || i == 35 ){
+				addSquare(new SubwaySquare(squareNames_outer[i], "Transit", i, 3));
+			}else if(i == 2 || i == 24 || i == 36 || i == 46){
+				addSquare(new CommunityChestCardSquare(squareNames_outer[i], "Community", i, 3));
+			}else if(i == 10 || i == 21 || i == 30 || i == 54){
+				addSquare(new ChanceCardSquare(squareNames_outer[i], "Chance", i, 3));
+			}else if(i == 11 || i == 18 || i == 39 || i == 49  ){
+				addSquare(new UtilitySquare(squareNames_outer[i], "Utility", i, 3));
+			}else if(i == 28){
+				addSquare(new GoSquare(squareNames_outer[i], "Go", i, 3));
+				//pay day(28) birthday(51)
+			}else if(i == 51 ){
+			//	addSquare(new SquareBirthday(squareNames_outer[i], "Birthday", i, 3));
+			}else if(i == 14 ){
+				addSquare(new HollandTunnelSquare(squareNames_outer[i], "Tunnel", i, 3));
+			}else if(i == 6 || i == 22 || i == 34 || i == 50){
+			//	addSquare(new SquareCabCompany(squareNames_outer[i], "CabCompany", i, 3));
+			}else if(i == 42 ){
+				addSquare(new GoToJailSquare(squareNames_outer[i], "GoToJail", i, 3));
+			}else{
+				addSquare(new PropertySquare(squareNames_outer[i], "Property", i, 3, 100 , "BLUE", list));
 			}
 		}
 
 	}
-	
+		
 
 	public ArrayList<Square> getSquares() {
 		return squares;
