@@ -18,12 +18,6 @@ public class CommunicationController {
     private GameEngine gameEngine = GameEngine.getInstance();
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
-    ///yanlis
-    private MessageBox messageBox;
-    public void setMessageBox(MessageBox messageBox){
-        this.messageBox = messageBox;
-    }
-    //wrong
 
     private CommunicationController() {
     	
@@ -39,6 +33,11 @@ public class CommunicationController {
     public void startServer() {
         gameServer = new GameServer("SERVER");
         gameServer.start();
+    }
+
+    public void createClient(String IP) {
+        client = new Client(IP,"Client");
+        client.start();
     }
 
     public void createClient() {
@@ -63,10 +62,7 @@ public class CommunicationController {
         }
 
         if(input.indexOf("message")!=-1){
-            //wrong
-            messageBox.addMessage(rest(input));
-            messageBox.repaint();
-            //yanlis
+            gameEngine.publishEvent("message/" + rest(input));
         }
 
         if(input.contains("client")) {

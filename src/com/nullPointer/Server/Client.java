@@ -13,6 +13,7 @@ public class Client extends Thread{
     private  Thread thread;
     private  String threadName;
     private Socket socket;
+    private String hostName = "localhost";
     private int portNumber = 4000;
     private PrintWriter out;
     private BufferedReader in;
@@ -22,11 +23,17 @@ public class Client extends Thread{
         threadName = name;
     }
 
+    public Client(String IP, String name) {
+        threadName = name;
+        hostName = IP; //127.0.0.1
+    }
+
     @Override
     public void run() {
-        String hostName = "localhost";//args[0];
+        //args[0];
         try {
             socket = new Socket(hostName, portNumber);
+            System.out.println("Client created with IP: " + socket.getInetAddress() + ". Port: " + socket.getPort());
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));

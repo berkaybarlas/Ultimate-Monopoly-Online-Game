@@ -10,7 +10,6 @@ class ClientHandler extends Thread
 {
     private Socket clientSocket;
     private ResponseController responseController;
-    private static ServerProtocol protocol = new ServerProtocol();
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -36,7 +35,6 @@ class ClientHandler extends Thread
                 if ((inputLine = in.readLine()) != null) {
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     System.out.println("[ClientHandler]: Client -> " + inputLine);
-                    outputLine = protocol.processInput(inputLine);
                     //responseController.sendResponse(outputLine);
                     responseController.sendResponse(inputLine);
                 }

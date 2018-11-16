@@ -25,6 +25,7 @@ public class GameEngine{
 
     private GameEngine() {
     		domainBoard=new DomainBoard();
+    		//static
     		playerController.getPlayers().add(new Player("Furkan"));
     		playerController.getPlayers().add(new Player("Berkay"));
     		playerController.getPlayers().add(new Player("Baran Berkay"));

@@ -1,16 +1,18 @@
 package com.nullPointer.UI;
 import com.nullPointer.Controller.CommunicationController;
+import com.nullPointer.Model.GameEngine;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MessageBox extends JPanel{
+public class MessageBox extends JPanel implements Observer{
 	private JScrollPane scrollPane;
 	private JTextField textEnter;
 	private JButton submit;
 	private JPanel panel;
 	private CommunicationController communicationController = CommunicationController.getInstance();
+	private GameEngine gameEngine = GameEngine.getInstance();
 
 	public MessageBox(){
 		this.setLayout(new BorderLayout());
@@ -53,6 +55,7 @@ public class MessageBox extends JPanel{
 			}
         });
 		this.setVisible(true);
+		gameEngine.subscribe(this);
 	}
 
 	public void addMessage(String msg) {
@@ -62,5 +65,12 @@ public class MessageBox extends JPanel{
         panel.validate();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if(message.contains("message/")){
+            addMessage(message.substring("message/".length()+1));
+        }
     }
 }
