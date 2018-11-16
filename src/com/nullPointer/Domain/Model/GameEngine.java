@@ -88,7 +88,7 @@ public class GameEngine{
     public void buy() {
     	
     	Player currentPlayer = playerController.getCurrentPlayer();
-    	Square square = domainBoard.getSquares().get(currentPlayer.getPosition());
+    	Square square = domainBoard.getSquaresInLayer().get(currentPlayer.getPosition());
     	if(square.getType().equals("PropertySquare") && ((PropertySquare) square).getOwner() == null) {
         	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
         	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
@@ -151,7 +151,7 @@ public class GameEngine{
 
 	public void evaluateSquare() {
         Player currentPlayer = playerController.getCurrentPlayer();
-        Square square = domainBoard.getSquares().get(currentPlayer.getTargetPosition());
+        Square square = domainBoard.getSquaresInLayer().get(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
     }
 
