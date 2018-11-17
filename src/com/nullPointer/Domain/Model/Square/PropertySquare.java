@@ -56,16 +56,6 @@ public class PropertySquare extends Square {
         this.color = color;
     }
 
-
-    public int getRent() {
-        return calculateRent();
-    }
-    private int calculateRent()
-    {
-        if (getRentListIndex() <= 6) return rentFactor*rentList[getRentListIndex()];
-        else return 0;
-    }
-
     public int numHouses()
     {
         if (getRentListIndex() <= 4) return getRentListIndex();
