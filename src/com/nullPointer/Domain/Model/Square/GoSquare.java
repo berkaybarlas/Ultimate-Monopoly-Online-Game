@@ -11,9 +11,9 @@ public class GoSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
-		gameEngine.getMoneyController().increaseMoney(currentPlayer, 300);
-		
+		//Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		//gameEngine.getMoneyController().increaseMoney(currentPlayer, 300);
+		gameEngine.nextTurn();
 	}
 
 }

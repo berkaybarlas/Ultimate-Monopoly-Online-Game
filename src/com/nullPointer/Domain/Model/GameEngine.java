@@ -98,7 +98,7 @@ public class GameEngine {
     public void buy() {
     	
     	Player currentPlayer = playerController.getCurrentPlayer();
-    	Square square = domainBoard.getSquaresInLayer().get(currentPlayer.getPosition());
+    	Square square = domainBoard.getSquareInLayerAtPosition(currentPlayer.getLayer() , currentPlayer.getTargetPosition());
     	if(square.getType().equals("PropertySquare") && ((PropertySquare) square).getOwner() == null) {
     		if(moneyController.hasEnoughMoney(currentPlayer, ((PropertySquare) square).getPrice())) {
     			moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
@@ -107,10 +107,11 @@ public class GameEngine {
     		}
     	}
     	else if(square.getType().equals("UtilitySquare")) {
-    		if(moneyController.hasEnoughMoney(currentPlayer, ((UtilitySquare) square).getPrice())) {
-	        	moneyController.decreaseMoney(currentPlayer, ((UtilitySquare) square).getPrice());
-	    		playerController.upgradeUtilityList((UtilitySquare) square, currentPlayer);
-	        	((UtilitySquare) square).setOwner(currentPlayer);
+    	    UtilitySquare utilitySquare = (UtilitySquare) square;
+    		if(moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice())) {
+	        	moneyController.decreaseMoney(currentPlayer, utilitySquare.getPrice());
+	    		playerController.upgradeUtilityList(utilitySquare, currentPlayer);
+	        	utilitySquare.setOwner(currentPlayer);
     		}
     	}	
         nextTurn();

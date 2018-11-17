@@ -22,15 +22,15 @@ public class Player {
 	
 	public Player(){
 		this.name="";
-		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
-		propertySquares = new ArrayList<PropertySquare>();
-		utilityList = new ArrayList<UtilitySquare>();
+		propertyCardsMap= new HashMap<>();
+		propertySquares = new ArrayList<>();
+		utilityList = new ArrayList<>();
 	}
 	public Player(String name) {
 		this.name = name;
-		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
-		propertySquares = new ArrayList<PropertySquare>();
-		utilityList = new ArrayList<UtilitySquare>();
+		propertyCardsMap= new HashMap<>();
+		propertySquares = new ArrayList<>();
+		utilityList = new ArrayList<>();
 	}
 
 	public String getName() {
