@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 public class ReverseDirectionSquare extends Square {
 
@@ -10,7 +11,8 @@ public class ReverseDirectionSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		gameEngine.getPlayerController().getCurrentPlayer().setDirection(!gameEngine.getPlayerController().getCurrentPlayer().getDirection());
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		currentPlayer.setDirection(!gameEngine.getPlayerController().getCurrentPlayer().getDirection());
 		// Moving the player should be done according to the direction boolean.
 	}
 

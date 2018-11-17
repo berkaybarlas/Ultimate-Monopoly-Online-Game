@@ -9,7 +9,7 @@ import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 import com.nullPointer.UI.Navigator;
 
-public class GameEngine{
+public class GameEngine implements Observable {
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private PlayerController playerController = PlayerController.getInstance();

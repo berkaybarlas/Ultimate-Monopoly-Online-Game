@@ -14,6 +14,7 @@ public class UtilitySquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		if(this.getOwner() == null) {
 			gameEngine.publishEvent("buy");
 		} else {
@@ -37,7 +38,7 @@ public class UtilitySquare extends Square {
 				multiplier = 150;
 			}
 			int diceVal = gameEngine.getRegularDie().getLastValues().get(0) + gameEngine.getRegularDie().getLastValues().get(1) + gameEngine.getSpeedDie().getLastValues().get(0);
-			gameEngine.payRent(gameEngine.getPlayerController().getCurrentPlayer(), this.getOwner(), diceVal * multiplier);
+			gameEngine.payRent(currentPlayer, this.getOwner(), diceVal * multiplier);
 			gameEngine.nextTurn();
 		}
 		

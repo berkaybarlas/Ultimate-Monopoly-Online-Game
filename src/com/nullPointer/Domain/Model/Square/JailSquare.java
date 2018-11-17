@@ -10,7 +10,7 @@ public class JailSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		gameEngine.publishEvent("doNothing");
+		gameEngine.nextTurn();
 	}
 
 }
