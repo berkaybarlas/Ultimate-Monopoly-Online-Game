@@ -55,12 +55,13 @@ public class GameEngine {
 	}
 
 
-    public void movePlayer() {
-        publishEvent("refresh");
-        Player currentPlayer = playerController.getCurrentPlayer();
-        currentPlayer.setTargetPosition(calculateMoveAmount());
-        evaluateSquare();
-    }
+	public ArrayList<Integer> rollDice() {
+		regularDie.roll(2);
+		speedDie.roll(1);
+		ArrayList<Integer> list=new ArrayList<Integer>(3);
+		list.add(regularDie.getLastValues().get(0));
+		list.add(regularDie.getLastValues().get(1));
+		list.add(speedDie.getLastValues().get(0));
 
 	public int calculateMoveAmount(){
 		int total = 0;
@@ -84,7 +85,22 @@ public class GameEngine {
 			}
 			nextTurn();
 		}
-		
+		else if (square.getType().equals("CommunityChestCardSquare"))
+		{
+			Card card = domainBoard.getChanceCards().element();
+			System.out.println(playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
+			if(card.getImmediate()){
+				card.playCard(this);
+				System.out.println();
+			}else{
+				playerController.addCardToCurrentPlayer(card);
+			}
+			nextTurn();
+		}
+		else
+		{
+			System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
+		}
 	}
 
 	public void improveProperty() {
