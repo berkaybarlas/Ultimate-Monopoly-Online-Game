@@ -43,8 +43,9 @@ public class PlayerController {
 		players.get(currentPlayer).setinJail(false);
 	}
 
-	public void movePlayer(int newPosition){
-		players.get(currentPlayer).setPosition(newPosition);
+	public void movePlayer(int amount, int layerSize){
+		//.setPosition(newPosition);
+		getCurrentPlayer().setTargetPosition(( getCurrentPlayer().getPosition() + amount ) % layerSize );
 	}
 
 	public void removeProperty(PropertySquare propertySquare){
