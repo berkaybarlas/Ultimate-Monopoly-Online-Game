@@ -1,5 +1,7 @@
 package com.nullPointer.Domain.Controller;
 import java.util.*;
+
+import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
@@ -64,5 +66,9 @@ public class PlayerController {
 	public void addPlayer() {
 	    //players.add(new Player());
     }
+
+    public void addCardToCurrentPlayer(Card card){
+		getCurrentPlayer().addCard(card);
+	}
 
 }

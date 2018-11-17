@@ -3,6 +3,7 @@ package com.nullPointer.Domain.Model;
 import java.util.*;
 
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.Cards.ChanceHolidayBonus;
 import com.nullPointer.Domain.Model.Square.Square;
 
 public class DomainBoard {
@@ -16,8 +17,13 @@ public class DomainBoard {
         layers.add(new ArrayList<Square>());
         layers.add(new ArrayList<Square>());
         layers.add(new ArrayList<Square>());
-        createSquares();
         cards = new LinkedList<Card>();
+        createSquares();
+        createCards();
+    }
+
+    private void createCards() {
+        cards.add(new ChanceHolidayBonus("Holiday Bonus", true));
     }
 
     public void createSquares() {
@@ -43,7 +49,13 @@ public class DomainBoard {
         return layers.get(1);
     }
 
+    public Square getSquareInLayerAtPosition(int layerIndex, int position) {
+        return layers.get(layerIndex).get(position);
+    }
+
     public Queue<Card> getCards() {
         return cards;
     }
+
+
 }
