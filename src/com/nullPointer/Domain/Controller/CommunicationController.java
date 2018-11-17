@@ -84,12 +84,16 @@ public class CommunicationController {
         if(input.contains("purchase")) {
         	gameEngine.buy();
         }
-        if(input.contains("drawCard")) {
-        	gameEngine.drawCard();
+
+        if(input.contains("card")) {
+            if(rest(input).contains("draw")){
+                gameEngine.drawCard();
+            } else
+            if(rest(input).contains("play")){
+                gameEngine.playCard();
+            }
         }
-        if(input.contains("playCard")) {
-        	gameEngine.playCard();
-        }
+
         if(input.contains("improveProperty")) {
         	gameEngine.improveProperty();
         }

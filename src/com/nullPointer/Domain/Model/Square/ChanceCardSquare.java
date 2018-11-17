@@ -14,7 +14,7 @@ public class ChanceCardSquare extends Square {
 		// make them draw some card? 
 		// maybe we can keep a chance card deck here, and make the player draw a card and call its playCard()
 		// open to suggestions
-		gameEngine.nextTurn();
+		gameEngine.publishEvent("drawCard");
 		
 	}
 

@@ -1,8 +1,14 @@
 package com.nullPointer.Domain.Model.Cards;
 
+import com.nullPointer.Domain.Controller.MoneyController;
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 
 public class ChanceHolidayBonus extends ChanceCard {
+	private MoneyController moneyController = MoneyController.getInstance();
+	private PlayerController playerController = PlayerController.getInstance();
+
+	private int holidayBonus = 100;
 
 	public ChanceHolidayBonus(String title, boolean isImmediate) {
 		super(title, isImmediate);
@@ -11,8 +17,9 @@ public class ChanceHolidayBonus extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), 100);
+		moneyController.increaseMoney(playerController.getCurrentPlayer(), holidayBonus);
+		System.out.println(playerController.getCurrentPlayer().getName() + " gained " + holidayBonus + "$.");
+
 	}
 
 }

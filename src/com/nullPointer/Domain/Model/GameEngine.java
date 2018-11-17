@@ -1,4 +1,5 @@
 package com.nullPointer.Domain.Model;
+import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.UI.Observer;
 import java.util.*;
 
@@ -78,7 +79,15 @@ public class GameEngine {
     }
 
     public void drawCard() {
-    	domainBoard.getCards().element();
+    	Card card = domainBoard.getCards().element();
+        System.out.println(playerController.getCurrentPlayer().getName() + " drawed " + card.getTitle());
+        if(card.getImmediate()){
+            card.playCard(this);
+            System.out.println();
+        }else{
+            playerController.addCardToCurrentPlayer(card);
+        }
+        nextTurn();
     }
 
     public void improveProperty() {
@@ -156,7 +165,7 @@ public class GameEngine {
 
 	public void evaluateSquare() {
         Player currentPlayer = playerController.getCurrentPlayer();
-        Square square = domainBoard.getSquaresInLayer().get(currentPlayer.getTargetPosition());
+        Square square = domainBoard.getSquareInLayerAtPosition(currentPlayer.getLayer(), currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
     }
 

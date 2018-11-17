@@ -52,8 +52,8 @@ public class ButtonPanel extends JPanel{
 		drawButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("drawCard");
-				//communicationController.sendClientMessage("drawCard");
-				purchaseButton.setEnabled(false);
+				communicationController.sendClientMessage("card/draw");
+				drawButton.setEnabled(false);
 			} 
 		} );
 		

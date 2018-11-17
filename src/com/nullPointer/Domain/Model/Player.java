@@ -16,7 +16,7 @@ public class Player {
 	private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
 	private ArrayList<PropertySquare> propertySquares;
 	private ArrayList<UtilitySquare> utilityList;
-	private ArrayList<Card> otherCards;
+	private ArrayList<Card> cardList;
 	private boolean inJail;
 	private boolean direction = true;
 	
@@ -71,12 +71,12 @@ public class Player {
 		return propertyCardsMap;
 	}
 	
-	public ArrayList<Card> getOtherCards() {
-		return otherCards;
+	public ArrayList<Card> getCardList() {
+		return cardList;
 	}
 	
-	public void setOtherCards(ArrayList<Card> otherCards) {
-		this.otherCards = otherCards;
+	public void setCardList(ArrayList<Card> cardList) {
+		this.cardList = cardList;
 	}
 	public ArrayList<PropertySquare> getPropertySquares() {
 		return propertySquares;
@@ -110,6 +110,11 @@ public class Player {
        // propertyCardsMap.put(propertySquare)
         propertySquares.add(propertySquare);
     }
+
+    public void addCard(Card card){
+		cardList.add(card);
+	}
+
 	@Override
 	public String toString() {
 		String temp = "";
