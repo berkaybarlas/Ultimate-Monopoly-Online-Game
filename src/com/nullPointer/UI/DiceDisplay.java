@@ -1,14 +1,11 @@
 package com.nullPointer.UI;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Model.GameEngine;
-import com.nullPointer.Model.RegularDie;
-import com.nullPointer.Model.SpeedDie;
+import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.RegularDie;
+import com.nullPointer.Domain.Model.SpeedDie;
 
 public class DiceDisplay extends JPanel implements Observer{
 

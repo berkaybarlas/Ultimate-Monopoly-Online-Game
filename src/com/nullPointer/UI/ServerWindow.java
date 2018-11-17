@@ -1,7 +1,6 @@
 package com.nullPointer.UI;
 
-import com.nullPointer.Controller.CommunicationController;
-import com.nullPointer.Utils.ColorSet;
+import com.nullPointer.Domain.Controller.CommunicationController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +13,12 @@ public class ServerWindow extends JPanel {
     private JButton quitServer;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
-
+    private JPanel buttonPanel;
     ClientDisplay clientDisplay;
 
     public ServerWindow() {
 
-        JPanel buttonPanel = new JPanel();
+        buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.add(new JLabel("Server Screen"));
         this.add(buttonPanel);
@@ -59,8 +58,10 @@ public class ServerWindow extends JPanel {
     }
 
     public void paint(Graphics g) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        clientDisplay.paint(g);
+        //clientDisplay.paint(g);
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth())/2,300);
     }
 
 }

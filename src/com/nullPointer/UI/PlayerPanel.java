@@ -1,8 +1,8 @@
 package com.nullPointer.UI;
 
 import javax.swing.*;
-import com.nullPointer.Model.GameEngine;
-import com.nullPointer.Model.Player;
+import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

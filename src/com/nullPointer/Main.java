@@ -1,6 +1,5 @@
 package com.nullPointer;
 
-import com.nullPointer.Model.GameEngine;
 import com.nullPointer.UI.AppWindow;
 
 public class Main {
