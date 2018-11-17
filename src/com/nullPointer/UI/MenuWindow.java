@@ -2,26 +2,51 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class MenuWindow extends JPanel {
+    JPanel buttonPanel;
     private JButton joinButton = null;
     private JButton serverCreateButton = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
 	private static String[] playerNumOptions = {"2","3","4","5","6","7","8","9","10", "11", "12"};
 
+    private Image image;
+    private int imageLength;
+    private File imageSrc = new File("./assets/monopoly_logo.png");
+
     public MenuWindow() {
 
-        JPanel buttonPanel = new JPanel();
+        buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.add(new JLabel("Menu"));
-        this.add(buttonPanel);
-        
+        this.add(buttonPanel, BorderLayout.CENTER);
+
         addButtons(buttonPanel);
+
+        try {
+            image = ImageIO.read(imageSrc);
+            image = image.getScaledInstance(400, 265, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void paint(Graphics g) {
+        //g.setColor(color);
+        //g.fillRect(position.x, position.y, length, length);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        super.paint(g);
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth())/2,300);
+        Point position = new Point((screenSize.width - image.getWidth(null))/2,100);
+        g.drawImage(image, position.x, position.y, null);
 
     }
 
@@ -86,5 +111,6 @@ public class MenuWindow extends JPanel {
         }
         return true;
     }
+
 }
 
