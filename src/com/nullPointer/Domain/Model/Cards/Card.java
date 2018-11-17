@@ -2,7 +2,7 @@ package com.nullPointer.Domain.Model.Cards;
 
 import com.nullPointer.Domain.Model.GameEngine;
 
-public abstract class Card {
+public abstract class Card implements iCard {
 	
 	private String title;
 	private boolean isImmediate;
