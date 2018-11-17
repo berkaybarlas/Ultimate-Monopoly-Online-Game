@@ -2,9 +2,9 @@ package com.nullPointer.Domain.Model.Cards;
 
 import com.nullPointer.Domain.Model.GameEngine;
 
-public class CCHappyBirhday extends CommunityChestCard {
+public class CCHappyBirthday extends CommunityChestCard {
 
-	public CCHappyBirhday(String title, boolean isImmediate) {
+	public CCHappyBirthday(String title, boolean isImmediate) {
 		super(title, isImmediate);
 		// TODO Auto-generated constructor stub
 	}
