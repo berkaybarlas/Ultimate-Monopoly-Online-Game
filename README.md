@@ -14,7 +14,7 @@ This project is developed by
  - Unimplemented squares automatically call nextTurn() for this demo.
  - A ServerInfo class has been added in order to maintain the connection between multiple computers.
  - evaluateSquare(diceValue, speedDieValue, player) has been changed to evaluateSquare(gameEngine), since we need GameEngine to publish various events,    depending on which square the current player is on.
- - buyProperty(propertySquare, player) has been changed to buy(), since there needs to be some flexibility as to which type of square will be bought                            (Utility Square or Property Square).
+ - buyProperty(propertySquare, player) has been changed to buy(), since there needs to be some flexibility as to which type of square will be bought                            (Utility Square or Property Square). Also, the hasEnoughMoney(player, amount) method has been transferred to MoneyController class. 
  -  
  
  
