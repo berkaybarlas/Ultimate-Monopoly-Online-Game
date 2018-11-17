@@ -67,8 +67,8 @@ public class GameEngine {
 
     public void movePlayer() {
         publishEvent("refresh");
-        playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
         Player currentPlayer = playerController.getCurrentPlayer();
+        currentPlayer.setTargetPosition(calculateMoveAmount());
         evaluateSquare();
     }
 
