@@ -12,6 +12,7 @@ public class RailRoadTransitStationsSquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
 		gameEngine.nextTurn();
+		System.out.println("here");
 	}
 
 }
