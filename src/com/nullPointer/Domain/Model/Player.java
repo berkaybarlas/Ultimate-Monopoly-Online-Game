@@ -24,11 +24,13 @@ public class Player {
 		this.name="";
 		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
 		propertySquares = new ArrayList<PropertySquare>();
+		utilityList = new ArrayList<UtilitySquare>();
 	}
 	public Player(String name) {
 		this.name = name;
 		propertyCardsMap= new HashMap<String, ArrayList<PropertySquare>>();
 		propertySquares = new ArrayList<PropertySquare>();
+		utilityList = new ArrayList<UtilitySquare>();
 	}
 
 	public String getName() {

@@ -68,6 +68,7 @@ public class GameEngine {
     public void movePlayer() {
         publishEvent("refresh");
         playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
+        Player currentPlayer = playerController.getCurrentPlayer();
         evaluateSquare();
     }
 
@@ -144,6 +145,7 @@ public class GameEngine {
 		if(player.getMoney()<0) {
 			publishEvent("bankrupt");
 		}
+		nextTurn();
 	}
 
 	public RegularDie getRegularDie() {
