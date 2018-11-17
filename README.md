@@ -9,7 +9,7 @@ This project is developed by
  
  # Changelog:
  
- - Several changes to methods of the Observer interface have been made, and several methods have been added to the GameEngine class in order to correctly subscribe, publish, and perform events.
+ - Several changes to methods of the Observer interface have been made, and several methods have been added to the GameEngine and UI classes in order to correctly subscribe, publish, and perform events.
  - Constructors of various classes have been modified, depending on their needs.
  - Unimplemented squares automatically call nextTurn() for this demo.
  - A ServerInfo class has been added in order to maintain the connection between multiple computers.

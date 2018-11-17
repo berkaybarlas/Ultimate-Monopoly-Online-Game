@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 public class BonusSquare extends Square {
 
@@ -10,7 +11,8 @@ public class BonusSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), 300);
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		gameEngine.getMoneyController().increaseMoney(currentPlayer, 300);
 		
 	}
 

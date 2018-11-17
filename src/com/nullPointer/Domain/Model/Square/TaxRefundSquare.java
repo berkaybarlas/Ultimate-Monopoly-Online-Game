@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 public class TaxRefundSquare extends Square {
 
@@ -11,7 +12,9 @@ public class TaxRefundSquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
-		gameEngine.getMoneyController().increaseMoney(gameEngine.getPlayerController().getCurrentPlayer(), gameEngine.getMoneyController().getPoolMoney()/2);
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		int poolMoney =  gameEngine.getMoneyController().getPoolMoney();
+		gameEngine.getMoneyController().increaseMoney(currentPlayer,poolMoney/2);
 	}
 
 }
