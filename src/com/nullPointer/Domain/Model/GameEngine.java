@@ -62,16 +62,6 @@ public class GameEngine {
         evaluateSquare();
     }
 
-		return list;
-	}
-
-	public void movePlayer() {
-		publishEvent("refresh");
-		playerController.getCurrentPlayer().setTargetPosition(calculateMoveAmount());
-		Player currentPlayer = playerController.getCurrentPlayer();
-		evaluateSquare();
-	}
-
 	public int calculateMoveAmount(){
 		int total = 0;
 		total+=regularDie.getLastValues().get(0);
