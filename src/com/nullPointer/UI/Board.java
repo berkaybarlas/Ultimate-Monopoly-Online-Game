@@ -144,7 +144,7 @@ public class Board extends JPanel implements Runnable, Observer {
                     if(currentPlayer.getPosition() != currentPlayer.getTargetPosition()) {
                         try {
                             movePlayer(i ,1 );
-                            currentPlayer.setPosition(currentPlayer.getPosition() + 1 );
+                            playerController.increaseCurrentPosition(currentPlayer);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
