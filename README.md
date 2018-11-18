@@ -29,4 +29,7 @@ We added also a rentIndex to PropertySquare to show which rent now is the curren
  - Sequence Diagram 6: Start Server
  The method names and class names which include those methods written in the diagrams are the same as the ones in the code except from small changes explained above.
  # Class Diagram:
- Every class included in the class diagram except BotBehavior is implemented with small changes which are specified above and also ServerProtocol class is not added because of being unnecessary.
+ - Every class included in the class diagram except BotBehavior is implemented with small changes which are specified above and also 
+ - **ServerProtocol** class is not deleted because it does not needed.
+ - **ServerInfo** class is added to store number of connected clients and their IPs.
+ - A variable added to Player class in order to check which client it is from.
