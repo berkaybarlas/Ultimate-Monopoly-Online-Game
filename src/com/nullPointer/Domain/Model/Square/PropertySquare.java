@@ -162,7 +162,7 @@ public class PropertySquare extends Square {
         } else {
             Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
             gameEngine.payRent(currentPlayer, this.getOwner() , this.getRent());
-            System.out.println("CurrentPlayer: " + currentPlayer.getName()+ " paid rent to " + this.getOwner());
+            gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
             gameEngine.nextTurn();
         }
 

@@ -82,7 +82,7 @@ public class GameEngine {
         Square square = domainBoard.getSquareInLayerAtPosition(currentPlayer.getLayer(), currentPlayer.getTargetPosition());
         if (square.getType().equals("CommunityChestCardSquare")) {
             Card card = domainBoard.getCCCards().element();
-            System.out.println(playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
+            publishEvent("message/" + "[System]: " + playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
                 card.playCard(this);
                 System.out.println();
@@ -92,7 +92,7 @@ public class GameEngine {
             nextTurn();
         } else if (square.getType().equals("ChanceCardSquare")) {
             Card card = domainBoard.getChanceCards().element();
-            System.out.println(playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
+            publishEvent("message/" + "[System]: " + playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
                 card.playCard(this);
                 System.out.println();

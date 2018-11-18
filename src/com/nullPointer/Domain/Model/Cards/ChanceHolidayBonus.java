@@ -18,8 +18,7 @@ public class ChanceHolidayBonus extends ChanceCard {
 	@Override
 	public void playCard(GameEngine gameEngine) {
 		moneyController.increaseMoney(playerController.getCurrentPlayer(), holidayBonus);
-		System.out.println(playerController.getCurrentPlayer().getName() + " gained " + holidayBonus + "$.");
-
+		gameEngine.publishEvent("message/" + "[System]: " + playerController.getCurrentPlayer().getName() + " gained " + holidayBonus + "$.");
 	}
 
 }
