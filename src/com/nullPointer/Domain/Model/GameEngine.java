@@ -1,7 +1,6 @@
 package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Cards.Card;
-import com.nullPointer.Domain.Model.Cards.CommunityChestCard;
 import com.nullPointer.UI.Observer;
 
 import java.util.*;
@@ -11,14 +10,12 @@ import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
-import com.nullPointer.UI.Navigator;
 
 public class GameEngine {
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private MoneyController moneyController = MoneyController.getInstance();
-    private Navigator navigator = Navigator.getInstance();
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
 
@@ -52,7 +49,7 @@ public class GameEngine {
     }
 
     public void startGame() {
-        navigator.gameScreen();
+        publishEvent("screen/gameScreen");
         initPlayers(2);
     }
 

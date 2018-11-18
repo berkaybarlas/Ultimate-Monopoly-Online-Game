@@ -55,6 +55,7 @@ public class CommunicationController {
 
         if(input.contains("game")) {
             if(includes(rest(input), "start")) {
+
                 gameEngine.startGame();
             }
         }

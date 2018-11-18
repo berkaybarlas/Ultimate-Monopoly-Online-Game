@@ -10,6 +10,7 @@ public class GameServer extends Thread{
     private  String threadName;
     private int portNumber = 4000;
 
+
     private ResponseController responseController;
 
     public GameServer(String name) {

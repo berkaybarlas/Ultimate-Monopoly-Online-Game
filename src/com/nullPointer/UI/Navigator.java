@@ -1,15 +1,19 @@
 package com.nullPointer.UI;
 
 
+import com.nullPointer.Domain.Model.GameEngine;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Navigator {
+public class Navigator implements Observer{
     private static Navigator _instance;
     private static CardLayout layout;
     private static JPanel panels;
+    private GameEngine gameEngine = GameEngine.getInstance();
 
     private Navigator() {
+        gameEngine.subscribe(this);
     }
 
     public static Navigator getInstance() {
@@ -46,5 +50,15 @@ public class Navigator {
     public void gameScreen() {
         layout.show(panels,"Game Panel");
 
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if(message.contains("screen")){
+            if(message.contains("gameScreen")){
+                gameScreen();
+            }
+
+        }
     }
 }
