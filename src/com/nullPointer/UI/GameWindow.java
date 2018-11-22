@@ -1,6 +1,9 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
@@ -14,6 +17,8 @@ public class GameWindow extends JPanel implements Observer {
     protected PlayerPanel playerPanel;
 
     private GameEngine gameEngine = GameEngine.getInstance();
+    private PlayerController playerController = PlayerController.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     public GameWindow(int width, int height) {
         super();
@@ -64,20 +69,23 @@ public class GameWindow extends JPanel implements Observer {
 
     @Override
     public void onEvent(String message) {
-        if(message.equals("buy")) {
-            buttonPanel.purchaseButton.setEnabled(true);
-        }
-        if(message.equals("rollDice")) {
-            buttonPanel.rollDice.setEnabled(true);
-        }
-        if(message.equals("drawCard")) {
-            buttonPanel.drawButton.setEnabled(true);
-        }
-        if(message.equals("playCard")) {
-            buttonPanel.playCardButton.setEnabled(true);
-        }
-        if(message.equals("improve")) {
-            buttonPanel.improveButton.setEnabled(true);
+        Player player = playerController.getCurrentPlayer();
+        if ( player != null && (playerController.getCurrentPlayer().getClientID() == serverInfo.getClientID())) {
+            if (message.equals("buy")) {
+                buttonPanel.purchaseButton.setEnabled(true);
+            }
+            if (message.equals("rollDice")) {
+                buttonPanel.rollDice.setEnabled(true);
+            }
+            if (message.equals("drawCard")) {
+                buttonPanel.drawButton.setEnabled(true);
+            }
+            if (message.equals("playCard")) {
+                buttonPanel.playCardButton.setEnabled(true);
+            }
+            if (message.equals("improve")) {
+                buttonPanel.improveButton.setEnabled(true);
+            }
         }
     }
 }

@@ -159,7 +159,7 @@ public class Board extends JPanel implements Runnable, Observer {
 
     @Override
     public void onEvent(String message) {
-        if(message.equals("initializePlayers")) {
+        if(message.equals("initializePawns")) {
 			initializePawns();
 			repaint();
 		}

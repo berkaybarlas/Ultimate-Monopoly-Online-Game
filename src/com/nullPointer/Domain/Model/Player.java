@@ -122,6 +122,14 @@ public class Player implements Serializable {
         cardList.add(card);
     }
 
+    public int getClientID() {
+        return ClientID;
+    }
+
+    public void setClientID(int clientID) {
+        ClientID = clientID;
+    }
+
     @Override
     public String toString() {
         String temp = "";

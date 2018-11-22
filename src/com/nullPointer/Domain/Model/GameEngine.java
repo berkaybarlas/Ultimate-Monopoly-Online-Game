@@ -43,16 +43,19 @@ public class GameEngine {
     }
 
     public void initPlayers(int playerNumber) {
+        publishEvent("initializePawns");
         publishEvent("initializePlayers");
     }
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
+
     }
 
     public void startGame() {
         publishEvent("screen/gameScreen");
         initPlayers(2);
+        publishEvent("rollDice");
     }
 
     public void movePlayer() {

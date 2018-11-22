@@ -31,7 +31,10 @@ public class PlayerController {
     }
 
     public Player getCurrentPlayer() {
-        return players.get(currentPlayer);
+        if(players.size()>0){
+            return players.get(currentPlayer);
+        }
+        return null;
     }
 
     public Player nextPlayer() {
