@@ -1,11 +1,11 @@
 package com.nullPointer.Domain.Controller;
 
-import java.util.*;
-
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
+
+import java.util.ArrayList;
 
 public class PlayerController {
 
@@ -14,11 +14,13 @@ public class PlayerController {
     private int currentPlayer = 0;
 
     private PlayerController() {
+        /*
         players.add(new Player("Furkan"));
         players.add(new Player("Tumay"));
         players.add(new Player("Berkay"));
         players.add(new Player("Baran"));
         players.add(new Player("Alihan"));
+        */
     }
 
     public static PlayerController getInstance() {
@@ -70,8 +72,8 @@ public class PlayerController {
         player.getUtilityList().add(utility);
     }
 
-    public void addPlayer() {
-        //players.add(new Player());
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     public void addCardToCurrentPlayer(Card card) {

@@ -65,7 +65,7 @@ public class Client extends Thread {
         }
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(Object msg) {
         try {
             outObject.writeObject(msg);
         } catch (Exception e) {

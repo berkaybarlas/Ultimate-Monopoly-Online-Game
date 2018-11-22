@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,8 +17,9 @@ public class GameWindow extends JPanel implements Observer {
 
     public GameWindow(int width, int height) {
         super();
-
+        ColorSet colorSet = new ColorSet();
         int offset = 50;
+
 
         JPanel contentPane = new JPanel();
         //contentPane.setLayout(new BoxLayout(contentPane, BorderLayout));
@@ -35,7 +37,7 @@ public class GameWindow extends JPanel implements Observer {
         buttonPanel = new ButtonPanel();
         middleSide.add(buttonPanel);
         contentPane.add(middleSide, BorderLayout.CENTER);
-        
+
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
 
@@ -46,6 +48,8 @@ public class GameWindow extends JPanel implements Observer {
         contentPane.add(rightSide, BorderLayout.LINE_END);
 
         this.add(contentPane);
+        setOpaque(false);
+        contentPane.setBackground(colorSet.getBackground());
         gameEngine.subscribe(this);
     }
 
@@ -55,7 +59,6 @@ public class GameWindow extends JPanel implements Observer {
 
 	public void paint(Graphics g) {
         super.paint(g);
-
         //board.paint(g);
     }
 

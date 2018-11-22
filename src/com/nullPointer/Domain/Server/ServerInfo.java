@@ -8,6 +8,7 @@ public class ServerInfo {
     private static ServerInfo _instance;
     private String serverIp;
     private int clientID;
+    private int maxPlayer = 12;
     private List<Integer> clientList;
 
     private ServerInfo() {

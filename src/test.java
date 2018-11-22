@@ -1,6 +1,7 @@
 
 
 import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -80,7 +81,8 @@ public class test extends JFrame {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         {
-
+            ColorSet colorSet = new ColorSet();
+            Color color = colorSet.getBLACK();
 
             EventQueue.invokeLater(new Runnable() {
                 public void run() {

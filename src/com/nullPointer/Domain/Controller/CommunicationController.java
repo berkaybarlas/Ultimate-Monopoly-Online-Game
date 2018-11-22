@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Controller;
 
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.RegularDie;
 import com.nullPointer.Domain.Model.SpeedDie;
 import com.nullPointer.Domain.Server.Client;
@@ -45,7 +46,7 @@ public class CommunicationController {
         client.start();
     }
 
-    public void sendClientMessage(String msg) {
+    public void sendClientMessage(Object msg) {
         client.sendMessage(msg);
     }
 
@@ -59,6 +60,10 @@ public class CommunicationController {
             if (input.contains("game")) {
                 if (includes(rest(input), "start")) {
                     gameEngine.startGame();
+                }
+            } else if (input.contains("player")) {
+                if (includes(rest(input), "create")) {
+
                 }
             } else if (input.indexOf("message") != -1) {
                 gameEngine.publishEvent("message/" + rest(input));
@@ -90,6 +95,8 @@ public class CommunicationController {
             }
         }else if(objectInput instanceof ArrayList) {
             serverInfo.setClientList((ArrayList) objectInput);
+        }else if(objectInput instanceof Player) {
+            gameEngine.addPlayer((Player) objectInput);
         }
     }
 
