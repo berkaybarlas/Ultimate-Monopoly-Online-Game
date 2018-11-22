@@ -1,20 +1,26 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class ServerWindow extends JPanel {
+public class ServerWindow extends JPanel implements Observer {
     private JButton startGame;
     private JButton quitServer;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private JPanel buttonPanel;
-    ClientDisplay clientDisplay;
+    private List<ClientDisplay> clientDisplayList;
 
     public ServerWindow() {
 
@@ -23,10 +29,9 @@ public class ServerWindow extends JPanel {
         buttonPanel.add(new JLabel("Server Screen"));
         this.add(buttonPanel);
         addButtons(buttonPanel);
+        gameEngine.subscribe(this);
+        createClientDisplay();
 
-        JPanel clientPanel = new JPanel();
-        clientDisplay = new ClientDisplay("client1");
-        this.add(clientPanel);
     }
 
     private void addButtons(JPanel panel) {
@@ -57,26 +62,62 @@ public class ServerWindow extends JPanel {
         communicationController.sendClientMessage("game/start");
     }
 
+    public List<ClientDisplay> createClientDisplay() {
+        List<Integer> clientList = serverInfo.getClientList();
+        clientDisplayList = new ArrayList<>();
+
+        for (int i = 0; i < clientList.size(); i++) {
+            JPanel clientPanel = new JPanel();
+            ClientDisplay clientDisplay = new ClientDisplay("Computer" + (i + 1), new Point(200, i * 200));
+            this.add(clientPanel);
+            clientDisplayList.add(clientDisplay);
+        }
+        return clientDisplayList;
+    }
+
+    public void addClient() {
+        int clientNumber = clientDisplayList.size();
+        String clientName = "Computer" + (clientNumber + 1);
+        Point clientDisplayPosition = new Point(200, clientNumber * 200);
+        clientDisplayList.add(new ClientDisplay(clientName, clientDisplayPosition));
+    }
+
+    @Override
+    public void onEvent(String message) {
+        if (message.equals("newClient")) {
+            this.addClient();
+            repaint();
+        }
+    }
+
     public void paint(Graphics g) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        //clientDisplay.paint(g);
-        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth())/2,300);
+        clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
     }
-
 }
 
- class ClientDisplay {
-    ClientDisplay(String name) {
+class ClientDisplay {
 
+    String clientName;
+    Point position;
+    int width = 300;
+    int height = 100;
+
+    ClientDisplay(String name, Point position) {
+        clientName = name;
+        this.position = position;
     }
 
     public void paint(Graphics g) {
-        Color color = new Color(0, 0,0);
+        Color color = new Color(255, 255, 255);
         g.setColor(color);
-        g.fillRect(300, 300, 200, 200);
+        g.fillRect(position.x, position.y, width, height);
 
-        g.drawString("",  200 + 20, 200);
+        color = new Color(0, 0, 0);
+        g.setColor(color);
+        g.drawString(clientName, position.x + 20, position.y + height / 2);
 
     }
 }

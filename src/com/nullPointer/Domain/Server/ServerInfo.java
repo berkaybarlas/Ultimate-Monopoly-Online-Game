@@ -1,13 +1,24 @@
 package com.nullPointer.Domain.Server;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServerInfo {
 
+    private static ServerInfo _instance;
     private String serverIp;
-    private String clientName;
+    private int clientID;
+    private List<Integer> clientList;
 
-    public ServerInfo(String serverIp, String clientName) {
-        this.serverIp = serverIp;
-        this.clientName = clientName;
+    private ServerInfo() {
+        clientList = new ArrayList<>();
+    }
+
+    public static ServerInfo getInstance() {
+        if (_instance == null) {
+            _instance = new ServerInfo();
+        }
+        return _instance;
     }
 
     public String getServerIp() {
@@ -18,11 +29,23 @@ public class ServerInfo {
         this.serverIp = serverIp;
     }
 
-    public String getClientName() {
-        return clientName;
+    public int getClientID() {
+        return clientID;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClientID(int clientID) {
+        this.clientID = clientID;
+    }
+
+    public void addClient(String clientId) {
+        clientList.add(Integer.parseInt(clientId));
+    }
+
+    public List<Integer> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Integer> clientList) {
+        this.clientList = clientList;
     }
 }
