@@ -51,39 +51,43 @@ public class CommunicationController {
 
     }
 
-    public void processInput(String input) {
-
-        if (input.contains("game")) {
-            if (includes(rest(input), "start")) {
-                gameEngine.startGame();
+    public void processInput(Object objectInput) {
+        if(objectInput instanceof String) {
+            String input = (String) objectInput;
+            if (input.contains("game")) {
+                if (includes(rest(input), "start")) {
+                    gameEngine.startGame();
+                }
+            } else if (input.indexOf("message") != -1) {
+                gameEngine.publishEvent("message/" + rest(input));
+            } else if (input.contains("client")) {
+                if (includes(rest(input), "create")) {
+                    String clientId = (rest(rest(input)));
+                    gameEngine.newClient(clientId);
+                }
+            } else if (input.contains("dice")) {
+                ArrayList<Integer> regularDice = new ArrayList<>();
+                ArrayList<Integer> speedDice = new ArrayList<>();
+                String[] values = input.split("/");
+                regularDice.add(Integer.parseInt(values[1]));
+                regularDice.add(Integer.parseInt(values[2]));
+                speedDice.add(Integer.parseInt(values[3]));
+                regularDie.setLastValues(regularDice);
+                speedDie.setLastValues(speedDice);
+                gameEngine.movePlayer();
+            } else if (input.contains("purchase")) {
+                gameEngine.buy();
+            } else if (input.contains("card")) {
+                if (rest(input).contains("draw")) {
+                    gameEngine.drawCard();
+                } else if (rest(input).contains("play")) {
+                    gameEngine.playCard();
+                }
+            } else if (input.contains("improveProperty")) {
+                gameEngine.improveProperty();
             }
-        } else if (input.indexOf("message") != -1) {
-            gameEngine.publishEvent("message/" + rest(input));
-        } else if (input.contains("client")) {
-            if (includes(rest(input), "create")) {
-                String clientId = (rest(rest(input)));
-                gameEngine.newClient(clientId);
-            }
-        } else if (input.contains("dice")) {
-            ArrayList<Integer> regularDice = new ArrayList<>();
-            ArrayList<Integer> speedDice = new ArrayList<>();
-            String[] values = input.split("/");
-            regularDice.add(Integer.parseInt(values[1]));
-            regularDice.add(Integer.parseInt(values[2]));
-            speedDice.add(Integer.parseInt(values[3]));
-            regularDie.setLastValues(regularDice);
-            speedDie.setLastValues(speedDice);
-            gameEngine.movePlayer();
-        } else if (input.contains("purchase")) {
-            gameEngine.buy();
-        } else if (input.contains("card")) {
-            if (rest(input).contains("draw")) {
-                gameEngine.drawCard();
-            } else if (rest(input).contains("play")) {
-                gameEngine.playCard();
-            }
-        } else if (input.contains("improveProperty")) {
-            gameEngine.improveProperty();
+        }else if(objectInput instanceof ArrayList) {
+            
         }
     }
 

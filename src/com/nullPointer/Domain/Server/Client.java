@@ -39,14 +39,16 @@ public class Client extends Thread {
 
             inObject = new ObjectInputStream(socket.getInputStream());
 
-            String fromServer;
+            Object fromServer;
 
             System.out.println("[Client]: Listening!");
             serverInfo.setClientID(socket.getLocalPort());
             while (true) {
-                if ((fromServer = (String) inObject.readObject()) != null) {
+                if ((fromServer = inObject.readObject()) != null) {
                     System.out.println("[Client]: Server -> " + fromServer);
-                    communicationController.processInput(fromServer);
+                    System.out.println(fromServer.getClass());
+
+                    communicationController.processInput( fromServer);
                 }
             }
         } catch (UnknownHostException er) {

@@ -1,6 +1,5 @@
 package com.nullPointer.Domain.Server;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -40,7 +39,7 @@ public class ResponseController {
         }
     }
 
-    public void sendResponse(String message) {
+    public void sendResponse(Object message) {
 
         listenerClientOutputs.forEach(socketOutput -> {
             try {
@@ -54,10 +53,11 @@ public class ResponseController {
     }
 
     public void sendGameData(Socket socket) throws IOException {
+
+        int indexOfClient = listenerClients.indexOf(socket);
         try {
             System.out.println("[ResponseController]:" + "trying to send object.");
-            outObject = new ObjectOutputStream(new
-                    BufferedOutputStream(socket.getOutputStream()));
+            outObject = listenerClientOutputs.get(indexOfClient);
             List<Integer> clientList = serverInfo.getClientList();
             outObject.writeObject(clientList);
         } catch (IOException e) {

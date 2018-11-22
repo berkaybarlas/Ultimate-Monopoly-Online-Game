@@ -17,20 +17,19 @@ class ClientHandler extends Thread {
         PrintWriter out;
         ObjectOutputStream oOut;
         BufferedReader in;
-        String inputLine, outputLine;
+        Object inputLine, outputLine;
 
         try {
             //out = new PrintWriter(clientSocket.getOutputStream(), true);
             //in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
             //oOut = new ObjectOutputStream(clientSocket.getOutputStream());
-            System.out.println("bom1");
             oin = new ObjectInputStream(clientSocket.getInputStream());
 
 
             //bak
             // out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
             while (true) {
-                if ((inputLine = (String) oin.readObject()) != null) {
+                if ((inputLine = oin.readObject()) != null) {
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     System.out.println("[ClientHandler]: Client -> " + inputLine);
                     //responseController.sendResponse(outputLine);
