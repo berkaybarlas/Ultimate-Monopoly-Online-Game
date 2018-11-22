@@ -241,3 +241,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/git,java,eclipse,intellij
+
+\.idea/encodings\.xml
