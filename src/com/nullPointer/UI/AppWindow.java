@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class AppWindow extends JFrame implements Observer{
+public class AppWindow extends JFrame implements Observer {
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
@@ -22,6 +23,7 @@ public class AppWindow extends JFrame implements Observer{
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private final CardLayout mainLayout = new CardLayout();
     private final JPanel panels = new JPanel(mainLayout);
@@ -47,11 +49,12 @@ public class AppWindow extends JFrame implements Observer{
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
+
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.setPreferredSize(new Dimension(width , height));
+        contentPane.setPreferredSize(new Dimension(width, height));
         contentPane.add(toolBar, BorderLayout.NORTH);
 
         setContentPane(contentPane);
@@ -59,7 +62,7 @@ public class AppWindow extends JFrame implements Observer{
         JPanel menuPanel = menuWindow;
         //menuPanel.setBorder(border);
         //menuPanel.add(new JLabel("Menu"));
-        panels.add(menuPanel, "Menu Panel" );
+        panels.add(menuPanel, "Menu Panel");
 
         JPanel gamePanel = gameWindow;
         gamePanel.setBorder(border);
@@ -119,8 +122,9 @@ public class AppWindow extends JFrame implements Observer{
         });
         toolBar.add(button);
     }
-	@Override
-	public void onEvent(String message) {
 
-	}
+    @Override
+    public void onEvent(String message) {
+
+    }
 }

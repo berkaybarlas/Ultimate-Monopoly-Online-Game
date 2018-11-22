@@ -18,11 +18,11 @@ public class CommunicationController {
     private SpeedDie speedDie = SpeedDie.getInstance();
 
     private CommunicationController() {
-    	
+
     }
 
     public static CommunicationController getInstance() {
-        if(_instance == null) {
+        if (_instance == null) {
             _instance = new CommunicationController();
         }
         return _instance;
@@ -34,7 +34,7 @@ public class CommunicationController {
     }
 
     public void createClient(String IP) {
-        client = new Client(IP,"Client");
+        client = new Client(IP, "Client");
         client.start();
     }
 
@@ -53,24 +53,18 @@ public class CommunicationController {
 
     public void processInput(String input) {
 
-        if(input.contains("game")) {
-            if(includes(rest(input), "start")) {
-
+        if (input.contains("game")) {
+            if (includes(rest(input), "start")) {
                 gameEngine.startGame();
             }
-        }
-
-        if(input.indexOf("message")!=-1){
+        } else if (input.indexOf("message") != -1) {
             gameEngine.publishEvent("message/" + rest(input));
-        }
-
-        if(input.contains("client")) {
-            if(includes(rest(input), "create")){
-                gameEngine.newClient();
+        } else if (input.contains("client")) {
+            if (includes(rest(input), "create")) {
+                String clientId = (rest(rest(input)));
+                gameEngine.newClient(clientId);
             }
-        }
-
-        if(input.contains("dice")) {
+        } else if (input.contains("dice")) {
             ArrayList<Integer> regularDice = new ArrayList<>();
             ArrayList<Integer> speedDice = new ArrayList<>();
             String[] values = input.split("/");
@@ -80,31 +74,24 @@ public class CommunicationController {
             regularDie.setLastValues(regularDice);
             speedDie.setLastValues(speedDice);
             gameEngine.movePlayer();
-        }
-        
-        if(input.contains("purchase")) {
-        	gameEngine.buy();
-        }
-
-        if(input.contains("card")) {
-            if(rest(input).contains("draw")){
+        } else if (input.contains("purchase")) {
+            gameEngine.buy();
+        } else if (input.contains("card")) {
+            if (rest(input).contains("draw")) {
                 gameEngine.drawCard();
-            } else
-            if(rest(input).contains("play")){
+            } else if (rest(input).contains("play")) {
                 gameEngine.playCard();
             }
-        }
-
-        if(input.contains("improveProperty")) {
-        	gameEngine.improveProperty();
+        } else if (input.contains("improveProperty")) {
+            gameEngine.improveProperty();
         }
     }
 
     private String rest(String word) {
         int slashIndex = word.indexOf('/');
-        if(slashIndex==-1)
+        if (slashIndex == -1)
             return word;
-        return word.substring(slashIndex+1);
+        return word.substring(slashIndex + 1);
     }
 
     private boolean includes(String sentence, String word) {
