@@ -4,9 +4,10 @@ import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Player {
+public class Player implements Serializable {
 	
 	private String name;
 	private int position = 0;

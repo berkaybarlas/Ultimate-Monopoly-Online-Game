@@ -1,15 +1,12 @@
 package com.nullPointer.Domain.Server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
-class ClientHandler extends Thread
-{
+class ClientHandler extends Thread {
     private Socket clientSocket;
     private ResponseController responseController;
+    private ObjectInputStream oin;
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -17,31 +14,34 @@ class ClientHandler extends Thread
     }
 
     public void run() {
-         PrintWriter out;
-         BufferedReader in;
-         String inputLine, outputLine;
+        PrintWriter out;
+        ObjectOutputStream oOut;
+        BufferedReader in;
+        String inputLine, outputLine;
 
         try {
-            out =
-                    new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
+            //out = new PrintWriter(clientSocket.getOutputStream(), true);
+            //in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
             //oOut = new ObjectOutputStream(clientSocket.getOutputStream());
-            //oin = new ObjectInputStream(clientSocket.getInputStream());
+            System.out.println("bom1");
+            oin = new ObjectInputStream(clientSocket.getInputStream());
 
 
-            out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
+            //bak
+            // out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
             while (true) {
-                if ((inputLine = in.readLine()) != null) {
+                if ((inputLine = (String) oin.readObject()) != null) {
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     System.out.println("[ClientHandler]: Client -> " + inputLine);
                     //responseController.sendResponse(outputLine);
                     responseController.sendResponse(inputLine);
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("[ClientHandler]: Exception caught when trying to listen on port ");
             System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

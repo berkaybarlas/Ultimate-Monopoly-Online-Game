@@ -1,21 +1,20 @@
 
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.*;
+import com.nullPointer.Domain.Model.Player;
 
-import java.awt.event.ActionEvent;
-
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.math.BigDecimal;
 
 public class test extends JFrame {
 
+    private static final Object Player = new Object() {
+        int a = 5;
+    };
     private final CardLayout cl = new CardLayout();
     private final JPanel cards = new JPanel(cl);
     private final Border border = BorderFactory.createEmptyBorder(60, 60, 60, 60);
@@ -62,15 +61,66 @@ public class test extends JFrame {
         cl.show(cards, "First Panel");
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                test frame = new test();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+    static final String[] descs = {"Java T-shirt",
+            "Java Mug",
+            "Duke Juggling Dolls",
+            "Java Pin",
+            "Java Key Chain"};
+    static final Player player = new Player("a");
+
+    static final String dataFile = "invoicedata";
+
+    static final BigDecimal[] prices = {
+            new BigDecimal("19.99"),
+            new BigDecimal("9.99"),
+            new BigDecimal("15.99"),
+            new BigDecimal("3.99"),
+            new BigDecimal("4.99")};
+    static final int[] units = {12, 8, 13, 29, 50};
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        {
+
+
+            EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    test frame = new test();
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }
+            });
+
+
+            ObjectOutputStream out = null;
+            try {
+                out = new ObjectOutputStream(new
+                        BufferedOutputStream(new FileOutputStream(dataFile)));
+
+                out.writeObject(player);
+            } finally {
+                out.close();
             }
-        });
+
+            ObjectInputStream in = null;
+            try {
+                in = new ObjectInputStream(new
+                        BufferedInputStream(new FileInputStream(dataFile)));
+
+                Player readPlayer;
+
+                try {
+                    while (true) {
+                        readPlayer = (Player) in.readObject();
+                        System.out.println(readPlayer.toString());
+                    }
+                } catch (EOFException e) {
+                }
+
+            } finally {
+                in.close();
+            }
+        }
     }
 }

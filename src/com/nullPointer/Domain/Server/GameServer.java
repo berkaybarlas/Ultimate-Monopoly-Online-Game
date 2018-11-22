@@ -26,8 +26,8 @@ public class GameServer extends Thread {
             while (true) {
                 Socket socket = serverSocket.accept();
                 responseController.addSocket(socket);
-                //responseController.sendGameData(socket);
-                //responseController.sendResponse("client/create/" + socket.getPort());
+                responseController.sendGameData(socket);
+                responseController.sendResponse("client/create/" + socket.getPort());
                 new ClientHandler(socket).start();
 
             }

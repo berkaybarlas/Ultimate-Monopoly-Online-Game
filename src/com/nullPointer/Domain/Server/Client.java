@@ -2,22 +2,22 @@ package com.nullPointer.Domain.Server;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client extends Thread{
-    private  Thread thread;
-    private  String threadName;
+public class Client extends Thread {
+    private Thread thread;
+    private String threadName;
     private Socket socket;
     private String hostName = "localhost";
     private int portNumber = 4000;
     private PrintWriter out;
+    private ObjectOutputStream outObject;
     private BufferedReader in;
+    private ObjectInputStream inObject;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     public Client(String name) {
         threadName = name;
@@ -33,18 +33,18 @@ public class Client extends Thread{
         //args[0];
         try {
             socket = new Socket(hostName, portNumber);
-            System.out.println("Client created with IP: " + socket.getInetAddress() + ". Port: " + socket.getPort());
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
+            System.out.println("Client created with IP: " + socket.getInetAddress() + ". Port: " + socket.getLocalPort());
 
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
+            outObject = new ObjectOutputStream(socket.getOutputStream());
+
+            inObject = new ObjectInputStream(socket.getInputStream());
+
             String fromServer;
-            String fromUser;
+
             System.out.println("[Client]: Listening!");
+            serverInfo.setClientID(socket.getLocalPort());
             while (true) {
-                if ((fromServer = in.readLine()) != null) {
+                if ((fromServer = (String) inObject.readObject()) != null) {
                     System.out.println("[Client]: Server -> " + fromServer);
                     communicationController.processInput(fromServer);
                 }
@@ -54,26 +54,29 @@ public class Client extends Thread{
             System.exit(1);
         } catch (IOException er) {
             System.err.println("[Client]: Couldn't get I/O for the connection to " +
-                    hostName);
+                    hostName + ". Error : " + er);
             System.exit(1);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } finally {
             System.out.println("[Client]: Client is not listening anymore");
         }
     }
 
     public void sendMessage(String msg) {
-        try{
-            out.println(msg);
-        }catch (Exception e){
+        try {
+            outObject.writeObject(msg);
+        } catch (Exception e) {
+            System.out.println("[Client]: Error during sendMessage" + e);
         }
     }
 
     @Override
     public void start() {
-        System.out.println("[Client]: Thread created with name " +  threadName );
+        System.out.println("[Client]: Thread created with name " + threadName);
         if (thread == null) {
-            thread = new Thread (this, threadName);
-            thread.start ();
+            thread = new Thread(this, threadName);
+            thread.start();
         }
     }
 
