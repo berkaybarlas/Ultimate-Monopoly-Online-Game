@@ -1,10 +1,26 @@
 package com.nullPointer.Utils;
 
-import java.awt.*;
+import java.awt.Color;
 
-public enum ColorSet {
+public class ColorSet {
 
-    BLACK("Black", new Color(0,0,0)),
+    public final static Color BLACK = new Color(0,0,0);
+
+    public final static Color BOARDBACKGROUND = new Color(187, 229, 206);
+
+    public ColorSet() {
+
+    }
+
+    public static Color getBLACK() {
+        return BLACK;
+    }
+
+    public static Color getBackground() {
+        return BOARDBACKGROUND;
+    }
+
+    /*
     BOARDBACKGROUND("Board", new Color(187, 229, 206)),
     WHITE("White", new Color(256,256,256));
 
@@ -21,7 +37,8 @@ public enum ColorSet {
     }
 
     public Color getValue() {
-        return value;
+        return new Color(0,0,0);
     }
+        */
 
 }

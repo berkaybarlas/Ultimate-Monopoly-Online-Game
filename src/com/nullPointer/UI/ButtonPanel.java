@@ -1,10 +1,11 @@
 package com.nullPointer.UI;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel{
 
@@ -59,7 +60,6 @@ public class ButtonPanel extends JPanel{
 		
 		playCardButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("playCard");
 				//communicationController.sendClientMessage("playCard");
 				playCardButton.setEnabled(false);
 			} 
@@ -67,7 +67,6 @@ public class ButtonPanel extends JPanel{
 		
 		improveButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("improveProperty");
 				//communicationController.sendClientMessage("improveProperty");
 				improveButton.setEnabled(false);
 			} 
@@ -75,7 +74,6 @@ public class ButtonPanel extends JPanel{
 		
 		rollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("roll dice");
                 gameEngine.rollDice();
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 				rollDice.setEnabled(false);
@@ -85,6 +83,7 @@ public class ButtonPanel extends JPanel{
 		drawButton.setEnabled(false);
 		playCardButton.setEnabled(false);
 		improveButton.setEnabled(false);
+		rollDice.setEnabled(false);
 		this.setVisible(true);
 		
 	}

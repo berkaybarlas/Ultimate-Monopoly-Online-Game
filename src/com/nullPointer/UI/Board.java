@@ -1,16 +1,14 @@
 package com.nullPointer.UI;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board extends JPanel implements Runnable, Observer {
@@ -161,9 +159,9 @@ public class Board extends JPanel implements Runnable, Observer {
 
     @Override
     public void onEvent(String message) {
-        if(message.equals("refreshPawnNumber")) {
-            initializePawns();
-            repaint();
-        }
+        if(message.equals("initializePawns")) {
+			initializePawns();
+			repaint();
+		}
     }
 }
