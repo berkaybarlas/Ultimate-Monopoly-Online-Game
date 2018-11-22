@@ -5,6 +5,7 @@ import com.nullPointer.Domain.Model.RegularDie;
 import com.nullPointer.Domain.Model.SpeedDie;
 import com.nullPointer.Domain.Server.Client;
 import com.nullPointer.Domain.Server.GameServer;
+import com.nullPointer.Domain.Server.ServerInfo;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class CommunicationController {
     private GameEngine gameEngine = GameEngine.getInstance();
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private CommunicationController() {
 
@@ -87,7 +89,7 @@ public class CommunicationController {
                 gameEngine.improveProperty();
             }
         }else if(objectInput instanceof ArrayList) {
-            
+            serverInfo.setClientList((ArrayList) objectInput);
         }
     }
 

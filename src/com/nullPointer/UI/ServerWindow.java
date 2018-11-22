@@ -76,10 +76,11 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addClient() {
-        int clientNumber = clientDisplayList.size();
-        String clientName = "Computer" + (clientNumber + 1);
-        Point clientDisplayPosition = new Point(200, clientNumber * 200);
-        clientDisplayList.add(new ClientDisplay(clientName, clientDisplayPosition));
+        createClientDisplay();
+        //int clientNumber = clientDisplayList.size();
+        //String clientName = "Computer" + (clientNumber + 1);
+        //Point clientDisplayPosition = new Point(200, clientNumber * 200);
+        //clientDisplayList.add(new ClientDisplay(clientName, clientDisplayPosition));
     }
 
     @Override
