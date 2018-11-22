@@ -1,21 +1,22 @@
 package com.nullPointer.Domain.Model;
 
-import com.nullPointer.Domain.Model.Cards.Card;
-import com.nullPointer.UI.Observer;
-
-import java.util.*;
-
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
+import com.nullPointer.Domain.Server.ServerInfo;
+import com.nullPointer.UI.Observer;
+
+import java.util.ArrayList;
 
 public class GameEngine {
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private MoneyController moneyController = MoneyController.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
 
@@ -56,7 +57,7 @@ public class GameEngine {
     public void movePlayer() {
         publishEvent("refresh");
         Player currentPlayer = playerController.getCurrentPlayer();
-        playerController.movePlayer(calculateMoveAmount(), domainBoard.getSquaresInLayer(currentPlayer.getLayer()).size() );
+        playerController.movePlayer(calculateMoveAmount(), domainBoard.getSquaresInLayer(currentPlayer.getLayer()).size());
         evaluateSquare();
     }
 
@@ -140,8 +141,9 @@ public class GameEngine {
         playerController.putInJail();
     }
 
-    public void newClient() {
-
+    public void newClient(String clientId) {
+        serverInfo.addClient(clientId);
+        publishEvent("newClient");
     }
 
     public PlayerController getPlayerController() {
@@ -185,4 +187,7 @@ public class GameEngine {
         square.evaluateSquare(this);
     }
 
+    public void loadData() {
+        //serverInfo.setClientList();
+    }
 }
