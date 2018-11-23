@@ -6,8 +6,9 @@ import javax.swing.*;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.RegularDie;
 import com.nullPointer.Domain.Model.SpeedDie;
+import com.nullPointer.Domain.Observer;
 
-public class DiceDisplay extends JPanel implements Observer{
+public class DiceDisplay extends JPanel implements Observer {
 
     private JLabel diceValues;
     private JLabel label;

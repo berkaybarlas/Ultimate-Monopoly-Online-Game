@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

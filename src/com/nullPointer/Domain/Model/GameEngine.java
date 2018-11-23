@@ -7,7 +7,7 @@ import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 import com.nullPointer.Domain.Server.ServerInfo;
-import com.nullPointer.UI.Observer;
+import com.nullPointer.Domain.Observer;
 
 import java.util.ArrayList;
 
