@@ -8,9 +8,19 @@ public class ColorSet {
 
     public final static Color BOARDBACKGROUND = new Color(187, 229, 206);
 
+    private static ColorSet _instance;
+
     public ColorSet() {
 
     }
+
+    public static ColorSet getInstance() {
+        if (_instance == null) {
+            _instance = new ColorSet();
+        }
+        return _instance;
+    }
+
 
     public static Color getBLACK() {
         return BLACK;
