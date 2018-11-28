@@ -136,7 +136,7 @@ public class Player implements Serializable {
         return "Player name: " + name + "\n" +
                 "Money: " + money + "\n" +
                 "Owned properties: " + propertySquares.toString() + "\n" +
-                "Owned utilities: " + utilityList;
+                "Owned utilities (" + utilityList.size() + " utilities are owned.): " + utilityList.toString();
     }
 
 }

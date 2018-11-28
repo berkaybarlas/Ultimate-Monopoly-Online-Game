@@ -82,7 +82,7 @@ public class ServerWindow extends JPanel implements Observer {
 
         for (int i = 0; i < clientList.size(); i++) {
             JPanel clientPanel = new JPanel();
-            ClientDisplay clientDisplay = new ClientDisplay("Computer" + (i + 1), new Point(200, i * 200));
+            ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 200));
             this.add(clientPanel);
             clientDisplayList.add(clientDisplay);
         }

@@ -52,5 +52,9 @@ public class UtilitySquare extends Square {
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
+	@Override
+    public String toString() {
+        return getName();
+    }
 
 }

@@ -32,9 +32,6 @@ public class PlayerPanel extends JPanel implements Observer {
         panel.setPreferredSize(new Dimension(100, 300));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
-//		textField = new JTextField();
-//		textField.setPreferredSize(new Dimension(300, 300));
-//		textField.setEditable(false);
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(390, 300));
         textArea.setEditable(false);
@@ -42,7 +39,6 @@ public class PlayerPanel extends JPanel implements Observer {
         addPlayerButtons();
         panel.add(scrollPane);
         this.add(panel);
-//		this.add(textField);
         this.add(textArea);
         gameEngine.subscribe(this);
 
