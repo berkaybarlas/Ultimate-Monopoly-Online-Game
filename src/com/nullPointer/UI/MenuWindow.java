@@ -5,8 +5,6 @@ import com.nullPointer.Utils.ColorSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +19,7 @@ public class MenuWindow extends JPanel {
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private static String[] playerNumOptions = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-    
+
     private Image logo;
     private File logoSrc = new File("./assets/monopoly_logo.png");
     private Image background;
@@ -65,7 +63,7 @@ public class MenuWindow extends JPanel {
 
     private void addButtons(JPanel panel) {
 
-        serverCreateButton = new JButton("Start Server");
+        serverCreateButton = new CustomButton("Start Server");
         serverCreateButton.setToolTipText("Start the game server");
         serverCreateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -80,28 +78,8 @@ public class MenuWindow extends JPanel {
         serverCreateButton.setVisible(true);
         panel.add(serverCreateButton);
 
-        joinButton = new JButton("Join Server");
+        joinButton = new CustomButton("Join Server");
         joinButton.setToolTipText("Join the game server");
-        joinButton.setBackground(colorSet.BLACK);
-        joinButton.setBounds(this.getWidth() / 2 - 100, this.getHeight() / 2 - 100, 100, 100);
-        joinButton.setForeground(Color.WHITE);
-        joinButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-        joinButton.setOpaque(true);
-        joinButton.setBorderPainted(false);
-        joinButton.getModel().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                ButtonModel model = (ButtonModel) e.getSource();
-
-                if (model.isRollover()) {
-                    joinButton.setBackground(new Color(4, 194, 63));
-                } else if (model.isPressed()) {
-                    joinButton.setBackground(Color.BLACK);
-                } else {
-                    joinButton.setBackground(new Color(206, 14, 16));
-                }
-            }
-        });
         joinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ip = JOptionPane.showInputDialog(panel, "Enter the IP address you'd like to join.", "IP address needed.");

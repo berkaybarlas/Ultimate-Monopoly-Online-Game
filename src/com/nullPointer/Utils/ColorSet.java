@@ -4,9 +4,13 @@ import java.awt.Color;
 
 public class ColorSet {
 
-    public final static Color BLACK = new Color(0,0,0);
+    public final static Color BLACK = new Color(0, 0, 0);
 
     public final static Color BOARDBACKGROUND = new Color(187, 229, 206);
+
+    public final static Color ButtonPrimary = new Color(206, 14, 16);
+
+    public final static Color ButtonPressed = new Color(255, 142, 139);
 
     private static ColorSet _instance;
 
@@ -21,34 +25,5 @@ public class ColorSet {
         return _instance;
     }
 
-
-    public static Color getBLACK() {
-        return BLACK;
-    }
-
-    public static Color getBackground() {
-        return BOARDBACKGROUND;
-    }
-
-    /*
-    BOARDBACKGROUND("Board", new Color(187, 229, 206)),
-    WHITE("White", new Color(256,256,256));
-
-    private final String key;
-    private final Color value;
-
-    ColorSet(String key, Color value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public Color getValue() {
-        return new Color(0,0,0);
-    }
-        */
 
 }

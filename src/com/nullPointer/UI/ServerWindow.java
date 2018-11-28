@@ -39,6 +39,7 @@ public class ServerWindow extends JPanel implements Observer {
         buttonPanel.add(new JLabel("Server Screen"));
         this.add(buttonPanel);
         addButtons(buttonPanel);
+
         gameEngine.subscribe(this);
         createClientDisplay();
         try {
@@ -54,7 +55,7 @@ public class ServerWindow extends JPanel implements Observer {
 
     private void addButtons(JPanel panel) {
 
-        startGame = new JButton("Start Game");
+        startGame = new CustomButton("Start Game");
         startGame.setToolTipText("Start the game ");
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +65,7 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(startGame);
 
-        addPlayer = new JButton("Add player");
+        addPlayer = new CustomButton("Add player");
         addPlayer.setToolTipText("add new player ");
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,7 +76,7 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(addPlayer);
 
-        quitServer = new JButton("Quit Server ");
+        quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -122,6 +123,7 @@ public class ServerWindow extends JPanel implements Observer {
         g.drawImage(background, 0, 0, null);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
+        buttonPanel.validate();
     }
 }
 
@@ -145,6 +147,7 @@ class ClientDisplay {
         color = new Color(0, 0, 0);
         g.setColor(color);
         g.drawString(clientName, position.x + 20, position.y + height / 2);
+
 
     }
 }

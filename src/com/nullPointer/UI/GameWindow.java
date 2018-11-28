@@ -55,7 +55,7 @@ public class GameWindow extends JPanel implements Observer {
 
         this.add(contentPane);
         setOpaque(false);
-        contentPane.setBackground(colorSet.getBackground());
+        contentPane.setBackground(colorSet.BOARDBACKGROUND);
         gameEngine.subscribe(this);
     }
 
