@@ -82,7 +82,6 @@ public class test extends JFrame {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         {
             ColorSet colorSet = new ColorSet();
-            Color color = colorSet.getBLACK();
 
             EventQueue.invokeLater(new Runnable() {
                 public void run() {

@@ -6,10 +6,13 @@ import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,10 @@ public class ServerWindow extends JPanel implements Observer {
     private Navigator navigator = Navigator.getInstance();
     private JPanel buttonPanel;
     private List<ClientDisplay> clientDisplayList;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private Image background;
+    private File backgroundSrc = new File("./assets/background2.jpg");
 
     public ServerWindow() {
 
@@ -32,14 +39,23 @@ public class ServerWindow extends JPanel implements Observer {
         buttonPanel.add(new JLabel("Server Screen"));
         this.add(buttonPanel);
         addButtons(buttonPanel);
+
         gameEngine.subscribe(this);
         createClientDisplay();
-
+        try {
+            background = ImageIO.read(backgroundSrc);
+            background = background.getScaledInstance(
+                    screenSize.width,
+                    screenSize.height,
+                    Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addButtons(JPanel panel) {
 
-        startGame = new JButton("Start Game");
+        startGame = new CustomButton("Start Game");
         startGame.setToolTipText("Start the game ");
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -49,7 +65,7 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(startGame);
 
-        addPlayer = new JButton("Add player");
+        addPlayer = new CustomButton("Add player");
         addPlayer.setToolTipText("add new player ");
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -60,7 +76,7 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(addPlayer);
 
-        quitServer = new JButton("Quit Server ");
+        quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -104,8 +120,10 @@ public class ServerWindow extends JPanel implements Observer {
     public void paint(Graphics g) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
+        g.drawImage(background, 0, 0, null);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
+        buttonPanel.validate();
     }
 }
 
@@ -129,6 +147,7 @@ class ClientDisplay {
         color = new Color(0, 0, 0);
         g.setColor(color);
         g.drawString(clientName, position.x + 20, position.y + height / 2);
+
 
     }
 }
