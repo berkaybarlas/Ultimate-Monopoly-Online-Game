@@ -3,7 +3,7 @@ package com.nullPointer.Domain.Server;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerInfo {
+public class  ServerInfo {
 
     private static ServerInfo _instance;
     private String serverIp;
