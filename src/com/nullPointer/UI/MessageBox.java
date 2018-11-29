@@ -1,11 +1,12 @@
 package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Observer;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class MessageBox extends JPanel implements Observer{
+public class MessageBox extends JPanel implements Observer {
 	private JScrollPane scrollPane;
 	private JTextField textEnter;
 	private JButton submit;

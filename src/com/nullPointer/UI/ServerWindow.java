@@ -2,6 +2,8 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
@@ -14,6 +16,7 @@ import java.util.List;
 
 public class ServerWindow extends JPanel implements Observer {
     private JButton startGame;
+    private JButton addPlayer;
     private JButton quitServer;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -46,6 +49,17 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(startGame);
 
+        addPlayer = new JButton("Add player");
+        addPlayer.setToolTipText("add new player ");
+        addPlayer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Player player = new Player("Test", serverInfo.getClientID());
+                communicationController.sendClientMessage(player);
+                //navigator.gameScreen();
+            }
+        });
+        panel.add(addPlayer);
+
         quitServer = new JButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
         quitServer.addActionListener(new ActionListener() {
@@ -68,7 +82,7 @@ public class ServerWindow extends JPanel implements Observer {
 
         for (int i = 0; i < clientList.size(); i++) {
             JPanel clientPanel = new JPanel();
-            ClientDisplay clientDisplay = new ClientDisplay("Computer" + (i + 1), new Point(200, i * 200));
+            ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 200));
             this.add(clientPanel);
             clientDisplayList.add(clientDisplay);
         }
@@ -76,10 +90,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addClient() {
-        int clientNumber = clientDisplayList.size();
-        String clientName = "Computer" + (clientNumber + 1);
-        Point clientDisplayPosition = new Point(200, clientNumber * 200);
-        clientDisplayList.add(new ClientDisplay(clientName, clientDisplayPosition));
+        createClientDisplay();
     }
 
     @Override

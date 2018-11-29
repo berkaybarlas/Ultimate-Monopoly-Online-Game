@@ -1,9 +1,11 @@
 package com.nullPointer.Domain.Server;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 //Singleton
 //Controller/Adapter
@@ -11,33 +13,59 @@ import java.util.ArrayList;
 public class ResponseController {
     private static ResponseController _instance;
     private ArrayList<Socket> listenerClients;
+    private ArrayList<ObjectOutputStream> listenerClientOutputs;
     private PrintWriter out;
+    private ObjectOutputStream outObject;
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private ResponseController() {
         this.listenerClients = new ArrayList<>();
+        this.listenerClientOutputs = new ArrayList<>();
     }
 
     public static ResponseController getInstance() {
-        if(_instance == null) {
+        if (_instance == null) {
             _instance = new ResponseController();
         }
         return _instance;
     }
 
-    public void addSocket(Socket socket){
+    public void addSocket(Socket socket) {
         listenerClients.add(socket);
+        try {
+            listenerClientOutputs.add(new ObjectOutputStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void sendResponse(String message) {
+    public void sendResponse(Object message) {
 
-        listenerClients.forEach(socket -> {
+        listenerClientOutputs.forEach(socketOutput -> {
             try {
-                out = new PrintWriter(socket.getOutputStream(), true);
-                out.println(message);
+                socketOutput.writeObject(message);
+
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("[ResponseController]:" + " error during sendResponse: " + e);
             }
         });
     }
 
+    public void sendGameData(Socket socket) throws IOException {
+
+        int indexOfClient = listenerClients.indexOf(socket);
+        try {
+            System.out.println("[ResponseController]:" + "trying to send object.");
+            outObject = listenerClientOutputs.get(indexOfClient);
+            List<Integer> clientList = serverInfo.getClientList();
+            outObject.writeObject(clientList);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("[ResponseController]:" + "sending object failed.");
+        } finally {
+            // outObject.close();
+            System.out.println("[ResponseController]:" + "sending object finished.");
+        }
+    }
 }

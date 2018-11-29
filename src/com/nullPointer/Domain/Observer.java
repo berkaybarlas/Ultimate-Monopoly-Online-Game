@@ -1,4 +1,4 @@
-package com.nullPointer.UI;
+package com.nullPointer.Domain;
 
 public interface Observer {
 

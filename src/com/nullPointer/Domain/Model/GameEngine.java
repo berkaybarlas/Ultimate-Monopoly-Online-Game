@@ -7,7 +7,7 @@ import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 import com.nullPointer.Domain.Server.ServerInfo;
-import com.nullPointer.UI.Observer;
+import com.nullPointer.Domain.Observer;
 
 import java.util.ArrayList;
 
@@ -43,15 +43,19 @@ public class GameEngine {
     }
 
     public void initPlayers(int playerNumber) {
-        for (int i = 0; i < playerNumber; i++) {
-            playerController.addPlayer();
-        }
-        publishEvent("refreshPawnNumber");
+        publishEvent("initializePawns");
+        publishEvent("initializePlayers");
+    }
+
+    public void addPlayer(Player newPlayer) {
+        playerController.addPlayer(newPlayer);
+
     }
 
     public void startGame() {
         publishEvent("screen/gameScreen");
         initPlayers(2);
+        publishEvent("rollDice");
     }
 
     public void movePlayer() {
