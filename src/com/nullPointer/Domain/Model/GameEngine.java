@@ -49,7 +49,7 @@ public class GameEngine {
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
-
+        publishEvent("newPlayer");
     }
 
     public void startGame() {

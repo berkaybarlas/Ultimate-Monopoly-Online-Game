@@ -27,6 +27,7 @@ public class ServerWindow extends JPanel implements Observer {
     private Navigator navigator = Navigator.getInstance();
     private JPanel buttonPanel;
     private List<ClientDisplay> clientDisplayList;
+    private List<PlayerDisplay> playerDisplayList;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private Image background;
@@ -42,6 +43,8 @@ public class ServerWindow extends JPanel implements Observer {
 
         gameEngine.subscribe(this);
         createClientDisplay();
+        createPlayerDisplay();
+
         try {
             background = ImageIO.read(backgroundSrc);
             background = background.getScaledInstance(
@@ -95,11 +98,8 @@ public class ServerWindow extends JPanel implements Observer {
     public List<ClientDisplay> createClientDisplay() {
         List<Integer> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
-
         for (int i = 0; i < clientList.size(); i++) {
-            JPanel clientPanel = new JPanel();
             ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 200));
-            this.add(clientPanel);
             clientDisplayList.add(clientDisplay);
         }
         return clientDisplayList;
@@ -109,10 +109,22 @@ public class ServerWindow extends JPanel implements Observer {
         createClientDisplay();
     }
 
+    public void createPlayerDisplay() {
+
+    }
+
+    public void addPlayer() {
+        ClientDisplay clientDisplay = new ClientDisplay("Player " + (3 + 1), new Point(1200, 200));
+        clientDisplayList.add(clientDisplay);
+    }
+
     @Override
     public void onEvent(String message) {
         if (message.equals("newClient")) {
             this.addClient();
+            repaint();
+        } else if (message.equals("newPlayer")) {
+            addPlayer();
             repaint();
         }
     }
@@ -148,6 +160,30 @@ class ClientDisplay {
         g.setColor(color);
         g.drawString(clientName, position.x + 20, position.y + height / 2);
 
+
+    }
+}
+
+class PlayerDisplay {
+
+    String clientName;
+    Point position;
+    int width = 300;
+    int height = 100;
+
+    PlayerDisplay(String name, Point position) {
+        clientName = name;
+        this.position = position;
+    }
+
+    public void paint(Graphics g) {
+        Color color = new Color(255, 255, 255);
+        g.setColor(color);
+        g.fillRect(position.x, position.y, width, height);
+
+        color = new Color(0, 0, 0);
+        g.setColor(color);
+        g.drawString(clientName, position.x + 20, position.y + height / 2);
 
     }
 }
