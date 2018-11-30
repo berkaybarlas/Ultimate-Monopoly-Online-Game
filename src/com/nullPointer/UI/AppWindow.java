@@ -47,6 +47,11 @@ public class AppWindow extends JFrame implements Observer {
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
+        Animator animator = new Animator(this);
+        Thread thread = new Thread(animator);
+        thread.start();
+        animator.setVisible(true);
+
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
@@ -57,7 +62,7 @@ public class AppWindow extends JFrame implements Observer {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setPreferredSize(new Dimension(width, height));
         contentPane.add(toolBar, BorderLayout.NORTH);
-
+        contentPane.add(animator);
         setContentPane(contentPane);
 
         JPanel menuPanel = menuWindow;

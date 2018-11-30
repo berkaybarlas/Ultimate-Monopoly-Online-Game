@@ -6,10 +6,10 @@ import com.nullPointer.Domain.Model.Player;
 
 public class Pawn implements Drawable {
     private Point position;
-    private Path myPath;
+    private Path myPath = new StraightLinePath(410, 410, 10, 10, 100);
     private int positionIndex;
     private Player player;
-    Animator animator = new Animator();
+    Animator animator = Animator.getInstance();
 
     public Pawn(Point point, Player player) {
         this.position = new Point(point.x, point.y);
@@ -61,18 +61,20 @@ public class Pawn implements Drawable {
     }
 
     public void draw(Graphics g) {
-        if (myPath != null && myPath.hasMoreSteps())
-            position = myPath.nextPosition();
-        else {
-            int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
+        /*if (player != null && player.getPosition() != player.getTargetPosition()) {
+            if (myPath != null && myPath.hasMoreSteps())
+                position = myPath.nextPosition();
+            else {
+                int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
 
-            myPath = new StraightLinePath(410, 410, 10, 10, numberOfSteps);
-            position = myPath.nextPosition();
-
-        }
-        g.setColor(Color.YELLOW);
-        g.fillRect((int) position.getX(), (int) position.getY(), 20, 20);
-        g.setColor(Color.BLACK);
-
+                //myPath = new StraightLinePath(410, 410, 10, 10, numberOfSteps);
+                position = myPath.nextPosition();
+                System.out.println("[Pawn]: Move pawn " + position.x + " " + position.y);
+            }
+            paint(g);
+            //playerController.increaseCurrentPosition(player);
+        }*/
+        position = new Point(100,100);
+        paint(g);
     }
 }
