@@ -194,4 +194,9 @@ public class GameEngine {
     public void loadData() {
         //serverInfo.setClientList();
     }
+
+    public boolean isCurrrentPlayerInThisClient(){
+        Player player = playerController.getCurrentPlayer();
+        return player != null && (playerController.getCurrentPlayer().getClientID() == serverInfo.getClientID());
+    }
 }

@@ -70,8 +70,8 @@ public class GameWindow extends JPanel implements Observer {
 
     @Override
     public void onEvent(String message) {
-        Player player = playerController.getCurrentPlayer();
-        if ( player != null && (playerController.getCurrentPlayer().getClientID() == serverInfo.getClientID())) {
+
+        if (gameEngine.isCurrrentPlayerInThisClient()) {
             if (message.equals("buy")) {
                 buttonPanel.purchaseButton.setEnabled(true);
             }
