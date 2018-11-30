@@ -65,16 +65,9 @@ public class Pawn implements Drawable{
             // 10 steps.
             int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
 
-            if (direction == DOWN) {
                 myPath = new StraightLinePath(410, 410, 10, 10, numberOfSteps);
-                myPosition = myPath.nextPosition();
-                direction = UP;
-            }
-            else {
-                myPath = new StraightLinePath(10, 10, 410, 410, numberOfSteps);
-                myPosition = myPath.nextPosition();
-                direction = DOWN;
-            }
+                position = myPath.nextPosition();
+            
         }
         g.setColor(Color.YELLOW);
         g.fillRect((int)position.getX(), (int)position.getY(), 15, 15);
