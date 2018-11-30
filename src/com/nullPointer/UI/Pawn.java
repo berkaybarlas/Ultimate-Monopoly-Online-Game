@@ -12,7 +12,7 @@ public class Pawn implements Drawable{
 	public Pawn(Point point, Player player) {
 		this.position = new Point(point.x, point.y);
 		this.player = player;
-		myPath = new StraightLinePath();
+		
 	}
 
 	public Point getPosition() {
@@ -57,7 +57,7 @@ public class Pawn implements Drawable{
 
 	public void draw(Graphics g) {
         if (myPath != null && myPath.hasMoreSteps())
-            myPosition = myPath.nextPosition();
+            position = myPath.nextPosition();
         else {
             // Get a random number of steps to make the balls move
             // at different speeds.  Note there has to be at least
@@ -77,9 +77,8 @@ public class Pawn implements Drawable{
             }
         }
         g.setColor(Color.YELLOW);
-        g.fillRect((int)myPosition.getX(), (int)myPosition.getY(), 15, 15);
+        g.fillRect((int)position.getX(), (int)position.getY(), 15, 15);
         g.setColor(Color.BLACK);
-        g.drawString("" + myNumber,
-            (int)myPosition.getX()+3, (int)myPosition.getY()+12);
+       
     }
 }
