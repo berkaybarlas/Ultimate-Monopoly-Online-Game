@@ -2,7 +2,7 @@ package com.nullPointer.UI;
 
 import java.awt.*;
 
-public class Pawn {
+public class Pawn implements Drawable{
     private Point position;
     private int positionIndex;
 
@@ -37,4 +37,10 @@ public class Pawn {
     public void paint(Graphics g) {
         g.fillOval(position.x, position.y , 20, 20);
     }
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
 }
