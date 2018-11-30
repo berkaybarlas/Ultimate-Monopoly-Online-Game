@@ -55,6 +55,16 @@ public class PlayerController {
         getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
     }
 
+    public void movePlayer(int targetIndex)
+    {
+        getCurrentPlayer().setTargetPosition(targetIndex);
+    }
+
+    public void changeCurrentPosition(Player player, int newPos)
+    {
+        player.setPosition(newPos);
+    }
+
     public void increaseCurrentPosition(Player player) {
         player.setPosition((player.getPosition() + 1) % 40);
     }
