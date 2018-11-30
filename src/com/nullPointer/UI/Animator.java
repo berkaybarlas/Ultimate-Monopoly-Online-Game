@@ -40,11 +40,9 @@ public class Animator extends JPanel implements Runnable {
             try {
                 playerList = playerController.getPlayers();
 
-                Thread.sleep(1);
-                //revalidate();
-                repaint();
-                //playerController.increaseCurrentPosition(currentPlayer);
-
+                Thread.sleep(100);
+                //validate();
+                //repaint();              
             } catch (InterruptedException e) {
                 System.out.println("Program Interrupted");
                 System.exit(0);

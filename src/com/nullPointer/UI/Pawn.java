@@ -2,11 +2,12 @@ package com.nullPointer.UI;
 
 import java.awt.*;
 
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Player;
 
 public class Pawn implements Drawable {
     private Point position;
-    private Path myPath = new StraightLinePath(410, 410, 10, 10, 100);
+    private Path myPath;
     private int positionIndex;
     private Player player;
     Animator animator = Animator.getInstance();
@@ -47,34 +48,23 @@ public class Pawn implements Drawable {
         g.setColor(Color.RED);
     }
 
-    public void move(Point start, Point end) {
-		/*int fraction=100;
-		int diffX=(int) (end.getX()-start.getX());
-		int diffY=(int) (end.getY()-start.getY());
-		int fracDiffX = diffX/fraction;
-		int fracDiffY = diffY/fraction;
-		for(int i=0;i<fraction;i++){
-			position.move((int)start.getX()+fracDiffX, (int)start.getY()+fracDiffY);
-			
-		}*/
-
-    }
-
     public void draw(Graphics g) {
-        /*if (player != null && player.getPosition() != player.getTargetPosition()) {
-            if (myPath != null && myPath.hasMoreSteps())
+    	System.out.println(position.getX()+"   "+position.getY());
+        if (player != null && player.getPosition() != player.getTargetPosition()) {
+            if (myPath != null && myPath.hasMoreSteps()){
+            	System.out.println("Path is not null");
                 position = myPath.nextPosition();
+                paint(g);
+            }
             else {
+            	PlayerController.getInstance().increaseCurrentPosition(player);
                 int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
 
-                //myPath = new StraightLinePath(410, 410, 10, 10, numberOfSteps);
+                myPath = new StraightLinePath(position.x, position.y, 10, 10, numberOfSteps);
                 position = myPath.nextPosition();
+                paint(g);
                 System.out.println("[Pawn]: Move pawn " + position.x + " " + position.y);
             }
-            paint(g);
-            //playerController.increaseCurrentPosition(player);
-        }*/
-        position = new Point(100,100);
-        paint(g);
+        }
     }
 }
