@@ -6,6 +6,8 @@ public class ColorSet {
 
     public final static Color BLACK = new Color(0, 0, 0);
 
+    public final static Color WHITE = new Color(255, 255, 255);
+
     public final static Color BOARDBACKGROUND = new Color(187, 229, 206);
 
     public final static Color ButtonPrimary = new Color(206, 14, 16);

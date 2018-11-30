@@ -32,10 +32,6 @@ public class MenuWindow extends JPanel {
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        this.add(buttonPanel, BorderLayout.CENTER);
-
-        addButtons(buttonPanel);
-
         try {
             logo = ImageIO.read(logoSrc);
             logo = logo.getScaledInstance(400, 265, Image.SCALE_SMOOTH);
@@ -47,6 +43,10 @@ public class MenuWindow extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.add(buttonPanel, BorderLayout.CENTER);
+
+        addButtons(buttonPanel);
+        buttonPanel.validate();
     }
 
     public void paint(Graphics g) {
@@ -54,10 +54,10 @@ public class MenuWindow extends JPanel {
         //g.fillRect(position.x, position.y, length, length);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
         Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 100);
         g.drawImage(background, 0, 0, null);
         g.drawImage(logo, position.x, position.y, null);
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
 
     }
 

@@ -5,6 +5,7 @@ import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class ServerWindow extends JPanel implements Observer {
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private JPanel buttonPanel;
+    private JScrollPane scrollPane;
+    private JPanel playerPanel;
     private List<ClientDisplay> clientDisplayList;
     private List<PlayerDisplay> playerDisplayList;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,8 +45,6 @@ public class ServerWindow extends JPanel implements Observer {
         addButtons(buttonPanel);
 
         gameEngine.subscribe(this);
-        createClientDisplay();
-        createPlayerDisplay();
 
         try {
             background = ImageIO.read(backgroundSrc);
@@ -54,6 +55,11 @@ public class ServerWindow extends JPanel implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        createClientDisplay();
+        createPlayerDisplay();
+        this.add(scrollPane);
+
     }
 
     private void addButtons(JPanel panel) {
@@ -110,13 +116,27 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void createPlayerDisplay() {
-
+        playerPanel = new JPanel();
+        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+        playerPanel.setBounds(600, 100, 120, 600);
+        playerPanel.setPreferredSize(new Dimension(120, 600));
+        playerPanel.setBackground(ColorSet.WHITE);
+        scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(600, 100, 120, 300);
+        scrollPane.setBackground(ColorSet.BLACK);
+        this.add(scrollPane);
+        scrollPane.validate();
     }
 
     public void addPlayer() {
-        ClientDisplay clientDisplay = new ClientDisplay("Player " + (3 + 1), new Point(1200, 200));
-        clientDisplayList.add(clientDisplay);
+        ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
+        CustomButton newButton = new CustomButton(pList.get(pList.size() - 1).getName());
+        newButton.setPreferredSize(new Dimension(100, 100));
+
+        playerPanel.add(newButton);
+        playerPanel.validate();
     }
+
 
     @Override
     public void onEvent(String message) {
@@ -125,17 +145,17 @@ public class ServerWindow extends JPanel implements Observer {
             repaint();
         } else if (message.equals("newPlayer")) {
             addPlayer();
-            repaint();
+            //repaint();
         }
     }
 
     public void paint(Graphics g) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        g.drawImage(background, 0, 0, null);
+        //g.drawImage(background, 0, 0, null);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-        buttonPanel.validate();
+        scrollPane.setLocation((screenSize.width - buttonPanel.getWidth()) / 4 * 3, 300);
     }
 }
 

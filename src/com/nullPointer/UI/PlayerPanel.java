@@ -3,6 +3,7 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class PlayerPanel extends JPanel implements Observer {
 
     private JPanel panel;
     private JScrollPane scrollPane;
-    private JPanel userPanel, displayPanel;
+    private JPanel userPanel;
     private JTextField textField;
     private GameEngine gameEngine = GameEngine.getInstance();
     private JTextArea textArea;
@@ -31,7 +32,7 @@ public class PlayerPanel extends JPanel implements Observer {
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(100, 300));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.black);
+        panel.setBackground(ColorSet.BLACK);
         textArea = new JTextArea();
         textArea.setPreferredSize(new Dimension(390, 300));
         textArea.setEditable(false);
@@ -57,10 +58,10 @@ public class PlayerPanel extends JPanel implements Observer {
         ArrayList<JButton> pButtons = new ArrayList<JButton>();
 
         for (int i = 0; i < pList.size(); i++) {
-            pButtons.add(new JButton(pList.get(i).getName()));
-            pButtons.get(i).setPreferredSize(new Dimension(100, 100));
+            JButton newButton = new JButton(pList.get(i).getName());
+            newButton.setPreferredSize(new Dimension(100, 100));
             int currentPlayerIndex = i;
-            pButtons.get(i).addActionListener(new ActionListener() {
+            newButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println(pList.get(currentPlayerIndex).getName());
                     textArea.setText(pList.get(currentPlayerIndex).toString());
@@ -68,6 +69,7 @@ public class PlayerPanel extends JPanel implements Observer {
                 }
             });
 
+            pButtons.add(newButton);
             userPanel.add(pButtons.get(i));
             userPanel.validate();
         }
