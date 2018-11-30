@@ -9,9 +9,11 @@ public class Pawn implements Drawable{
 	 private Path myPath;
 	private int positionIndex;
 	private Player player;
+	Animator animator = new Animator();
 	public Pawn(Point point, Player player) {
 		this.position = new Point(point.x, point.y);
 		this.player = player;
+		animator.addDrawable(this);
 		
 	}
 
@@ -41,6 +43,8 @@ public class Pawn implements Drawable{
 
 	public void paint(Graphics g) {
 		g.fillOval(position.x, position.y , 20, 20);
+		System.out.println("hellooooooooooooooooo"+position.x +position.y);
+		g.setColor(Color.RED);
 	}
 	public void move(Point start, Point end) {
 		/*int fraction=100;
@@ -59,10 +63,6 @@ public class Pawn implements Drawable{
         if (myPath != null && myPath.hasMoreSteps())
             position = myPath.nextPosition();
         else {
-            // Get a random number of steps to make the balls move
-            // at different speeds.  Note there has to be at least
-            // 1 step in each path, but for appearances we used at least
-            // 10 steps.
             int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
 
                 myPath = new StraightLinePath(410, 410, 10, 10, numberOfSteps);
@@ -70,7 +70,7 @@ public class Pawn implements Drawable{
             
         }
         g.setColor(Color.YELLOW);
-        g.fillRect((int)position.getX(), (int)position.getY(), 15, 15);
+        g.fillRect((int)position.getX(), (int)position.getY(), 20, 20);
         g.setColor(Color.BLACK);
        
     }

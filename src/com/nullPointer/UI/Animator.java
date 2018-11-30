@@ -20,17 +20,14 @@ public class Animator extends JPanel implements Runnable{
 		while (true) {
 			try {
 				Thread.sleep(100);
-				/*for(int i = 0; i<playerList.size(); i++){
+				for(int i = 0; i<playerList.size(); i++){
 				Player currentPlayer = playerList.get(i);
 				if(currentPlayer.getPosition() != currentPlayer.getTargetPosition()) {
-					try {
-						//movePlayer(i ,1 );
-						playerController.increaseCurrentPosition(currentPlayer);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					repaint();
+					//movePlayer(i ,1 );
+					playerController.increaseCurrentPosition(currentPlayer);
 				}
-			}*/
+			}
 			} catch (InterruptedException e) {
 				System.out.println("Program Interrupted");
 				System.exit(0);

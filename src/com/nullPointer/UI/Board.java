@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class Board extends JPanel implements Runnable, Observer {
+public class Board extends JPanel implements Observer {
 	private Image image; 
 	private File imageSrc = new File("./assets/ultimate_monopoly.png");
 
@@ -261,13 +261,13 @@ public class Board extends JPanel implements Runnable, Observer {
 		//g.setColor(color);
 		g.fillRect(position.x, position.y, length, length);
 		g.drawImage(image, position.x, position.y, length, length, null);
-		//g.setColor(Color.RED);
+		g.setColor(Color.RED);
 
-		for (Entry<Integer, Point[]> entry : squareMap.entrySet())
+		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
 		{
 			g.fillOval(entry.getValue()[0].x, entry.getValue()[1].x,20, 20);
 			g.setColor(Color.CYAN);
-		}
+		}*/
 		pawnList.forEach(pawn -> pawn.paint(g));
 	}
 
@@ -340,31 +340,6 @@ public class Board extends JPanel implements Runnable, Observer {
 				amount--;
 			}
 		}
-	}
-
-	@Override
-	public void run() {
-		while (true) {
-			try {
-				Thread.sleep(10);
-				/*for(int i = 0; i<playerList.size(); i++){
-					Player currentPlayer = playerList.get(i);
-					if(currentPlayer.getPosition() != currentPlayer.getTargetPosition()) {
-						try {
-							movePlayer(i ,1 );
-							playerController.increaseCurrentPosition(currentPlayer);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}*/
-			} catch (InterruptedException e) {
-				System.out.println("Program Interrupted");
-				System.exit(0);
-			}
-			repaint();
-		}
-
 	}
 
 	@Override
