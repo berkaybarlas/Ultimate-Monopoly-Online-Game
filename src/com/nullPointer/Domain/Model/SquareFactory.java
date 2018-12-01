@@ -19,6 +19,22 @@ public class SquareFactory {
      * RentList's for each property square
      */
     //Should these be public or private??
+    int[] LombardList = {17, 85, 240, 475, 670, 1025, 1525, 105, 100};
+    int[] EmbarcaderoList = LombardList;
+    int[] FishermansWharfList = {21, 105, 320, 780, 950, 1125, 1625, 125, 100};
+
+    int[] BeaconList = {30, 160, 470, 1050, 1250, 1500, 2500, 165, 200};
+    int[] BoylstonList = BeaconList;
+    int[] NewburyList = {40, 185, 550, 1200, 1500, 1700, 2700, 190, 200};
+
+    int[] FifthList = {60, 220, 650, 1500, 1800, 2100, 3600, 215, 300};
+    int[] MadisonList = FifthList;
+    int[] WallList = {80, 300, 800, 1800, 2200, 2700, 4200, 250, 300};
+
+    int[] FloridaList = {9, 45, 120, 350, 500, 700, 1200, 65, 50};
+    int[] MiamiList = FloridaList;
+    int[] BiscayneList = {11, 55, 160, 475, 650, 800, 1300, 75, 50};
+
     int[] MediterranianAveList = {2, 10, 30, 90, 160, 250, 750, 30, 50};
     int[] BalticAveList = {4, 20, 60, 180, 320, 450, 900, 30, 50};
 
@@ -73,6 +89,22 @@ public class SquareFactory {
     /*
      * Prices for each property square
      */
+    int LombardPrice = 210;
+    int EmbarcaderoPrice = 210;
+    int FishermansWharfPrice= 250;
+
+    int BeaconPrice = 330;
+    int BoylstonPrice = 330;
+    int NewburyPrice = 380;
+
+    int FifthPrice = 430;
+    int MadisonPrice = 430;
+    int WallPrice = 500;
+
+    int FloridaPrice = 130;
+    int MiamiPrice = 130;
+    int BiscaynePrice = 150;
+
     int MediterranianPrice = 60;
     int BalticPrice = 60;
 
@@ -106,6 +138,14 @@ public class SquareFactory {
     /*
      * Color values for each property square
      */
+    String LombardColor, EmbarcaderoColor, FishermansWharfColor = "White";
+
+    String BeaconColor, BoylstonColor, NewburyColor = "Black";
+
+    String FifthColor, MadisonColor, WallColor = "Dark Gray";
+
+    String FloridaColor, MiamiColor, BiscayneColor = "Brown";
+
     String MediterranianColor, BalticColor = "Dark Purple";
 
     String OrientalColor, VermontColor, ConnecticutColor = "Light Blue";
@@ -122,7 +162,62 @@ public class SquareFactory {
     
     String ParkColor, BoardwalkColor = "Dark Blue";
 
-    public Square createMiddleSquare(int index) {
+    public Square createInnerSquares(int index) {
+        switch(index) {
+            case 0:
+                return new EmptySquare(squareNames_inner[index],"SqueezePlaySquare");
+            case 1:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",EmbarcaderoPrice,EmbarcaderoColor,EmbarcaderoList);
+            case 2:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",FishermansWharfPrice,FishermansWharfColor,FishermansWharfList);
+            case 3:
+                return new UtilitySquare(squareNames_inner[index],"UtilitySquare");
+            case 4:
+                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChestSquare");
+            case 5:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",BeaconPrice,BeaconColor,BeaconList);
+            case 6:
+                return new BonusSquare(squareNames_inner[index],"BonusSquare");
+            case 7:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",BoylstonPrice,BoylstonColor,BoylstonList);
+            case 8:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",NewburyPrice,NewburyColor,NewburyList);
+            case 9:
+                return new RailRoadTransitStationsSquare(squareNames_inner[index],"RailRoadTransitStationsSquare");
+            case 10:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",FifthPrice,FifthColor,FifthList);
+            case 11:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",MadisonPrice,MadisonColor,MadisonList);
+            case 12:
+                return new EmptySquare(squareNames_inner[index],"StockExchangeSquare");
+            case 13:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",WallPrice,WallColor,WallList);
+            case 14:
+                return new TaxRefundSquare(squareNames_inner[index],"TaxRefundSquare");
+            case 15:
+                return new UtilitySquare(squareNames_inner[index],"UtilitySquare");
+            case 16:
+                return new ChanceCardSquare(squareNames_inner[index],"ChanceCardSquare");
+            case 17:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",FloridaPrice,FloridaColor,FloridaList);
+            case 18:
+                return new HollandTunnelSquare(squareNames_inner[index],"HollandTunnelSquare");
+            case 19:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",MiamiPrice,MiamiColor,MiamiList);
+            case 20:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",BiscaynePrice,BiscayneColor,BiscayneList);
+            case 21:
+                return new RailRoadTransitStationsSquare(squareNames_inner[index],"RailRoadTransitStationsSquare");
+            case 22:
+                return new ReverseDirectionSquare(squareNames_inner[index],"ReverseDirectionSquare");
+            case 23:
+                return new PropertySquare(squareNames_inner[index],"PropertySquare",LombardPrice,LombardColor,LombardList);
+            default:
+                return null;
+        }
+    }
+
+    public Square createMiddleSquares(int index) {
         switch (index) {
             case 0:
                 return new GoSquare(squareNames_middle[index], "GoSquare");
@@ -143,7 +238,7 @@ public class SquareFactory {
             case 8:
                 return new PropertySquare(squareNames_middle[index], "PropertySquare", VermontPrice, VermontColor, VermontAveList);
             case 9:
-                return new PropertySquare(squareNames_middle[index], "PropertySquare", ConnecticutPrice, ConnecticutColor, MediterranianAveList);
+                return new PropertySquare(squareNames_middle[index], "PropertySquare", ConnecticutPrice, ConnecticutColor, ConnecticutAveList);
             case 10:
                 return new JailSquare(squareNames_middle[index], "JailSquare");
             case 11:
