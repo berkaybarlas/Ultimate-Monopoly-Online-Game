@@ -1,10 +1,12 @@
 package com.nullPointer.Domain.Model;
 
-import java.util.*;
-
 import com.nullPointer.Domain.Model.Cards.Card;
-import com.nullPointer.Domain.Model.Cards.ChanceHolidayBonus;
 import com.nullPointer.Domain.Model.Square.Square;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DomainBoard {
 
@@ -73,14 +75,15 @@ public class DomainBoard {
     public void createSquares() {
 
         for (int i = 0; i < squareFactory.squareNames_inner.length; i++) {
-
+            layers.get(0).add(squareFactory.createInnerSquares(i));
         }
 
         for (int i = 0; i < squareFactory.squareNames_middle.length; i++) {
-            layers.get(1).add(squareFactory.createMiddleSquare(i));
+            layers.get(1).add(squareFactory.createMiddleSquares(i));
         }
 
         for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
+            layers.get(2).add(squareFactory.createOuterSquares(i));
         }
 
     }
