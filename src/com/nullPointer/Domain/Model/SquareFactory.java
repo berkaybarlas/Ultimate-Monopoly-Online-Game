@@ -93,6 +93,8 @@ public class SquareFactory {
     int EmbarcaderoPrice = 210;
     int FishermansWharfPrice= 250;
 
+    int TelephonePrice = 150;
+
     int BeaconPrice = 330;
     int BoylstonPrice = 330;
     int NewburyPrice = 380;
@@ -100,6 +102,8 @@ public class SquareFactory {
     int FifthPrice = 430;
     int MadisonPrice = 430;
     int WallPrice = 500;
+
+    int GasPrice = 150;
 
     int FloridaPrice = 130;
     int MiamiPrice = 130;
@@ -115,7 +119,9 @@ public class SquareFactory {
     int StCharlesPrice = 140;
     int StatesPrice = 140;
     int VirginiaPrice = 160;
-    
+
+    int ElectricPrice = 150;
+
     int StJamesPrice = 180;
     int TennesseePrice = 180;
     int NewYorkPrice = 200;
@@ -127,7 +133,9 @@ public class SquareFactory {
     int AtlanticPrice = 260;
     int VentnorPrice = 260;
     int MarvinPrice = 280;
-    
+
+    int WaterPrice = 150;
+
     int PacificPrice = 300;
     int NorthCarolinaPrice = 300;
     int PennsylvaniaPrice = 320;
@@ -171,7 +179,7 @@ public class SquareFactory {
             case 2:
                 return new PropertySquare(squareNames_inner[index],"PropertySquare",FishermansWharfPrice,FishermansWharfColor,FishermansWharfList);
             case 3:
-                return new UtilitySquare(squareNames_inner[index],"UtilitySquare");
+                return new UtilitySquare(squareNames_inner[index],"UtilitySquare",TelephonePrice);
             case 4:
                 return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChestSquare");
             case 5:
@@ -195,7 +203,7 @@ public class SquareFactory {
             case 14:
                 return new TaxRefundSquare(squareNames_inner[index],"TaxRefundSquare");
             case 15:
-                return new UtilitySquare(squareNames_inner[index],"UtilitySquare");
+                return new UtilitySquare(squareNames_inner[index],"UtilitySquare",GasPrice);
             case 16:
                 return new ChanceCardSquare(squareNames_inner[index],"ChanceCardSquare");
             case 17:
@@ -244,7 +252,7 @@ public class SquareFactory {
             case 11:
                 return new PropertySquare(squareNames_middle[index], "PropertySquare", StCharlesPrice, StCharlesColor, StCharlesList);
             case 12:
-                return new UtilitySquare(squareNames_middle[index], "UtilitySquare");
+                return new UtilitySquare(squareNames_middle[index], "UtilitySquare",ElectricPrice);
             case 13:
                 return new PropertySquare(squareNames_middle[index], "PropertySquare", StatesPrice, StatesColor, StatesAveList);
             case 14:
@@ -276,7 +284,7 @@ public class SquareFactory {
             case 27:
         			return new PropertySquare(squareNames_middle[index], "PropertySquare", VentnorPrice, VentnorColor, VentnorList);
             case 28:
-            	 	return new UtilitySquare(squareNames_middle[index], "UtilitySquare");
+            	 	return new UtilitySquare(squareNames_middle[index], "UtilitySquare",WaterPrice);
             case 29:
             		return new PropertySquare(squareNames_middle[index], "PropertySquare", MarvinPrice, MarvinColor, MarvinList);
             case 30:
