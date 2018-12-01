@@ -83,6 +83,7 @@ public class DomainBoard {
         }
 
         for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
+            layers.get(2).add(squareFactory.createOuterSquares(i));
         }
 
     }
