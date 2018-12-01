@@ -33,7 +33,6 @@ public class GameWindow extends JPanel implements Observer {
 
         contentPane.setBorder( new EmptyBorder(0,0,0,0) );
         contentPane.add(board, BorderLayout.LINE_START);
-        //new Thread(board).start();
 
         JPanel middleSide = new JPanel();
         middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));

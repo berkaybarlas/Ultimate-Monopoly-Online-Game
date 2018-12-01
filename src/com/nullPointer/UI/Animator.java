@@ -17,18 +17,14 @@ public class Animator extends JPanel implements Runnable {
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private List<Player> playerList = new ArrayList<>();
-    private JPanel animationPanel;
+    private JFrame animFrame;
 
     public Animator(JFrame jFrame) {
-
-//        Container container = jFrame.getContentPane();
-//        container.add(this);
-
+    	animFrame=jFrame;
         setPreferredSize(new Dimension(1,1));
         _instance = this;
 
     }
-
     public static Animator getInstance(){
         return _instance;
     }
@@ -38,16 +34,12 @@ public class Animator extends JPanel implements Runnable {
         //System.out.println("[Animator]: Thread started");
         while (true) {
             try {
-                playerList = playerController.getPlayers();
-
-                Thread.sleep(100);
-                //validate();
-                //repaint();              
+                Thread.sleep(80);                            
             } catch (InterruptedException e) {
                 System.out.println("Program Interrupted");
                 System.exit(0);
             }
-            repaint();
+            animFrame.repaint();
         }
     }
 
@@ -66,5 +58,4 @@ public class Animator extends JPanel implements Runnable {
     public void removeDrawable(Drawable d) {
         elementsToDraw.removeElement(d);
     }
-
 }

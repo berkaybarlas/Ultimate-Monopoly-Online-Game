@@ -49,12 +49,9 @@ public class Pawn implements Drawable {
     }
 
     public void draw(Graphics g) {
-    	System.out.println(position.getX()+"   "+position.getY());
         if (player != null && player.getPosition() != player.getTargetPosition()) {
             if (myPath != null && myPath.hasMoreSteps()){
-            	System.out.println("Path is not null");
-                position = myPath.nextPosition();
-                paint(g);
+                position = myPath.nextPosition();               
             }
             else {
             	PlayerController.getInstance().increaseCurrentPosition(player);
@@ -62,9 +59,8 @@ public class Pawn implements Drawable {
 
                 myPath = new StraightLinePath(position.x, position.y, 10, 10, numberOfSteps);
                 position = myPath.nextPosition();
-                paint(g);
-                System.out.println("[Pawn]: Move pawn " + position.x + " " + position.y);
-            }
+             }
+            paint(g);
         }
     }
 }
