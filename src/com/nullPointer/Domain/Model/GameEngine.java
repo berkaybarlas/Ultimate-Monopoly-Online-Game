@@ -194,4 +194,14 @@ public class GameEngine {
     public void loadData() {
         //serverInfo.setClientList();
     }
+
+	public void resume() {
+		// TODO Auto-generated method stub
+		System.out.println("Game Engine: Game resumed");
+	}
+
+	public void pause() {
+		// TODO Auto-generated method stub
+		System.out.println("Game Engine: Game paused");
+	}
 }
