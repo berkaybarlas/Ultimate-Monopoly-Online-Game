@@ -32,8 +32,24 @@ public class Board extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     //new added things below
     private HashMap<Integer, Point[]> squareMap = new HashMap<Integer, Point[]>();
-
+    private ArrayList<Integer> currentPath=new ArrayList<Integer>();
+    public static Board instance;
+    
+    public ArrayList<Integer> getCurrentPath(){
+    	return currentPath;   	
+    }
+    public HashMap<Integer, Point[]> getSquareMap(){
+    	return squareMap;
+    }
+    public static Board getInstance(){   	
+    	return instance;
+    }
+    
     public Board(Point position, int length) {
+    	instance=this;
+    	currentPath.add(58);
+    	currentPath.add(59);
+    	currentPath.add(60);
         try {
             image = ImageIO.read(imageSrc);
             image = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
