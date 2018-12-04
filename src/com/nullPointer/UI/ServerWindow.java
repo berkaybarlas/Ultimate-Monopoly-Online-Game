@@ -94,7 +94,7 @@ public class ServerWindow extends JPanel implements Observer {
     @Override
     public void onEvent(String message) {
         if (message.equals("newClient")) {
-            this.createClientDisplay();
+            this.addClient();
             repaint();
         }
     }
@@ -123,8 +123,8 @@ class ClientDisplay extends JPanel{
         Graphics2D g2 = (Graphics2D) g;
         Color color = new Color(0, 0, 0);
         g2.setColor(color);
-        g2.setFont(new Font("Corbel", Font.PLAIN, 200));
-        g2.drawString(clientName, position.x + 20, position.y + height / 2);
+        g2.setFont(new Font("Corbel", Font.PLAIN, 20));
+        g2.drawString(clientName, position.x + 100, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
         g2.drawRect(position.x, position.y, width, height);
     }
