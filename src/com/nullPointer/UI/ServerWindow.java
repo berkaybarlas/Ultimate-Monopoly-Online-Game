@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 
@@ -81,8 +81,13 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList = new ArrayList<>();
 
         for (int i = 0; i < clientList.size(); i++) {
-            ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 150));
-            clientDisplayList.add(clientDisplay);
+            if(clientList.size() <= 6) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(100, i * 150));
+                clientDisplayList.add(clientDisplay);
+            } else {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(500, i * 150));
+                clientDisplayList.add(clientDisplay);
+            }
         }
         return clientDisplayList;
     }
@@ -113,16 +118,18 @@ class ClientDisplay extends JPanel{
     Point position;
     int width = 300;
     int height = 100;
+    Random rand = new Random();
+    Color clientColor;
 
     ClientDisplay(String name, Point position) {
         clientName = name;
         this.position = position;
+        clientColor = new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
     }
 
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        Color color = new Color(0, 0, 0);
-        g2.setColor(color);
+        g2.setColor(clientColor);
         g2.setFont(new Font("Corbel", Font.PLAIN, 20));
         g2.drawString(clientName, position.x + 100, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
