@@ -81,9 +81,7 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList = new ArrayList<>();
 
         for (int i = 0; i < clientList.size(); i++) {
-            JPanel clientPanel = new JPanel();
-            ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 200));
-            this.add(clientPanel);
+            ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(200, i * 150));
             clientDisplayList.add(clientDisplay);
         }
         return clientDisplayList;
@@ -96,7 +94,7 @@ public class ServerWindow extends JPanel implements Observer {
     @Override
     public void onEvent(String message) {
         if (message.equals("newClient")) {
-            this.addClient();
+            this.createClientDisplay();
             repaint();
         }
     }
@@ -109,7 +107,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 }
 
-class ClientDisplay {
+class ClientDisplay extends JPanel{
 
     String clientName;
     Point position;
@@ -122,13 +120,12 @@ class ClientDisplay {
     }
 
     public void paint(Graphics g) {
-        Color color = new Color(255, 255, 255);
-        g.setColor(color);
-        g.fillRect(position.x, position.y, width, height);
-
-        color = new Color(0, 0, 0);
-        g.setColor(color);
-        g.drawString(clientName, position.x + 20, position.y + height / 2);
-
+        Graphics2D g2 = (Graphics2D) g;
+        Color color = new Color(0, 0, 0);
+        g2.setColor(color);
+        g2.setFont(new Font("Corbel", Font.PLAIN, 200));
+        g2.drawString(clientName, position.x + 20, position.y + height / 2);
+        g2.setStroke(new BasicStroke(2.0F));
+        g2.drawRect(position.x, position.y, width, height);
     }
 }
