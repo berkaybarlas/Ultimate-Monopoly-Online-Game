@@ -54,13 +54,11 @@ public class Pawn implements Drawable {
 		ArrayList<Integer> path=Board.getInstance().getCurrentPath();
 		HashMap<Integer, Point[]> squareMap=Board.getInstance().getSquareMap();
 		if (player != null && player.getPosition() != player.getTargetPosition()) {
-
-			for(int i=0;i<path.size();i++){
-
-				if (myPath != null && myPath.hasMoreSteps()){
-					position = myPath.nextPosition();               
-				}
-				else {
+			if (myPath != null && myPath.hasMoreSteps()){
+				position = myPath.nextPosition();               
+			}
+			else {
+				for(int i=0;i<path.size();i++){
 					PlayerController.getInstance().increaseCurrentPosition(player);
 					int numberOfSteps = (int) (10.0 + (Math.random() * 100.0));
 					myPath = new StraightLinePath(position.x, position.y 
@@ -69,9 +67,8 @@ public class Pawn implements Drawable {
 							,numberOfSteps);
 					position = myPath.nextPosition();
 				}
-				paint(g);
 			}
+			paint(g);
 		}
-
 	}
 }
