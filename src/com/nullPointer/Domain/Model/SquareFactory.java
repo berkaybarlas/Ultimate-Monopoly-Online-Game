@@ -35,6 +35,7 @@ public class SquareFactory {
     int[] MiamiList = FloridaList;
     int[] BiscayneList = {11, 55, 160, 475, 650, 800, 1300, 75, 50};
 
+    // last two: Mortgage value, House cost
     int[] MediterranianAveList = {2, 10, 30, 90, 160, 250, 750, 30, 50};
     int[] BalticAveList = {4, 20, 60, 180, 320, 450, 900, 30, 50};
 
