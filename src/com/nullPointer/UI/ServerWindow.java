@@ -5,12 +5,13 @@ import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 
@@ -79,19 +80,20 @@ public class ServerWindow extends JPanel implements Observer {
     public List<ClientDisplay> createClientDisplay() {
         List<Integer> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
-
+        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
-            JPanel clientPanel = new JPanel();
-            ClientDisplay clientDisplay = new ClientDisplay("Computer" + (i + 1), new Point(200, i * 200));
-            this.add(clientPanel);
-            clientDisplayList.add(clientDisplay);
+            if(i < 6) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * height/6), ColorSet.getPlayerColors().get(i));
+                clientDisplayList.add(clientDisplay);
+            } else {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(400, (i-6) * height/6), ColorSet.getPlayerColors().get(i));
+                clientDisplayList.add(clientDisplay);
+            }
         }
         return clientDisplayList;
     }
 
-    public void addClient() {
-        createClientDisplay();
-    }
+    public void addClient() { createClientDisplay(); }
 
     @Override
     public void onEvent(String message) {
@@ -109,26 +111,27 @@ public class ServerWindow extends JPanel implements Observer {
     }
 }
 
-class ClientDisplay {
+class ClientDisplay extends JPanel{
 
     String clientName;
     Point position;
     int width = 300;
     int height = 100;
+    Random rand = new Random();
+    Color clientColor;
 
-    ClientDisplay(String name, Point position) {
+    ClientDisplay(String name, Point position, Color color) {
         clientName = name;
         this.position = position;
+        clientColor = color;
     }
 
     public void paint(Graphics g) {
-        Color color = new Color(255, 255, 255);
-        g.setColor(color);
-        g.fillRect(position.x, position.y, width, height);
-
-        color = new Color(0, 0, 0);
-        g.setColor(color);
-        g.drawString(clientName, position.x + 20, position.y + height / 2);
-
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(clientColor);
+        g2.setFont(new Font("Corbel", Font.PLAIN, 20));
+        g2.drawString(clientName, position.x + 100, position.y + height / 2);
+        g2.setStroke(new BasicStroke(2.0F));
+        g2.drawRect(position.x, position.y, width, height);
     }
 }
