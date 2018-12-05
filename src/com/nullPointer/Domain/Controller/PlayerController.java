@@ -12,6 +12,14 @@ public class PlayerController {
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
     private int currentPlayer = 0;
+    private Player chosenPlayer = null;
+
+    public Player getChosen() {
+		return chosenPlayer;
+	}
+	public void setChosen(Player choose) {
+		this.chosenPlayer = choose;
+	}
 
     private PlayerController() {
         /*

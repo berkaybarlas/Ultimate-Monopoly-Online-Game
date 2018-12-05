@@ -25,7 +25,7 @@ public class GameEngine {
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
-    private GameEngine() {
+	private GameEngine() {
         domainBoard = new DomainBoard();
     }
 
