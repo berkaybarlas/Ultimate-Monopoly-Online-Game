@@ -72,28 +72,45 @@ public class GameEngine {
         publishEvent("refresh");
         LinkedList<Integer> path = new LinkedList<Integer>();
         HashMap<Integer, Square> squares = domainBoard.getSquareMap();
-        HashMap<Integer, Integer[]> connections = domainBoard.getConnectionsMap();
+        HashMap<Integer, ArrayList<Integer>> connections = domainBoard.getConnectionsMap();
         Player currentPlayer = playerController.getCurrentPlayer();
-        int currentPos = currentPlayer.getPosition();
+        int currentPos;
         int regularDiceTotal = calculateMoveAmount();
         int target = -2;
 
 
         for(int i=0; i<regularDiceTotal; i++)
         {
-            int placeToGo = connections.get(currentPos)[0];
-            System.out.println("TEST STRING");
+            currentPos = currentPlayer.getPosition();
+            int placeToGo = connections.get(currentPos).get(0);
+//            System.out.println("TEST STRING");
             System.out.println(currentPos);
+//            System.out.println(placeToGo);
+//            System.out.println(domainBoard.getSquareMap());
+//            System.out.println(connections.get(56));
+//            System.out.println(connections.get(57));
+//            System.out.println(connections.get(58));
+//            System.out.println("END");
             if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal%2 == 0)
             {
-                placeToGo = connections.get(currentPos)[1];
+                if(connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
+                else System.out.println("There seems to be a problem.");
             }
-            playerController.changeCurrentPosition(currentPlayer, placeToGo);
+            else
+            {
+
+            }
+//            System.out.println("Printing current position: before:");
+//            System.out.println(currentPos);
+           playerController.changeCurrentPosition(currentPlayer, placeToGo);
+//            System.out.println("after: ");
+//            System.out.println(currentPos);
             path.add(placeToGo);
             target = placeToGo;
         }
 
-        System.out.println("TEST STRING");
+        System.out.println("TEST STRING2");
+        System.out.println(path);
         System.out.println(target);
         playerController.movePlayer(target);
         return path;

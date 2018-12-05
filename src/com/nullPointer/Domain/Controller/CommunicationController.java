@@ -9,6 +9,7 @@ import com.nullPointer.Domain.Server.GameServer;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class CommunicationController {
 
@@ -75,13 +76,14 @@ public class CommunicationController {
             } else if (input.contains("dice")) {
                 ArrayList<Integer> regularDice = new ArrayList<>();
                 ArrayList<Integer> speedDice = new ArrayList<>();
+                LinkedList<Integer> path = new LinkedList<Integer>();
                 String[] values = input.split("/");
                 regularDice.add(Integer.parseInt(values[1]));
                 regularDice.add(Integer.parseInt(values[2]));
                 speedDice.add(Integer.parseInt(values[3]));
                 regularDie.setLastValues(regularDice);
                 speedDie.setLastValues(speedDice);
-                gameEngine.calculatePath();
+                path = gameEngine.calculatePath();
             } else if (input.contains("purchase")) {
                 gameEngine.buy();
             } else if (input.contains("card")) {
