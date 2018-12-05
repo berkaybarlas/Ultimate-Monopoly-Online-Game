@@ -22,8 +22,6 @@ public class DomainBoard {
     private int layer3end = 119;
 
 
-
-
     // List that holds card generation orders for CC & chance cards. I appended the CCIndexList & ChanceIndexList, you can make changes as you see fit.
     public ArrayList<Integer> meta_card_gen_info = new ArrayList<Integer>();
 
@@ -81,66 +79,59 @@ public class DomainBoard {
 
     public void createSquares() {
 
-/*        for (int i = 0; i < squareFactory.squareNames_inner.length; i++) {
-
-        }*/
-
-        for (int i = 0; i < squareFactory.squareNames_middle.length; i++) {
-            domainSquareMap.put(i+layer2begin, squareFactory.createMiddleSquare(i));
+        for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
+            domainSquareMap.put(i + layer1begin, squareFactory.createOuterSquares(i));
         }
 
-/*        for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
+        for (int i = 0; i < squareFactory.squareNames_middle.length; i++) {
+            domainSquareMap.put(i + layer2begin, squareFactory.createMiddleSquares(i));
+        }
 
-        }*/
+        for (int i = 0; i < squareFactory.squareNames_inner.length; i++) {
+            domainSquareMap.put(i + layer3begin, squareFactory.createInnerSquares(i));
+        }
 
     }
 
     // Creates map of connections. This feature is fundamental to the current board, and therefore is hard-coded.
-    public void createConnectionsMap()
-    {
-        for(int i=0; i<55; i++)
-        {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i+1, -1)));
+    public void createConnectionsMap() {
+        for (int i = 0; i < 55; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
         }
         connectionsMap.put(55, new ArrayList<Integer>(Arrays.asList(0, -1)));
 
-        for(int i=56; i<95; i++)
-        {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i+1, -1)));
+        for (int i = 56; i < 95; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
         }
         connectionsMap.put(95, new ArrayList<Integer>(Arrays.asList(56, -1)));
 
-        for(int i=96; i<119; i++)
-        {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i+1, -1)));
+        for (int i = 96; i < 119; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
         }
         connectionsMap.put(110, new ArrayList<Integer>(Arrays.asList(96, -1)));
 
-        connectionsMap.get(7).set(1,61);         //Reading Railroad Transit Station
-        connectionsMap.get(61).set(1,7);
+        connectionsMap.get(7).set(1, 61);         //Reading Railroad Transit Station
+        connectionsMap.get(61).set(1, 7);
 
-        connectionsMap.get(71).set(1,105);      //Pennsylvania Railroad Transit Station
-        connectionsMap.get(105).set(1,61);
+        connectionsMap.get(71).set(1, 105);      //Pennsylvania Railroad Transit Station
+        connectionsMap.get(105).set(1, 61);
 
-        connectionsMap.get(35).set(1,81);      //B&O Railroad Transit Station
-        connectionsMap.get(81).set(1,35);
+        connectionsMap.get(35).set(1, 81);      //B&O Railroad Transit Station
+        connectionsMap.get(81).set(1, 35);
 
-        connectionsMap.get(91).set(1,117);    //Short Line Railroad Transit Station
+        connectionsMap.get(91).set(1, 117);    //Short Line Railroad Transit Station
         connectionsMap.get(117).set(1, 91);
     }
 
-    public HashMap<Integer, Square> getSquareMap()
-    {
+    public HashMap<Integer, Square> getSquareMap() {
         return domainSquareMap;
     }
 
-    public HashMap<Integer, ArrayList<Integer>> getConnectionsMap()
-    {
+    public HashMap<Integer, ArrayList<Integer>> getConnectionsMap() {
         return connectionsMap;
     }
 
-    public Square getSquareAt(int pos)
-    {
+    public Square getSquareAt(int pos) {
         return domainSquareMap.get(pos);
     }
 
