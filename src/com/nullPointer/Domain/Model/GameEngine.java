@@ -20,6 +20,8 @@ public class GameEngine {
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
 
+    private boolean gameIsPaused = false;
+
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -137,6 +139,7 @@ public class GameEngine {
 
     public void nextTurn() {
         playerController.nextPlayer();
+
         publishEvent("rollDice");
         publishEvent("refresh");
     }
@@ -194,4 +197,25 @@ public class GameEngine {
     public void loadData() {
         //serverInfo.setClientList();
     }
+
+    public void resume() {
+        gameIsPaused = false;
+        System.out.println("Game Engine: Game resumed");
+        publishEvent("resume");
+    }
+
+    public void pause() {
+        gameIsPaused = true;
+        System.out.println("Game Engine: Game paused");
+        publishEvent("pause");
+    }
+
+    public boolean isMyTurn() {
+        Player player = playerController.getCurrentPlayer();
+        if (player != null && (player.getClientID() == serverInfo.getClientID())) {
+            return true;
+        }
+        return false;
+    }
+
 }

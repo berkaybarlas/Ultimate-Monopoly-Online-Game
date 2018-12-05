@@ -19,6 +19,7 @@ public class SquareFactory {
      * RentList's for each property square
      */
     //Should these be public or private??
+    // last two: Mortgage value, House cost
     int[] MediterranianAveList = {2, 10, 30, 90, 160, 250, 750, 30, 50};
     int[] BalticAveList = {4, 20, 60, 180, 320, 450, 900, 30, 50};
 

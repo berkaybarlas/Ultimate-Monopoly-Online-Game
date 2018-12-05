@@ -92,6 +92,10 @@ public class CommunicationController {
                 }
             } else if (input.contains("improveProperty")) {
                 gameEngine.improveProperty();
+            } else if(input.contains("resume")) {
+            	gameEngine.resume();
+            } else if(input.contains("pause")) {
+            	gameEngine.pause();
             }
         }else if(objectInput instanceof ArrayList) {
             serverInfo.setClientList((ArrayList) objectInput);
