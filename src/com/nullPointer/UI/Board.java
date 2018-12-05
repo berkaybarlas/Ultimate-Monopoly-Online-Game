@@ -333,10 +333,20 @@ public class Board extends JPanel implements Observer {
     }
 
     @Override
-    public void onEvent(Object message) {
+    public void onEvent(String message) {
         if (message.equals("initializePawns")) {
             initializePawns();
             repaint();
+        }else if(message.contains("path")){
+            proccessPath(message);
         }
+    }
+
+    private void proccessPath(String message) {
+        //path/[57, 58, 59, 60, 61, 62, 63]
+        ArrayList<Integer> path=new ArrayList<Integer>();
+        message = message.substring(5,message.length()-1);
+        String[] parts = message.split("/,\\s?/");
+        System.out.println(parts.toString());
     }
 }

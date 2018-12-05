@@ -108,6 +108,7 @@ public class GameEngine {
 
         System.out.println("TEST STRING2");
         System.out.println(path);
+        publishEvent("path/" + path);
         System.out.println(target);
         playerController.movePlayer(target);
         return path;

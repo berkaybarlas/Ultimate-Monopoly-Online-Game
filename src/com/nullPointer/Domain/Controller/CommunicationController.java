@@ -83,7 +83,7 @@ public class CommunicationController {
                 speedDice.add(Integer.parseInt(values[3]));
                 regularDie.setLastValues(regularDice);
                 speedDie.setLastValues(speedDice);
-                path = gameEngine.calculatePath();
+                gameEngine.calculatePath();
             } else if (input.contains("purchase")) {
                 gameEngine.buy();
             } else if (input.contains("card")) {
