@@ -30,7 +30,7 @@ public class ServerWindow extends JPanel implements Observer {
     private JScrollPane scrollPane;
     private JPanel playerPanel;
     private List<ClientDisplay> clientDisplayList;
-    private List<PlayerDisplay> playerDisplayList;
+
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private Image background;
@@ -118,14 +118,14 @@ public class ServerWindow extends JPanel implements Observer {
     public void createPlayerDisplay() {
         playerPanel = new JPanel();
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setBounds(600, 100, 120, 600);
-        playerPanel.setPreferredSize(new Dimension(120, 600));
-        playerPanel.setBackground(ColorSet.WHITE);
+        playerPanel.setBounds(screenSize.width/3*2, screenSize.height/80, 120, 300);
+        playerPanel.setPreferredSize(new Dimension(120, 300));
+       // playerPanel.setBackground(ColorSet.WHITE);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(600, 100, 120, 300);
+        scrollPane.setBounds(screenSize.width/3*2, screenSize.height/80, 150, 300);
         scrollPane.setBackground(ColorSet.BLACK);
         this.add(scrollPane);
-        scrollPane.validate();
+
     }
 
     public void addPlayer() {
@@ -135,8 +135,19 @@ public class ServerWindow extends JPanel implements Observer {
 
         playerPanel.add(newButton);
         playerPanel.validate();
+        scrollPane.validate();
+
     }
 
+    public void paint(Graphics g) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        super.paint(g);
+        //g.drawImage(background, 0, 0, null);
+        clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
+        scrollPane.setLocation((screenSize.width - buttonPanel.getWidth()) / 4 * 3, 100);
+
+    }
 
     @Override
     public void onEvent(String message) {
@@ -147,15 +158,6 @@ public class ServerWindow extends JPanel implements Observer {
             addPlayer();
             //repaint();
         }
-    }
-
-    public void paint(Graphics g) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        super.paint(g);
-        //g.drawImage(background, 0, 0, null);
-        clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
-        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-        scrollPane.setLocation((screenSize.width - buttonPanel.getWidth()) / 4 * 3, 300);
     }
 }
 
@@ -180,30 +182,6 @@ class ClientDisplay {
         g.setColor(color);
         g.drawString(clientName, position.x + 20, position.y + height / 2);
 
-
-    }
-}
-
-class PlayerDisplay {
-
-    String clientName;
-    Point position;
-    int width = 300;
-    int height = 100;
-
-    PlayerDisplay(String name, Point position) {
-        clientName = name;
-        this.position = position;
-    }
-
-    public void paint(Graphics g) {
-        Color color = new Color(255, 255, 255);
-        g.setColor(color);
-        g.fillRect(position.x, position.y, width, height);
-
-        color = new Color(0, 0, 0);
-        g.setColor(color);
-        g.drawString(clientName, position.x + 20, position.y + height / 2);
 
     }
 }

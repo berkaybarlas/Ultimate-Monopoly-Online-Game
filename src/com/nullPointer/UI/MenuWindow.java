@@ -46,7 +46,6 @@ public class MenuWindow extends JPanel {
         this.add(buttonPanel, BorderLayout.CENTER);
 
         addButtons(buttonPanel);
-        buttonPanel.validate();
     }
 
     public void paint(Graphics g) {
@@ -58,6 +57,7 @@ public class MenuWindow extends JPanel {
         g.drawImage(background, 0, 0, null);
         g.drawImage(logo, position.x, position.y, null);
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
+        buttonPanel.validate();
 
     }
 
