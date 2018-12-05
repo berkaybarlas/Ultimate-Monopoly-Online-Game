@@ -19,11 +19,12 @@ public class CustomButton extends JButton {
         super(text);
         this.setToolTipText("Join the game server");
         this.setBackground(colorSet.ButtonPrimary);
-        super.setBounds(this.getWidth() / 2 - 100, this.getHeight() / 2 - 100, 100, 100);
+        //super.setBounds(this.getWidth() / 2 - 100, this.getHeight() / 2 - 100, 100, 400);
         this.setForeground(Color.WHITE);
         this.setFont(new Font("Tahoma", Font.BOLD, 20));
         this.setOpaque(true);
         this.setBorderPainted(false);
+        this.setFocusPainted(false);
         JButton button = this;
         this.getModel().addChangeListener(new ChangeListener() {
             @Override

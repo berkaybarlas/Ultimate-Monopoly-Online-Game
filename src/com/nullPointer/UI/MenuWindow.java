@@ -27,11 +27,12 @@ public class MenuWindow extends JPanel {
 
     private ColorSet colorSet = ColorSet.getInstance();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+    private int buttonHeight = 60;
+    private int buttonWidth =  300;
     public MenuWindow() {
 
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
         try {
             logo = ImageIO.read(logoSrc);
             logo = logo.getScaledInstance(400, 265, Image.SCALE_SMOOTH);
@@ -57,7 +58,7 @@ public class MenuWindow extends JPanel {
         g.drawImage(background, 0, 0, null);
         g.drawImage(logo, position.x, position.y, null);
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-        buttonPanel.validate();
+
 
     }
 
@@ -65,6 +66,9 @@ public class MenuWindow extends JPanel {
 
         serverCreateButton = new CustomButton("Start Server");
         serverCreateButton.setToolTipText("Start the game server");
+        //serverCreateButton.setBounds(screenSize.width / 2 - buttonWidth / 2, screenSize.height / 2 - buttonHeight / 2 - 75, buttonWidth,
+         //       buttonHeight);
+        serverCreateButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         serverCreateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 communicationController.startServer();
@@ -78,8 +82,10 @@ public class MenuWindow extends JPanel {
         serverCreateButton.setVisible(true);
         panel.add(serverCreateButton);
 
+
         joinButton = new CustomButton("Join Server");
         joinButton.setToolTipText("Join the game server");
+        joinButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         joinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ip = JOptionPane.showInputDialog(panel, "Enter the IP address you'd like to join.", "IP address needed.");
