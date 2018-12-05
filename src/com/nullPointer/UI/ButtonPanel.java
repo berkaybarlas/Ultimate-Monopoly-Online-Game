@@ -16,6 +16,7 @@ public class ButtonPanel extends JPanel{
     protected JButton rollDice;
     protected JButton resumeButton;
     protected JButton pauseButton;
+    protected JButton saveButton;
     
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -31,6 +32,7 @@ public class ButtonPanel extends JPanel{
 		rollDice = new JButton("Roll Dice");
 		resumeButton = new JButton("Resume");
 		pauseButton = new JButton("Pause");
+		saveButton = new JButton("Save");
 		
 		purchaseButton.setBounds(150,0,100,30);
 		drawButton.setBounds(150,35,100,30);
@@ -95,6 +97,15 @@ public class ButtonPanel extends JPanel{
 				communicationController.sendClientMessage("pause");
 				pauseButton.setEnabled(false);
 				resumeButton.setEnabled(true);
+			} 
+		} );
+		
+		saveButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Game saved");
+				communicationController.sendClientMessage("save");
+				saveButton.setEnabled(false);
+			//	.setEnabled(true);
 			} 
 		} );
 		

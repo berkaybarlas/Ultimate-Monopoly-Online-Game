@@ -218,7 +218,6 @@ public class GameEngine {
         return false;
     }
 
-
     public boolean isCurrrentPlayerInThisClient(){
         Player player = playerController.getCurrentPlayer();
         return player != null && (playerController.getCurrentPlayer().getClientID() == serverInfo.getClientID());
