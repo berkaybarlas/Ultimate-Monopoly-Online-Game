@@ -27,7 +27,7 @@ public class GameEngine {
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
-	private GameEngine() {
+    private GameEngine() {
         domainBoard = new DomainBoard();
     }
 
@@ -69,8 +69,7 @@ public class GameEngine {
     //        evaluateSquare();
 //    }
 
-    public LinkedList<Integer> calculatePath()
-    {
+    public LinkedList<Integer> calculatePath() {
         publishEvent("refresh");
         LinkedList<Integer> path = new LinkedList<Integer>();
         HashMap<Integer, Square> squares = domainBoard.getSquareMap();
@@ -81,8 +80,7 @@ public class GameEngine {
         int target = -2;
 
 
-        for(int i=0; i<regularDiceTotal; i++)
-        {
+        for (int i = 0; i < regularDiceTotal; i++) {
             currentPos = currentPlayer.getPosition();
             int placeToGo = connections.get(currentPos).get(0);
 //            System.out.println("TEST STRING");
@@ -93,18 +91,15 @@ public class GameEngine {
 //            System.out.println(connections.get(57));
 //            System.out.println(connections.get(58));
 //            System.out.println("END");
-            if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal%2 == 0)
-            {
-                if(connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
+            if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
+                if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
                 else System.out.println("There seems to be a problem.");
-            }
-            else
-            {
+            } else {
 
             }
 //            System.out.println("Printing current position: before:");
 //            System.out.println(currentPos);
-           playerController.changeCurrentPosition(currentPlayer, placeToGo);
+            playerController.changeCurrentPosition(currentPlayer, placeToGo);
 //            System.out.println("after: ");
 //            System.out.println(currentPos);
             path.add(placeToGo);
@@ -141,14 +136,10 @@ public class GameEngine {
         Card card;
         String type = square.getType();
 
-        if(type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare"))
-        {
-            if (type.equals("CommunityChestCardSquare"))
-            {
+        if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
+            if (type.equals("CommunityChestCardSquare")) {
                 card = domainBoard.getCCCards().element();
-            }
-            else
-            {
+            } else {
                 card = domainBoard.getChanceCards().element();
             }
             publishEvent("message/" + "[System]: " + playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
@@ -159,9 +150,7 @@ public class GameEngine {
                 playerController.addCardToCurrentPlayer(card);
             }
             nextTurn();
-        }
-        else
-        {
+        } else {
             System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
         }
     }
@@ -170,26 +159,21 @@ public class GameEngine {
 
     }
 
-    public void buy()
-    {
+    public void buy() {
 
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
 
-        if (type.equals("PropertySquare") && !((PropertySquare) square).isOwned())
-        {
-            if (moneyController.hasEnoughMoney(currentPlayer, ((PropertySquare) square).getPrice()))
-            {
+        if (type.equals("PropertySquare") && !((PropertySquare) square).isOwned()) {
+            if (moneyController.hasEnoughMoney(currentPlayer, ((PropertySquare) square).getPrice())) {
                 moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
                 playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
                 ((PropertySquare) square).setOwner(currentPlayer);
             }
-        } else if (type.equals("UtilitySquare"))
-        {
+        } else if (type.equals("UtilitySquare")) {
             UtilitySquare utilitySquare = (UtilitySquare) square;
-            if (moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice()))
-            {
+            if (moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice())) {
                 moneyController.decreaseMoney(currentPlayer, utilitySquare.getPrice());
                 playerController.upgradeUtilityList(utilitySquare, currentPlayer);
                 utilitySquare.setOwner(currentPlayer);

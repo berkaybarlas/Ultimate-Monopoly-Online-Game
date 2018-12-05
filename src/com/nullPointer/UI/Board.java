@@ -332,72 +332,8 @@ public class Board extends JPanel implements Observer {
         pawnList.add(new Pawn(initialPosition, player));
     }
 
-    public void movePlayer(int playerIndex, int amount) throws InterruptedException {
-        while (amount > 0) {
-            if (pawnList.get(playerIndex).getPosition().x > 4 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y == 14 * smallSide - 20) {
-                for (int j = 0; j < smallSide; j++) {
-                    pawnList.get(playerIndex).changeX(-1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            }
-            //breaking point
-            else if (pawnList.get(playerIndex).getPosition().x == 4 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y == 14 * smallSide - 20) {
-                pawnList.get(playerIndex).changeY(-1);
-                for (int j = 0; j < smallSide - 1; j++) {
-                    pawnList.get(playerIndex).changeY(-1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            } else if (pawnList.get(playerIndex).getPosition().x == 4 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y < 14 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y > 4 * smallSide - 20) {
-                for (int j = 0; j < smallSide; j++) {
-                    pawnList.get(playerIndex).changeY(-1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            }
-            //breaking point
-            else if (pawnList.get(playerIndex).getPosition().x == 4 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y == 4 * smallSide - 20) {
-                pawnList.get(playerIndex).changeX(+1);
-                for (int j = 0; j < smallSide - 1; j++) {
-                    pawnList.get(playerIndex).changeX(+1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            } else if (pawnList.get(playerIndex).getPosition().x > 4 * smallSide - 20 && pawnList.get(playerIndex).getPosition().x < 14 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y == 4 * smallSide - 20) {
-                for (int j = 0; j < smallSide; j++) {
-                    pawnList.get(playerIndex).changeX(+1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            }
-            //breaking point
-            else if (pawnList.get(playerIndex).getPosition().x == 14 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y == 4 * smallSide - 20) {
-                pawnList.get(playerIndex).changeY(+1);
-                for (int j = 0; j < smallSide - 1; j++) {
-                    pawnList.get(playerIndex).changeY(+1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            } else if (pawnList.get(playerIndex).getPosition().x == 14 * smallSide - 20 && pawnList.get(playerIndex).getPosition().y > 4 * smallSide - 20) {
-                for (int j = 0; j < smallSide; j++) {
-                    pawnList.get(playerIndex).changeY(+1);
-                    this.repaint();
-                    Thread.sleep(sleepTime);
-                }
-                amount--;
-            }
-        }
-    }
-
     @Override
-    public void onEvent(String message) {
+    public void onEvent(Object message) {
         if (message.equals("initializePawns")) {
             initializePawns();
             repaint();
