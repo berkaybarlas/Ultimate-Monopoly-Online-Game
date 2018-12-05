@@ -20,6 +20,8 @@ public class GameEngine {
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
 
+    private boolean gameIsPaused = false;
+    
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -137,6 +139,7 @@ public class GameEngine {
 
     public void nextTurn() {
         playerController.nextPlayer();
+        
         publishEvent("rollDice");
         publishEvent("refresh");
     }
@@ -197,11 +200,15 @@ public class GameEngine {
 
 	public void resume() {
 		// TODO Auto-generated method stub
+		gameIsPaused = false;
 		System.out.println("Game Engine: Game resumed");
+		publishEvent("resume");
 	}
 
 	public void pause() {
 		// TODO Auto-generated method stub
+		gameIsPaused = true;
 		System.out.println("Game Engine: Game paused");
+		publishEvent("pause");
 	}
 }

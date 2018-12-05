@@ -84,7 +84,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Game resumed");
 				communicationController.sendClientMessage("resume");
-				resumeButton.setEnabled(false);;
+				//resumeButton.setEnabled(false);
 			} 
 		} );
 		
@@ -92,7 +92,7 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Game paused");
 				communicationController.sendClientMessage("pause");
-				pauseButton.setEnabled(false);;
+				//pauseButton.setEnabled(false);
 			} 
 		} );
 		
@@ -109,7 +109,7 @@ public class ButtonPanel extends JPanel{
 		improveButton.setEnabled(false);
 		rollDice.setEnabled(false);
 		resumeButton.setEnabled(false);
-		pauseButton.setEnabled(false);
+		pauseButton.setEnabled(true);
 		this.setVisible(true);
 		
 	}

@@ -10,6 +10,7 @@ import com.nullPointer.Utils.ColorSet;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameWindow extends JPanel implements Observer {
     protected Board board;
@@ -20,6 +21,8 @@ public class GameWindow extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
+    
+    private ArrayList<JButton> disabledButtons = new ArrayList<JButton>();
 
     public GameWindow(int width, int height) {
         super();
@@ -88,10 +91,44 @@ public class GameWindow extends JPanel implements Observer {
                 buttonPanel.improveButton.setEnabled(true);
             }
             if(message.equals("resume")){
-            	buttonPanel.resumeButton.setEnabled(true);
+            	buttonPanel.pauseButton.setEnabled(true);
+            	for(int i=0; i<disabledButtons.size();i++) {
+            		JButton currButton = disabledButtons.get(i);
+            		currButton.setEnabled(true);
+            	}
+            	disabledButtons.clear();
+            	buttonPanel.resumeButton.setEnabled(false);
             }
             if(message.equals("pause")){
-            	buttonPanel.pauseButton.setEnabled(true);
+            	
+				if(buttonPanel.rollDice.isEnabled()) {
+            		disabledButtons.add(buttonPanel.rollDice);
+            		buttonPanel.rollDice.setEnabled(false);
+				}
+				if(buttonPanel.purchaseButton.isEnabled()) {
+            		disabledButtons.add(buttonPanel.purchaseButton);
+            		buttonPanel.purchaseButton.setEnabled(false);
+				}
+				if(buttonPanel.drawButton.isEnabled()) {
+            		disabledButtons.add(buttonPanel.drawButton);
+            		buttonPanel.drawButton.setEnabled(false);
+				}
+				if(buttonPanel.playCardButton.isEnabled()) {
+            		disabledButtons.add(buttonPanel.playCardButton);
+            		buttonPanel.playCardButton.setEnabled(false);
+				}
+				if(buttonPanel.improveButton.isEnabled()) {
+            		disabledButtons.add(buttonPanel.improveButton);
+            		buttonPanel.improveButton.setEnabled(false);
+				}				
+            	
+            	if(player != null && (playerController.getCurrentPlayer().getClientID() == serverInfo.getClientID())) {
+                	buttonPanel.resumeButton.setEnabled(true);
+            	}else {
+            		buttonPanel.resumeButton.setEnabled(false);
+            	}
+            	buttonPanel.pauseButton.setEnabled(false);
+            	disabledButtons.add(buttonPanel.pauseButton);
             }
         }
     }
