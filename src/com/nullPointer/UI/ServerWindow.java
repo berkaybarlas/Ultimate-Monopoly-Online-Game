@@ -5,6 +5,7 @@ import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,22 +80,20 @@ public class ServerWindow extends JPanel implements Observer {
     public List<ClientDisplay> createClientDisplay() {
         List<Integer> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
-
+        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
-            if(clientList.size() <= 6) {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(100, i * 150));
+            if(i < 6) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * height/6), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             } else {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(500, i * 150));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(400, (i-6) * height/6), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             }
         }
         return clientDisplayList;
     }
 
-    public void addClient() {
-        createClientDisplay();
-    }
+    public void addClient() { createClientDisplay(); }
 
     @Override
     public void onEvent(String message) {
@@ -121,10 +120,10 @@ class ClientDisplay extends JPanel{
     Random rand = new Random();
     Color clientColor;
 
-    ClientDisplay(String name, Point position) {
+    ClientDisplay(String name, Point position, Color color) {
         clientName = name;
         this.position = position;
-        clientColor = new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
+        clientColor = color;
     }
 
     public void paint(Graphics g) {
