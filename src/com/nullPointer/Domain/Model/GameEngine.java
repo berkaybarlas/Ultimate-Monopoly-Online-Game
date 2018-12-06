@@ -24,6 +24,11 @@ public class GameEngine {
 
     private boolean gameIsPaused = false;
 
+    public DomainBoard getDomainBoard()
+    {
+        return domainBoard;
+    }
+
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -53,7 +58,7 @@ public class GameEngine {
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
-
+        publishEvent("newPlayer");
     }
 
     public void startGame() {
