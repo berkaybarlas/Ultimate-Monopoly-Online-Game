@@ -12,15 +12,18 @@ public class PlayerController {
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
     private int currentPlayer = 0;
+    private Player chosenPlayer = null;
+
+    public Player getChosen() {
+        return chosenPlayer;
+    }
+
+    public void setChosen(Player choose) {
+        this.chosenPlayer = choose;
+    }
 
     private PlayerController() {
-        /*
-        players.add(new Player("Furkan"));
-        players.add(new Player("Tumay"));
-        players.add(new Player("Berkay"));
-        players.add(new Player("Baran"));
-        players.add(new Player("Alihan"));
-        */
+
     }
 
     public static PlayerController getInstance() {
@@ -31,10 +34,14 @@ public class PlayerController {
     }
 
     public Player getCurrentPlayer() {
-        if(players.size()>0){
+        if (players.size() > 0) {
             return players.get(currentPlayer);
         }
         return null;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayer;
     }
 
     public Player nextPlayer() {
@@ -53,6 +60,14 @@ public class PlayerController {
     public void movePlayer(int amount, int layerSize) {
         //.setPosition(newPosition);
         getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
+    }
+
+    public void movePlayer(int targetIndex) {
+        getCurrentPlayer().setTargetPosition(targetIndex);
+    }
+
+    public void changeCurrentPosition(Player player, int newPos) {
+        player.setPosition(newPos);
     }
 
     public void increaseCurrentPosition(Player player) {

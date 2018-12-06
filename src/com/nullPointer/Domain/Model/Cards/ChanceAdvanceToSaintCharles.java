@@ -1,8 +1,13 @@
 package com.nullPointer.Domain.Model.Cards;
 
-import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Controller.MoneyController;
+import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Model.*;
 
 public class ChanceAdvanceToSaintCharles extends ChanceCard {
+	private MoneyController moneyController = MoneyController.getInstance();
+	private PlayerController playerController = PlayerController.getInstance();
+
 
 	public ChanceAdvanceToSaintCharles(String title, boolean isImmediate) {
 		super(title, isImmediate);
@@ -12,7 +17,10 @@ public class ChanceAdvanceToSaintCharles extends ChanceCard {
 	@Override
 	public void playCard(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
-		
+		int StCharles = 67;
+		Player currenPlayer = playerController.getCurrentPlayer();
+		gameEngine.publishEvent("teleport" + StCharles);
+		playerController.movePlayer(StCharles);
 	}
 
 }

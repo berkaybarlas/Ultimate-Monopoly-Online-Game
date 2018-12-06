@@ -36,7 +36,6 @@ public class GameWindow extends JPanel implements Observer {
 
         contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         contentPane.add(board, BorderLayout.LINE_START);
-        new Thread(board).start();
 
         JPanel middleSide = new JPanel();
         middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));
@@ -46,6 +45,7 @@ public class GameWindow extends JPanel implements Observer {
         buttonPanel = new ButtonPanel();
         middleSide.add(buttonPanel);
         contentPane.add(middleSide, BorderLayout.CENTER);
+        middleSide.setOpaque(false);
 
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
@@ -58,7 +58,7 @@ public class GameWindow extends JPanel implements Observer {
 
         this.add(contentPane);
         setOpaque(false);
-        contentPane.setBackground(colorSet.getBackground());
+        contentPane.setBackground(colorSet.BOARDBACKGROUND);
         gameEngine.subscribe(this);
     }
 
@@ -79,6 +79,7 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("rollDice")) {
                 buttonPanel.rollDice.setEnabled(true);
+                buttonPanel.endTurn.setEnabled(true);
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
