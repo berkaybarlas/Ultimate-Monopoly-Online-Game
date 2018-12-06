@@ -45,6 +45,7 @@ public class GameWindow extends JPanel implements Observer {
         buttonPanel = new ButtonPanel();
         middleSide.add(buttonPanel);
         contentPane.add(middleSide, BorderLayout.CENTER);
+        middleSide.setOpaque(false);
 
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));

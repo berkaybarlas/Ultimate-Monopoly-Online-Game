@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -28,17 +30,25 @@ public class ServerWindow extends JPanel implements Observer {
     private JScrollPane scrollPane;
     private JPanel playerPanel;
     private List<ClientDisplay> clientDisplayList;
+    private int buttonHeight = 40;
+    private int buttonWidth = 180;
+
+    private int pButtonHeight = 50;
+    private int pButtonWidth = 200;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private Image background;
     private File backgroundSrc = new File("./assets/background2.jpg");
+    JLabel back;
 
     public ServerWindow() {
 
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.add(new JLabel("Server Screen"));
+        //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        //buttonPanel.add(new JLabel("Server Screen"));
+        buttonPanel.setPreferredSize(new Dimension(buttonWidth, 4 * buttonHeight));
+        buttonPanel.setOpaque(false);
         this.add(buttonPanel);
         addButtons(buttonPanel);
 
@@ -58,12 +68,18 @@ public class ServerWindow extends JPanel implements Observer {
         createPlayerDisplay();
         this.add(scrollPane);
 
+        ImageIcon backgroundIcon = new ImageIcon(background);
+        back = new JLabel();
+        back.setIcon(backgroundIcon);
+        add(back);
+
     }
 
     private void addButtons(JPanel panel) {
 
         startGame = new CustomButton("Start Game");
         startGame.setToolTipText("Start the game ");
+        startGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startServer();
@@ -74,6 +90,7 @@ public class ServerWindow extends JPanel implements Observer {
 
         addPlayer = new CustomButton("Add player");
         addPlayer.setToolTipText("add new player ");
+        addPlayer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Player player = new Player("Test", serverInfo.getClientID());
@@ -85,6 +102,7 @@ public class ServerWindow extends JPanel implements Observer {
 
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
+        quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 communicationController.removeClient();
@@ -104,28 +122,27 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
-            if(i < 6) {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * height/6), ColorSet.getPlayerColors().get(i));
+            if (i < 6) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * height / 6), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             } else {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(400, (i-6) * height/6), ColorSet.getPlayerColors().get(i));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(400, (i - 6) * height / 6), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             }
         }
         return clientDisplayList;
     }
 
-    public void addClient() { createClientDisplay(); }
+    public void addClient() {
+        createClientDisplay();
+    }
 
     public void createPlayerDisplay() {
         playerPanel = new JPanel();
-        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setBounds(screenSize.width/3*2, screenSize.height/80, 120, 300);
-        playerPanel.setPreferredSize(new Dimension(120, 300));
-       // playerPanel.setBackground(ColorSet.WHITE);
+        //playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+        playerPanel.setPreferredSize(new Dimension(pButtonWidth + 30, 12 * (pButtonHeight + 10)));
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(screenSize.width/3*2, screenSize.height/80, 150, 300);
-        scrollPane.setBackground(ColorSet.BLACK);
+        scrollPane.setBounds(screenSize.width / 3 * 2, screenSize.height / 80, 150, 300);
         this.add(scrollPane);
 
     }
@@ -133,7 +150,7 @@ public class ServerWindow extends JPanel implements Observer {
     public void addPlayer() {
         ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
         CustomButton newButton = new CustomButton(pList.get(pList.size() - 1).getName());
-        newButton.setPreferredSize(new Dimension(100, 100));
+        newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
 
         playerPanel.add(newButton);
         playerPanel.validate();
@@ -145,9 +162,10 @@ public class ServerWindow extends JPanel implements Observer {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
         //g.drawImage(background, 0, 0, null);
+        back.setLocation(0, 0);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
-        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-        scrollPane.setLocation((screenSize.width - buttonPanel.getWidth()) / 4 * 3, 100);
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 200);
+        scrollPane.setLocation((screenSize.width ) / 4 * 3, 100);
 
     }
 
@@ -163,7 +181,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 }
 
-class ClientDisplay extends JPanel{
+class ClientDisplay extends JPanel {
 
     String clientName;
     Point position;

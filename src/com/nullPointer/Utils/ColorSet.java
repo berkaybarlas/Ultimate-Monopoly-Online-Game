@@ -42,6 +42,8 @@ public class ColorSet {
     }
     public final static Color ButtonPressed = new Color(255, 142, 139);
 
+    public final static Color ButtonPrimary = new Color(206, 14, 16);
+
     public static ArrayList<Color> getPlayerColors() {
         playerColors.add(player1Color);
         playerColors.add(player2Color);

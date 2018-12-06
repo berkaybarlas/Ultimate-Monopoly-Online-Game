@@ -9,16 +9,16 @@ import java.awt.*;
 
 public class CustomButton extends JButton {
 
-    private ColorSet colorSet = ColorSet.getInstance();
 
-    private Color primaryColor = colorSet.ButtonPrimary;
 
-    private Color pressedColor = colorSet.ButtonPressed;
+    private Color primaryColor = ColorSet.ButtonPrimary;
+
+    private Color pressedColor = ColorSet.ButtonPressed;
 
     public CustomButton(String text) {
         super(text);
         this.setToolTipText("Join the game server");
-        this.setBackground(colorSet.ButtonPrimary);
+        this.setBackground(ColorSet.ButtonPrimary);
         //super.setBounds(this.getWidth() / 2 - 100, this.getHeight() / 2 - 100, 100, 400);
         this.setForeground(Color.WHITE);
         this.setFont(new Font("Tahoma", Font.BOLD, 20));

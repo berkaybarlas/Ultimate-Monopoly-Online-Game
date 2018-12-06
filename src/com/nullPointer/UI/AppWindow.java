@@ -61,9 +61,9 @@ public class AppWindow extends JFrame implements Observer {
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.setPreferredSize(new Dimension(width, height));
-        contentPane.add(toolBar, BorderLayout.NORTH);
+        contentPane.add(toolBar);
         contentPane.add(animator);
         setContentPane(contentPane);
 
@@ -82,7 +82,8 @@ public class AppWindow extends JFrame implements Observer {
         //serverPanel.add(new JLabel("Server Screen"));
         panels.add(serverPanel, "Server Panel");
 
-        contentPane.add(panels, BorderLayout.CENTER);
+        //contentPane.add(panels, BorderLayout.CENTER);
+        contentPane.add(panels);
         navigator.setLayout(mainLayout);
         navigator.setPanels(panels);
 

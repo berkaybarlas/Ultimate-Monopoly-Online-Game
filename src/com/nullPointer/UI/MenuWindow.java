@@ -25,17 +25,21 @@ public class MenuWindow extends JPanel {
     private Image background;
     private File backgroundSrc = new File("./assets/background3.png");
 
-    private ColorSet colorSet = ColorSet.getInstance();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private int buttonHeight = 60;
     private int buttonWidth =  300;
+    private JLabel back;
+    private JLabel logoIcon;
+
     public MenuWindow() {
+        JLayeredPane contentPane = new JLayeredPane();
 
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+        //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+        buttonPanel.setPreferredSize(new Dimension(buttonWidth, 3* buttonHeight));
         try {
             logo = ImageIO.read(logoSrc);
-            logo = logo.getScaledInstance(400, 265, Image.SCALE_SMOOTH);
+            logo = logo.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
             background = ImageIO.read(backgroundSrc);
             background = background.getScaledInstance(
                     screenSize.width,
@@ -45,21 +49,32 @@ public class MenuWindow extends JPanel {
             e.printStackTrace();
         }
         this.add(buttonPanel, BorderLayout.CENTER);
-
+        buttonPanel.setOpaque(false);
         addButtons(buttonPanel);
+        ImageIcon logoImage = new ImageIcon(logo);
+        logoIcon = new JLabel();
+        logoIcon.setIcon(logoImage);
+        add(logoIcon);
+        ImageIcon backgroundIcon = new ImageIcon(background);
+        back = new JLabel();
+        back.setIcon(backgroundIcon);
+        add(back);
     }
-
+    @Override
+    public boolean isOptimizedDrawingEnabled(){
+        return false;
+    }
     public void paint(Graphics g) {
         //g.setColor(color);
         //g.fillRect(position.x, position.y, length, length);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 100);
-        g.drawImage(background, 0, 0, null);
-        g.drawImage(logo, position.x, position.y, null);
+        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
+        //g.drawImage(background, 0, 0, null);
+        //g.drawImage(logo, position.x, position.y, null);
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-
-
+        back.setLocation(0,0);
+        logoIcon.setLocation(position.x,position.y);
     }
 
     private void addButtons(JPanel panel) {

@@ -26,7 +26,8 @@ public class ButtonPanel extends JPanel {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
+        panel.setOpaque(false);
+        setOpaque(false);
         purchaseButton = new JButton("Buy Property");
         drawButton = new JButton("Draw card");
         playCardButton = new JButton("Play card");
