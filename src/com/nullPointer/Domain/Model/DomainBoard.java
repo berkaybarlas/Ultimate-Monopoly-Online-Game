@@ -3,29 +3,34 @@ package com.nullPointer.Domain.Model;
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Square.Square;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class DomainBoard {
 
-    private ArrayList<ArrayList<Square>> layers;
+    private int numSquares = 120;
+    private HashMap<Integer, Square> domainSquareMap;
+    private HashMap<Integer, ArrayList<Integer>> connectionsMap;
     private Queue<Card> CCCards, ChanceCards;
     private SquareFactory squareFactory = SquareFactory.getInstance();
     private CardFactory cardFactory = CardFactory.getInstance();
+
+    private int layer1begin = 0;
+    private int layer1end = 55;
+    private int layer2begin = 56;
+    private int layer2end = 95;
+    private int layer3begin = 96;
+    private int layer3end = 119;
 
 
     // List that holds card generation orders for CC & chance cards. I appended the CCIndexList & ChanceIndexList, you can make changes as you see fit.
     public ArrayList<Integer> meta_card_gen_info = new ArrayList<Integer>();
 
     public DomainBoard() {
-        layers = new ArrayList<>(3);
-        layers.add(new ArrayList<Square>());
-        layers.add(new ArrayList<Square>());
-        layers.add(new ArrayList<Square>());
+        domainSquareMap = new HashMap<Integer, Square>(numSquares);
+        connectionsMap = new HashMap<Integer, ArrayList<Integer>>(numSquares);
         CCCards = new LinkedList<Card>();
         ChanceCards = new LinkedList<Card>();
+        createConnectionsMap();
         createSquares();
         createCards();
     }
@@ -74,31 +79,60 @@ public class DomainBoard {
 
     public void createSquares() {
 
-        for (int i = 0; i < squareFactory.squareNames_inner.length; i++) {
-            layers.get(0).add(squareFactory.createInnerSquares(i));
+        for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
+            domainSquareMap.put(i + layer1begin, squareFactory.createOuterSquares(i));
         }
 
         for (int i = 0; i < squareFactory.squareNames_middle.length; i++) {
-            layers.get(1).add(squareFactory.createMiddleSquares(i));
+            domainSquareMap.put(i + layer2begin, squareFactory.createMiddleSquares(i));
         }
 
-        for (int i = 0; i < squareFactory.squareNames_outer.length; i++) {
-            layers.get(2).add(squareFactory.createOuterSquares(i));
+        for (int i = 0; i < squareFactory.squareNames_inner.length; i++) {
+            domainSquareMap.put(i + layer3begin, squareFactory.createInnerSquares(i));
         }
 
     }
 
+    // Creates map of connections. This feature is fundamental to the current board, and therefore is hard-coded.
+    public void createConnectionsMap() {
+        for (int i = 0; i < 55; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+        }
+        connectionsMap.put(55, new ArrayList<Integer>(Arrays.asList(0, -1)));
 
-    public ArrayList<Square> getSquaresInLayer(int layerIndex) {
-        return layers.get(layerIndex);
+        for (int i = 56; i < 95; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+        }
+        connectionsMap.put(95, new ArrayList<Integer>(Arrays.asList(56, -1)));
+
+        for (int i = 96; i < 119; i++) {
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+        }
+        connectionsMap.put(110, new ArrayList<Integer>(Arrays.asList(96, -1)));
+
+        connectionsMap.get(7).set(1, 61);         //Reading Railroad Transit Station
+        connectionsMap.get(61).set(1, 7);
+
+        connectionsMap.get(71).set(1, 105);      //Pennsylvania Railroad Transit Station
+        connectionsMap.get(105).set(1, 61);
+
+        connectionsMap.get(35).set(1, 81);      //B&O Railroad Transit Station
+        connectionsMap.get(81).set(1, 35);
+
+        connectionsMap.get(91).set(1, 117);    //Short Line Railroad Transit Station
+        connectionsMap.get(117).set(1, 91);
     }
 
-    public ArrayList<Square> getSquaresInLayer() {
-        return layers.get(1);
+    public HashMap<Integer, Square> getSquareMap() {
+        return domainSquareMap;
     }
 
-    public Square getSquareInLayerAtPosition(int layerIndex, int position) {
-        return layers.get(layerIndex).get(position);
+    public HashMap<Integer, ArrayList<Integer>> getConnectionsMap() {
+        return connectionsMap;
+    }
+
+    public Square getSquareAt(int pos) {
+        return domainSquareMap.get(pos);
     }
 
     public Queue<Card> getCCCards() {
