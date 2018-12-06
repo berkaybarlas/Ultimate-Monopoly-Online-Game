@@ -65,6 +65,8 @@ public class CommunicationController {
             } else if (input.contains("player")) {
                 if (includes(rest(input), "create")) {
 
+                }else if (includes(rest(input), "next")) {
+                    gameEngine.nextTurn();
                 }
             } else if (input.indexOf("message") != -1) {
                 gameEngine.publishEvent("message/" + rest(input));
