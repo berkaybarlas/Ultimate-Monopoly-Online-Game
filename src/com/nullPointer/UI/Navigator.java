@@ -2,11 +2,12 @@ package com.nullPointer.UI;
 
 
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Observer;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Navigator implements Observer{
+public class Navigator implements Observer {
     private static Navigator _instance;
     private static CardLayout layout;
     private static JPanel panels;

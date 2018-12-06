@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class GameServer extends Thread{
+public class GameServer extends Thread {
 
-    private  Thread thread;
-    private  String threadName;
+    private Thread thread;
+    private String threadName;
     private int portNumber = 4000;
 
 
@@ -26,7 +26,8 @@ public class GameServer extends Thread{
             while (true) {
                 Socket socket = serverSocket.accept();
                 responseController.addSocket(socket);
-                responseController.sendResponse("client/create");
+                responseController.sendGameData(socket);
+                responseController.sendResponse("client/create/" + socket.getPort());
                 new ClientHandler(socket).start();
 
             }
@@ -37,12 +38,13 @@ public class GameServer extends Thread{
         }
         System.out.println("[Server]: server Out");
     }
+
     @Override
     public void start() {
-        System.out.println("[Server]: Starting thread with name " +  threadName );
+        System.out.println("[Server]: Starting thread with name " + threadName);
         if (thread == null) {
-            thread = new Thread (this, threadName);
-            thread.start ();
+            thread = new Thread(this, threadName);
+            thread.start();
         }
     }
 

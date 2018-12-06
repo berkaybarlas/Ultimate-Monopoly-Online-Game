@@ -2,6 +2,9 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Observer;
+import com.nullPointer.Domain.SaveLoadManager;
+import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,8 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
-public class AppWindow extends JFrame implements Observer{
+public class AppWindow extends JFrame implements Observer {
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
@@ -22,6 +26,7 @@ public class AppWindow extends JFrame implements Observer{
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private final CardLayout mainLayout = new CardLayout();
     private final JPanel panels = new JPanel(mainLayout);
@@ -44,22 +49,28 @@ public class AppWindow extends JFrame implements Observer{
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
+        Animator animator = new Animator(this);
+        Thread thread = new Thread(animator);
+        thread.start();
+        animator.setVisible(true);
+
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
+
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.setPreferredSize(new Dimension(width , height));
-        contentPane.add(toolBar, BorderLayout.NORTH);
-
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
+        contentPane.setPreferredSize(new Dimension(width, height));
+        contentPane.add(toolBar);
+        contentPane.add(animator);
         setContentPane(contentPane);
 
         JPanel menuPanel = menuWindow;
         //menuPanel.setBorder(border);
         //menuPanel.add(new JLabel("Menu"));
-        panels.add(menuPanel, "Menu Panel" );
+        panels.add(menuPanel, "Menu Panel");
 
         JPanel gamePanel = gameWindow;
         gamePanel.setBorder(border);
@@ -71,7 +82,8 @@ public class AppWindow extends JFrame implements Observer{
         //serverPanel.add(new JLabel("Server Screen"));
         panels.add(serverPanel, "Server Panel");
 
-        contentPane.add(panels, BorderLayout.CENTER);
+        //contentPane.add(panels, BorderLayout.CENTER);
+        contentPane.add(panels);
         navigator.setLayout(mainLayout);
         navigator.setPanels(panels);
 
@@ -83,14 +95,27 @@ public class AppWindow extends JFrame implements Observer{
 
     protected void addButtons(JToolBar toolBar) {
 
-        messageButton = new JButton("Send Message");
-        messageButton.setToolTipText("Join the game server");
+        messageButton = new JButton("Save Game");
+        messageButton.setToolTipText("Save the game server");
         messageButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.sendClientMessage("hello");
+                try {
+                    SaveLoadManager.getInstance().saveGame();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         toolBar.add(messageButton);
+
+        button = new JButton("Load");
+        button.setToolTipText("Load the program");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        toolBar.add(button);
 
         menuButton = new JButton("Menu");
         menuButton.setToolTipText("Menu window");
@@ -110,17 +135,11 @@ public class AppWindow extends JFrame implements Observer{
         });
         toolBar.add(gameButton);
 
-        button = new JButton("Quit");
-        button.setToolTipText("Quit the program");
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        toolBar.add(button);
-    }
-	@Override
-	public void onEvent(String message) {
 
-	}
+    }
+
+    @Override
+    public void onEvent(String message) {
+
+    }
 }

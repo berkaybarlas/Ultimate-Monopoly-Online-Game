@@ -16,25 +16,21 @@ public class CardFactory {
     /*
      * Community Chest card names
      */
-    public String CCCard_names[] = {"Be Kind, Rewind", "Deal Buster", "Elected District Attorney", "Game Night", "Happy Birthday", "House Condemned",
-            "The Insider's Edge", "A Moving Experience", "Pay Hospital Bills", "Share In Their Good Fortune", "Tornado Hits"};
+    public String CCCard_names[] = {"Be Kind, Rewind", "Game Night", "Happy Birthday", "House Condemned",
+            "The Insider's Edge", "A Moving Experience", "Pay Hospital Bills", "Tornado Hits"};
 
     /*
      * Chance card names
      */
     public String ChanceCard_names[] = {"Advance To The Nearest Railroad", "Advance To The Pay Corner", "Advance To St. Charles Place", "Buyer's Market", "Changing Lanes",
             /*This is not a typo, 2 cards with same name exist*/ "Changing Lanes", "Foreclosed Property Sale", "Forward Thinker", "Get Out Of Jail Free", "Get Rollin'",
-            "Go To Jail", "GPS Not Working", "Holiday Bonus", "Hurricane Makes Landfall", "Just Say \"NO\"", "Make General Repairs", "Mardi Gras", "Pay Back",
+            "Go To Jail", "GPS Not Working", "Holiday Bonus", "Hurricane Makes Landfall", "Make General Repairs", "Mardi Gras", "Pay Back",
             "Property Taxes", "Ride The Subway", "See You In Court", "Social Media Fail", "Zero Dollars Down"};
 
     /*
      * isImmediate values for community chest cards
      */
     public boolean bekindRewindImmediate = true;
-
-    public boolean dealBusterImmediate = false;
-
-    public boolean electedDistrictAttorneyImmediate = false;
 
     public boolean gameNightImmediate = true;
 
@@ -47,8 +43,6 @@ public class CardFactory {
     public boolean movingExperienceImmediate = true;
 
     public boolean payHospitalBillsImmediate = true;
-
-    public boolean shareInTheirGoodFortuneImmediate = false;
 
     public boolean tornadoImmediate = true;
 
@@ -82,8 +76,6 @@ public class CardFactory {
     public boolean holidayBonusImmediate = true;
 
     public boolean hurricaneImmediate = true;
-
-    public boolean justSayNOImmediate = false;
 
     public boolean generakRepairsImmediate = true;
 
@@ -133,22 +125,20 @@ public class CardFactory {
             case 13:
                 return new ChanceHurricane(ChanceCard_names[index], hurricaneImmediate);
             case 14:
-                return new ChanceJustSayNo(ChanceCard_names[index], justSayNOImmediate);
-            case 15:
                 return new ChanceMakeGeneralRepairs(ChanceCard_names[index], generakRepairsImmediate);
-            case 16:
+            case 15:
                 return new ChanceMardiGras(ChanceCard_names[index], mardiGrasImmediate);
-            case 17:
+            case 16:
                 return new ChancePayBack(ChanceCard_names[index], payBackImmediate);
-            case 18:
+            case 17:
                 return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
-            case 19:
+            case 18:
                 return new ChanceRideTheSubway(ChanceCard_names[index], rideTheSubwayImmediate);
-            case 20:
+            case 19:
                 return new ChanceSeeUInCourt(ChanceCard_names[index], CUInCourtImmediate);
-            case 21:
+            case 20:
                 return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
-            case 22:
+            case 21:
                 return new ChanceZeroDollarsDown(ChanceCard_names[index], zeroDollarsDownImmediate);
             default:
                 return null;
@@ -161,24 +151,18 @@ public class CardFactory {
             case 0:
                 return new CCBeKindRewind(CCCard_names[index], bekindRewindImmediate);
             case 1:
-                return new CCDealBuster(CCCard_names[index], dealBusterImmediate);
-            case 2:
-                return new CCElectedDistrictAttorney(CCCard_names[index], electedDistrictAttorneyImmediate);
-            case 3:
                 return new CCGameNight(CCCard_names[index], gameNightImmediate);
-            case 4:
+            case 2:
                 return new CCHappyBirthday(CCCard_names[index], happyBirthdayImmediate);
-            case 5:
+            case 3:
                 return new CCHouseCondemned(CCCard_names[index], houseCondemnedImmediate);
-            case 6:
+            case 4:
                 return new CCInsidersEdge(CCCard_names[index], insidersEdgeImmediate);
-            case 7:
+            case 5:
                 return new CCMovingExperience(CCCard_names[index], movingExperienceImmediate);
-            case 8:
+            case 6:
                 return new CCPayHospitalBills(CCCard_names[index], payHospitalBillsImmediate);
-            case 9:
-                return new CCShareInTheirGoodFortune(CCCard_names[index], shareInTheirGoodFortuneImmediate);
-            case 10:
+            case 7:
                 return new CCTornadoHits(CCCard_names[index], tornadoImmediate);
             default:
                 return null;

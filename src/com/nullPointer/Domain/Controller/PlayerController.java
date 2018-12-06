@@ -1,24 +1,29 @@
 package com.nullPointer.Domain.Controller;
 
-import java.util.*;
-
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
+
+import java.util.ArrayList;
 
 public class PlayerController {
 
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
     private int currentPlayer = 0;
+    private Player chosenPlayer = null;
+
+    public Player getChosen() {
+        return chosenPlayer;
+    }
+
+    public void setChosen(Player choose) {
+        this.chosenPlayer = choose;
+    }
 
     private PlayerController() {
-        players.add(new Player("Furkan"));
-        players.add(new Player("Tumay"));
-        players.add(new Player("Berkay"));
-        players.add(new Player("Baran"));
-        players.add(new Player("Alihan"));
+
     }
 
     public static PlayerController getInstance() {
@@ -29,7 +34,14 @@ public class PlayerController {
     }
 
     public Player getCurrentPlayer() {
-        return players.get(currentPlayer);
+        if (players.size() > 0) {
+            return players.get(currentPlayer);
+        }
+        return null;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayer;
     }
 
     public Player nextPlayer() {
@@ -48,6 +60,14 @@ public class PlayerController {
     public void movePlayer(int amount, int layerSize) {
         //.setPosition(newPosition);
         getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
+    }
+
+    public void movePlayer(int targetIndex) {
+        getCurrentPlayer().setTargetPosition(targetIndex);
+    }
+
+    public void changeCurrentPosition(Player player, int newPos) {
+        player.setPosition(newPos);
     }
 
     public void increaseCurrentPosition(Player player) {
@@ -70,8 +90,8 @@ public class PlayerController {
         player.getUtilityList().add(utility);
     }
 
-    public void addPlayer() {
-        //players.add(new Player());
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     public void addCardToCurrentPlayer(Card card) {
