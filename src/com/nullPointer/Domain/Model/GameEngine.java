@@ -81,36 +81,24 @@ public class GameEngine {
 
 
         for (int i = 0; i < regularDiceTotal; i++) {
-            currentPos = currentPlayer.getPosition();
+            currentPos = currentPlayer.getTargetPosition();
+
             int placeToGo = connections.get(currentPos).get(0);
-//            System.out.println("TEST STRING");
-            System.out.println(currentPos);
-//            System.out.println(placeToGo);
-//            System.out.println(domainBoard.getSquareMap());
-//            System.out.println(connections.get(56));
-//            System.out.println(connections.get(57));
-//            System.out.println(connections.get(58));
-//            System.out.println("END");
+
             if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
                 if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
-                else System.out.println("There seems to be a problem.");
-            } else {
-
+                else System.out.println("[GameEngine]: There seems to be a problem.");
             }
-//            System.out.println("Printing current position: before:");
-//            System.out.println(currentPos);
-            playerController.changeCurrentPosition(currentPlayer, placeToGo);
-//            System.out.println("after: ");
-//            System.out.println(currentPos);
+
+            //playerController.changeCurrentPosition(currentPlayer, placeToGo);
             path.add(placeToGo);
             target = placeToGo;
+            playerController.movePlayer(target);
         }
 
-        System.out.println("TEST STRING2");
-        System.out.println(path);
         publishEvent("path/" + path);
-        System.out.println(target);
         playerController.movePlayer(target);
+        evaluateSquare();
         return path;
     }
 
@@ -143,7 +131,7 @@ public class GameEngine {
             } else {
                 card = domainBoard.getChanceCards().element();
             }
-            publishEvent("message/" + "[System]: " + playerController.getCurrentPlayer().getName() + " drew " + card.getTitle());
+            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
                 card.playCard(this);
                 System.out.println();

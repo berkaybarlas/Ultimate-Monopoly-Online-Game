@@ -78,6 +78,7 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("rollDice")) {
                 buttonPanel.rollDice.setEnabled(true);
+                buttonPanel.endTurn.setEnabled(true);
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
