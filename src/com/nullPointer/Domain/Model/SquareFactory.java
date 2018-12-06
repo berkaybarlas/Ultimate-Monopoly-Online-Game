@@ -1,5 +1,4 @@
-package com.nullPointer.Domain.Model;
-
+  
 import com.nullPointer.Domain.Model.Square.*;
 
 public class SquareFactory {
