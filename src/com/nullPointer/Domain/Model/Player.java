@@ -11,9 +11,9 @@ public class Player implements Serializable {
 
     private String name;
     private int ClientID;
-    private int position = 0;
+    private int position = 56;
     private int layer = 1;
-    private int targetPosition = 0;
+    private int targetPosition = 56;
     private int money = 3200;
     private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
     private ArrayList<PropertySquare> propertySquares;
@@ -21,6 +21,7 @@ public class Player implements Serializable {
     private ArrayList<Card> cardList;
     private boolean inJail;
     private boolean direction = true;
+    private int rentMultiplier = 1;
 
     public Player(String name, int ClientID) {
         this.name = name;
@@ -36,6 +37,17 @@ public class Player implements Serializable {
         propertySquares = new ArrayList<>();
         utilityList = new ArrayList<>();
     }
+
+    public int getRentMultiplier()
+    {
+        return rentMultiplier;
+    }
+
+    public void setRentMultiplier(int newRentMultiplier)
+    {
+        this.rentMultiplier = newRentMultiplier;
+    }
+
 
     public String getName() {
         return name;
