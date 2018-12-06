@@ -20,10 +20,11 @@ public class AppWindow extends JFrame implements Observer {
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
     private JButton loadButton = null;
-    private JButton messageButton = null;
+    private JButton saveButton = null;
     private JButton menuButton = null;
     private JButton gameButton = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private SaveLoadController saveGameController =  SaveLoadController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
@@ -95,24 +96,30 @@ public class AppWindow extends JFrame implements Observer {
 
     protected void addButtons(JToolBar toolBar) {
 
-        messageButton = new JButton("Save Game");
-        messageButton.setToolTipText("Save the game server");
-        messageButton.addActionListener(new ActionListener() {
+        saveButton = new JButton("Save Game");
+        saveButton.setToolTipText("Save the game server");
+        saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SaveLoadController.getInstance().saveGame();
+                	// whether the game is paused or not will be checked.
+                    saveGameController.saveGame();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         });
-        toolBar.add(messageButton);
+        toolBar.add(saveButton);
 
         loadButton = new JButton("Load");
         loadButton.setToolTipText("Load the program");
         loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                try {
+					saveGameController.loadGame("savefile");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         toolBar.add(loadButton);

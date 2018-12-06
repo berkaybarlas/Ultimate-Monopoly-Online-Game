@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Controller;
 
 import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Controller.PlayerController;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -16,9 +17,10 @@ import java.util.Calendar;
 public class SaveLoadController {
 
     private static SaveLoadController _instance;
-    static final String dataFile = "invoicedata";
+  
     static final Player player = new Player("Testplayer ");
-
+   // private PlayerController playerController = PlayerController.getInstance();
+    
     private SaveLoadController() {
 
     }
@@ -39,7 +41,11 @@ public class SaveLoadController {
         try {
             out = new ObjectOutputStream(new
                     BufferedOutputStream(new FileOutputStream(saveFile)));
+//            for(Player player : playerController.getPlayers()) {
+//            	out.writeObject(player);
+//            }
             out.writeObject(player);
+            out.flush();
             System.out.println("Game state is saved to " + saveFile);
 
         } catch (FileNotFoundException e) {

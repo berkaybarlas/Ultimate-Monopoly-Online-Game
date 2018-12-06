@@ -48,7 +48,7 @@ public class Client extends Thread {
                     System.out.println("[Client]: Server -> " + fromServer);
                     System.out.println(fromServer.getClass());
 
-                    communicationController.processInput( fromServer);
+                    communicationController.processInput(fromServer);
                 }
             }
         } catch (UnknownHostException er) {
