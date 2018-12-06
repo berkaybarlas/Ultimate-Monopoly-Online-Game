@@ -1,9 +1,9 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
-import com.nullPointer.Domain.SaveLoadManager;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
@@ -94,7 +94,7 @@ public class AppWindow extends JFrame implements Observer {
         messageButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SaveLoadManager.getInstance().saveGame();
+                    SaveLoadController.getInstance().saveGame();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
@@ -10,6 +11,7 @@ import com.nullPointer.Utils.ColorSet;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameWindow extends JPanel implements Observer {
@@ -20,6 +22,7 @@ public class GameWindow extends JPanel implements Observer {
 
     private GameEngine gameEngine = GameEngine.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
+    private SaveLoadController saveLoadController = SaveLoadController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private ArrayList<JButton> disabledButtons = new ArrayList<JButton>();
@@ -92,6 +95,15 @@ public class GameWindow extends JPanel implements Observer {
             if (message.equals("resume")) {
                 enableButtons();
                 System.out.println("[GameWindow: resumed]");
+            }
+            if (message.equals("save")) {
+                try {
+					saveLoadController.saveGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                System.out.println("[GameWindow: saved]");
             }
         }
         if (message.equals("pause")) {

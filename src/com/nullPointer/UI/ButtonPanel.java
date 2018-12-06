@@ -42,6 +42,7 @@ public class ButtonPanel extends JPanel{
 		rollDice.setBounds(150,140,100,30);
 		resumeButton.setBounds(150,175,100,30);
 		pauseButton.setBounds(150,210,100,30);
+		saveButton.setBounds(150, 245, 100, 30);
 
 		panel.add(rollDice);
 		panel.add(purchaseButton, BorderLayout.CENTER);
@@ -50,6 +51,7 @@ public class ButtonPanel extends JPanel{
 		panel.add(improveButton);
 		panel.add(resumeButton);
 		panel.add(pauseButton);
+		panel.add(saveButton);
 
         this.add(panel);
         
@@ -105,7 +107,6 @@ public class ButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Game saved");
 				communicationController.sendClientMessage("save");
-				saveButton.setEnabled(false);
 			} 
 		} );
 		

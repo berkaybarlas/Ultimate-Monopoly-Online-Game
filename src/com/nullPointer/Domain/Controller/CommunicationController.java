@@ -96,6 +96,8 @@ public class CommunicationController {
             	gameEngine.resume();
             } else if(input.contains("pause")) {
             	gameEngine.pause();
+            } else if(input.contains("save")) {
+            	gameEngine.save();
             }
         }else if(objectInput instanceof ArrayList) {
             serverInfo.setClientList((ArrayList) objectInput);
