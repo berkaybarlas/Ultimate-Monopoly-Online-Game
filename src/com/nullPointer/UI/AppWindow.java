@@ -19,7 +19,7 @@ public class AppWindow extends JFrame implements Observer {
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
-    private JButton button = null;
+    private JButton loadButton = null;
     private JButton messageButton = null;
     private JButton menuButton = null;
     private JButton gameButton = null;
@@ -102,14 +102,14 @@ public class AppWindow extends JFrame implements Observer {
         });
         toolBar.add(messageButton);
 
-        button = new JButton("Load");
-        button.setToolTipText("Load the program");
-        button.addActionListener(new ActionListener() {
+        loadButton = new JButton("Load");
+        loadButton.setToolTipText("Load the program");
+        loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-        toolBar.add(button);
+        toolBar.add(loadButton);
 
         menuButton = new JButton("Menu");
         menuButton.setToolTipText("Menu window");
@@ -128,7 +128,6 @@ public class AppWindow extends JFrame implements Observer {
             }
         });
         toolBar.add(gameButton);
-
 
     }
 

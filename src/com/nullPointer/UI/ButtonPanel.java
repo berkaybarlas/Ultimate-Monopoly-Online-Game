@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.UI.AppWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,7 +106,6 @@ public class ButtonPanel extends JPanel{
 				System.out.println("Game saved");
 				communicationController.sendClientMessage("save");
 				saveButton.setEnabled(false);
-			//	.setEnabled(true);
 			} 
 		} );
 		
@@ -123,6 +123,7 @@ public class ButtonPanel extends JPanel{
 		rollDice.setEnabled(false);
 		resumeButton.setEnabled(false);
 		pauseButton.setEnabled(true);
+		saveButton.setEnabled(true);
 		this.setVisible(true);
 		
 	}
