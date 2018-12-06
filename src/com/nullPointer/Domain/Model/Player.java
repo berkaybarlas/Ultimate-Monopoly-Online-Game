@@ -11,9 +11,9 @@ public class Player implements Serializable {
 
     private String name;
     private int ClientID;
-    private int position = 0;
+    private int position = 56;
     private int layer = 1;
-    private int targetPosition = 0;
+    private int targetPosition = 56;
     private int money = 3200;
     private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
     private ArrayList<PropertySquare> propertySquares;

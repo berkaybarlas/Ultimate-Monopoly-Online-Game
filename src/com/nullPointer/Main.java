@@ -1,5 +1,6 @@
 package com.nullPointer;
 
+import com.nullPointer.UI.Animator;
 import com.nullPointer.UI.AppWindow;
 
 public class Main {
@@ -9,6 +10,8 @@ public class Main {
         AppWindow frame = new AppWindow();
         frame.pack();
         frame.setVisible(true);
+
+
     }
 }
  

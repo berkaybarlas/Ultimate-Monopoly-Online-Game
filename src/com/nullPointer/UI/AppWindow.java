@@ -3,6 +3,7 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
+import com.nullPointer.Domain.SaveLoadManager;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class AppWindow extends JFrame implements Observer {
     private GameWindow gameWindow;
@@ -47,6 +49,11 @@ public class AppWindow extends JFrame implements Observer {
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
+        Animator animator = new Animator(this);
+        Thread thread = new Thread(animator);
+        thread.start();
+        animator.setVisible(true);
+
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
@@ -57,7 +64,7 @@ public class AppWindow extends JFrame implements Observer {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setPreferredSize(new Dimension(width, height));
         contentPane.add(toolBar, BorderLayout.NORTH);
-
+        contentPane.add(animator);
         setContentPane(contentPane);
 
         JPanel menuPanel = menuWindow;
@@ -87,14 +94,27 @@ public class AppWindow extends JFrame implements Observer {
 
     protected void addButtons(JToolBar toolBar) {
 
-        messageButton = new JButton("Send Message");
-        messageButton.setToolTipText("Join the game server");
+        messageButton = new JButton("Save Game");
+        messageButton.setToolTipText("Save the game server");
         messageButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.sendClientMessage("hello");
+                try {
+                    SaveLoadManager.getInstance().saveGame();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         toolBar.add(messageButton);
+
+        button = new JButton("Load");
+        button.setToolTipText("Load the program");
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        toolBar.add(button);
 
         menuButton = new JButton("Menu");
         menuButton.setToolTipText("Menu window");
@@ -114,14 +134,7 @@ public class AppWindow extends JFrame implements Observer {
         });
         toolBar.add(gameButton);
 
-        button = new JButton("Quit");
-        button.setToolTipText("Quit the program");
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        toolBar.add(button);
+
     }
 
     @Override
