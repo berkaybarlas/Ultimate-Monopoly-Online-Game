@@ -341,7 +341,7 @@ public class Board extends JPanel implements Observer {
             repaint();
         } else if (message.contains("path")) {
             proccessPath(message);
-            //pawnList.get(playerController.);
+            pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         }
     }
 

@@ -34,7 +34,7 @@ public class Animator extends JPanel implements Runnable {
         //System.out.println("[Animator]: Thread started");
         while (true) {
             try {
-                Thread.sleep(80);                            
+                Thread.sleep(40);
             } catch (InterruptedException e) {
                 System.out.println("Program Interrupted");
                 System.exit(0);

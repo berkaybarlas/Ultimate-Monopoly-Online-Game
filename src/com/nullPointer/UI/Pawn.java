@@ -47,6 +47,10 @@ public class Pawn implements Drawable {
         this.positionIndex = positionIndex;
     }
 
+    public void setPath(ArrayList<Integer> path) {
+        this.path = path;
+    }
+
     public void paint(Graphics g) {
         g.fillOval(position.x, position.y, 20, 20);
         g.setColor(Color.RED);
@@ -54,23 +58,24 @@ public class Pawn implements Drawable {
 
     public void draw(Graphics g) {
 
+        if (myPath != null && myPath.hasMoreSteps()) {
+            position = myPath.nextPosition();
+        } else {
+            if (path.size() != 0) {
+                int i = 0;
+                PlayerController.getInstance().increaseCurrentPosition(player);
+                int numberOfSteps = (int) (10.0);
 
-        if (player != null && player.getPosition() != player.getTargetPosition()) {
-            if (myPath != null && myPath.hasMoreSteps()) {
+                myPath = new StraightLinePath(position.x, position.y
+                        , (squareMap.get(path.get(i))[0].x + squareMap.get(path.get(i))[1].x) / 2
+                        , (squareMap.get(path.get(i))[0].y + squareMap.get(path.get(i))[1].y) / 2
+                        , numberOfSteps);
                 position = myPath.nextPosition();
-            } else {
-                for (int i = 0; i < path.size(); i++) {
-                    PlayerController.getInstance().increaseCurrentPosition(player);
-                    int numberOfSteps = (int) (10.0 + (Math.random() * 10.0));
-
-                    myPath = new StraightLinePath(position.x, position.y
-                            , (squareMap.get(path.get(i))[0].x + squareMap.get(path.get(i))[1].x) / 2
-                            , (squareMap.get(path.get(i))[0].y + squareMap.get(path.get(i))[1].y) / 2
-                            , numberOfSteps);
-                    position = myPath.nextPosition();
-                }
+                path.remove(i);
             }
-            paint(g);
         }
+
+        paint(g);
     }
+
 }
