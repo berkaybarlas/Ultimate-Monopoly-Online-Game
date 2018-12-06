@@ -24,6 +24,11 @@ public class GameEngine {
 
     private boolean gameIsPaused = false;
 
+    public DomainBoard getDomainBoard()
+    {
+        return domainBoard;
+    }
+
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
