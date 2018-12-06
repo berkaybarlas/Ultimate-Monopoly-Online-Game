@@ -52,6 +52,12 @@ public class MoneyController {
 	public void setPoolMoney(int poolMoney) {
 		this.poolMoney = poolMoney;
 	}
+	public void increasePoolMoney(int poolMoney) {
+		this.poolMoney += poolMoney;
+	}
+	public void decreasePoolMoney(int poolMoney) {
+		this.poolMoney -= poolMoney;
+	}
     
     public boolean hasEnoughMoney(Player player, int amount) {
     		if(player.getMoney()>=amount) {

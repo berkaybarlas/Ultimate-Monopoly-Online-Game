@@ -135,11 +135,11 @@ public class PropertySquare extends Square {
         this.rentFactor = rentFactor;
     }
 
-    private int getRentListIndex() {
+    public int getRentListIndex() {
         return rentListIndex;
     }
 
-    private void setRentListIndex(int rentListIndex) {
+    public void setRentListIndex(int rentListIndex) {
         this.rentListIndex = rentListIndex;
     }
 
