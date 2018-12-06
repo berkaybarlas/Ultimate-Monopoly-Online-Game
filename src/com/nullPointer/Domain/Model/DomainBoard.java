@@ -96,19 +96,23 @@ public class DomainBoard {
     // Creates map of connections. This feature is fundamental to the current board, and therefore is hard-coded.
     public void createConnectionsMap() {
         for (int i = 0; i < 55; i++) {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1, i - 1)));
         }
-        connectionsMap.put(55, new ArrayList<Integer>(Arrays.asList(0, -1)));
+        connectionsMap.get(0).set(2, 55);
+        connectionsMap.put(55, new ArrayList<Integer>(Arrays.asList(0, -1, 54)));
+
 
         for (int i = 56; i < 95; i++) {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1, i - 1)));
         }
-        connectionsMap.put(95, new ArrayList<Integer>(Arrays.asList(56, -1)));
+        connectionsMap.get(56).set(2, 95);
+        connectionsMap.put(95, new ArrayList<Integer>(Arrays.asList(56, -1, 94)));
 
         for (int i = 96; i < 119; i++) {
-            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1)));
+            connectionsMap.put(i, new ArrayList<Integer>(Arrays.asList(i + 1, -1, i - 1)));
         }
-        connectionsMap.put(110, new ArrayList<Integer>(Arrays.asList(96, -1)));
+        connectionsMap.get(96).set(2, 119);
+        connectionsMap.put(119, new ArrayList<Integer>(Arrays.asList(96, -1, 118)));
 
         connectionsMap.get(7).set(1, 61);         //Reading Railroad Transit Station
         connectionsMap.get(61).set(1, 7);
@@ -121,6 +125,8 @@ public class DomainBoard {
 
         connectionsMap.get(91).set(1, 117);    //Short Line Railroad Transit Station
         connectionsMap.get(117).set(1, 91);
+
+
     }
 
     public HashMap<Integer, Square> getSquareMap() {
