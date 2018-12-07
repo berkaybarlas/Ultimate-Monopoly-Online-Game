@@ -5,9 +5,10 @@ import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayerController {
+public class PlayerController implements Serializable {
 
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
@@ -26,7 +27,7 @@ public class PlayerController {
 
     }
 
-    public static PlayerController getInstance() {
+    public static synchronized PlayerController getInstance() {
         if (_instance == null) {
             _instance = new PlayerController();
         }
@@ -96,6 +97,11 @@ public class PlayerController {
 
     public void addCardToCurrentPlayer(Card card) {
         getCurrentPlayer().addCard(card);
+    }
+
+    public void exchangePlayerControllerData(PlayerController inputController) {
+        players = inputController.getPlayers();
+        currentPlayer = inputController.getCurrentPlayerIndex();
     }
 
 }

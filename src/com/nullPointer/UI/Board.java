@@ -327,7 +327,7 @@ public class Board extends JPanel implements Observer {
 			g.fillOval(entry.getValue()[1].x, entry.getValue()[1].y,20, 20);
 			g.setColor(Color.GREEN);
 		}*/
-        pawnList.forEach(pawn -> pawn.paint(g));
+        //pawnList.forEach(pawn -> pawn.paint(g));
     }
 
     public void addNewPawn(Player player) {
