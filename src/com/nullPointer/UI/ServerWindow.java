@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
@@ -26,10 +27,11 @@ public class ServerWindow extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
-    private JPanel buttonPanel;
+    private JPanel buttonPanel, playerPanel, cPanel;
     private JScrollPane scrollPane;
-    private JPanel playerPanel;
+    private JTextField textField;
     private List<ClientDisplay> clientDisplayList;
+    private ArrayList<CustomButton> bList = new ArrayList<CustomButton>();
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -88,17 +90,17 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(startGame);
 
-        addPlayer = new CustomButton("Add player");
-        addPlayer.setToolTipText("add new player ");
-        addPlayer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-        addPlayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Player player = new Player("Test", serverInfo.getClientID());
-                communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
-            }
-        });
-        panel.add(addPlayer);
+//        addPlayer = new CustomButton("Add player");
+//        addPlayer.setToolTipText("add new player ");
+//        addPlayer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+//        addPlayer.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                Player player = new Player("Test", serverInfo.getClientID());
+//                communicationController.sendClientMessage(player);
+//                //navigator.gameScreen();
+//            }
+//        });
+//        panel.add(addPlayer);
 
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
@@ -116,6 +118,12 @@ public class ServerWindow extends JPanel implements Observer {
     private void startServer() {
         communicationController.sendClientMessage("game/start");
     }
+
+//    public void createPlayerCreationDisplay() {
+//        pCreation = new PlayerCreationDisplay();
+//        pCreation.setPreferredSize(new Dimension(200,200));
+//        this.add(pCreation);
+//    }
 
     public List<ClientDisplay> createClientDisplay() {
         List<Integer> clientList = serverInfo.getClientList();
@@ -142,9 +150,31 @@ public class ServerWindow extends JPanel implements Observer {
         //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         playerPanel.setBackground(ColorSet.BOARDBACKGROUND);
+        playerPanel.setPreferredSize(new Dimension(pButtonWidth + 30, 12 * (pButtonHeight + 10)));
+        cPanel = new JPanel();
+        cPanel.setPreferredSize(new Dimension(230,50));
+        cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
+        cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize( new Dimension(pButtonWidth + 30, 4 * (pButtonHeight + 10)));
+        scrollPane.setBounds(screenSize.width / 3 * 2, screenSize.height / 80, 150, 300);
+        textField = new JTextField("Enter player name here!");
+        textField.setPreferredSize(new Dimension(230, 50));
+        textField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Player player = new Player(textField.getText(), serverInfo.getClientID());
+                communicationController.sendClientMessage(player);
+                //navigator.gameScreen();
+            }
+        });
+//        addPlayer = new CustomButton("Add Player");
+//        addPlayer.setToolTipText("Press to add your player!");
+//        addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
+//        addPlayer
+          cPanel.add(textField);
+//        cPanel.add(addPlayer);
         this.add(scrollPane);
+        this.add(cPanel);
 
     }
 
@@ -163,8 +193,10 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
         newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
         newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
-
-        playerPanel.add(newButton);
+        bList.add(newButton);
+        for(CustomButton cB : bList) {
+            playerPanel.add(newButton);
+        }
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
     }
@@ -177,7 +209,7 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 200);
         scrollPane.setLocation((screenSize.width ) / 4 * 3, 100);
-
+        cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight()+100);
     }
 
     @Override
@@ -192,7 +224,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 }
 
-class ClientDisplay extends JPanel {
+class ClientDisplay {
 
     String clientName;
     Point position;
