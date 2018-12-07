@@ -68,6 +68,7 @@ public class Client extends Thread {
     public void sendMessage(Object msg) {
         try {
             outObject.writeObject(msg);
+            outObject.reset();
         } catch (Exception e) {
             System.out.println("[Client]: Error during sendMessage" + e);
         }
