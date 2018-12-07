@@ -31,11 +31,12 @@ public class ServerWindow extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
-    private JPanel buttonPanel, playerPanel, cPanel;
+    private JPanel buttonPanel, playerPanel, cPanel, pPanel;
     private JScrollPane scrollPane;
     private JTextField textField;
     private List<ClientDisplay> clientDisplayList;
     private ArrayList<CustomButton> bList = new ArrayList<CustomButton>();
+    private ArrayList<Image> pawnImages = new ArrayList<Image>();
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -44,9 +45,18 @@ public class ServerWindow extends JPanel implements Observer {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private Image background;
+    private Image background, rightButtonImg, leftButtonImg, p1, p2, p3, p4, p5, p6;
     private File backgroundSrc = new File("./assets/background2.jpg");
-    JLabel back;
+    private File RBISrc = new File("./assets/b1.png");
+    private File LBISrc = new File("./assets/pawns/b2.png");
+    private File P1Src = new File("./assets/pawns/hat.png");
+    private File P2Src = new File("./assets/pawns/iron.png");
+    private File P3Src = new File("./assets/pawns/rende.png");
+    private File P4Src = new File("./assets/pawns/car.png");
+    private File P5Src = new File("./assets/pawns/ship.png");
+    private File P6Src = new File("./assets/pawns/boot.png");
+
+    JLabel back, buffer;
 
     public ServerWindow() {
 
@@ -150,23 +160,25 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void createPlayerDisplay() {
-        int panelWidth = pButtonWidth + 15;
+        int panelWidth = pButtonWidth + 55;
         int panelHeight = 6 * (pButtonHeight + 5);
         playerPanel = new JPanel();
         //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setBackground(ColorSet.serverWindowLightBackground);
+        playerPanel.setBackground(ColorSet.SERVERBACKGROUND);
         //playerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
         cPanel = new JPanel();
-        cPanel.setPreferredSize(new Dimension(panelWidth, 100));
+        cPanel.setPreferredSize(new Dimension(panelWidth, 500));
         //cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(panelWidth, panelHeight));
+        scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND,2,true));
         textField = new JTextField("Enter player name here!");
         textField.setPreferredSize(new Dimension(230, 50));
         textField.setFont(new Font("Corbel", Font.PLAIN, 15));
-        textField.setBackground(ColorSet.serverWindowLightBackground);
+        textField.setBackground(ColorSet.SERVERBACKGROUND);
+        textField.setHorizontalAlignment(JTextField.CENTER);
         textField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -178,6 +190,28 @@ public class ServerWindow extends JPanel implements Observer {
                 textField.setText("");
             }
         });
+        try {
+            p1 = ImageIO.read(P1Src);
+            p1 = p1.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p1);
+            p2 = ImageIO.read(P2Src);
+            p2 = p2.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p2);
+            p3 = ImageIO.read(P3Src);
+            p3 = p3.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p3);
+            p4 = ImageIO.read(P4Src);
+            p4 = p4.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p4);
+            p5 = ImageIO.read(P5Src);
+            p5 = p5.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p5);
+            p6 = ImageIO.read(P6Src);
+            p6 = p6.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            pawnImages.add(p6);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addPlayer = new CustomButton("Add Player");
         addPlayer.setToolTipText("Press to add your player!");
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
@@ -189,7 +223,31 @@ public class ServerWindow extends JPanel implements Observer {
                 textField.setText("Enter player name here!");
             }
         });
+        JButton rightButton = new JButton();
+        JButton leftButton = new JButton();
+        try {
+            rightButtonImg = ImageIO.read(RBISrc);
+            rightButtonImg = rightButtonImg.getScaledInstance(70,70,Image.SCALE_SMOOTH);
+            rightButton.setIcon(new ImageIcon(rightButtonImg));
+            leftButtonImg = ImageIO.read(LBISrc);
+            leftButtonImg = leftButtonImg.getScaledInstance(70,70,Image.SCALE_SMOOTH);
+            leftButton.setIcon(new ImageIcon(leftButtonImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        pPanel = new JPanel();
+        pPanel.setPreferredSize(new Dimension(70,70));
+        pPanel.setBackground(ColorSet.SERVERBACKGROUND);
+        pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary,2,true));
+        buffer = new JLabel();
+        buffer.setIcon(new ImageIcon(pawnImages.get(0)));
+        pPanel.add(buffer);
+        rightButton.setBorder(null);
+        leftButton.setBorder(null);
         cPanel.add(textField);
+        cPanel.add(leftButton);
+        cPanel.add(pPanel);
+        cPanel.add(rightButton);
         cPanel.add(addPlayer);
         this.add(scrollPane);
         this.add(cPanel);
@@ -217,9 +275,9 @@ public class ServerWindow extends JPanel implements Observer {
             }
         });
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
-        newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
-        newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
-        newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
+        newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));
+        newButton.setMaximumSize(new Dimension(pButtonWidth + 47, pButtonHeight));
+        newButton.setMinimumSize(new Dimension(pButtonWidth + 47, pButtonHeight));
         bList.add(newButton);
 
         playerPanel.add(newButton);
