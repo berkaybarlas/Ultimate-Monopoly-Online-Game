@@ -47,7 +47,7 @@ public class ResponseController {
         listenerClientOutputs.forEach(socketOutput -> {
             try {
                 socketOutput.writeObject(message);
-
+                socketOutput.reset();
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("[ResponseController]:" + " error during sendResponse: " + e);
@@ -66,6 +66,7 @@ public class ResponseController {
             //outObject.writeObject(PlayerController.getInstance());
             outObject.writeObject(playerController);
             outObject.writeObject("loadData");
+            outObject.reset();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("[ResponseController]:" + "sending object failed.");

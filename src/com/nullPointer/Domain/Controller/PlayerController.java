@@ -34,10 +34,6 @@ public class PlayerController implements Serializable {
         return _instance;
     }
 
-    public static void setInstance(PlayerController playerController) {
-        _instance = playerController;
-    }
-
     public Player getCurrentPlayer() {
         if (players.size() > 0) {
             return players.get(currentPlayer);
@@ -101,6 +97,11 @@ public class PlayerController implements Serializable {
 
     public void addCardToCurrentPlayer(Card card) {
         getCurrentPlayer().addCard(card);
+    }
+
+    public void exchangePlayerControllerData(PlayerController inputController) {
+        players = inputController.getPlayers();
+        currentPlayer = inputController.getCurrentPlayerIndex();
     }
 
 }

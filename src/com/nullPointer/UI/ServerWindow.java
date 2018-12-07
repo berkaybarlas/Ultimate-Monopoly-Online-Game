@@ -27,6 +27,7 @@ public class ServerWindow extends JPanel implements Observer {
     private JButton addPlayer;
     private JButton quitServer;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
@@ -194,13 +195,34 @@ public class ServerWindow extends JPanel implements Observer {
         this.add(cPanel);
     }
 
+    public void updateButtonColor() {
+//        List<Integer> clientList = serverInfo.getClientList();
+//        ArrayList<Player> pList = playerController.getPlayers();
+//        for (int i = 0; i < bList.size(); i++) {
+//            CustomButton playerButton = bList.get(i);
+//            Player player = pList.get(i);
+//            playerButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
+//        }
+        playerPanel.removeAll();
+        playerPanel.validate();
+        repaint();
+        ArrayList<Player> pList = PlayerController.getInstance().getPlayers();
+        for (Player player : pList) {
+            addPlayerButton(player);
+        }
+        playerPanel.validate();
+        repaint();
+    }
+
     public void addPlayerButton(Player player) {
         List<Integer> clientList = serverInfo.getClientList();
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(serverInfo.getClientID())));
-                player.setClientID(serverInfo.getClientID());
+              player.setClientID(serverInfo.getClientID());
+              communicationController.sendClientMessage(PlayerController.getInstance());
+                //updateButtonColor();
             }
         });
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
@@ -216,17 +238,20 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addPlayer() {
-        ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
-        Player player = pList.get(pList.size() - 1);
-        addPlayerButton(player);
+        ArrayList<Player> pList = playerController.getPlayers();
+        if (pList.size() > 0) {
+            Player player = pList.get(pList.size() - 1);
+            addPlayerButton(player);
+        }
     }
 
     public void addOtherPlayers() {
-        ArrayList<Player> pList = PlayerController.getInstance().getPlayers();
-        for (Player player : pList) {
-            addPlayerButton(player);
+        if (bList.size() == 0) {
+            ArrayList<Player> pList = playerController.getPlayers();
+            for (Player player : pList) {
+                addPlayerButton(player);
+            }
         }
-
     }
 
     public void paint(Graphics g) {
@@ -235,6 +260,7 @@ public class ServerWindow extends JPanel implements Observer {
         //g.drawImage(background, 0, 0, null);
         back.setLocation(0, 0);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
+        //bList.forEach(customButton -> customButton.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 200);
         scrollPane.setLocation((screenSize.width) / 4 * 3, 100);
         cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + 100);
@@ -248,7 +274,9 @@ public class ServerWindow extends JPanel implements Observer {
         } else if (message.equals("newPlayer")) {
             addPlayer();
         } else if (message.equals("refreshPlayerDisplay")) {
-            addOtherPlayers();
+            //playerController = PlayerController.getInstance();
+            //addOtherPlayers();
+            updateButtonColor();
             repaint();
         }
     }

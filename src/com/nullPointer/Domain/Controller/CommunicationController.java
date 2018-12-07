@@ -108,9 +108,11 @@ public class CommunicationController {
         } else if (objectInput instanceof Player) {
             gameEngine.addPlayer((Player) objectInput);
         } else if (objectInput instanceof PlayerController) {
-            PlayerController.setInstance((PlayerController) objectInput);
+            PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
+            gameEngine.publishEvent("refreshPlayerDisplay");
         }
     }
+
 
     private String rest(String word) {
         int slashIndex = word.indexOf('/');
