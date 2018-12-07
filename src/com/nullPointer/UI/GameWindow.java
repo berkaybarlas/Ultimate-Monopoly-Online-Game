@@ -55,6 +55,7 @@ public class GameWindow extends JPanel implements Observer {
         MessageBox msg = new MessageBox();
         rightSide.add(msg);
         contentPane.add(rightSide, BorderLayout.LINE_END);
+        rightSide.setOpaque(false);
 
         this.add(contentPane);
         setOpaque(false);

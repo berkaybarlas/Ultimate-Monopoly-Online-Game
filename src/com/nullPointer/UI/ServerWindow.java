@@ -66,12 +66,12 @@ public class ServerWindow extends JPanel implements Observer {
 
         createClientDisplay();
         createPlayerDisplay();
-        this.add(scrollPane);
 
         ImageIcon backgroundIcon = new ImageIcon(background);
         back = new JLabel();
         back.setIcon(backgroundIcon);
         add(back);
+        this.setOpaque(false);
 
     }
 
@@ -139,22 +139,33 @@ public class ServerWindow extends JPanel implements Observer {
 
     public void createPlayerDisplay() {
         playerPanel = new JPanel();
-        //playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setPreferredSize(new Dimension(pButtonWidth + 30, 12 * (pButtonHeight + 10)));
+        //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
+        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+        playerPanel.setBackground(ColorSet.BOARDBACKGROUND);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(screenSize.width / 3 * 2, screenSize.height / 80, 150, 300);
+        scrollPane.setPreferredSize( new Dimension(pButtonWidth + 30, 4 * (pButtonHeight + 10)));
         this.add(scrollPane);
 
     }
 
     public void addPlayer() {
+        List<Integer> clientList = serverInfo.getClientList();
         ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
-        CustomButton newButton = new CustomButton(pList.get(pList.size() - 1).getName());
+        Player player = pList.get(pList.size() - 1);
+        CustomButton newButton = new CustomButton(player.getName());
+        newButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(serverInfo.getClientID())));
+                player.setClientID(serverInfo.getClientID());
+            }
+        });
+        newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
         newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
+        newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
+        newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
 
         playerPanel.add(newButton);
-        playerPanel.validate();
-        scrollPane.validate();
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
     }
 
