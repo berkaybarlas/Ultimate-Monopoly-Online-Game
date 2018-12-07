@@ -59,8 +59,10 @@ public class ServerWindow extends JPanel implements Observer {
     private File P6Src = new File("./assets/pawns/boot.png");
 
     private ImageIcon dispImg;
+    private Image logo;
+    private File logoSrc = new File("./assets/monopoly_logo.png");
 
-    JLabel back, buffer;
+    JLabel back, buffer, logoIcon;
 
     public ServerWindow() {
 
@@ -75,6 +77,8 @@ public class ServerWindow extends JPanel implements Observer {
         gameEngine.subscribe(this);
 
         try {
+            logo = ImageIO.read(logoSrc);
+            logo = logo.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
             background = ImageIO.read(backgroundSrc);
             background = background.getScaledInstance(
                     screenSize.width,
@@ -88,6 +92,11 @@ public class ServerWindow extends JPanel implements Observer {
         createPlayerDisplay();
 
         ImageIcon backgroundIcon = new ImageIcon(background);
+
+        ImageIcon logoImage = new ImageIcon(logo);
+        logoIcon = new JLabel();
+        logoIcon.setIcon(logoImage);
+        add(logoIcon);
         back = new JLabel();
         back.setIcon(backgroundIcon);
         add(back);
@@ -335,9 +344,12 @@ public class ServerWindow extends JPanel implements Observer {
         back.setLocation(0, 0);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         //bList.forEach(customButton -> customButton.paint(g));
-        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 200);
+        buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 400);
         scrollPane.setLocation((screenSize.width) / 4 * 3, 100);
         cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + 100);
+
+        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
+        logoIcon.setLocation(position.x, position.y);
     }
 
     @Override

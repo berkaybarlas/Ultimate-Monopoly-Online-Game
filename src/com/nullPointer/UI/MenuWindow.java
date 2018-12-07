@@ -71,11 +71,11 @@ public class MenuWindow extends JPanel {
         //g.fillRect(position.x, position.y, length, length);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
         //g.drawImage(background, 0, 0, null);
         //g.drawImage(logo, position.x, position.y, null);
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
         back.setLocation(0, 0);
+        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
         logoIcon.setLocation(position.x, position.y);
     }
 

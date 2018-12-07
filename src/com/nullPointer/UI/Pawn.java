@@ -52,8 +52,8 @@ public class Pawn implements Drawable {
     }
 
     public void paint(Graphics g) {
-        g.fillOval(position.x, position.y, 20, 20);
         g.setColor(Color.RED);
+        g.fillOval(position.x, position.y, 20, 20);
     }
 
     public void draw(Graphics g) {
@@ -74,7 +74,6 @@ public class Pawn implements Drawable {
                 path.remove(i);
             }
         }
-
         paint(g);
     }
 
