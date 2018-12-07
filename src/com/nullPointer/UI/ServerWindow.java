@@ -246,8 +246,7 @@ public class ServerWindow extends JPanel implements Observer {
             this.addClient();
             repaint();
         } else if (message.equals("newPlayer")) {
-            addPlayer(plat);
-            //repaint();
+            addPlayer();
         } else if (message.equals("refreshPlayerDisplay")) {
             addOtherPlayers();
             repaint();
