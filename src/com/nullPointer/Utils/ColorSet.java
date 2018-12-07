@@ -37,6 +37,8 @@ public class ColorSet {
 
     public final static Color player12Color = new Color(255, 0, 127);
 
+    public final static Color serverWindowLightBackground = new Color(230,241,227);
+
     public ColorSet() {
         
     }

@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -149,30 +151,37 @@ public class ServerWindow extends JPanel implements Observer {
         playerPanel = new JPanel();
         //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setBackground(ColorSet.BOARDBACKGROUND);
+        playerPanel.setBackground(ColorSet.serverWindowLightBackground);
         playerPanel.setPreferredSize(new Dimension(pButtonWidth + 30, 12 * (pButtonHeight + 10)));
         cPanel = new JPanel();
-        cPanel.setPreferredSize(new Dimension(230,50));
-        cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
+        cPanel.setPreferredSize(new Dimension(230,100));
+        //cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize( new Dimension(pButtonWidth + 30, 4 * (pButtonHeight + 10)));
+        scrollPane.setPreferredSize( new Dimension(pButtonWidth + 30, 6 * (pButtonHeight + 10)));
         scrollPane.setBounds(screenSize.width / 3 * 2, screenSize.height / 80, 150, 300);
         textField = new JTextField("Enter player name here!");
         textField.setPreferredSize(new Dimension(230, 50));
-        textField.addActionListener(new ActionListener() {
+        textField.setBackground(ColorSet.serverWindowLightBackground);
+        textField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                textField.setText("");
+            }
+        });
+        addPlayer = new CustomButton("Add Player");
+        addPlayer.setToolTipText("Press to add your player!");
+        addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
+        addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Player player = new Player(textField.getText(), serverInfo.getClientID());
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
+                textField.setText("Enter player name here!");
             }
         });
-//        addPlayer = new CustomButton("Add Player");
-//        addPlayer.setToolTipText("Press to add your player!");
-//        addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
-//        addPlayer
-          cPanel.add(textField);
-//        cPanel.add(addPlayer);
+        cPanel.add(textField);
+        cPanel.add(addPlayer);
         this.add(scrollPane);
         this.add(cPanel);
 
@@ -195,7 +204,7 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
         bList.add(newButton);
         for(CustomButton cB : bList) {
-            playerPanel.add(newButton);
+            playerPanel.add(cB);
         }
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
