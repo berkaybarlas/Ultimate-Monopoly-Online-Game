@@ -196,13 +196,6 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void updateButtonColor() {
-//        List<Integer> clientList = serverInfo.getClientList();
-//        ArrayList<Player> pList = playerController.getPlayers();
-//        for (int i = 0; i < bList.size(); i++) {
-//            CustomButton playerButton = bList.get(i);
-//            Player player = pList.get(i);
-//            playerButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
-//        }
         playerPanel.removeAll();
         playerPanel.validate();
         repaint();
@@ -219,10 +212,8 @@ public class ServerWindow extends JPanel implements Observer {
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(serverInfo.getClientID())));
               player.setClientID(serverInfo.getClientID());
               communicationController.sendClientMessage(PlayerController.getInstance());
-                //updateButtonColor();
             }
         });
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
