@@ -192,17 +192,10 @@ public class ServerWindow extends JPanel implements Observer {
         cPanel.add(addPlayer);
         this.add(scrollPane);
         this.add(cPanel);
-        //add other players
-
-        //Player player = pList.get(pList.size() - 1);
-
-
     }
 
-    public void addPlayer() {
+    public void addPlayerButton(Player player) {
         List<Integer> clientList = serverInfo.getClientList();
-        ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
-        Player player = pList.get(pList.size() - 1);
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -220,29 +213,20 @@ public class ServerWindow extends JPanel implements Observer {
         playerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    }
 
+    public void addPlayer() {
+        ArrayList<Player> pList = gameEngine.getPlayerController().getPlayers();
+        Player player = pList.get(pList.size() - 1);
+        addPlayerButton(player);
     }
 
     public void addOtherPlayers() {
-        List<Integer> clientList = serverInfo.getClientList();
         ArrayList<Player> pList = PlayerController.getInstance().getPlayers();
         for (Player player : pList) {
-            CustomButton newButton = new CustomButton(player.getName());
-            newButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    //newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(serverInfo.getClientID())));
-                    player.setClientID(serverInfo.getClientID());
-                }
-            });
-
-            newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
-            newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
-            newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
-            newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
-            bList.add(newButton);
-            playerPanel.add(newButton);
+            addPlayerButton(player);
         }
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
     }
 
     public void paint(Graphics g) {
@@ -262,7 +246,7 @@ public class ServerWindow extends JPanel implements Observer {
             this.addClient();
             repaint();
         } else if (message.equals("newPlayer")) {
-            addPlayer();
+            addPlayer(plat);
             //repaint();
         } else if (message.equals("refreshPlayerDisplay")) {
             addOtherPlayers();
