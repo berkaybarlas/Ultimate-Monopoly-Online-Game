@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -37,6 +38,7 @@ public class ServerWindow extends JPanel implements Observer {
     private List<ClientDisplay> clientDisplayList;
     private ArrayList<CustomButton> bList = new ArrayList<CustomButton>();
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
+    private static int cnt = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -48,13 +50,15 @@ public class ServerWindow extends JPanel implements Observer {
     private Image background, rightButtonImg, leftButtonImg, p1, p2, p3, p4, p5, p6;
     private File backgroundSrc = new File("./assets/background2.jpg");
     private File RBISrc = new File("./assets/b1.png");
-    private File LBISrc = new File("./assets/pawns/b2.png");
+    private File LBISrc = new File("./assets/b2.png");
     private File P1Src = new File("./assets/pawns/hat.png");
     private File P2Src = new File("./assets/pawns/iron.png");
     private File P3Src = new File("./assets/pawns/rende.png");
     private File P4Src = new File("./assets/pawns/car.png");
     private File P5Src = new File("./assets/pawns/ship.png");
     private File P6Src = new File("./assets/pawns/boot.png");
+
+    private ImageIcon dispImg;
 
     JLabel back, buffer;
 
@@ -192,22 +196,22 @@ public class ServerWindow extends JPanel implements Observer {
         });
         try {
             p1 = ImageIO.read(P1Src);
-            p1 = p1.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p1 = p1.getScaledInstance(((BufferedImage) p1).getWidth()/8,((BufferedImage) p1).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p1);
             p2 = ImageIO.read(P2Src);
-            p2 = p2.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p2 = p2.getScaledInstance(((BufferedImage) p2).getWidth()/8,((BufferedImage) p2).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p2);
             p3 = ImageIO.read(P3Src);
-            p3 = p3.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p3 = p3.getScaledInstance(((BufferedImage) p3).getWidth()/8,((BufferedImage) p3).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p3);
             p4 = ImageIO.read(P4Src);
-            p4 = p4.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p4 = p4.getScaledInstance(((BufferedImage) p4).getWidth()/8,((BufferedImage) p4).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p4);
             p5 = ImageIO.read(P5Src);
-            p5 = p5.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p5 = p5.getScaledInstance(((BufferedImage) p5).getWidth()/8,((BufferedImage) p5).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p5);
             p6 = ImageIO.read(P6Src);
-            p6 = p6.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+            p6 = p6.getScaledInstance(((BufferedImage) p6).getWidth()/8,((BufferedImage) p6).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p6);
         } catch (IOException e) {
             e.printStackTrace();
@@ -236,14 +240,35 @@ public class ServerWindow extends JPanel implements Observer {
             e.printStackTrace();
         }
         pPanel = new JPanel();
-        pPanel.setPreferredSize(new Dimension(70,70));
+        pPanel.setPreferredSize(new Dimension(100,45));
         pPanel.setBackground(ColorSet.SERVERBACKGROUND);
         pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary,2,true));
+        dispImg = new ImageIcon(pawnImages.get(cnt));
         buffer = new JLabel();
-        buffer.setIcon(new ImageIcon(pawnImages.get(0)));
+        buffer.setIcon(dispImg);
         pPanel.add(buffer);
         rightButton.setBorder(null);
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cnt++;
+                dispImg = new ImageIcon(pawnImages.get(cnt%pawnImages.size()));
+                buffer.setIcon(dispImg);
+                validate();
+                repaint();
+            }
+        });
         leftButton.setBorder(null);
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cnt--;
+                dispImg = new ImageIcon(pawnImages.get((cnt+pawnImages.size())%pawnImages.size()));
+                buffer.setIcon(dispImg);
+                validate();
+                repaint();
+            }
+        });
         cPanel.add(textField);
         cPanel.add(leftButton);
         cPanel.add(pPanel);
