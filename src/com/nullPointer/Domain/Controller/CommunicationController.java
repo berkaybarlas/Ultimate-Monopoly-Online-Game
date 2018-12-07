@@ -105,6 +105,8 @@ public class CommunicationController {
             serverInfo.setClientList((ArrayList) objectInput);
         }else if(objectInput instanceof Player) {
             gameEngine.addPlayer((Player) objectInput);
+        }else if(objectInput instanceof PlayerController) {
+            PlayerController.setInstance((PlayerController) objectInput);
         }
     }
 

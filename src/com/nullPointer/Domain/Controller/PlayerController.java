@@ -5,9 +5,10 @@ import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayerController {
+public class PlayerController implements Serializable {
 
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
@@ -31,6 +32,10 @@ public class PlayerController {
             _instance = new PlayerController();
         }
         return _instance;
+    }
+
+    public static void setInstance(PlayerController playerController) {
+        _instance = playerController;
     }
 
     public Player getCurrentPlayer() {

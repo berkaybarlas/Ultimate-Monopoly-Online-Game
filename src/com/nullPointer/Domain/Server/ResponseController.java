@@ -1,5 +1,7 @@
 package com.nullPointer.Domain.Server;
 
+import com.nullPointer.Domain.Controller.PlayerController;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -60,6 +62,7 @@ public class ResponseController {
             outObject = listenerClientOutputs.get(indexOfClient);
             List<Integer> clientList = serverInfo.getClientList();
             outObject.writeObject(clientList);
+            outObject.writeObject(PlayerController.getInstance());
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("[ResponseController]:" + "sending object failed.");
