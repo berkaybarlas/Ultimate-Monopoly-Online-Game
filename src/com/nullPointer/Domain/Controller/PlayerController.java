@@ -27,7 +27,7 @@ public class PlayerController implements Serializable {
 
     }
 
-    public static PlayerController getInstance() {
+    public static synchronized PlayerController getInstance() {
         if (_instance == null) {
             _instance = new PlayerController();
         }

@@ -1,6 +1,7 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
@@ -148,24 +149,31 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void createPlayerDisplay() {
+        int panelWidth = pButtonWidth + 15;
+        int panelHeight = 6 * (pButtonHeight + 5);
         playerPanel = new JPanel();
         //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         playerPanel.setBackground(ColorSet.serverWindowLightBackground);
-        playerPanel.setPreferredSize(new Dimension(pButtonWidth + 30, 12 * (pButtonHeight + 10)));
+        //playerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
         cPanel = new JPanel();
-        cPanel.setPreferredSize(new Dimension(230,100));
+        cPanel.setPreferredSize(new Dimension(panelWidth, 100));
         //cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize( new Dimension(pButtonWidth + 30, 6 * (pButtonHeight + 10)));
-        scrollPane.setBounds(screenSize.width / 3 * 2, screenSize.height / 80, 150, 300);
+        scrollPane.setPreferredSize(new Dimension(panelWidth, panelHeight));
         textField = new JTextField("Enter player name here!");
         textField.setPreferredSize(new Dimension(230, 50));
+        textField.setFont(new Font("Corbel", Font.PLAIN, 15));
         textField.setBackground(ColorSet.serverWindowLightBackground);
         textField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                textField.setText("");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
                 textField.setText("");
             }
         });
@@ -184,6 +192,10 @@ public class ServerWindow extends JPanel implements Observer {
         cPanel.add(addPlayer);
         this.add(scrollPane);
         this.add(cPanel);
+        //add other players
+
+        //Player player = pList.get(pList.size() - 1);
+
 
     }
 
@@ -203,11 +215,34 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
         newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
         bList.add(newButton);
-        for(CustomButton cB : bList) {
-            playerPanel.add(cB);
-        }
+
+        playerPanel.add(newButton);
+        playerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
+    }
+
+    public void addOtherPlayers() {
+        List<Integer> clientList = serverInfo.getClientList();
+        ArrayList<Player> pList = PlayerController.getInstance().getPlayers();
+        for (Player player : pList) {
+            CustomButton newButton = new CustomButton(player.getName());
+            newButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(serverInfo.getClientID())));
+                    player.setClientID(serverInfo.getClientID());
+                }
+            });
+
+            newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
+            newButton.setPreferredSize(new Dimension(pButtonWidth, pButtonHeight));
+            newButton.setMaximumSize(new Dimension(pButtonWidth, pButtonHeight));
+            newButton.setMinimumSize(new Dimension(pButtonWidth, pButtonHeight));
+            bList.add(newButton);
+            playerPanel.add(newButton);
+        }
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     }
 
     public void paint(Graphics g) {
@@ -217,8 +252,8 @@ public class ServerWindow extends JPanel implements Observer {
         back.setLocation(0, 0);
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 200);
-        scrollPane.setLocation((screenSize.width ) / 4 * 3, 100);
-        cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight()+100);
+        scrollPane.setLocation((screenSize.width) / 4 * 3, 100);
+        cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + 100);
     }
 
     @Override
@@ -229,6 +264,9 @@ public class ServerWindow extends JPanel implements Observer {
         } else if (message.equals("newPlayer")) {
             addPlayer();
             //repaint();
+        } else if (message.equals("refreshPlayerDisplay")) {
+            addOtherPlayers();
+            repaint();
         }
     }
 }

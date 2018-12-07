@@ -19,6 +19,7 @@ public class ResponseController {
     private PrintWriter out;
     private ObjectOutputStream outObject;
     private ServerInfo serverInfo = ServerInfo.getInstance();
+    private PlayerController playerController = PlayerController.getInstance();
 
     private ResponseController() {
         this.listenerClients = new ArrayList<>();
@@ -62,7 +63,9 @@ public class ResponseController {
             outObject = listenerClientOutputs.get(indexOfClient);
             List<Integer> clientList = serverInfo.getClientList();
             outObject.writeObject(clientList);
-            outObject.writeObject(PlayerController.getInstance());
+            //outObject.writeObject(PlayerController.getInstance());
+            outObject.writeObject(playerController);
+            outObject.writeObject("loadData");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("[ResponseController]:" + "sending object failed.");
