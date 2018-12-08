@@ -155,11 +155,11 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
-            if (i < 6) {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * (height-200) / 6 + 100), ColorSet.getPlayerColors().get(i));
+            if (i % 2  == 0) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * (height-200) / 12 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             } else {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(300, (i - 6) * (height-200) / 6 + 100), ColorSet.getPlayerColors().get(i));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(300, (i - 1) * (height-200) / 12 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             }
         }
@@ -175,13 +175,13 @@ public class ServerWindow extends JPanel implements Observer {
         int panelHeight = 6 * (pButtonHeight + 5);
         playerPanel = new JPanel();
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setBackground(ColorSet.SERVERBACKGROUND);
+        playerPanel.setBackground(ColorSet.SERVERBACKGROUND_LIGHT);
         cPanel = new JPanel();
         cPanel.setPreferredSize(new Dimension(panelWidth, 500));
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(panelWidth, panelHeight));
-        scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND,2,true));
+        scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND_LIGHT,2,true));
         initTextField();
         initPawnImages();
         addPlayer = new CustomButton("Add Player");
@@ -209,7 +209,7 @@ public class ServerWindow extends JPanel implements Observer {
         textField = new JTextField("Enter player name here!");
         textField.setPreferredSize(new Dimension(230, 50));
         textField.setFont(new Font("Corbel", Font.PLAIN, 15));
-        textField.setBackground(ColorSet.SERVERBACKGROUND);
+        textField.setBackground(ColorSet.SERVERBACKGROUND_LIGHT);
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.addMouseListener(new MouseAdapter() {
             @Override
@@ -264,7 +264,7 @@ public class ServerWindow extends JPanel implements Observer {
         }
         pPanel = new JPanel();
         pPanel.setPreferredSize(new Dimension(100,45));
-        pPanel.setBackground(ColorSet.SERVERBACKGROUND);
+        pPanel.setBackground(ColorSet.SERVERBACKGROUND_LIGHT);
         pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary,2,true));
         dispImg = new ImageIcon(pawnImages.get(cnt));
         buffer = new JLabel();
@@ -352,8 +352,8 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         //bList.forEach(customButton -> customButton.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 400);
-        scrollPane.setLocation((screenSize.width) / 4 * 3, 100);
-        cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + 100);
+        scrollPane.setLocation((screenSize.width) / 4 * 3, screenSize.height/2 - 270);
+        cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + scrollPane.getY());
 
         Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
         logoIcon.setLocation(position.x, position.y);
