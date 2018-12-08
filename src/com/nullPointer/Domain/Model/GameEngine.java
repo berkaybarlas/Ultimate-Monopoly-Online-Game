@@ -24,8 +24,7 @@ public class GameEngine {
 
     private boolean gameIsPaused = false;
 
-    public DomainBoard getDomainBoard()
-    {
+    public DomainBoard getDomainBoard() {
         return domainBoard;
     }
 

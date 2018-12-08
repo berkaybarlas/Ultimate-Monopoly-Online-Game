@@ -56,7 +56,7 @@ public class CommunicationController {
     }
 
     public void processInput(Object objectInput) {
-        if(objectInput instanceof String) {
+        if (objectInput instanceof String) {
             String input = (String) objectInput;
             if (input.contains("game")) {
                 if (includes(rest(input), "start")) {
@@ -65,7 +65,7 @@ public class CommunicationController {
             } else if (input.contains("player")) {
                 if (includes(rest(input), "create")) {
 
-                }else if (includes(rest(input), "next")) {
+                } else if (includes(rest(input), "next")) {
                     gameEngine.nextTurn();
                 }
             } else if (input.indexOf("message") != -1) {
@@ -96,17 +96,23 @@ public class CommunicationController {
                 }
             } else if (input.contains("improveProperty")) {
                 gameEngine.improveProperty();
-            } else if(input.contains("resume")) {
-            	gameEngine.resume();
-            } else if(input.contains("pause")) {
-            	gameEngine.pause();
+            } else if (input.contains("resume")) {
+                gameEngine.resume();
+            } else if (input.contains("pause")) {
+                gameEngine.pause();
+            } else if (input.contains("loadData")) {
+                gameEngine.publishEvent("refreshPlayerDisplay");
             }
-        }else if(objectInput instanceof ArrayList) {
+        } else if (objectInput instanceof ArrayList) {
             serverInfo.setClientList((ArrayList) objectInput);
-        }else if(objectInput instanceof Player) {
+        } else if (objectInput instanceof Player) {
             gameEngine.addPlayer((Player) objectInput);
+        } else if (objectInput instanceof PlayerController) {
+            PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
+            gameEngine.publishEvent("refreshPlayerDisplay");
         }
     }
+
 
     private String rest(String word) {
         int slashIndex = word.indexOf('/');

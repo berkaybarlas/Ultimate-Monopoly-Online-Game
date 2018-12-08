@@ -17,7 +17,7 @@ public class GameWindow extends JPanel implements Observer {
     protected DiceDisplay diceDisplay;
     protected ButtonPanel buttonPanel;
     protected PlayerPanel playerPanel;
-
+    Animator animator;
     private GameEngine gameEngine = GameEngine.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
@@ -61,6 +61,13 @@ public class GameWindow extends JPanel implements Observer {
         setOpaque(false);
         contentPane.setBackground(colorSet.BOARDBACKGROUND);
         gameEngine.subscribe(this);
+
+        animator = new Animator(this);
+        Thread thread = new Thread(animator);
+        thread.start();
+        animator.setVisible(true);
+        contentPane.add(animator);
+
     }
 
     public ButtonPanel getButtonPanel() {
@@ -69,6 +76,7 @@ public class GameWindow extends JPanel implements Observer {
 
     public void paint(Graphics g) {
         super.paint(g);
+        animator.paint(g);
         //board.paint(g);
     }
 
