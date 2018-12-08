@@ -24,9 +24,7 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame;
-    private JButton addPlayer;
-    private JButton quitServer;
+    private JButton startGame, addPlayer, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -38,7 +36,7 @@ public class ServerWindow extends JPanel implements Observer {
     private List<ClientDisplay> clientDisplayList;
     private ArrayList<CustomButton> bList = new ArrayList<CustomButton>();
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
-    private static int cnt = 0;
+    private int cnt = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -158,10 +156,10 @@ public class ServerWindow extends JPanel implements Observer {
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
             if (i < 6) {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * height / 6), ColorSet.getPlayerColors().get(i));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * (height-200) / 6 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             } else {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(400, (i - 6) * height / 6), ColorSet.getPlayerColors().get(i));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(300, (i - 6) * (height-200) / 6 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             }
         }
@@ -176,17 +174,38 @@ public class ServerWindow extends JPanel implements Observer {
         int panelWidth = pButtonWidth + 55;
         int panelHeight = 6 * (pButtonHeight + 5);
         playerPanel = new JPanel();
-        //playerPanel.set (new Dimension(pButtonWidth + 30,12 * (pButtonHeight + 10) ));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         playerPanel.setBackground(ColorSet.SERVERBACKGROUND);
-        //playerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
         cPanel = new JPanel();
         cPanel.setPreferredSize(new Dimension(panelWidth, 500));
-        //cPanel.setLayout(new BoxLayout(cPanel, BoxLayout.Y_AXIS));
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(panelWidth, panelHeight));
         scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND,2,true));
+        initTextField();
+        initPawnImages();
+        addPlayer = new CustomButton("Add Player");
+        addPlayer.setToolTipText("Press to add your player!");
+        addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
+        addPlayer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Player player = new Player(textField.getText(), serverInfo.getClientID());
+                communicationController.sendClientMessage(player);
+                //navigator.gameScreen();
+                textField.setText("Enter player name here!");
+            }
+        });
+        initSelectionButtons();
+        cPanel.add(textField);
+        cPanel.add(leftButton);
+        cPanel.add(pPanel);
+        cPanel.add(rightButton);
+        cPanel.add(addPlayer);
+        this.add(scrollPane);
+        this.add(cPanel);
+    }
+
+    public void initTextField() {
         textField = new JTextField("Enter player name here!");
         textField.setPreferredSize(new Dimension(230, 50));
         textField.setFont(new Font("Corbel", Font.PLAIN, 15));
@@ -203,6 +222,9 @@ public class ServerWindow extends JPanel implements Observer {
                 textField.setText("");
             }
         });
+    }
+
+    public void initPawnImages() {
         try {
             p1 = ImageIO.read(P1Src);
             p1 = p1.getScaledInstance(((BufferedImage) p1).getWidth()/8,((BufferedImage) p1).getHeight()/8,Image.SCALE_SMOOTH);
@@ -225,19 +247,11 @@ public class ServerWindow extends JPanel implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        addPlayer = new CustomButton("Add Player");
-        addPlayer.setToolTipText("Press to add your player!");
-        addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
-        addPlayer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID());
-                communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
-                textField.setText("Enter player name here!");
-            }
-        });
-        JButton rightButton = new JButton();
-        JButton leftButton = new JButton();
+    }
+
+    public void initSelectionButtons() {
+        rightButton = new JButton();
+        leftButton = new JButton();
         try {
             rightButtonImg = ImageIO.read(RBISrc);
             rightButtonImg = rightButtonImg.getScaledInstance(70,70,Image.SCALE_SMOOTH);
@@ -278,13 +292,6 @@ public class ServerWindow extends JPanel implements Observer {
                 repaint();
             }
         });
-        cPanel.add(textField);
-        cPanel.add(leftButton);
-        cPanel.add(pPanel);
-        cPanel.add(rightButton);
-        cPanel.add(addPlayer);
-        this.add(scrollPane);
-        this.add(cPanel);
     }
 
     public void updateButtonColor() {
@@ -372,8 +379,8 @@ class ClientDisplay {
 
     String clientName;
     Point position;
-    int width = 300;
-    int height = 100;
+    int width = 200;
+    int height = 80;
     Random rand = new Random();
     Color clientColor;
 
@@ -387,8 +394,8 @@ class ClientDisplay {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(clientColor);
         g2.setFont(new Font("Corbel", Font.PLAIN, 20));
-        g2.drawString(clientName, position.x + 100, position.y + height / 2);
+        g2.drawString(clientName, position.x + 50, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
-        g2.drawRect(position.x, position.y, width, height);
+        g2.drawRoundRect(position.x, position.y, width, height,5,5);
     }
 }
