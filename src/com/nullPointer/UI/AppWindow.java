@@ -36,8 +36,11 @@ public class AppWindow extends JFrame implements Observer {
     public AppWindow() {
         super("Ultimate Monopoly");
 
-        int width = screenSize.width - 15;
-        int height = screenSize.height - 30;
+
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);   // allows the app to open in fullscreen from the start
+
+        int width = screenSize.width;   //used to be screenSize.width - 15
+        int height = screenSize.height;  //used to be screenSize.height - 30
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -60,6 +63,8 @@ public class AppWindow extends JFrame implements Observer {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.setPreferredSize(new Dimension(width, height));
+
+
         //contentPane.add(toolBar);
         setContentPane(contentPane);
 
@@ -87,6 +92,7 @@ public class AppWindow extends JFrame implements Observer {
         gameEngine.subscribe(this::onEvent);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setVisible(true);   IDK if I should open this, window is already visible? -B.H.
     }
 
 
