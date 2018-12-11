@@ -3,6 +3,7 @@ package com.nullPointer.Domain.Model;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
@@ -24,8 +25,14 @@ public class GameEngine {
 
     private boolean gameIsPaused = false;
 
+    private Roll3 roll3;
+    
     public DomainBoard getDomainBoard() {
         return domainBoard;
+    }
+
+    public Roll3 getRoll3(){
+    	return roll3;
     }
 
     private static GameEngine _instance;

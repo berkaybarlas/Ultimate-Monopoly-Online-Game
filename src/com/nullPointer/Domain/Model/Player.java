@@ -22,8 +22,18 @@ public class Player implements Serializable {
     private boolean inJail;
     private boolean direction = true;
     private int rentMultiplier = 1;
+    
+    private ArrayList<Integer> roll3;
 
-    public Player(String name, int ClientID) {
+    public ArrayList<Integer> getRoll3() {
+		return roll3;
+	}
+
+	public void setRoll3(ArrayList<Integer> roll3) {
+		this.roll3 = roll3;
+	}
+
+	public Player(String name, int ClientID) {
         this.name = name;
 		this.ClientID = ClientID;
         propertyCardsMap = new HashMap<>();
