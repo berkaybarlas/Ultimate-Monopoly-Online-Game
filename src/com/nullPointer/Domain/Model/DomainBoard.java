@@ -10,8 +10,8 @@ public class DomainBoard {
     private int numSquares = 120;
     private HashMap<Integer, Square> domainSquareMap;
     private HashMap<Integer, ArrayList<Integer>> connectionsMap;
-    private Queue<Card> CCCards, ChanceCards;
-    private SquareFactory squareFactory = SquareFactory.getInstance();
+    private Queue<Card> CCCards, ChanceCards, Roll3Cards;
+	private SquareFactory squareFactory = SquareFactory.getInstance();
     private CardFactory cardFactory = CardFactory.getInstance();
 
     private int layer1begin = 0;
@@ -34,6 +34,13 @@ public class DomainBoard {
         createSquares();
         createCards();
     }
+    
+    public Queue<Card> getRoll3Cards() {
+		return Roll3Cards;
+	}
+	public void setRoll3Cards(Queue<Card> roll3Cards) {
+		Roll3Cards = roll3Cards;
+	}
 
     /*
      * This is the real method for creating all cards, which will be activated

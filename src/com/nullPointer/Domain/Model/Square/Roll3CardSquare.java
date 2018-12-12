@@ -13,14 +13,10 @@ public class Roll3CardSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		// make them draw some card? 
 		// maybe we can keep a roll 3 card deck here, and make the player draw a card and call its playCard()
 		// open to suggestions
-		
-		//this publish will enable draw card buttons for each player 
-		gameEngine.publishEvent("Draw roll3 card");
-		ArrayList<Integer> roll3 = gameEngine.getRoll3().getValues();
+		gameEngine.publishEvent("roll3Dice");
+		/*ArrayList<Integer> roll3 = gameEngine.getRoll3().getValues();
 		while(roll3.size() != 3){
 			try {
 				Thread.sleep(10);
@@ -29,7 +25,7 @@ public class Roll3CardSquare extends Square {
 				e.printStackTrace();
 			}
 		}
-		Collections.sort(roll3);
+		Collections.sort(roll3);*/
 		
 		
 		

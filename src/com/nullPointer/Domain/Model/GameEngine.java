@@ -24,17 +24,10 @@ public class GameEngine {
     private DomainBoard domainBoard;
 
     private boolean gameIsPaused = false;
-
-    private Roll3 roll3;
     
     public DomainBoard getDomainBoard() {
         return domainBoard;
     }
-
-    public Roll3 getRoll3(){
-    	return roll3;
-    }
-
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -122,6 +115,15 @@ public class GameEngine {
         list.add(speedDie.getLastValues().get(0));
         return list;
     }
+    
+    public ArrayList<Integer> roll3Dice() {
+        regularDie.roll(3);
+        ArrayList<Integer> list = new ArrayList<Integer>(3);
+        list.add(regularDie.getLastValues().get(0));
+        list.add(regularDie.getLastValues().get(1));
+        list.add(regularDie.getLastValues().get(2));
+        return list;
+    }
 
     public int calculateMoveAmount() {
         int total = 0;
@@ -139,8 +141,12 @@ public class GameEngine {
         if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
             if (type.equals("CommunityChestCardSquare")) {
                 card = domainBoard.getCCCards().element();
-            } else {
+            } 
+            else if(type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().element();
+            }
+            else{
+            	card = domainBoard.getRoll3Cards().element();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {

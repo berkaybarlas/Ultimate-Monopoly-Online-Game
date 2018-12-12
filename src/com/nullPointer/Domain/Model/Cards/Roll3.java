@@ -22,7 +22,7 @@ public class Roll3 extends Card {
 	public void playCard(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
 		gameEngine.publishEvent("Roll3 "+roll3Values.get(0)+" "+roll3Values.get(1)+" "+roll3Values.get(2));
-		gameEngine.getPlayerController().getChosen().setRoll3(this.roll3Values);
+		gameEngine.getPlayerController().getCurrentPlayer().addRoll3(this);
 
 	}
 
