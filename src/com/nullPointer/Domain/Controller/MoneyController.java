@@ -30,7 +30,7 @@ public class MoneyController {
     }
     
     public void transferMoney(Player payer, Player receiver, int amount) {
-    		decreaseMoney(receiver, amount);
+    		decreaseMoney(payer, amount);
     		increaseMoney(receiver, amount);
     }
     

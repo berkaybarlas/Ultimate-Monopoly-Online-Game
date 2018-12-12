@@ -59,25 +59,34 @@ public class MoneyControllerTest {
 		int amount = 100;
 		playerController.transferMoney(payer, receiver, amount);
 		assertEquals(200, payer.getMoney());
-		assertEquals(300, receiver.getMoney());		
-	}
+		assertEquals(300, receiver.getMoney());	
+		}
 
 	@Test
 	public void testGetMoneyFromAllPlayers() {
-		MoneyController playerController = MoneyController.getInstance();
+		MoneyController moneyController = MoneyController.getInstance();
+		PlayerController playerController = PlayerController.getInstance();
+		
 		Player player1 = new Player("player1");
+		playerController.addPlayer(player1);
 		player1.setMoney(200);
 		Player player2 = new Player("player2");
+		playerController.addPlayer(player2);
 		player2.setMoney(200);
 		Player player3 = new Player("player3");
+		playerController.addPlayer(player3);
 		player3.setMoney(200);
 		Player player4 = new Player("player4");
+		playerController.addPlayer(player4);
 		player4.setMoney(200);
 		Player player5 = new Player("player5");
+		playerController.addPlayer(player5);
 		player5.setMoney(200);
 		Player player6 = new Player("player6");
+		playerController.addPlayer(player6);
 		player6.setMoney(200);
-		playerController.getMoneyFromAllPlayers(player1, 100);
+		
+		moneyController.getMoneyFromAllPlayers(player1, 100);
 		assertEquals(700, player1.getMoney());
 		assertEquals(100, player2.getMoney());
 		assertEquals(100, player3.getMoney());
