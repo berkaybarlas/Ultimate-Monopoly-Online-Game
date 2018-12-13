@@ -22,9 +22,15 @@ public class GameEngine {
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
-
     private boolean gameIsPaused = false;
+    private boolean roll3 = false;
     
+    public boolean getRoll3(){
+    	return roll3;
+    }
+    public void setRoll3(boolean set){
+    	roll3 = set;
+    }
     public DomainBoard getDomainBoard() {
         return domainBoard;
     }
@@ -57,6 +63,7 @@ public class GameEngine {
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
+        newPlayer.addRoll3Card((Roll3)domainBoard.getRoll3Cards().poll());
         publishEvent("newPlayer");
     }
 
@@ -98,6 +105,7 @@ public class GameEngine {
             path.add(placeToGo);
             target = placeToGo;
             playerController.movePlayer(target);
+            
         }
 
         publishEvent("path/" + path);
@@ -162,11 +170,13 @@ public class GameEngine {
     }
 
     public void improveProperty() {
-
+    	
     }
 
     public void buy() {
 
+    	domainBoard.getSquareAt(86).evaluateSquare(this);;
+    	
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();

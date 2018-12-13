@@ -24,14 +24,14 @@ public class Player implements Serializable {
     private boolean direction = true;
     private int rentMultiplier = 1;
     
-    private ArrayList<Roll3> roll3;
+    private ArrayList<Roll3> roll3Cards;
 
-    public ArrayList<Roll3> getRoll3() {
-		return roll3;
+    public ArrayList<Roll3> getRoll3Cards() {
+		return roll3Cards;
 	}
 
-	public void addRoll3(Roll3 roll3) {
-		this.roll3.add(roll3);
+	public void addRoll3Card(Roll3 roll3) {
+		this.roll3Cards.add(roll3);
 	}
 
 	public Player(String name, int ClientID) {
@@ -40,6 +40,7 @@ public class Player implements Serializable {
         propertyCardsMap = new HashMap<>();
         propertySquares = new ArrayList<>();
         utilityList = new ArrayList<>();
+        roll3Cards = new ArrayList<Roll3>();
     }
 
     public Player(String name) {
