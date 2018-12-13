@@ -202,9 +202,12 @@ public class GameEngine {
 
     public void payRent(Player player, Player owner, int amount) {
         moneyController.decreaseMoney(player, amount);
-        moneyController.increaseMoney(owner, amount);
         if (player.getMoney() < 0) {
+            player.setMoney(0);
+            moneyController.increaseMoney(owner, player.getMoney());
             publishEvent("bankrupt");
+        } else {
+            moneyController.increaseMoney(owner, amount);
         }
         nextTurn();
     }

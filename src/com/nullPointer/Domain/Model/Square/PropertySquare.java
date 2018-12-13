@@ -143,7 +143,7 @@ public class PropertySquare extends Square {
         this.rentListIndex = rentListIndex;
     }
 
-    public int[] rentList() {
+    public int[] getRentList() {
         return rentList;
     }
 
@@ -153,6 +153,16 @@ public class PropertySquare extends Square {
 
     public boolean isOwned() {
         return owner != null;
+    }
+
+    public boolean repOk() {
+        if(this.getName() != null && price > 0 && color != null && rentFactor > 0 && rentList != null && rentList.length == 8) {
+            for(int rentPrice : this.getRentList()) {
+                if(rentPrice <= 0) return false;
+            }
+            return  true;
+        }
+        return false;
     }
 
     @Override
