@@ -27,6 +27,7 @@ public class JUnitPropertySquareTest {
     @org.junit.Test
     public void isOwnedForUnowned() {
         assertFalse(pSq.isOwned());
+        assertNull(pSq.getOwner());
     }
 
     @org.junit.Test
@@ -59,10 +60,45 @@ public class JUnitPropertySquareTest {
     }
 
     @org.junit.Test
+    public void greaterRentForImproved() {
+        int initRent = pSq.getRent();
+        pSq.improve();
+        int initMoney1 = p1.getMoney();
+        int initMoney2 = p2.getMoney();
+        pSq.setOwner(p1);
+        gameEngine.setCurrentPlayer(p2);
+        pSq.evaluateSquare(gameEngine);
+        assertTrue(initRent < pSq.getRent());
+        assertTrue(p2.getMoney() < initMoney2 - initRent);
+        assertFalse(p1.getMoney() == initMoney1 + initRent);
+    }
+
+    @org.junit.Test
+    public void lessRentForDowngraded() {
+        pSq.improve();
+        int initRent = pSq.getRent();
+        int initMoney1 = p1.getMoney();
+        int initMoney2 = p2.getMoney();
+        pSq.downgrade();
+        pSq.setOwner(p1);
+        gameEngine.setCurrentPlayer(p2);
+        pSq.evaluateSquare(gameEngine);
+        assertTrue(p2.getMoney() > initMoney2 - initRent);
+        assertTrue(p1.getMoney() < initMoney1 + initRent);
+    }
+
+    @org.junit.Test
+    public void smallerRentForImproved() {
+        pSq.improve();
+        int upRent = pSq.getRent();
+        pSq.downgrade();
+        pSq.evaluateSquare(gameEngine);
+        assertTrue(upRent > pSq.getRent());
+    }
+
+    @org.junit.Test
     public void landingOnOwnedWithNotEnoughMoney() {
         int initMoney1 = p1.getMoney();
-        gameEngine.addPlayer(p1);
-        gameEngine.addPlayer(p2);
         pSq.setOwner(p1);
         p2.setMoney(10);
         gameEngine.setCurrentPlayer(p2);
@@ -75,7 +111,6 @@ public class JUnitPropertySquareTest {
     public void landingOnYourOwnProperty() {
         gameEngine.addPlayer(p1);
         p1.setMoney(p1.getMoney() - pSq.getPrice());
-        pSq.setOwner(p1);
         int initMoney1 = p1.getMoney();
         pSq.evaluateSquare(gameEngine);
         assertEquals(initMoney1, p1.getMoney());
