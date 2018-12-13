@@ -104,4 +104,16 @@ public class PlayerController implements Serializable {
         currentPlayer = inputController.getCurrentPlayerIndex();
     }
 
+    public boolean repOk() {
+        if(players != null) {
+            if(players.size() > 0) {
+                for(Player p : players) {
+                    if(!p.repOk()) return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

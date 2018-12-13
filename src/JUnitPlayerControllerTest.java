@@ -14,6 +14,8 @@ public class JUnitPlayerControllerTest {
         pController = PlayerController.getInstance();
         p1 = new Player("Player 1");
         p2 = new Player("Player 2");
+        p1.setMoney(3200);
+        p2.setMoney(3200);
         pController.addPlayer(p1);
         pController.addPlayer(p2);
     }
@@ -41,4 +43,16 @@ public class JUnitPlayerControllerTest {
         pController.movePlayer(targetPosition);
         assertEquals(targetPosition, pController.getCurrentPlayer().getTargetPosition());
     }
+
+    @org.junit.Test
+    public void repOkCorrect() {
+        assertTrue(pController.repOk());
+    }
+
+    @org.junit.Test
+    public void repOkIncorrect() {
+        pController.getPlayers().clear();
+        assertFalse(pController.repOk());
+    }
+
 }

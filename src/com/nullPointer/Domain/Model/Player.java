@@ -27,15 +27,19 @@ public class Player implements Serializable {
         this.name = name;
 		this.ClientID = ClientID;
         propertyCardsMap = new HashMap<>();
-        propertySquares = new ArrayList<>();
-        utilityList = new ArrayList<>();
+        propertySquares = new ArrayList<PropertySquare>();
+        utilityList = new ArrayList<UtilitySquare>();
+        cardList = new ArrayList<Card>();
+//        this.direction = true;
     }
 
     public Player(String name) {
         this.name = name;
         propertyCardsMap = new HashMap<>();
-        propertySquares = new ArrayList<>();
-        utilityList = new ArrayList<>();
+        propertySquares = new ArrayList<PropertySquare>();
+        utilityList = new ArrayList<UtilitySquare>();
+        cardList = new ArrayList<Card>();
+//        this.direction = true;
     }
 
     public int getRentMultiplier()
@@ -101,7 +105,7 @@ public class Player implements Serializable {
         return propertySquares;
     }
 
-    public void propertySquares(ArrayList<PropertySquare> properties) {
+    public void setPropertySquares(ArrayList<PropertySquare> properties) {
         this.propertySquares = properties;
     }
 
@@ -140,6 +144,13 @@ public class Player implements Serializable {
 
     public void setClientID(int clientID) {
         ClientID = clientID;
+    }
+
+    public boolean repOk() {
+        if(name != null && money >= 0 && propertySquares != null && utilityList != null && cardList != null) {
+            return  true;
+        }
+        return false;
     }
 
     @Override
