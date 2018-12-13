@@ -259,4 +259,8 @@ public class GameEngine {
         return false;
     }
 
+    public void setCurrentPlayer(Player p) {
+        playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
+    }
+
 }

@@ -45,6 +45,10 @@ public class PlayerController implements Serializable {
         return currentPlayer;
     }
 
+    public void setCurrentPlayerIndex(int cP) {
+        this.currentPlayer = cP;
+    };
+
     public Player nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
         return players.get(currentPlayer);
