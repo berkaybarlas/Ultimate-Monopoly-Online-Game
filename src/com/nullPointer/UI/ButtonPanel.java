@@ -19,6 +19,10 @@ public class ButtonPanel extends JPanel {
     protected JButton endTurn;
     protected JButton resumeButton;
     protected JButton pauseButton;
+
+    private int offset = 100;
+    private int buttonHeight = 35;
+
     protected JButton saveButton;
     
     private CommunicationController communicationController = CommunicationController.getInstance();
@@ -31,6 +35,7 @@ public class ButtonPanel extends JPanel {
         panel.setOpaque(false);
         setOpaque(false);
         purchaseButton = new JButton("Buy Property");
+        //purchaseButton = new CustomButton("Buy Property");
         drawButton = new JButton("Draw card");
         playCardButton = new JButton("Play card");
         improveButton = new JButton("Improve Property");
@@ -40,14 +45,16 @@ public class ButtonPanel extends JPanel {
         pauseButton = new JButton("Pause");
 		saveButton = new JButton("Save");
 
-        purchaseButton.setBounds(150, 0, 100, 30);
-        drawButton.setBounds(150, 35, 100, 30);
-        playCardButton.setBounds(150, 70, 100, 30);
-        improveButton.setBounds(150, 105, 100, 30);
-        rollDice.setBounds(150, 140, 100, 30);
-        endTurn.setBounds(150, 175, 100, 30);
-        resumeButton.setBounds(150, 210, 100, 30);
-        pauseButton.setBounds(150, 245, 100, 30);
+
+        // THESE ARE WORTHLESS, BOXLAYOUT DOESN'T CARE!
+//        purchaseButton.setBounds(150, offset, 100, 30);
+//        drawButton.setBounds(150, offset + buttonHeight, 100, 30);
+//        playCardButton.setBounds(150, offset + 2*buttonHeight, 100, 30);
+//        improveButton.setBounds(150, offset + 3*buttonHeight, 100, 30);
+//        rollDice.setBounds(150, offset + 4*buttonHeight, 100, 30);
+//        endTurn.setBounds(150, offset + 5*buttonHeight, 100, 30);
+//        resumeButton.setBounds(150, offset + 6*buttonHeight, 100, 30);
+//        pauseButton.setBounds(150, offset + 7*buttonHeight, 100, 30);
 
         panel.add(rollDice);
         panel.add(endTurn);
@@ -57,6 +64,8 @@ public class ButtonPanel extends JPanel {
         panel.add(improveButton);
         panel.add(resumeButton);
         panel.add(pauseButton);
+
+        this.setMaximumSize(panel.getMaximumSize());
 
         this.add(panel);
 
