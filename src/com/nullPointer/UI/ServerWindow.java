@@ -25,7 +25,7 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
+    private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -127,6 +127,19 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(loadGame);
 
+        saveGame = new CustomButton("Save Game");
+        saveGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        saveGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveLoadController.saveGame();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        panel.add(saveGame);
+
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
@@ -155,11 +168,11 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
-            if (i % 2  == 0) {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * (height-200) / 12 + 100), ColorSet.getPlayerColors().get(i));
+            if (i % 2 == 0) {
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(50, i * (height - 200) / 12 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             } else {
-                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(300, (i - 1) * (height-200) / 12 + 100), ColorSet.getPlayerColors().get(i));
+                ClientDisplay clientDisplay = new ClientDisplay("Computer " + (i + 1), new Point(300, (i - 1) * (height - 200) / 12 + 100), ColorSet.getPlayerColors().get(i));
                 clientDisplayList.add(clientDisplay);
             }
         }
@@ -181,7 +194,7 @@ public class ServerWindow extends JPanel implements Observer {
         cPanel.setOpaque(false);
         scrollPane = new JScrollPane(playerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(panelWidth, panelHeight));
-        scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND_LIGHT,2,true));
+        scrollPane.setBorder(BorderFactory.createLineBorder(ColorSet.SERVERBACKGROUND_LIGHT, 2, true));
         initTextField();
         initPawnImages();
         addPlayer = new CustomButton("Add Player");
@@ -227,22 +240,22 @@ public class ServerWindow extends JPanel implements Observer {
     public void initPawnImages() {
         try {
             p1 = ImageIO.read(P1Src);
-            p1 = p1.getScaledInstance(((BufferedImage) p1).getWidth()/8,((BufferedImage) p1).getHeight()/8,Image.SCALE_SMOOTH);
+            p1 = p1.getScaledInstance(((BufferedImage) p1).getWidth() / 8, ((BufferedImage) p1).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p1);
             p2 = ImageIO.read(P2Src);
-            p2 = p2.getScaledInstance(((BufferedImage) p2).getWidth()/8,((BufferedImage) p2).getHeight()/8,Image.SCALE_SMOOTH);
+            p2 = p2.getScaledInstance(((BufferedImage) p2).getWidth() / 8, ((BufferedImage) p2).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p2);
             p3 = ImageIO.read(P3Src);
-            p3 = p3.getScaledInstance(((BufferedImage) p3).getWidth()/8,((BufferedImage) p3).getHeight()/8,Image.SCALE_SMOOTH);
+            p3 = p3.getScaledInstance(((BufferedImage) p3).getWidth() / 8, ((BufferedImage) p3).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p3);
             p4 = ImageIO.read(P4Src);
-            p4 = p4.getScaledInstance(((BufferedImage) p4).getWidth()/8,((BufferedImage) p4).getHeight()/8,Image.SCALE_SMOOTH);
+            p4 = p4.getScaledInstance(((BufferedImage) p4).getWidth() / 8, ((BufferedImage) p4).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p4);
             p5 = ImageIO.read(P5Src);
-            p5 = p5.getScaledInstance(((BufferedImage) p5).getWidth()/8,((BufferedImage) p5).getHeight()/8,Image.SCALE_SMOOTH);
+            p5 = p5.getScaledInstance(((BufferedImage) p5).getWidth() / 8, ((BufferedImage) p5).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p5);
             p6 = ImageIO.read(P6Src);
-            p6 = p6.getScaledInstance(((BufferedImage) p6).getWidth()/8,((BufferedImage) p6).getHeight()/8,Image.SCALE_SMOOTH);
+            p6 = p6.getScaledInstance(((BufferedImage) p6).getWidth() / 8, ((BufferedImage) p6).getHeight() / 8, Image.SCALE_SMOOTH);
             pawnImages.add(p6);
         } catch (IOException e) {
             e.printStackTrace();
@@ -254,18 +267,18 @@ public class ServerWindow extends JPanel implements Observer {
         leftButton = new JButton();
         try {
             rightButtonImg = ImageIO.read(RBISrc);
-            rightButtonImg = rightButtonImg.getScaledInstance(70,70,Image.SCALE_SMOOTH);
+            rightButtonImg = rightButtonImg.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             rightButton.setIcon(new ImageIcon(rightButtonImg));
             leftButtonImg = ImageIO.read(LBISrc);
-            leftButtonImg = leftButtonImg.getScaledInstance(70,70,Image.SCALE_SMOOTH);
+            leftButtonImg = leftButtonImg.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             leftButton.setIcon(new ImageIcon(leftButtonImg));
         } catch (IOException e) {
             e.printStackTrace();
         }
         pPanel = new JPanel();
-        pPanel.setPreferredSize(new Dimension(100,45));
+        pPanel.setPreferredSize(new Dimension(100, 45));
         pPanel.setBackground(ColorSet.SERVERBACKGROUND_LIGHT);
-        pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary,2,true));
+        pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary, 2, true));
         dispImg = new ImageIcon(pawnImages.get(cnt));
         buffer = new JLabel();
         buffer.setIcon(dispImg);
@@ -275,7 +288,7 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt++;
-                dispImg = new ImageIcon(pawnImages.get(cnt%pawnImages.size()));
+                dispImg = new ImageIcon(pawnImages.get(cnt % pawnImages.size()));
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -286,7 +299,7 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt--;
-                dispImg = new ImageIcon(pawnImages.get((cnt+pawnImages.size())%pawnImages.size()));
+                dispImg = new ImageIcon(pawnImages.get((cnt + pawnImages.size()) % pawnImages.size()));
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -311,8 +324,8 @@ public class ServerWindow extends JPanel implements Observer {
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              player.setClientID(serverInfo.getClientID());
-              communicationController.sendClientMessage(PlayerController.getInstance());
+                player.setClientID(serverInfo.getClientID());
+                communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
@@ -352,7 +365,7 @@ public class ServerWindow extends JPanel implements Observer {
         clientDisplayList.forEach(clientDisplay -> clientDisplay.paint(g));
         //bList.forEach(customButton -> customButton.paint(g));
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 400);
-        scrollPane.setLocation((screenSize.width) / 4 * 3, screenSize.height/2 - 270);
+        scrollPane.setLocation((screenSize.width) / 4 * 3, screenSize.height / 2 - 270);
         cPanel.setLocation((screenSize.width) / 4 * 3, scrollPane.getHeight() + scrollPane.getY());
 
         Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
@@ -396,6 +409,6 @@ class ClientDisplay {
         g2.setFont(new Font("Corbel", Font.PLAIN, 20));
         g2.drawString(clientName, position.x + 50, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
-        g2.drawRoundRect(position.x, position.y, width, height,5,5);
+        g2.drawRoundRect(position.x, position.y, width, height, 5, 5);
     }
 }

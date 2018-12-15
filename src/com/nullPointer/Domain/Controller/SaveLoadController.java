@@ -40,8 +40,10 @@ public class SaveLoadController {
         ObjectOutputStream out = null;
 
         try {
+            File dir = new File("./saveFiles/");
+            dir.mkdirs();
             out = new ObjectOutputStream(new
-                    BufferedOutputStream(new FileOutputStream("/saveFiles/" + saveFile)));
+                    BufferedOutputStream(new FileOutputStream("./saveFiles/" + saveFile)));
             PlayerController playerController = PlayerController.getInstance();
             out.writeObject(playerController);
             //DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();
@@ -70,13 +72,15 @@ public class SaveLoadController {
     public void loadGame(String fileName) throws IOException {
         ObjectInputStream in = null;
         PlayerController playerController;
+        DomainBoard domainBoard;
         try {
             in = new ObjectInputStream(new
                     BufferedInputStream(new FileInputStream(fileName)));
             //read
             playerController = (PlayerController) in.readObject();
-            //System.out.println(playerTest);
             communicationController.sendClientMessage(playerController);
+            //domainBoard = (DomainBoard) in.readObject();
+            //communicationController.sendClientMessage(domainBoard);
 
         } catch (EOFException e) {
             e.printStackTrace();
@@ -88,16 +92,16 @@ public class SaveLoadController {
     }
 
     public ArrayList<String> getSavedFiles() {
-        File dir = new File("/saveFiles/");
+        File dir = new File("./saveFiles/");
 
         File[] matches = dir.listFiles(new FilenameFilter()
         {
             public boolean accept(File dir, String name)
             {
-                return name.startsWith("temp") && name.endsWith(".txt");
+                return name.startsWith("save");
             }
         });
-        ArrayList<String> fileList = new ArrayList<>();
+         ArrayList<String> fileList = new ArrayList<>();
         for (int i = 0; i < matches.length; i++) {
             File match = matches[i];
             fileList.add(match.getName());
