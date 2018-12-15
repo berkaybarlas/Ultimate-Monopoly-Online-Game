@@ -3,6 +3,8 @@ package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
+import java.util.Arrays;
+
 /**
  * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
  *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
@@ -153,12 +155,10 @@ public class PropertySquare extends Square {
     }
 
     /**
-     *
      * @param owner
      * @requires    -
      * @modifies    owner
      * @effects     Sets the owner Player of this PropertySquare.
-     *
      */
     public void setOwner(Player owner) {
         if (!isOwned()) this.owner = owner;
@@ -192,26 +192,14 @@ public class PropertySquare extends Square {
         return owner != null;
     }
 
-    public boolean repOk() {
-        if(this.getName() != null && price > 0 && color != null && rentFactor > 0 && rentList != null && rentList.length == 8) {
-            for(int rentPrice : this.getRentList()) {
-                if(rentPrice <= 0) return false;
-            }
-            return  true;
-        }
-        return false;
-    }
-
     /**
-     *
-     * @param gameEngine
+     * @param       gameEngine
      * @requires    currentPlayer is not null.
      * @modifies    currentPlayer
      * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
      *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
      *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
      *              it goes bankrupt.
-     *
      */
     @Override
     public void evaluateSquare(GameEngine gameEngine) {
@@ -226,9 +214,25 @@ public class PropertySquare extends Square {
 
     }
 
-    @Override
-    public String toString() {
-        return getName();
+    public boolean repOk() {
+        if(this.getName() != null && price > 0 && color != null && rentFactor > 0 && rentList != null && rentList.length == 8) {
+            for(int rentPrice : this.getRentList()) {
+                if(rentPrice <= 0) return false;
+            }
+            return  true;
+        }
+        return false;
     }
 
+    @Override
+    public String toString() {
+        return "[PropertySquare]" +
+                "\nName: " + this.getName() +
+                "\nPrice: " + price +
+                "\nColor: " + color + '\'' +
+                "\nOwner: " + owner +
+                "\nCurrent Rent Factor: " + rentFactor +
+                "\nRents: " + Arrays.toString(rentList) +
+                "\nMortgage Situation: " + isMortgaged;
+    }
 }

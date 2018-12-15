@@ -126,11 +126,7 @@ public class PlayerController implements Serializable {
         players = inputController.getPlayers();
         currentPlayer = inputController.getCurrentPlayerIndex();
     }
-
-    /**
-     *
-     * @return
-     */
+    
     public boolean repOk() {
         if(players != null) {
             if(players.size() > 0) {
@@ -143,4 +139,9 @@ public class PlayerController implements Serializable {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "[PlayerController] " +
+                "Players in the Controller: " + players;
+    }
 }
