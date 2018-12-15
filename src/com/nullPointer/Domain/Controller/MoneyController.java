@@ -18,19 +18,51 @@ public class MoneyController {
 		return _instance;
 	}
 
+	 /**
+	  * 
+	  * @param player : current player
+	  * @param amount : how much will the player's money be increased
+	  * @requires player != null & amount >= 0
+	  * @modifies player's money
+	  * @effects increases the player's money by amount
+	  */
 	public void increaseMoney(Player player, int amount) {
 		player.setMoney(player.getMoney()+amount);
 	}
 
+	/**
+	  * 
+	  * @param player : current player
+	  * @param amount : how much will the player's money be decreased
+	  * @requires player != null & amount >= 0
+	  * @modifies player's money
+	  * @effects decreases the player's money by amount
+	  */
 	public void decreaseMoney(Player player, int amount) {
 		player.setMoney(player.getMoney()-amount);
 	}
 
+	/**
+	  * 
+	  * @param player : current player
+	  * @param amount : how much will the taken from payer and given to receiver
+	  * @requires player != null & amount >= 0
+	  * @modifies payer's and receiver's money
+	  * @effects transfers a certain amount of money ("amount") from the payer player to receiver player
+	  */
 	public void transferMoney(Player payer, Player receiver, int amount) {
 		decreaseMoney(payer, amount);
 		increaseMoney(receiver, amount);
 	}
 
+	/**
+	  * 
+	  * @param player : current player
+	  * @param amount : how much will be collected from all players except "player" 
+	  * @requires player != null & amount >= 0
+	  * @modifies all players' money
+	  * @effects collects money from all players (except "player") and the collected sum is given to "player"
+	  */
 	public void getMoneyFromAllPlayers(Player player, int amount) {
 		int gain = 0;
 		for(Player p:playerController.getPlayers()) {
@@ -56,6 +88,13 @@ public class MoneyController {
 		this.poolMoney -= poolMoney;
 	}
 
+	/**
+	  * 
+	  * @param player : current player
+	  * @param amount : whether the player has more money than this value.
+	  * @requires player != null & amount >= 0
+	  * @effects checks whether the player has more money than "amount" 
+	  */
 	public boolean hasEnoughMoney(Player player, int amount) {
 		if(player.getMoney()>=amount) {
 			return true;
