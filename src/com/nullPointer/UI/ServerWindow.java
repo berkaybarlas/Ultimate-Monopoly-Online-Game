@@ -24,7 +24,7 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, quitServer, rightButton, leftButton;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -115,17 +115,17 @@ public class ServerWindow extends JPanel implements Observer {
         });
         panel.add(startGame);
 
-//        addPlayer = new CustomButton("Add player");
-//        addPlayer.setToolTipText("add new player ");
-//        addPlayer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-//        addPlayer.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                Player player = new Player("Test", serverInfo.getClientID());
-//                communicationController.sendClientMessage(player);
-//                //navigator.gameScreen();
-//            }
-//        });
-//        panel.add(addPlayer);
+        loadGame = new CustomButton("Load Game");
+        loadGame.setToolTipText("Load game data");
+        loadGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        loadGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //Player player = new Player("Test", serverInfo.getClientID());
+                //communicationController.sendClientMessage(player);
+                //navigator.gameScreen();
+            }
+        });
+        panel.add(loadGame);
 
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");

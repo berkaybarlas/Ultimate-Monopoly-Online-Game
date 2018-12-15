@@ -1,9 +1,6 @@
 package com.nullPointer.Domain.Controller;
 
-import com.nullPointer.Domain.Model.GameEngine;
-import com.nullPointer.Domain.Model.Player;
-import com.nullPointer.Domain.Model.RegularDie;
-import com.nullPointer.Domain.Model.SpeedDie;
+import com.nullPointer.Domain.Model.*;
 import com.nullPointer.Domain.Server.Client;
 import com.nullPointer.Domain.Server.GameServer;
 import com.nullPointer.Domain.Server.ServerInfo;
@@ -112,6 +109,8 @@ public class CommunicationController {
         } else if (objectInput instanceof PlayerController) {
             PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
             gameEngine.publishEvent("refreshPlayerDisplay");
+        } else if (objectInput instanceof DomainBoard) {
+
         }
     }
 
