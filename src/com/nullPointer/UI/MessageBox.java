@@ -16,18 +16,22 @@ public class MessageBox extends JPanel implements Observer {
 
 	public MessageBox(){
 		this.setLayout(new BorderLayout());
-
+		this.setOpaque(false);
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setOpaque(false);
 		scrollPane = new JScrollPane(panel);
+		scrollPane.setOpaque(false);
 		scrollPane.setBounds(0, 0,500,200);
 		JPanel contentPane = new JPanel(null);
+		contentPane.setOpaque(false);
 		contentPane.setPreferredSize(new Dimension(500, 200));
 		contentPane.add(scrollPane);
 		this.add(contentPane,BorderLayout.NORTH);
 
 		JPanel enterPane = new JPanel(null);
 		enterPane.setPreferredSize(new Dimension(100, 200));
+		enterPane.setOpaque(false);
 		this.add(enterPane,BorderLayout.SOUTH);
 
 		submit = new JButton();
@@ -56,7 +60,7 @@ public class MessageBox extends JPanel implements Observer {
 
 	public void addMessage(String msg) {
         Label message=new Label();
-        message.setText(msg);
+        message.setText(" " + msg);
         panel.add(message);
         panel.validate();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

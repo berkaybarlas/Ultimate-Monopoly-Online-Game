@@ -3,6 +3,13 @@ package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
+import java.util.Arrays;
+
+/**
+ * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
+ *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
+ *
+ */
 public class PropertySquare extends Square {
     private Player owner = null;
     private int price;
@@ -36,12 +43,25 @@ public class PropertySquare extends Square {
         setColor(color);
     }
 
-	
-	
-	
+
+
+    /**
+     * @requires   -
+     * @modifies   -
+     * @effects    Calls the calculateRent method in order to calculate the rent according to the
+     *              required parameters.
+     */
 	public int getRent() {
 		return calculateRent();
 	}
+
+    /**
+     * @requires    rentList is not null.
+     *              rentFactor is nonzero.
+     * @modifies    -
+     * @effects     Calculates the rent according to the rentList index and retFactor
+     *              of this PropertySquare and returns it.
+     */
 	private int calculateRent()
 	{
 		if (getRentListIndex() <= 6) return rentFactor * rentList[getRentListIndex()];
@@ -101,11 +121,22 @@ public class PropertySquare extends Square {
         return (getRentListIndex() > 0);
     }
 
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that an upgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void improve() {
         //change inventory
         if (canBeImproved()) setRentListIndex(rentListIndex + 1);
     }
-
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that a downgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void downgrade() {
         //change inventory
         if (canBeDowngraded()) setRentListIndex(rentListIndex - 1);
@@ -123,6 +154,12 @@ public class PropertySquare extends Square {
         return owner;
     }
 
+    /**
+     * @param owner
+     * @requires    -
+     * @modifies    owner
+     * @effects     Sets the owner Player of this PropertySquare.
+     */
     public void setOwner(Player owner) {
         if (!isOwned()) this.owner = owner;
     }
@@ -143,7 +180,7 @@ public class PropertySquare extends Square {
         this.rentListIndex = rentListIndex;
     }
 
-    public int[] rentList() {
+    public int[] getRentList() {
         return rentList;
     }
 
@@ -155,6 +192,15 @@ public class PropertySquare extends Square {
         return owner != null;
     }
 
+    /**
+     * @param       gameEngine
+     * @requires    currentPlayer is not null.
+     * @modifies    currentPlayer
+     * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
+     *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
+     *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
+     *              it goes bankrupt.
+     */
     @Override
     public void evaluateSquare(GameEngine gameEngine) {
         if (this.getOwner() == null) {
@@ -168,9 +214,25 @@ public class PropertySquare extends Square {
 
     }
 
-    @Override
-    public String toString() {
-        return getName();
+    public boolean repOk() {
+        if(this.getName() != null && price > 0 && color != null && rentFactor > 0 && rentList != null && rentList.length == 8) {
+            for(int rentPrice : this.getRentList()) {
+                if(rentPrice <= 0) return false;
+            }
+            return  true;
+        }
+        return false;
     }
 
+    @Override
+    public String toString() {
+        return "[PropertySquare]" +
+                "\nName: " + this.getName() +
+                "\nPrice: " + price +
+                "\nColor: " + color + '\'' +
+                "\nOwner: " + owner +
+                "\nCurrent Rent Factor: " + rentFactor +
+                "\nRents: " + Arrays.toString(rentList) +
+                "\nMortgage Situation: " + isMortgaged;
+    }
 }

@@ -17,11 +17,12 @@ public class Animator extends JPanel implements Runnable {
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private List<Player> playerList = new ArrayList<>();
-    private JFrame animFrame;
+    private JPanel animFrame;
 
-    public Animator(JFrame jFrame) {
+    public Animator(JPanel jFrame) {
     	animFrame=jFrame;
         setPreferredSize(new Dimension(1,1));
+        setOpaque(false);
         _instance = this;
 
     }

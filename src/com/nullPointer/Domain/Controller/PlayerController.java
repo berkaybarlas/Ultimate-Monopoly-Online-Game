@@ -5,9 +5,12 @@ import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayerController {
+
+
+public class PlayerController implements Serializable {
 
     private static PlayerController _instance;
     private ArrayList<Player> players = new ArrayList<Player>(12);
@@ -26,7 +29,7 @@ public class PlayerController {
 
     }
 
-    public static PlayerController getInstance() {
+    public static synchronized PlayerController getInstance() {
         if (_instance == null) {
             _instance = new PlayerController();
         }
@@ -44,24 +47,45 @@ public class PlayerController {
         return currentPlayer;
     }
 
+    public void setCurrentPlayerIndex(int cP) {
+        this.currentPlayer = cP;
+    };
+
+    /**
+     * @return The next {@code Player} object in the list.
+     * @requires players != null
+     * @modifies currentPlayer
+     * @effects Updates currentPlayer by setting it to currentPlayer+1 (mod size(players)) & returns the next {@code Player} object.
+     */
     public Player nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
         return players.get(currentPlayer);
     }
 
+    /**
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @effects Alters {@code Player}'s inJail status by setting it <code>true</code>.
+     */
     public void putInJail() {
         players.get(currentPlayer).setinJail(true);
     }
 
+    /**
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @effects Alters {@code Player}'s inJail status by setting it <code>true</code>.
+     */
     public void getOutFromJail() {
         players.get(currentPlayer).setinJail(false);
     }
 
-    public void movePlayer(int amount, int layerSize) {
-        //.setPosition(newPosition);
-        getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
-    }
-
+    /**
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @param targetIndex new value of {@code TargetPosition}
+     * @effects Alters {@code Player}'s {@code TargetPosition} by setting it to targetIndex.
+     */
     public void movePlayer(int targetIndex) {
         getCurrentPlayer().setTargetPosition(targetIndex);
     }
@@ -98,4 +122,26 @@ public class PlayerController {
         getCurrentPlayer().addCard(card);
     }
 
+    public void exchangePlayerControllerData(PlayerController inputController) {
+        players = inputController.getPlayers();
+        currentPlayer = inputController.getCurrentPlayerIndex();
+    }
+    
+    public boolean repOk() {
+        if(players != null) {
+            if(players.size() > 0) {
+                for(Player p : players) {
+                    if(!p.repOk()) return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "[PlayerController] " +
+                "Players in the Controller: " + players;
+    }
 }

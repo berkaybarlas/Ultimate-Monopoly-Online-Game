@@ -56,7 +56,7 @@ public class CommunicationController {
     }
 
     public void processInput(Object objectInput) {
-        if(objectInput instanceof String) {
+        if (objectInput instanceof String) {
             String input = (String) objectInput;
             if (input.contains("game")) {
                 if (includes(rest(input), "start")) {
@@ -65,7 +65,7 @@ public class CommunicationController {
             } else if (input.contains("player")) {
                 if (includes(rest(input), "create")) {
 
-                }else if (includes(rest(input), "next")) {
+                } else if (includes(rest(input), "next")) {
                     gameEngine.nextTurn();
                 }
             } else if (input.indexOf("message") != -1) {
@@ -102,13 +102,19 @@ public class CommunicationController {
             	gameEngine.pause();
             } else if(input.contains("save")) {
             	gameEngine.save();
+            } else if (input.contains("loadData")) {
+                gameEngine.publishEvent("refreshPlayerDisplay");
             }
-        }else if(objectInput instanceof ArrayList) {
+        } else if (objectInput instanceof ArrayList) {
             serverInfo.setClientList((ArrayList) objectInput);
-        }else if(objectInput instanceof Player) {
+        } else if (objectInput instanceof Player) {
             gameEngine.addPlayer((Player) objectInput);
+        } else if (objectInput instanceof PlayerController) {
+            PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
+            gameEngine.publishEvent("refreshPlayerDisplay");
         }
     }
+
 
     private String rest(String word) {
         int slashIndex = word.indexOf('/');
@@ -119,5 +125,13 @@ public class CommunicationController {
 
     private boolean includes(String sentence, String word) {
         return (sentence.indexOf(word) != -1);
+    }
+
+    public GameServer getGameServer() {
+        return this.gameServer;
+    }
+
+    public Client getClient() {
+        return this.client;
     }
 }

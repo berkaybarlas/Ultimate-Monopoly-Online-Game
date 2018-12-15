@@ -3,7 +3,6 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
-import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
@@ -19,7 +18,7 @@ public class GameWindow extends JPanel implements Observer {
     protected DiceDisplay diceDisplay;
     protected ButtonPanel buttonPanel;
     protected PlayerPanel playerPanel;
-
+    Animator animator;
     private GameEngine gameEngine = GameEngine.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private SaveLoadController saveLoadController = SaveLoadController.getInstance();
@@ -32,22 +31,24 @@ public class GameWindow extends JPanel implements Observer {
         ColorSet colorSet = new ColorSet();
         int offset = 50;
 
-
         JPanel contentPane = new JPanel();
-        //contentPane.setLayout(new BoxLayout(contentPane, BorderLayout));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         board = new Board(new Point(0, 0), height - offset);
 
         contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-        contentPane.add(board, BorderLayout.LINE_START);
+        contentPane.add(board);          // BorderLayout.LINE_START
 
         JPanel middleSide = new JPanel();
         middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));
+        //middleSide.add(Box.createVerticalGlue());
+        //middleSide.add(Box.createRigidArea(new Dimension(0, 100)));
+        buttonPanel = new ButtonPanel();
+        middleSide.add(buttonPanel);
 
         diceDisplay = new DiceDisplay();
         middleSide.add(diceDisplay);
-        buttonPanel = new ButtonPanel();
-        middleSide.add(buttonPanel);
-        contentPane.add(middleSide, BorderLayout.CENTER);
+        middleSide.add(Box.createRigidArea(new Dimension(0, 100)));
+        contentPane.add(middleSide);    // BorderLayout.CENTER
         middleSide.setOpaque(false);
 
         JPanel rightSide = new JPanel();
@@ -57,12 +58,20 @@ public class GameWindow extends JPanel implements Observer {
         rightSide.add(playerPanel);
         MessageBox msg = new MessageBox();
         rightSide.add(msg);
-        contentPane.add(rightSide, BorderLayout.LINE_END);
+        contentPane.add(rightSide);    // BorderLayout.LINE_END
+        rightSide.setOpaque(false);
 
         this.add(contentPane);
         setOpaque(false);
         contentPane.setBackground(colorSet.BOARDBACKGROUND);
         gameEngine.subscribe(this);
+
+        animator = new Animator(this);
+        Thread thread = new Thread(animator);
+        thread.start();
+        animator.setVisible(true);
+        contentPane.add(animator);
+
     }
 
     public ButtonPanel getButtonPanel() {
@@ -71,6 +80,7 @@ public class GameWindow extends JPanel implements Observer {
 
     public void paint(Graphics g) {
         super.paint(g);
+        animator.paint(g);
         //board.paint(g);
     }
 

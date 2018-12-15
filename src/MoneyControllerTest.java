@@ -1,33 +1,12 @@
-package com.nullPointer.Domain.Controller;
-
-
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import com.nullPointer.Domain.Controller.MoneyController;
+import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Model.Player;
 import org.junit.Test;
 
-import com.nullPointer.Domain.Model.Player;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MoneyControllerTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testIncreaseMoney() {
@@ -107,4 +86,20 @@ public class MoneyControllerTest {
 		assertEquals(false, moneyController.hasEnoughMoney(ply, 400));
 		
 	}
+	
+	@Test
+	public void repOkCorrect() {
+		MoneyController moneyController = MoneyController.getInstance();
+//		PlayerController playerController = PlayerController.getInstance();
+//		Player player1 = new Player("test player 1");
+//		Player player2 = new Player("test player 2");
+//		player1.setMoney(3000);
+//		player2.setMoney(4000);
+//		playerController.addPlayer(player1);
+//		playerController.addPlayer(player2);
+//		moneyController.setPoolMoney(1000);
+		
+		assertTrue(moneyController.repOk());
+	}
+	
 }

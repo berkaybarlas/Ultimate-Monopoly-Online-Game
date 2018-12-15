@@ -1,5 +1,11 @@
 package com.nullPointer.Domain.Model.Square;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Model.RegularDie;
+import com.nullPointer.Domain.Model.Cards.Roll3;
 
 public class Roll3CardSquare extends Square {
 
@@ -10,11 +16,63 @@ public class Roll3CardSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		// make them draw some card? 
-		// maybe we can keep a roll 3 card deck here, and make the player draw a card and call its playCard()
-		// open to suggestions
+		gameEngine.setRoll3(true);
+		gameEngine.publishEvent("rollDice");
+
+		RegularDie die = gameEngine.getRegularDie();
+		ArrayList<Integer> diceValues = die.getLastValues();
+		while(diceValues.size() != 3){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Collections.sort(diceValues);
+		System.out.println("[Roll3CardSquare] Dice Values: "+diceValues.toString());
+		ArrayList<Player> players = gameEngine.getPlayerController().getPlayers();
+
+		for(int i=0;i<players.size();i++){
+			int totalMatch =0;
+			totalMatch = checkRoll3ForAPlayer(players.get(i), diceValues);
+			if(totalMatch == 1){
+				gameEngine.getMoneyController().increaseMoney(players.get(i), 50);
+				System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+50);
+			}
+			else if(totalMatch == 2){
+				gameEngine.getMoneyController().increaseMoney(players.get(i), 200);
+				System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+200);
+			}
+			else if(totalMatch == 3){
+				if(players.get(i).equals(gameEngine.getPlayerController().getCurrentPlayer())){
+					gameEngine.getMoneyController().increaseMoney(players.get(i), 1500);
+					System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+1500);
+				}
+				else{
+					gameEngine.getMoneyController().increaseMoney(players.get(i), 1000);
+					System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+1000);
+				}
+			}
+		}
+
 		gameEngine.nextTurn();
+	}
+	private int checkRoll3ForAPlayer(Player player, ArrayList<Integer> diceValues){
+		int total=0;
+		ArrayList<Integer> alreadyExists = new ArrayList<Integer>();
+		ArrayList<Roll3> cards = player.getRoll3Cards();
+		for(int i=0;i<cards.size();i++){
+			Roll3 card = cards.get(i);
+			for(int k=0;k<diceValues.size();k++){
+				if(card.getValues().contains(diceValues.get(k)) && !alreadyExists.contains(diceValues.get(k))){
+					total++;
+					alreadyExists.add(diceValues.get(k));
+				}
+			}
+
+		}
+		return total;
 	}
 
 }
