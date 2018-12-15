@@ -8,6 +8,8 @@ import com.nullPointer.Domain.Model.Square.UtilitySquare;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
 public class PlayerController implements Serializable {
 
     private static PlayerController _instance;
@@ -50,10 +52,10 @@ public class PlayerController implements Serializable {
     };
 
     /**
-     * @requires    players is not null.
-     *              currentPlayer is not null.
-     * @modifies    currentPlayer
-     * @effects     Increments the currentPlayer indicator, to set the next player in list as the currentPlayer.
+     * @return The next {@code Player} object in the list.
+     * @requires players != null
+     * @modifies currentPlayer
+     * @effects Updates currentPlayer by setting it to currentPlayer+1 (mod size(players)) & returns the next {@code Player} object.
      */
     public Player nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
@@ -61,35 +63,28 @@ public class PlayerController implements Serializable {
     }
 
     /**
-     * @requires    players is not null.
-     *              currentPlayer is not null.
-     * @modifies    inJail
-     * @effects     Sends the currentPlayer to jail (i.e. sets its inJail boolean true).
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @effects Alters {@code Player}'s inJail status by setting it <code>true</code>.
      */
     public void putInJail() {
         players.get(currentPlayer).setinJail(true);
     }
 
     /**
-     * @requires    players is not null.
-     *              currentPlayer is not null.
-     * @modifies    inJail
-     * @effects     Releases the currentPlayer from jail (i.e. sets its inJail boolean false).
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @effects Alters {@code Player}'s inJail status by setting it <code>true</code>.
      */
     public void getOutFromJail() {
         players.get(currentPlayer).setinJail(false);
     }
 
-    public void movePlayer(int amount, int layerSize) {
-        //.setPosition(newPosition);
-        getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
-    }
-
     /**
-     * @requires    players is not null.
-     *              currentPlayer is not null.
-     * @modifies    targetIndex
-     * @effects     Set the currentPlayer's targetIndex, so that it can be moved to that point.
+     * @requires players != null & size(players) >= currentPlayer
+     * @modifies players.get(currentPlayer)
+     * @param targetIndex new value of {@code TargetPosition}
+     * @effects Alters {@code Player}'s {@code TargetPosition} by setting it to targetIndex.
      */
     public void movePlayer(int targetIndex) {
         getCurrentPlayer().setTargetPosition(targetIndex);
@@ -132,6 +127,10 @@ public class PlayerController implements Serializable {
         currentPlayer = inputController.getCurrentPlayerIndex();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean repOk() {
         if(players != null) {
             if(players.size() > 0) {
