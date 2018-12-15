@@ -93,5 +93,18 @@ public class MoneyControllerTest {
 		assertEquals(100, player4.getMoney());
 		assertEquals(100, player5.getMoney());
 	}
+	@Test
+	public void hasEnoughMoney() {
+		MoneyController moneyController = MoneyController.getInstance();
+		PlayerController playerController = PlayerController.getInstance();
 
+		Player ply = new Player("test player");
+		playerController.addPlayer(ply);
+		ply.setMoney(500);
+		moneyController.decreaseMoney(ply, 200);
+		
+		assertEquals(true, moneyController.hasEnoughMoney(ply, 200));
+		assertEquals(false, moneyController.hasEnoughMoney(ply, 400));
+		
+	}
 }
