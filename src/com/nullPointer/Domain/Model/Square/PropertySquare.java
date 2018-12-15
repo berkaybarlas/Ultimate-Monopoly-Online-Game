@@ -3,6 +3,11 @@ package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
+/**
+ * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
+ *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
+ *
+ */
 public class PropertySquare extends Square {
     private Player owner = null;
     private int price;
@@ -39,9 +44,9 @@ public class PropertySquare extends Square {
 
 
     /**
-     * @requires:   -
-     * @modifies:   -
-     * @effects:    Calls the calculateRent method in order to calculate the rent according to the
+     * @requires   -
+     * @modifies   -
+     * @effects    Calls the calculateRent method in order to calculate the rent according to the
      *              required parameters.
      */
 	public int getRent() {
@@ -148,9 +153,12 @@ public class PropertySquare extends Square {
     }
 
     /**
+     *
+     * @param owner
      * @requires    -
      * @modifies    owner
      * @effects     Sets the owner Player of this PropertySquare.
+     *
      */
     public void setOwner(Player owner) {
         if (!isOwned()) this.owner = owner;
@@ -195,12 +203,15 @@ public class PropertySquare extends Square {
     }
 
     /**
+     *
+     * @param gameEngine
      * @requires    currentPlayer is not null.
      * @modifies    currentPlayer
      * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
      *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
      *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
      *              it goes bankrupt.
+     *
      */
     @Override
     public void evaluateSquare(GameEngine gameEngine) {

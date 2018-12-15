@@ -1,12 +1,9 @@
 package com.nullPointer.Domain.Controller;
 
-import java.util.ArrayList;
-
 import com.nullPointer.Domain.Model.Player;
 
 public class MoneyController {
 	private static MoneyController _instance;
-	private ArrayList<Player> players=new ArrayList<Player>(12);
 	private PlayerController playerController = PlayerController.getInstance();
 	private int poolMoney = 0;
 

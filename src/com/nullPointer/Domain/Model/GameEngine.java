@@ -262,7 +262,7 @@ public class GameEngine {
 	public void save() {
 		publishEvent("save");
 	}
-	
+
     public void setCurrentPlayer(Player p) {
         playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
     }
