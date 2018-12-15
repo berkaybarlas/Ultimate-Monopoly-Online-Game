@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
@@ -22,15 +23,25 @@ public class Player implements Serializable {
     private boolean inJail;
     private boolean direction = true;
     private int rentMultiplier = 1;
+    
+    private ArrayList<Roll3> roll3Cards;
 
-    public Player(String name, int ClientID) {
+    public ArrayList<Roll3> getRoll3Cards() {
+		return roll3Cards;
+	}
+
+	public void addRoll3Card(Roll3 roll3) {
+		this.roll3Cards.add(roll3);
+	}
+
+	public Player(String name, int ClientID) {
         this.name = name;
 		this.ClientID = ClientID;
         propertyCardsMap = new HashMap<>();
-        propertySquares = new ArrayList<PropertySquare>();
-        utilityList = new ArrayList<UtilitySquare>();
-        cardList = new ArrayList<Card>();
-//        this.direction = true;
+        propertySquares = new ArrayList<>();
+        utilityList = new ArrayList<>();
+        roll3Cards = new ArrayList<Roll3>();
+        cardList = new ArrayList<>();
     }
 
     public Player(String name) {

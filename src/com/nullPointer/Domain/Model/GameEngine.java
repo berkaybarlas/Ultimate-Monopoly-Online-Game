@@ -3,6 +3,7 @@ package com.nullPointer.Domain.Model;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
@@ -21,13 +22,18 @@ public class GameEngine {
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
-
     private boolean gameIsPaused = false;
-
+    private boolean roll3 = false;
+    
+    public boolean getRoll3(){
+    	return roll3;
+    }
+    public void setRoll3(boolean set){
+    	roll3 = set;
+    }
     public DomainBoard getDomainBoard() {
         return domainBoard;
     }
-
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -57,6 +63,7 @@ public class GameEngine {
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
+        newPlayer.addRoll3Card((Roll3)domainBoard.getRoll3Cards().poll());
         publishEvent("newPlayer");
     }
 
@@ -98,6 +105,7 @@ public class GameEngine {
             path.add(placeToGo);
             target = placeToGo;
             playerController.movePlayer(target);
+            
         }
 
         publishEvent("path/" + path);
@@ -113,6 +121,15 @@ public class GameEngine {
         list.add(regularDie.getLastValues().get(0));
         list.add(regularDie.getLastValues().get(1));
         list.add(speedDie.getLastValues().get(0));
+        return list;
+    }
+    
+    public ArrayList<Integer> roll3Dice() {
+        regularDie.roll(3);
+        ArrayList<Integer> list = new ArrayList<Integer>(3);
+        list.add(regularDie.getLastValues().get(0));
+        list.add(regularDie.getLastValues().get(1));
+        list.add(regularDie.getLastValues().get(2));
         return list;
     }
 
@@ -132,8 +149,12 @@ public class GameEngine {
         if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
             if (type.equals("CommunityChestCardSquare")) {
                 card = domainBoard.getCCCards().element();
-            } else {
+            } 
+            else if(type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().element();
+            }
+            else{
+            	card = domainBoard.getRoll3Cards().element();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
@@ -149,11 +170,13 @@ public class GameEngine {
     }
 
     public void improveProperty() {
-
+    	
     }
 
     public void buy() {
 
+    	domainBoard.getSquareAt(86).evaluateSquare(this);;
+    	
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();

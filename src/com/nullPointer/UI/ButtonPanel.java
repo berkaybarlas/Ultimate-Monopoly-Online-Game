@@ -11,14 +11,14 @@ import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel {
 
-    protected JButton purchaseButton;
-    protected JButton drawButton;
-    protected JButton playCardButton;
-    protected JButton improveButton;
-    protected JButton rollDice;
-    protected JButton endTurn;
-    protected JButton resumeButton;
-    protected JButton pauseButton;
+	protected JButton purchaseButton;
+	protected JButton drawButton;
+	protected JButton playCardButton;
+	protected JButton improveButton;
+	protected JButton rollDice;
+	protected JButton endTurn;
+	protected JButton resumeButton;
+	protected JButton pauseButton;
 
     private int offset = 100;
     private int buttonHeight = 35;
@@ -28,7 +28,7 @@ public class ButtonPanel extends JPanel {
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
 
-    public ButtonPanel() {
+	public ButtonPanel() {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -69,80 +69,83 @@ public class ButtonPanel extends JPanel {
 
         this.add(panel);
 
-        purchaseButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("purchase");
-                communicationController.sendClientMessage("purchase");
-                purchaseButton.setEnabled(false);
-                ;
-            }
-        });
+		purchaseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("purchase");
+				communicationController.sendClientMessage("purchase");
+				purchaseButton.setEnabled(false);
+				;
+			}
+		});
 
-        drawButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("drawCard");
-                communicationController.sendClientMessage("card/draw");
-                drawButton.setEnabled(false);
-            }
-        });
+		drawButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("drawCard");
+				communicationController.sendClientMessage("card/draw");
+				drawButton.setEnabled(false);
+			}
+		});
 
-        playCardButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //communicationController.sendClientMessage("playCard");
-                playCardButton.setEnabled(false);
-            }
-        });
+		playCardButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//communicationController.sendClientMessage("playCard");
+				playCardButton.setEnabled(false);
+			}
+		});
 
-        improveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //communicationController.sendClientMessage("improveProperty");
-                improveButton.setEnabled(false);
-            }
-        });
+		improveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//communicationController.sendClientMessage("improveProperty");
+				improveButton.setEnabled(false);
+			}
+		});
 
-        resumeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Game resumed");
-                communicationController.sendClientMessage("resume");
-                pauseButton.setEnabled(true);
-                resumeButton.setEnabled(false);
-            }
-        });
+		resumeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Game resumed");
+				communicationController.sendClientMessage("resume");
+				pauseButton.setEnabled(true);
+				resumeButton.setEnabled(false);
+			}
+		});
 
-        pauseButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Game paused");
-                communicationController.sendClientMessage("pause");
-                pauseButton.setEnabled(false);
-                resumeButton.setEnabled(true);
-            }
-        });
+		pauseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Game paused");
+				communicationController.sendClientMessage("pause");
+				pauseButton.setEnabled(false);
+				resumeButton.setEnabled(true);
+			}
+		});
 
-        rollDice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                gameEngine.rollDice();
-                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
-                rollDice.setEnabled(false);
-            }
-        });
+		rollDice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!gameEngine.getRoll3())
+					gameEngine.rollDice();
+				else
+					gameEngine.roll3Dice();
+				communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+				rollDice.setEnabled(false);
+			}
+		});
 
-        endTurn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                communicationController.sendClientMessage("player/next");
-                endTurn.setEnabled(false);
-            }
-        });
+		endTurn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				communicationController.sendClientMessage("player/next");
+				endTurn.setEnabled(false);
+			}
+		});
 
 
-        purchaseButton.setEnabled(false);
-        endTurn.setEnabled(false);
-        drawButton.setEnabled(false);
-        playCardButton.setEnabled(false);
-        improveButton.setEnabled(false);
-        rollDice.setEnabled(false);
-        resumeButton.setEnabled(false);
-        pauseButton.setEnabled(true);
-        this.setVisible(true);
+		purchaseButton.setEnabled(false);
+		endTurn.setEnabled(false);
+		drawButton.setEnabled(false);
+		playCardButton.setEnabled(false);
+		improveButton.setEnabled(false);
+		rollDice.setEnabled(false);
+		resumeButton.setEnabled(false);
+		pauseButton.setEnabled(true);
+		this.setVisible(true);
 
-    }
+	}
 }
