@@ -68,12 +68,10 @@ public class MoneyController {
 	}
 
 	public boolean repOk() {
-		if(players != null) {
-			if(players.size() > 0) {
-				if(poolMoney>=0) return true;
-				return false;
-			}
-		}
+		if(poolMoney>=0) 
+			return true;
 		return false;
+	
 	}
+
 }
