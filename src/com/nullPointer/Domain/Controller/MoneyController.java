@@ -44,7 +44,8 @@ public class MoneyController {
 
 	/**
 	  * 
-	  * @param player : current player
+	  * @param payer : current player
+	  * @param receiver : Player who receives the money.
 	  * @param amount : how much will the taken from payer and given to receiver
 	  * @requires player != null & amount >= 0
 	  * @modifies payer's and receiver's money

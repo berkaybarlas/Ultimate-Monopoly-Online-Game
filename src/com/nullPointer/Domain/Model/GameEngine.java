@@ -110,6 +110,16 @@ public class GameEngine {
 
         publishEvent("path/" + path);
         playerController.movePlayer(target);
+        playerController.setPath(currentPlayer, path);
+        for(int j = 0; j<path.size()-1; j++)
+        {
+            int i = path.get(j);
+            Square onTheWay = squares.get(i);
+            if (onTheWay.getFlyover())
+            {
+                onTheWay.evaluateSquare(this, "flyover");
+            }
+        }
         evaluateSquare();
         return path;
     }

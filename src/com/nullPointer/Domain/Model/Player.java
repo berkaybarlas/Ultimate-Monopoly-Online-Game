@@ -23,12 +23,18 @@ public class Player implements Serializable {
     private boolean inJail;
     private boolean direction = true;
     private int rentMultiplier = 1;
+    private LinkedList<Integer> path = null;
     
-    private ArrayList<Roll3> roll3Cards;
+    private ArrayList<Roll3> roll3Cards = new ArrayList<Roll3>();
 
     public ArrayList<Roll3> getRoll3Cards() {
 		return roll3Cards;
 	}
+
+	public void setRoll3Cards(ArrayList<Roll3> newRoll3)
+    {
+        this.roll3Cards = newRoll3;
+    }
 
 	public void addRoll3Card(Roll3 roll3) {
 		this.roll3Cards.add(roll3);
@@ -155,6 +161,17 @@ public class Player implements Serializable {
 
     public void setClientID(int clientID) {
         ClientID = clientID;
+    }
+
+
+    public LinkedList<Integer> getPath()
+    {
+        return path;
+    }
+
+    public void setPath(LinkedList<Integer> path)
+    {
+        this.path = path;
     }
 
     public boolean repOk() {
