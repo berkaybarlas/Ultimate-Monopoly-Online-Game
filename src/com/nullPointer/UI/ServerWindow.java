@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
@@ -30,6 +31,7 @@ public class ServerWindow extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private Navigator navigator = Navigator.getInstance();
+    private SaveLoadController saveLoadController = SaveLoadController.getInstance();
     private JPanel buttonPanel, playerPanel, cPanel, pPanel;
     private JScrollPane scrollPane;
     private JTextField textField;
@@ -120,9 +122,7 @@ public class ServerWindow extends JPanel implements Observer {
         loadGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //Player player = new Player("Test", serverInfo.getClientID());
-                //communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
+                saveLoadController.getSavedFiles();
             }
         });
         panel.add(loadGame);

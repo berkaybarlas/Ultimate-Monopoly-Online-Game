@@ -110,7 +110,8 @@ public class CommunicationController {
             PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
             gameEngine.publishEvent("refreshPlayerDisplay");
         } else if (objectInput instanceof DomainBoard) {
-
+            GameEngine.getInstance().getDomainBoard().exchangeDomainBoardData((DomainBoard) objectInput);
+            gameEngine.publishEvent("refreshPlayerDisplay");
         }
     }
 
