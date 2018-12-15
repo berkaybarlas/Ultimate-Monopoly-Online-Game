@@ -49,6 +49,12 @@ public class PlayerController implements Serializable {
         this.currentPlayer = cP;
     };
 
+    /**
+     * @requires    players is not null.
+     *              currentPlayer is not null.
+     * @modifies    currentPlayer
+     * @effects     Increments the currentPlayer indicator, to set the next player in list as the currentPlayer.
+     */
     public Player nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
         return players.get(currentPlayer);
@@ -79,6 +85,12 @@ public class PlayerController implements Serializable {
         getCurrentPlayer().setTargetPosition((getCurrentPlayer().getPosition() + amount) % layerSize);
     }
 
+    /**
+     * @requires    players is not null.
+     *              currentPlayer is not null.
+     * @modifies    targetIndex
+     * @effects     Set the currentPlayer's targetIndex, so that it can be moved to that point.
+     */
     public void movePlayer(int targetIndex) {
         getCurrentPlayer().setTargetPosition(targetIndex);
     }
