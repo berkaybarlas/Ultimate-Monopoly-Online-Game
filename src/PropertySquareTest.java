@@ -5,7 +5,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class JUnitPropertySquareTest {
+public class PropertySquareTest {
 
     Player p1, p2;
     PropertySquare pSq;
@@ -42,7 +42,7 @@ public class JUnitPropertySquareTest {
         p1.setMoney(p1.getMoney() + pSq.getPrice());
         pSq.setOwner(null);
         int initMoney = p1.getMoney();
-        gameEngine.getPlayerController().addPlayer(p1);
+        gameEngine.addPlayer(p1);
         pSq.evaluateSquare(gameEngine);
         assertEquals(p1.getMoney(), initMoney);
     }
@@ -60,7 +60,7 @@ public class JUnitPropertySquareTest {
     }
 
     @org.junit.Test
-    public void greaterRentForImproved() {
+    public void greaterRentPaymentForImproved() {
         int initRent = pSq.getRent();
         pSq.improve();
         int initMoney1 = p1.getMoney();
@@ -74,7 +74,7 @@ public class JUnitPropertySquareTest {
     }
 
     @org.junit.Test
-    public void lessRentForDowngraded() {
+    public void lessRentPaymentForDowngraded() {
         pSq.improve();
         int initRent = pSq.getRent();
         int initMoney1 = p1.getMoney();

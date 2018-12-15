@@ -36,12 +36,25 @@ public class PropertySquare extends Square {
         setColor(color);
     }
 
-	
-	
-	
+
+
+    /**
+     * @requires:   -
+     * @modifies:   -
+     * @effects:    Calls the calculateRent method in order to calculate the rent according to the
+     *              required parameters.
+     */
 	public int getRent() {
 		return calculateRent();
 	}
+
+    /**
+     * @requires    rentList is not null.
+     *              rentFactor is nonzero.
+     * @modifies    -
+     * @effects     Calculates the rent according to the rentList index and retFactor
+     *              of this PropertySquare and returns it.
+     */
 	private int calculateRent()
 	{
 		if (getRentListIndex() <= 6) return rentFactor * rentList[getRentListIndex()];
@@ -101,11 +114,22 @@ public class PropertySquare extends Square {
         return (getRentListIndex() > 0);
     }
 
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that an upgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void improve() {
         //change inventory
         if (canBeImproved()) setRentListIndex(rentListIndex + 1);
     }
-
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that a downgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void downgrade() {
         //change inventory
         if (canBeDowngraded()) setRentListIndex(rentListIndex - 1);
@@ -123,6 +147,11 @@ public class PropertySquare extends Square {
         return owner;
     }
 
+    /**
+     * @requires    -
+     * @modifies    owner
+     * @effects     Sets the owner Player of this PropertySquare.
+     */
     public void setOwner(Player owner) {
         if (!isOwned()) this.owner = owner;
     }
@@ -165,6 +194,14 @@ public class PropertySquare extends Square {
         return false;
     }
 
+    /**
+     * @requires    currentPlayer is not null.
+     * @modifies    currentPlayer
+     * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
+     *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
+     *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
+     *              it goes bankrupt.
+     */
     @Override
     public void evaluateSquare(GameEngine gameEngine) {
         if (this.getOwner() == null) {
