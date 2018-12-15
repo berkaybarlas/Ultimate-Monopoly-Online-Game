@@ -54,10 +54,22 @@ public class PlayerController implements Serializable {
         return players.get(currentPlayer);
     }
 
+    /**
+     * @requires    players is not null.
+     *              currentPlayer is not null.
+     * @modifies    inJail
+     * @effects     Sends the currentPlayer to jail (i.e. sets its inJail boolean true).
+     */
     public void putInJail() {
         players.get(currentPlayer).setinJail(true);
     }
 
+    /**
+     * @requires    players is not null.
+     *              currentPlayer is not null.
+     * @modifies    inJail
+     * @effects     Releases the currentPlayer from jail (i.e. sets its inJail boolean false).
+     */
     public void getOutFromJail() {
         players.get(currentPlayer).setinJail(false);
     }

@@ -4,7 +4,7 @@ import com.nullPointer.Domain.Model.Player;
 
 import static org.junit.Assert.*;
 
-public class JUnitPlayerControllerTest {
+public class PlayerControllerTest {
 
     PlayerController pController;
     Player p1;
