@@ -96,10 +96,12 @@ public class CommunicationController {
                 }
             } else if (input.contains("improveProperty")) {
                 gameEngine.improveProperty();
-            } else if (input.contains("resume")) {
-                gameEngine.resume();
-            } else if (input.contains("pause")) {
-                gameEngine.pause();
+            } else if(input.contains("resume")) {
+            	gameEngine.resume();
+            } else if(input.contains("pause")) {
+            	gameEngine.pause();
+            } else if(input.contains("save")) {
+            	gameEngine.save();
             } else if (input.contains("loadData")) {
                 gameEngine.publishEvent("refreshPlayerDisplay");
             }

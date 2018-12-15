@@ -1,25 +1,33 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Controller;
 
 import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Controller.PlayerController;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SaveLoadManager {
+// about loading:
+//Previous ServerInfo
+//PlayerController
+//Board
+// HAS TO CHANGE PAWN INITIALIZING METHOD
 
-    private static SaveLoadManager _instance;
-    static final String dataFile = "invoicedata";
+public class SaveLoadController {
+
+    private static SaveLoadController _instance;
+  
     static final Player player = new Player("Testplayer ");
-
-    private SaveLoadManager() {
+   // private PlayerController playerController = PlayerController.getInstance();
+    
+    private SaveLoadController() {
 
     }
 
-    public static SaveLoadManager getInstance() {
+    public static SaveLoadController getInstance() {
         if (_instance == null) {
-            _instance = new SaveLoadManager();
+            _instance = new SaveLoadController();
         }
         return _instance;
     }
@@ -28,13 +36,16 @@ public class SaveLoadManager {
 
         ObjectOutputStream out = null;
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("savefile_HH_mm_dd_MM_YY");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_dd_MM_YY");
         String saveFile = "savefile";//sdf.format(cal.getTime());
         try {
             out = new ObjectOutputStream(new
                     BufferedOutputStream(new FileOutputStream(saveFile)));
-
+//            for(Player player : playerController.getPlayers()) {
+//            	out.writeObject(player);
+//            }
             out.writeObject(player);
+            out.flush();
             System.out.println("Game state is saved to " + saveFile);
 
         } catch (FileNotFoundException e) {

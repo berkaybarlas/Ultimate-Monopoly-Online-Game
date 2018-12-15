@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.UI.AppWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,8 @@ public class ButtonPanel extends JPanel {
     protected JButton endTurn;
     protected JButton resumeButton;
     protected JButton pauseButton;
-
+    protected JButton saveButton;
+    
     private CommunicationController communicationController = CommunicationController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
 
@@ -36,6 +38,7 @@ public class ButtonPanel extends JPanel {
         endTurn = new JButton("End Turn");
         resumeButton = new JButton("Resume");
         pauseButton = new JButton("Pause");
+		saveButton = new JButton("Save");
 
         purchaseButton.setBounds(150, 0, 100, 30);
         drawButton.setBounds(150, 35, 100, 30);

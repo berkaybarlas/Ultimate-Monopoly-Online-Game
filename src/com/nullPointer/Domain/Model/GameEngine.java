@@ -2,6 +2,7 @@ package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.Square;
@@ -9,6 +10,7 @@ import com.nullPointer.Domain.Model.Square.UtilitySquare;
 import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Domain.Observer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -259,6 +261,9 @@ public class GameEngine {
         return false;
     }
 
+	public void save() {
+		publishEvent("save");
+	}
     public void setCurrentPlayer(Player p) {
         playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
     }
