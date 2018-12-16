@@ -1,5 +1,3 @@
-package com.nullPointer;
-
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.GameEngine;
