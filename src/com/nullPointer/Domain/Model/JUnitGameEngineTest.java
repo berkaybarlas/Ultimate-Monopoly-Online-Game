@@ -1,5 +1,5 @@
 package com.nullPointer.Domain.Model;
-
+import static org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.*;
