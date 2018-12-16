@@ -1,5 +1,3 @@
-package com.nullPointer;
-
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.GameEngine;
@@ -13,6 +11,10 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author HP
+ *
+ */
 public class SquareTest {
 
     Square bonus, go, goToJail, lux, rev, r3;
