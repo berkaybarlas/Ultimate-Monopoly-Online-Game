@@ -13,6 +13,10 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author HP
+ *
+ */
 public class SquareTest {
 
     Square bonus, go, goToJail, lux, rev, r3;

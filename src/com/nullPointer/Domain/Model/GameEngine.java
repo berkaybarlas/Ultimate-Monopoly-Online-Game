@@ -123,7 +123,13 @@ public class GameEngine {
         evaluateSquare();
         return path;
     }
-
+    /**
+     * @param -
+     * @requires    -
+     * @modifies    regularDie and speedDie
+     * @effects     lastValues ArrayLists of regularDie and speedDie change according
+     *              to the result of roll() methods
+     */
     public ArrayList<Integer> rollDice() {
         regularDie.roll(2);
         speedDie.roll(1);
@@ -143,13 +149,29 @@ public class GameEngine {
         return list;
     }
 
+    /**
+     * @param -
+     * @requires    lastValues ArrayLists are not null and regularDie's lastValues
+     *              ArrayList contains at least 2 elements
+     * @modifies    -
+     * @effects     -
+     */
     public int calculateMoveAmount() {
         int total = 0;
         total += regularDie.getLastValues().get(0);
         total += regularDie.getLastValues().get(1);
         return total;
     }
-
+    /**
+     * @param -
+     * @requires    1)playerController's currentPlayer's not being null
+     * 				2)currentPlayer's targetPosition's not being null
+     * 				3)domainBoard's not being null
+     * 				4)domainBoard's containing a not null Square in targetPosition
+     * 				in squaresMap
+     * @modifies    -CCCards or ChanceCards or Roll3Cards queues according to the type of the Square
+     * @effects     takes the first element from the queue and if it is immediate plays else puts it into the cards ArrayList
+     */
     public void drawCard() {
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
@@ -182,11 +204,18 @@ public class GameEngine {
     public void improveProperty() {
     	
     }
-
-    public void buy() {
-
-    	domainBoard.getSquareAt(86).evaluateSquare(this);;
-    	
+    /**
+     * @param -
+     * @requires    1)currentPlayer's not being null
+     * 				2)currentPlayer's targetPosition's not being null
+     * 				3)domainBoard's not being null
+     * 				4)domainBoard's containing a not null Square in targetPosition
+     * 				in squaresMap
+     * @modifies    currentPlayer's money, propertyList or utilityList, square's owner  
+     * @effects     currentPlayer's money decreases if she/he has, the owner of the square becomes currentPlayer
+     * 				the square is added to propertyList or utilityList of currentPlayer
+     */
+    public void buy() {    	
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
@@ -232,7 +261,13 @@ public class GameEngine {
         return moneyController;
     }
 
-
+    /**
+     * @param 		player, owner, amount
+     * @requires    player's and owner's not being null 				
+     * @modifies    player's and owner's money if player has any money
+     * @effects     if player has money, her/his money is decreased and player's increased
+     * 				else an bankrupt event is published
+     */
     public void payRent(Player player, Player owner, int amount) {
         moneyController.decreaseMoney(player, amount);
         if (player.getMoney() < 0) {
@@ -298,6 +333,15 @@ public class GameEngine {
 
     public void setCurrentPlayer(Player p) {
         playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
+    }
+
+
+    public boolean repOk() {    	
+        if(regularDie != null && speedDie != null && playerController != null && moneyController != null
+        		&& serverInfo != null && domainBoard != null) {
+            return  true;
+        }
+        return false;
     }
 
 }
