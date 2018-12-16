@@ -1,28 +1,24 @@
 package com.nullPointer.Domain.Model;
-import static org.junit.Test;
-import static org.junit.Assert.*;
-
-import java.util.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import com.nullPointer.Domain.Model.Cards.CCBeKindRewind;
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Square.CommunityChestCardSquare;
-import com.nullPointer.Domain.Model.Square.Square;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class JUnitGameEngineTest {
 
-	@Test
+	@org.junit.Test
 	public void testCalculatePath() {
 		//fail("Not yet implemented");
 	}
 
-	@Test
+	@org.junit.Test
 	public void testRollDice() {
 		RegularDie die = GameEngine.getInstance().getRegularDie();
 		SpeedDie speeddie = GameEngine.getInstance().getSpeedDie();
@@ -39,7 +35,7 @@ public class JUnitGameEngineTest {
 		}
 	}
 
-	@Test
+	@org.junit.Test
 	public void testCalculateMoveAmount() {
 		RegularDie die = GameEngine.getInstance().getRegularDie();
 		die.getLastValues().add(3);
@@ -48,7 +44,7 @@ public class JUnitGameEngineTest {
 
 	}
 
-	@Test
+	@org.junit.Test
 	public void testDrawCommunityChestCard() {
 
 		Player currentPlayer = new Player("Tumay");
@@ -88,12 +84,12 @@ public class JUnitGameEngineTest {
 
 	}
 
-	@Test
+	@org.junit.Test
 	public void testBuy() {
 		//fail("Not yet implemented");
 	}
 
-	@Test
+	@org.junit.Test
 	public void testPayRent() {
 		//fail("Not yet implemented");
 	}

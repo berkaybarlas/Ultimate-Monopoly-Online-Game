@@ -1,3 +1,5 @@
+package test;
+
 import com.nullPointer.Domain.Model.Cards.CCBeKindRewind;
 import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.*;
@@ -32,7 +34,7 @@ public class GameEngineTest {
 		//System.out.println("Test Board 0 indexed Sqaure "+gameEngine.getDomainBoard().getSquareAt(0).getName());
 	}
 
-	@Test
+	@org.junit.Test
 	public void testRollDice() {
 		RegularDie die = GameEngine.getInstance().getRegularDie();
 		SpeedDie speeddie = GameEngine.getInstance().getSpeedDie();
@@ -49,7 +51,7 @@ public class GameEngineTest {
 		}
 	}
 
-	@Test
+	@org.junit.Test
 	public void testCalculateMoveAmount() {
 		RegularDie die = GameEngine.getInstance().getRegularDie();
 		die.getLastValues().add(3);
@@ -58,7 +60,7 @@ public class GameEngineTest {
 
 	}
 
-	@Test
+	@org.junit.Test
 	public void testDrawCommunityChestCard() {
 
 		Player currentPlayer = new Player("Tumay");
@@ -79,7 +81,7 @@ public class GameEngineTest {
 		}
 	}
 
-	@Test
+	@org.junit.Test
 	public void testBuyAnUnownedProperty() {
 		//setting p1 as the current player
 		gameEngine.getPlayerController().setCurrentPlayerIndex(0);
@@ -88,7 +90,7 @@ public class GameEngineTest {
 		assertEquals(pSq, p1.getPropertySquares().get(0));
 		assertEquals(3050,p1.getMoney());
 	}
-	@Test
+	@org.junit.Test
 	public void testPayRent() {
 		p1.addSquare(pSq);
 		p1.setMoney(3050);
@@ -101,7 +103,7 @@ public class GameEngineTest {
 		assertEquals(3150, p1.getMoney());
 	}
 
-	@Test
+	@org.junit.Test
 	public void repOkCorrect() {
 		gameEngine.repOk();
 	}

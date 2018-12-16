@@ -1,3 +1,4 @@
+package test;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
@@ -22,7 +23,7 @@ public class PlayerControllerTest {
         pController.addPlayer(p2);
     }
 
-    @Test
+    @org.junit.Test
     public void nextPlayer() {
         GameEngine.getInstance().setCurrentPlayer(p1);
         assertEquals(p2,pController.nextPlayer());

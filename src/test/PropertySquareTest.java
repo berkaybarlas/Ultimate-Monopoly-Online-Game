@@ -1,3 +1,4 @@
+package test;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;

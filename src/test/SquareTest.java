@@ -1,9 +1,9 @@
+package test;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.*;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class SquareTest {
     PlayerController pc;
     GameEngine gg;
 
-    @Before
+    @org.junit.Before
     public void setUp() throws Exception {
         pc = PlayerController.getInstance();
         gg = GameEngine.getInstance();
@@ -42,7 +42,7 @@ public class SquareTest {
         p2.setRoll3Cards(new ArrayList<Roll3>(Arrays.asList(new Roll3("JRollCard", false, 1, 3, 5))));
     }
 
-    @Test
+    @org.junit.Test
     public void goTest()
     {
         assertEquals(gg.getPlayerController(), pc);
@@ -61,7 +61,7 @@ public class SquareTest {
         assertEquals((finalMoneyP1-initMoneyP1), 600);
     }
 
-    @Test
+    @org.junit.Test
     public void bonusTest()
     {
         Player p2 = pc.getCurrentPlayer();
@@ -76,7 +76,7 @@ public class SquareTest {
         assertEquals((finalMoneyP2 - initMoneyP2), 550);
     }
 
-    @Test
+    @org.junit.Test
     public void goToJailTest()
     {
         Player ben = pc.getCurrentPlayer();
@@ -90,7 +90,7 @@ public class SquareTest {
 
     }
 
-    @Test
+    @org.junit.Test
     public void luxuryTaxTest()
     {
         Player kocBurssuz = pc.getCurrentPlayer();
@@ -100,7 +100,7 @@ public class SquareTest {
         assertEquals((vergilendirilmisKutsalKazanc - babaParasi), -75);
     }
 
-    @Test
+    @org.junit.Test
     public void reverseTest()
     {
         Player duduPeri = pc.getCurrentPlayer();
@@ -111,7 +111,7 @@ public class SquareTest {
         assertFalse(zaman);
     }
 
-    @Test
+    @org.junit.Test
     public void roll3Test()
     {
         Player current = pc.getCurrentPlayer();
