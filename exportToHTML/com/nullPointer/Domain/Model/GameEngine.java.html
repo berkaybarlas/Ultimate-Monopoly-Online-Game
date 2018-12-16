@@ -1,0 +1,375 @@
+<html>
+<head>
+<title>GameEngine.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #808080; font-weight: bold; font-style: italic;}
+.s4 { color: #0000ff;}
+.s5 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+GameEngine.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.nullPointer.Domain.Model;
+
+<span class="s0">import </span>com.nullPointer.Domain.Controller.MoneyController;
+<span class="s0">import </span>com.nullPointer.Domain.Controller.PlayerController;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Cards.Card;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Cards.Roll3;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Square.PropertySquare;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Square.Square;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Square.UtilitySquare;
+<span class="s0">import </span>com.nullPointer.Domain.Observer;
+<span class="s0">import </span>com.nullPointer.Domain.Server.ServerInfo;
+
+<span class="s0">import </span>java.util.ArrayList;
+<span class="s0">import </span>java.util.HashMap;
+<span class="s0">import </span>java.util.LinkedList;
+
+<span class="s2">/**</span>
+ * <span class="s3">@overview    </span><span class="s2">This class contains the main flow of the game logic, i.e. the game controller.</span>
+ *              Most of the game logic related operations are done by this class and other components are
+ *              notified by this class.
+ *
+ */
+<span class="s0">public class </span>GameEngine {
+    <span class="s0">private </span>RegularDie regularDie = RegularDie.getInstance();
+    <span class="s0">private </span>SpeedDie speedDie = SpeedDie.getInstance();
+    <span class="s0">private </span>PlayerController playerController = PlayerController.getInstance();
+    <span class="s0">private </span>MoneyController moneyController = MoneyController.getInstance();
+    <span class="s0">private </span>ServerInfo serverInfo = ServerInfo.getInstance();
+    <span class="s0">private static int </span>ownedUtilities = <span class="s4">0</span>;
+    <span class="s0">private </span>DomainBoard domainBoard;
+    <span class="s0">private boolean </span>gameIsPaused = <span class="s0">false</span>;
+    <span class="s0">private boolean </span>roll3 = <span class="s0">false</span>;
+    
+    <span class="s0">public boolean </span>getRoll3(){
+    	<span class="s0">return </span>roll3;
+    }
+    <span class="s0">public void </span>setRoll3(<span class="s0">boolean </span>set){
+    	roll3 = set;
+    }
+    <span class="s0">public </span>DomainBoard getDomainBoard() {
+        <span class="s0">return </span>domainBoard;
+    }
+    <span class="s0">private static </span>GameEngine _instance;
+    ArrayList&lt;Observer&gt; observers = <span class="s0">new </span>ArrayList&lt;Observer&gt;();
+
+    <span class="s0">private </span>GameEngine() {
+        domainBoard = <span class="s0">new </span>DomainBoard();
+    }
+
+    <span class="s0">public static </span>GameEngine getInstance() {
+        <span class="s0">if </span>(_instance == <span class="s0">null</span>) {
+            _instance = <span class="s0">new </span>GameEngine();
+        }
+        <span class="s0">return </span>_instance;
+    }
+
+    <span class="s0">public void </span>subscribe(Observer observer) {
+        observers.add(observer);
+    }
+
+    <span class="s0">public void </span>publishEvent(String message) {
+        observers.forEach(listener -&gt; listener.onEvent(message));
+    }
+
+    <span class="s0">public void </span>initPlayers(<span class="s0">int </span>playerNumber) {
+        publishEvent(<span class="s5">&quot;initializePawns&quot;</span>);
+        publishEvent(<span class="s5">&quot;initializePlayers&quot;</span>);
+    }
+
+    <span class="s0">public void </span>addPlayer(Player newPlayer) {
+        playerController.addPlayer(newPlayer);
+        newPlayer.addRoll3Card((Roll3)domainBoard.getRoll3Cards().poll());
+        publishEvent(<span class="s5">&quot;newPlayer&quot;</span>);
+    }
+
+    <span class="s0">public void </span>startGame() {
+        publishEvent(<span class="s5">&quot;screen/gameScreen&quot;</span>);
+        initPlayers(<span class="s4">2</span>);
+        publishEvent(<span class="s5">&quot;rollDice&quot;</span>);
+    }
+
+    <span class="s2">//    public void movePlayer() {                old code</span>
+    //        publishEvent(&quot;refresh&quot;);
+    //        Player currentPlayer = playerController.getCurrentPlayer();
+    //        playerController.movePlayer(calculateMoveAmount(), domainBoard.getSquaresInLayer(currentPlayer.getLayer()).size());
+    //        evaluateSquare();
+//    }
+
+    <span class="s0">public </span>LinkedList&lt;Integer&gt; calculatePath() {
+        publishEvent(<span class="s5">&quot;refresh&quot;</span>);
+        LinkedList&lt;Integer&gt; path = <span class="s0">new </span>LinkedList&lt;Integer&gt;();
+        HashMap&lt;Integer, Square&gt; squares = domainBoard.getSquareMap();
+        HashMap&lt;Integer, ArrayList&lt;Integer&gt;&gt; connections = domainBoard.getConnectionsMap();
+        Player currentPlayer = playerController.getCurrentPlayer();
+        <span class="s0">int </span>currentPos;
+        <span class="s0">int </span>regularDiceTotal = calculateMoveAmount();
+        <span class="s0">int </span>target = -<span class="s4">2</span>;
+
+
+        <span class="s0">for </span>(<span class="s0">int </span>i = <span class="s4">0</span>; i &lt; regularDiceTotal; i++) {
+            currentPos = currentPlayer.getTargetPosition();
+
+            <span class="s0">int </span>placeToGo = connections.get(currentPos).get(<span class="s4">0</span>);
+
+            <span class="s0">if </span>(domainBoard.getSquareAt(currentPos).getType().equals(<span class="s5">&quot;RailroadTransitSquare&quot;</span>) &amp;&amp; regularDiceTotal % <span class="s4">2 </span>== <span class="s4">0</span>) {
+                <span class="s0">if </span>(connections.get(currentPos).get(<span class="s4">1</span>) != -<span class="s4">1</span>) placeToGo = connections.get(currentPos).get(<span class="s4">1</span>);
+                <span class="s0">else </span>System.out.println(<span class="s5">&quot;[GameEngine]: There seems to be a problem.&quot;</span>);
+            }
+
+            <span class="s2">//playerController.changeCurrentPosition(currentPlayer, placeToGo);</span>
+            path.add(placeToGo);
+            target = placeToGo;
+            playerController.movePlayer(target);
+            
+        }
+
+        publishEvent(<span class="s5">&quot;path/&quot; </span>+ path);
+        playerController.movePlayer(target);
+        playerController.setPath(currentPlayer, path);
+        <span class="s0">for</span>(<span class="s0">int </span>j = <span class="s4">0</span>; j&lt;path.size()-<span class="s4">1</span>; j++)
+        {
+            <span class="s0">int </span>i = path.get(j);
+            Square onTheWay = squares.get(i);
+            <span class="s0">if </span>(onTheWay.getFlyover())
+            {
+                onTheWay.evaluateSquare(<span class="s0">this</span>, <span class="s5">&quot;flyover&quot;</span>);
+            }
+        }
+        evaluateSquare();
+        <span class="s0">return </span>path;
+    }
+    <span class="s2">/**</span>
+     * <span class="s3">@param </span><span class="s2">-</span>
+     * <span class="s3">@requires    </span><span class="s2">-</span>
+     * <span class="s3">@modifies    </span><span class="s2">regularDie and speedDie</span>
+     * <span class="s3">@effects     </span><span class="s2">lastValues ArrayLists of regularDie and speedDie change according</span>
+     *              to the result of roll() methods
+     */
+    <span class="s0">public </span>ArrayList&lt;Integer&gt; rollDice() {
+        regularDie.roll(<span class="s4">2</span>);
+        speedDie.roll(<span class="s4">1</span>);
+        ArrayList&lt;Integer&gt; list = <span class="s0">new </span>ArrayList&lt;Integer&gt;(<span class="s4">3</span>);
+        list.add(regularDie.getLastValues().get(<span class="s4">0</span>));
+        list.add(regularDie.getLastValues().get(<span class="s4">1</span>));
+        list.add(speedDie.getLastValues().get(<span class="s4">0</span>));
+        <span class="s0">return </span>list;
+    }
+    
+    <span class="s0">public </span>ArrayList&lt;Integer&gt; roll3Dice() {
+        regularDie.roll(<span class="s4">3</span>);
+        ArrayList&lt;Integer&gt; list = <span class="s0">new </span>ArrayList&lt;Integer&gt;(<span class="s4">3</span>);
+        list.add(regularDie.getLastValues().get(<span class="s4">0</span>));
+        list.add(regularDie.getLastValues().get(<span class="s4">1</span>));
+        list.add(regularDie.getLastValues().get(<span class="s4">2</span>));
+        <span class="s0">return </span>list;
+    }
+
+    <span class="s2">/**</span>
+     * <span class="s3">@param </span><span class="s2">-</span>
+     * <span class="s3">@requires    </span><span class="s2">lastValues ArrayLists are not null and regularDie's lastValues</span>
+     *              ArrayList contains at least 2 elements
+     * <span class="s3">@modifies    </span><span class="s2">-</span>
+     * <span class="s3">@effects     </span><span class="s2">-</span>
+     */
+    <span class="s0">public int </span>calculateMoveAmount() {
+        <span class="s0">int </span>total = <span class="s4">0</span>;
+        total += regularDie.getLastValues().get(<span class="s4">0</span>);
+        total += regularDie.getLastValues().get(<span class="s4">1</span>);
+        <span class="s0">return </span>total;
+    }
+    <span class="s2">/**</span>
+     * <span class="s3">@param </span><span class="s2">-</span>
+     * <span class="s3">@requires    </span><span class="s2">1)playerController's currentPlayer's not being null</span>
+     * 				2)currentPlayer's targetPosition's not being null
+     * 				3)domainBoard's not being null
+     * 				4)domainBoard's containing a not null Square in targetPosition
+     * 				in squaresMap
+     * <span class="s3">@modifies    </span><span class="s2">-CCCards or ChanceCards or Roll3Cards queues according to the type of the Square</span>
+     * <span class="s3">@effects     </span><span class="s2">takes the first element from the queue and if it is immediate plays else puts it into the cards ArrayList</span>
+     */
+    <span class="s0">public void </span>drawCard() {
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
+        Card card;
+        String type = square.getType();
+
+        <span class="s0">if </span>(type.equals(<span class="s5">&quot;CommunityChestCardSquare&quot;</span>) || type.equals(<span class="s5">&quot;ChanceCardSquare&quot;</span>)) {
+            <span class="s0">if </span>(type.equals(<span class="s5">&quot;CommunityChestCardSquare&quot;</span>)) {
+                card = domainBoard.getCCCards().element();
+            } 
+            <span class="s0">else if</span>(type.equals(<span class="s5">&quot;ChanceCardSquare&quot;</span>)) {
+                card = domainBoard.getChanceCards().element();
+            }
+            <span class="s0">else</span>{
+            	card = domainBoard.getRoll3Cards().element();
+            }
+            publishEvent(<span class="s5">&quot;message/&quot; </span>+ <span class="s5">&quot;[System]: &quot; </span>+ currentPlayer.getName() + <span class="s5">&quot; drew &quot; </span>+ card.getTitle());
+            <span class="s0">if </span>(card.getImmediate()) {
+                card.playCard(<span class="s0">this</span>);
+                System.out.println();
+            } <span class="s0">else </span>{
+                playerController.addCardToCurrentPlayer(card);
+            }
+            nextTurn();
+        } <span class="s0">else </span>{
+            System.out.println(<span class="s5">&quot;Error: drawCard has been called while player is outside Community Chest or Chance squares.&quot;</span>);
+        }
+    }
+
+    <span class="s0">public void </span>improveProperty() {
+    	
+    }
+    <span class="s2">/**</span>
+     * <span class="s3">@param </span><span class="s2">-</span>
+     * <span class="s3">@requires    </span><span class="s2">1)currentPlayer's not being null</span>
+     * 				2)currentPlayer's targetPosition's not being null
+     * 				3)domainBoard's not being null
+     * 				4)domainBoard's containing a not null Square in targetPosition
+     * 				in squaresMap
+     * <span class="s3">@modifies    </span><span class="s2">currentPlayer's money, propertyList or utilityList, square's owner  </span>
+     * <span class="s3">@effects     </span><span class="s2">currentPlayer's money decreases if she/he has, the owner of the square becomes currentPlayer</span>
+     * 				the square is added to propertyList or utilityList of currentPlayer
+     */
+    <span class="s0">public void </span>buy() {    	
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
+        String type = square.getType();
+
+        <span class="s0">if </span>(type.equals(<span class="s5">&quot;PropertySquare&quot;</span>) &amp;&amp; !((PropertySquare) square).isOwned()) {
+            <span class="s0">if </span>(moneyController.hasEnoughMoney(currentPlayer, ((PropertySquare) square).getPrice())) {
+                moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
+                playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
+                ((PropertySquare) square).setOwner(currentPlayer);
+            }
+        } <span class="s0">else if </span>(type.equals(<span class="s5">&quot;UtilitySquare&quot;</span>)) {
+            UtilitySquare utilitySquare = (UtilitySquare) square;
+            <span class="s0">if </span>(moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice())) {
+                moneyController.decreaseMoney(currentPlayer, utilitySquare.getPrice());
+                playerController.upgradeUtilityList(utilitySquare, currentPlayer);
+                utilitySquare.setOwner(currentPlayer);
+            }
+        }
+        nextTurn();
+    }
+
+    <span class="s0">public void </span>nextTurn() {
+        playerController.nextPlayer();
+
+        publishEvent(<span class="s5">&quot;rollDice&quot;</span>);
+        publishEvent(<span class="s5">&quot;refresh&quot;</span>);
+    }
+
+    <span class="s0">public void </span>sendToJail() {
+        playerController.putInJail();
+    }
+
+    <span class="s0">public void </span>newClient(String clientId) {
+        serverInfo.addClient(clientId);
+        publishEvent(<span class="s5">&quot;newClient&quot;</span>);
+    }
+
+    <span class="s0">public </span>PlayerController getPlayerController() {
+        <span class="s0">return </span>playerController;
+    }
+
+    <span class="s0">public </span>MoneyController getMoneyController() {
+        <span class="s0">return </span>moneyController;
+    }
+
+    <span class="s2">/**</span>
+     * <span class="s3">@param 		</span><span class="s2">player, owner, amount</span>
+     * <span class="s3">@requires    </span><span class="s2">player's and owner's not being null 				</span>
+     * <span class="s3">@modifies    </span><span class="s2">player's and owner's money if player has any money</span>
+     * <span class="s3">@effects     </span><span class="s2">if player has money, her/his money is decreased and player's increased</span>
+     * 				else an bankrupt event is published
+     */
+    <span class="s0">public void </span>payRent(Player player, Player owner, <span class="s0">int </span>amount) {
+        moneyController.decreaseMoney(player, amount);
+        <span class="s0">if </span>(player.getMoney() &lt; <span class="s4">0</span>) {
+            player.setMoney(<span class="s4">0</span>);
+            moneyController.increaseMoney(owner, player.getMoney());
+            publishEvent(<span class="s5">&quot;bankrupt&quot;</span>);
+        } <span class="s0">else </span>{
+            moneyController.increaseMoney(owner, amount);
+        }
+        nextTurn();
+    }
+
+    <span class="s0">public </span>RegularDie getRegularDie() {
+        <span class="s0">return </span>regularDie;
+    }
+
+    <span class="s0">public </span>SpeedDie getSpeedDie() {
+        <span class="s0">return </span>speedDie;
+    }
+
+    <span class="s0">public </span>String getLastDiceValues() {
+        <span class="s0">return </span>regularDie.getLastValues().get(<span class="s4">0</span>) + <span class="s5">&quot;/&quot; </span>+ regularDie.getLastValues().get(<span class="s4">1</span>) + <span class="s5">&quot;/&quot; </span>+ speedDie.getLastValues().get(<span class="s4">0</span>);
+    }
+
+    <span class="s0">public void </span>playCard() {
+        <span class="s2">// TODO Auto-generated method stub</span>
+
+    }
+
+    <span class="s0">public void </span>evaluateSquare() {
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
+        square.evaluateSquare(<span class="s0">this</span>);
+    }
+
+    <span class="s0">public void </span>loadData() {
+        <span class="s2">//serverInfo.setClientList();</span>
+    }
+
+    <span class="s0">public void </span>resume() {
+        gameIsPaused = <span class="s0">false</span>;
+        System.out.println(<span class="s5">&quot;Game Engine: Game resumed&quot;</span>);
+        publishEvent(<span class="s5">&quot;resume&quot;</span>);
+    }
+
+    <span class="s0">public void </span>pause() {
+        gameIsPaused = <span class="s0">true</span>;
+        System.out.println(<span class="s5">&quot;Game Engine: Game paused&quot;</span>);
+        publishEvent(<span class="s5">&quot;pause&quot;</span>);
+    }
+
+    <span class="s0">public boolean </span>isMyTurn() {
+        Player player = playerController.getCurrentPlayer();
+        <span class="s0">if </span>(player != <span class="s0">null </span>&amp;&amp; (player.getClientID() == serverInfo.getClientID())) {
+            <span class="s0">return true</span>;
+        }
+        <span class="s0">return false</span>;
+    }
+
+	<span class="s0">public void </span>save() {
+		publishEvent(<span class="s5">&quot;save&quot;</span>);
+	}
+
+    <span class="s0">public void </span>setCurrentPlayer(Player p) {
+        playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
+    }
+
+
+    <span class="s0">public boolean </span>repOk() {    	
+        <span class="s0">if</span>(regularDie != <span class="s0">null </span>&amp;&amp; speedDie != <span class="s0">null </span>&amp;&amp; playerController != <span class="s0">null </span>&amp;&amp; moneyController != <span class="s0">null</span>
+        		&amp;&amp; serverInfo != <span class="s0">null </span>&amp;&amp; domainBoard != <span class="s0">null</span>) {
+            <span class="s0">return  true</span>;
+        }
+        <span class="s0">return false</span>;
+    }
+
+}
+</pre>
+</body>
+</html>

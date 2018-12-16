@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * @overview    This class contains the main flow of the game logic, i.e. the game controller.
+ *              Most of the game logic related operations are done by this class and other components are
+ *              notified by this class.
+ *
+ */
 public class GameEngine {
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();

@@ -7,7 +7,13 @@ public class GoToJailSquare extends Square {
 		super(n, t);
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	/**
+	 * REQUIRES: gameEngine != null
+	 * MODIFIES: - (currentPlayer is modified by the player controller.)
+	 * EFFECTS: Sets the jail flag of currentPlayer to the opposite of its current value (i.e. sends it to the jail).
+	 * @param gameEngine engine that controls the system
+	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
