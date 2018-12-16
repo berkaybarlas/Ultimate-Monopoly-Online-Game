@@ -1,11 +1,16 @@
-import static org.junit.Assert.*;
-
-import java.util.*;
-import org.junit.Test;
+import com.nullPointer.Domain.Model.Cards.CCBeKindRewind;
+import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.*;
-import com.nullPointer.Domain.Model.Cards.*;
 import com.nullPointer.Domain.Model.Square.CommunityChestCardSquare;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GameEngineTest {
 	Player p1, p2;
@@ -95,6 +100,11 @@ public class GameEngineTest {
 		gameEngine.payRent(p2, p1, 100);
 		assertEquals(3100,p2.getMoney());
 		assertEquals(3150, p1.getMoney());
+	}
+
+	@Test
+	public void repOkCorrect() {
+		gameEngine.repOk();
 	}
 
 }
