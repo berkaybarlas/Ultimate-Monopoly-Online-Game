@@ -16,9 +16,9 @@ public class Roll3CardSquare extends Square {
 
 
 	/**
-	 * REQUIRES: gameEngine != null
-	 * MODIFIES: all players who are in possession of a Roll3 card.
-	 * EFFECTS: increases money of all players by amounts decided by Roll3 rules.
+	 * @requires gameEngine != null
+	 * @modifies all players who are in possession of a Roll3 card.
+	 * @effects increases money of all players by amounts decided by Roll3 rules.
 	 * 		1 match: +50
 	 * 		2 matches: +200
 	 * 		3 matches: if currentPlayer has 3 matches, +1500; else +1000

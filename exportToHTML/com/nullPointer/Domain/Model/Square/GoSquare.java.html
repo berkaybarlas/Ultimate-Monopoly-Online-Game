@@ -31,9 +31,9 @@ GoSquare.java</font>
 
 
 	<span class="s2">/**</span>
-	 * REQUIRES: gameEngine != null
-	 * MODIFIES: gameEngine.getPlayerController().getCurrentPlayer()
-	 * EFFECTS: Increases player's money by 300.
+	 * <span class="s3">@requires </span><span class="s2">gameEngine != null</span>
+	 * <span class="s3">@modifies </span><span class="s2">gameEngine.getPlayerController().getCurrentPlayer()</span>
+	 * <span class="s3">@effects </span><span class="s2">Increases player's money by 300.</span>
 	 * <span class="s3">@param </span><span class="s2">gameEngine engine that controls the system</span>
 	 */
 	@Override
@@ -43,9 +43,9 @@ GoSquare.java</font>
 	}
 
 	<span class="s2">/**</span>
-	 * REQUIRES: gameEngine != null
-	 * MODIFIES: gameEngine.getPlayerController().getCurrentPlayer()
-	 * EFFECTS: Calls the default evaluation method if args is &quot;flyover&quot;.
+	 * <span class="s3">@requires </span><span class="s2">gameEngine != null</span>
+	 * <span class="s3">@modifies </span><span class="s2">gameEngine.getPlayerController().getCurrentPlayer()</span>
+	 * <span class="s3">@effects </span><span class="s2">Calls the default evaluation method if args is &quot;flyover&quot;.</span>
 	 * <span class="s3">@param </span><span class="s2">gg engine that controls the system</span>
 	 * <span class="s3">@param </span><span class="s2">args additional arguments</span>
 	 */

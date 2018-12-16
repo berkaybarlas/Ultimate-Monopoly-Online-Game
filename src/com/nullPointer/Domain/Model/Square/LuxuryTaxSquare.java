@@ -10,9 +10,9 @@ public class LuxuryTaxSquare extends Square {
 	}
 
 	/**
-	 * REQUIRES: gameEngine != null
-	 * MODIFIES: gameEngine.getPlayerController().getCurrentPlayer()
-	 * EFFECTS: reduces current player's money by 75.
+	 * @requires gameEngine != null
+	 * @modifies gameEngine.getPlayerController().getCurrentPlayer()
+	 * @effects reduces current player's money by 75.
 	 * @param gameEngine engine that controls the system
 	 */
 	@Override

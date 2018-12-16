@@ -9,9 +9,9 @@ public class GoToJailSquare extends Square {
 	}
 
 	/**
-	 * REQUIRES: gameEngine != null
-	 * MODIFIES: - (currentPlayer is modified by the player controller.)
-	 * EFFECTS: Sets the jail flag of currentPlayer to the opposite of its current value (i.e. sends it to the jail).
+	 * @requires gameEngine != null
+	 * @modifies - (currentPlayer is modified by the player controller.)
+	 * @effects Sets the jail flag of currentPlayer to the opposite of its current value (i.e. sends it to the jail).
 	 * @param gameEngine engine that controls the system
 	 */
 	@Override
