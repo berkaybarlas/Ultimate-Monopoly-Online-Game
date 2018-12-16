@@ -41,7 +41,7 @@ public class SquareTest {
     }
 
     @Test
-    public void evaluateSquareTests()
+    public void goTest()
     {
         assertEquals(gg.getPlayerController(), pc);
 
@@ -57,83 +57,72 @@ public class SquareTest {
         finalMoneyP1 = p1.getMoney();
 
         assertEquals((finalMoneyP1-initMoneyP1), 600);
+    }
 
-        gg.nextTurn();
-        assertEquals(pc.getCurrentPlayer(), p2);
-
+    @Test
+    public void bonusTest()
+    {
+        Player p2 = pc.getCurrentPlayer();
         int initMoneyP2 = p2.getMoney();
         bonus.evaluateSquare(gg);
         int finalMoneyP2 = p2.getMoney();
+        System.out.println(finalMoneyP2);
+        System.out.println(initMoneyP2);
         assertEquals((finalMoneyP2-initMoneyP2), 300);
         bonus.evaluateSquare(gg, "flyover");
         finalMoneyP2 = p2.getMoney();
         assertEquals((finalMoneyP2 - initMoneyP2), 550);
+    }
 
-        gg.nextTurn();
-        assertEquals(pc.getCurrentPlayer(), p1);
-
-        // yazar burada sıkılmaya başlamıştır
+    @Test
+    public void goToJailTest()
+    {
         Player ben = pc.getCurrentPlayer();
-        boolean maphustaMıyım = ben.isInJail();
-        assertFalse(maphustaMıyım);
+        boolean maphustaMiyim = ben.isInJail();
+        assertFalse(maphustaMiyim);
         goToJail.evaluateSquare(gg);
-        boolean pekiŞimdiMaphustaMıyım = ben.isInJail();
-        assertTrue(pekiŞimdiMaphustaMıyım);
-        // zavallı ben... şimdi kim bilir kaç yıl, kader kurbanı olarak yatacağım... Durumu tam olarak içselleştirebilmeniz için arka fon müziği: https://m.youtube.com/watch?v=-1r3kL_4iPA
+        boolean pekiSimdiMaphustaMiyim = ben.isInJail();
+        assertTrue(pekiSimdiMaphustaMiyim);
 
-        // *hapisteyimdir*
-        // *hükümette üst düzey tanıdıklarım vardır*
         ben.setinJail(false);
-        // *hapiste değilimdir*
 
-        gg.nextTurn();
-        assertEquals(pc.getCurrentPlayer(), p2);
+    }
 
-        // Go ve Bonus ile günlerine bereketle başlayan oyuncularımız, p1'in maphus damına düşmesiiyle zor günlerin başladığı bir döneme girmişlerdir.
-        // Kim bilir, şimdi p2'yi ne maceralar beklemektedir?
-
-        Player koçBurssuz = pc.getCurrentPlayer();
-        int babaParası = koçBurssuz.getMoney();
+    @Test
+    public void luxuryTaxTest()
+    {
+        Player kocBurssuz = pc.getCurrentPlayer();
+        int babaParasi = kocBurssuz.getMoney();
         lux.evaluateSquare(gg);
-        int vergilendirilmişKutsalKazanç = koçBurssuz.getMoney();
-        assertEquals((vergilendirilmişKutsalKazanç - babaParası), -75); // pırlantadan, yattan %0 KDV alırsan olacağı bu işte, adamlar 75M vergiyle yırttılar...
+        int vergilendirilmisKutsalKazanc = kocBurssuz.getMoney();
+        assertEquals((vergilendirilmisKutsalKazanc - babaParasi), -75);
+    }
 
-
-        // *betüş sesiyle* ZAMAAAN, GERİYE AKSIIINNNN!!!
-
-        gg.nextTurn();
-        assertEquals(pc.getCurrentPlayer(), p1);
-
-        //ilk başta Sihirli Annem konsepti yapmayı planlamamıştım, ana John Lennon'un da dediği gibi, "İnsanoğlu plan yapar ve Tanrı güler."...
+    @Test
+    public void reverseTest()
+    {
         Player duduPeri = pc.getCurrentPlayer();
         boolean zaman = duduPeri.getDirection();
         assertTrue(zaman);
-        rev.evaluateSquare(gg);  // söylerken kollarınızı birden havaya kaldırın, sihir efektini postta ekleyecekler
+        rev.evaluateSquare(gg);
         zaman = duduPeri.getDirection();
         assertFalse(zaman);
+    }
 
-        // yazarın sıkıntısı geçmiş, yaptığı şaklabanlığın ne kadar saçma olduğunun farkına varmıştır. Yazarı rahatsız etmeyin, o zaten
-        // bir köşede hatalarını düşünüp, belki de ağlamaktadır...
-
-        gg.nextTurn();
-        assertEquals(pc.getCurrentPlayer(), p2);
-
-
+    @Test
+    public void roll3Test()
+    {
         Player current = pc.getCurrentPlayer();
         int currentOldMoney = current.getMoney();
-        Player other = p1;
-        assertEquals(other, p1);
+        Player other = p2;
+        assertEquals(other, p2);
         int otherOldMoney = other.getMoney();
-        gg.getRegularDie().setLastValues(new ArrayList<Integer>(Arrays.asList(1, 3, 5)));  // hilebaz current zarları manipüle ediyor
+        gg.getRegularDie().setLastValues(new ArrayList<Integer>(Arrays.asList(1, 2, 5)));
         System.out.println();
         r3.evaluateSquare(gg);
         int currentNewMoney = current.getMoney();
         int otherNewMoney = other.getMoney();
         assertEquals((currentNewMoney-currentOldMoney), 1500);
-        assertEquals((otherNewMoney-otherOldMoney), 200);  // gördüğünüz gibi hilebaz current 1500'ü cebe indirirken, zavallı other 200'le yetinmek zorunda kaldı. Bu dünyanın düzeni de böyle işte...
-
+        assertEquals((otherNewMoney-otherOldMoney), 200);
     }
-
-
-
 }
