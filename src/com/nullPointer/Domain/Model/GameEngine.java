@@ -15,10 +15,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- * @overview    This class contains the main flow of the game logic, i.e. the game controller.
- *              Most of the game logic related operations are done by this class and other components are
- *              notified by this class.
- *
+ * @overview This class contains the main flow of the game logic, i.e. the game controller.
+ * Most of the game logic related operations are done by this class and other components are
+ * notified by this class.
  */
 public class GameEngine {
     private RegularDie regularDie = RegularDie.getInstance();
@@ -30,16 +29,19 @@ public class GameEngine {
     private DomainBoard domainBoard;
     private boolean gameIsPaused = false;
     private boolean roll3 = false;
-    
-    public boolean getRoll3(){
-    	return roll3;
+
+    public boolean getRoll3() {
+        return roll3;
     }
-    public void setRoll3(boolean set){
-    	roll3 = set;
+
+    public void setRoll3(boolean set) {
+        roll3 = set;
     }
+
     public DomainBoard getDomainBoard() {
         return domainBoard;
     }
+
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -69,7 +71,7 @@ public class GameEngine {
 
     public void addPlayer(Player newPlayer) {
         playerController.addPlayer(newPlayer);
-        newPlayer.addRoll3Card((Roll3)domainBoard.getRoll3Cards().poll());
+        newPlayer.addRoll3Card((Roll3) domainBoard.getRoll3Cards().poll());
         publishEvent("newPlayer");
     }
 
@@ -111,30 +113,29 @@ public class GameEngine {
             path.add(placeToGo);
             target = placeToGo;
             playerController.movePlayer(target);
-            
+
         }
 
         publishEvent("path/" + path);
         playerController.movePlayer(target);
         playerController.setPath(currentPlayer, path);
-        for(int j = 0; j<path.size()-1; j++)
-        {
+        for (int j = 0; j < path.size() - 1; j++) {
             int i = path.get(j);
             Square onTheWay = squares.get(i);
-            if (onTheWay.getFlyover())
-            {
+            if (onTheWay.getFlyover()) {
                 onTheWay.evaluateSquare(this, "flyover");
             }
         }
         evaluateSquare();
         return path;
     }
+
     /**
      * @param -
-     * @requires    -
-     * @modifies    regularDie and speedDie
-     * @effects     lastValues ArrayLists of regularDie and speedDie change according
-     *              to the result of roll() methods
+     * @requires -
+     * @modifies regularDie and speedDie
+     * @effects lastValues ArrayLists of regularDie and speedDie change according
+     * to the result of roll() methods
      */
     public ArrayList<Integer> rollDice() {
         regularDie.roll(2);
@@ -145,7 +146,7 @@ public class GameEngine {
         list.add(speedDie.getLastValues().get(0));
         return list;
     }
-    
+
     public ArrayList<Integer> roll3Dice() {
         regularDie.roll(3);
         ArrayList<Integer> list = new ArrayList<Integer>(3);
@@ -157,10 +158,10 @@ public class GameEngine {
 
     /**
      * @param -
-     * @requires    lastValues ArrayLists are not null and regularDie's lastValues
-     *              ArrayList contains at least 2 elements
-     * @modifies    -
-     * @effects     -
+     * @requires lastValues ArrayLists are not null and regularDie's lastValues
+     * ArrayList contains at least 2 elements
+     * @modifies -
+     * @effects -
      */
     public int calculateMoveAmount() {
         int total = 0;
@@ -168,15 +169,16 @@ public class GameEngine {
         total += regularDie.getLastValues().get(1);
         return total;
     }
+
     /**
      * @param -
-     * @requires    1)playerController's currentPlayer's not being null
-     * 				2)currentPlayer's targetPosition's not being null
-     * 				3)domainBoard's not being null
-     * 				4)domainBoard's containing a not null Square in targetPosition
-     * 				in squaresMap
-     * @modifies    -CCCards or ChanceCards or Roll3Cards queues according to the type of the Square
-     * @effects     takes the first element from the queue and if it is immediate plays else puts it into the cards ArrayList
+     * @requires 1)playerController's currentPlayer's not being null
+     * 2)currentPlayer's targetPosition's not being null
+     * 3)domainBoard's not being null
+     * 4)domainBoard's containing a not null Square in targetPosition
+     * in squaresMap
+     * @modifies -CCCards or ChanceCards or Roll3Cards queues according to the type of the Square
+     * @effects takes the first element from the queue and if it is immediate plays else puts it into the cards ArrayList
      */
     public void drawCard() {
         Player currentPlayer = playerController.getCurrentPlayer();
@@ -187,12 +189,10 @@ public class GameEngine {
         if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
             if (type.equals("CommunityChestCardSquare")) {
                 card = domainBoard.getCCCards().element();
-            } 
-            else if(type.equals("ChanceCardSquare")) {
+            } else if (type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().element();
-            }
-            else{
-            	card = domainBoard.getRoll3Cards().element();
+            } else {
+                card = domainBoard.getRoll3Cards().element();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
@@ -208,20 +208,21 @@ public class GameEngine {
     }
 
     public void improveProperty() {
-    	
+
     }
+
     /**
      * @param -
-     * @requires    1)currentPlayer's not being null
-     * 				2)currentPlayer's targetPosition's not being null
-     * 				3)domainBoard's not being null
-     * 				4)domainBoard's containing a not null Square in targetPosition
-     * 				in squaresMap
-     * @modifies    currentPlayer's money, propertyList or utilityList, square's owner  
-     * @effects     currentPlayer's money decreases if she/he has, the owner of the square becomes currentPlayer
-     * 				the square is added to propertyList or utilityList of currentPlayer
+     * @requires 1)currentPlayer's not being null
+     * 2)currentPlayer's targetPosition's not being null
+     * 3)domainBoard's not being null
+     * 4)domainBoard's containing a not null Square in targetPosition
+     * in squaresMap
+     * @modifies currentPlayer's money, propertyList or utilityList, square's owner
+     * @effects currentPlayer's money decreases if she/he has, the owner of the square becomes currentPlayer
+     * the square is added to propertyList or utilityList of currentPlayer
      */
-    public void buy() {    	
+    public void buy() {
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
@@ -268,11 +269,11 @@ public class GameEngine {
     }
 
     /**
-     * @param 		player, owner, amount
-     * @requires    player's and owner's not being null 				
-     * @modifies    player's and owner's money if player has any money
-     * @effects     if player has money, her/his money is decreased and player's increased
-     * 				else an bankrupt event is published
+     * @param player, owner, amount
+     * @requires player's and owner's not being null
+     * @modifies player's and owner's money if player has any money
+     * @effects if player has money, her/his money is decreased and player's increased
+     * else an bankrupt event is published
      */
     public void payRent(Player player, Player owner, int amount) {
         moneyController.decreaseMoney(player, amount);
@@ -333,19 +334,24 @@ public class GameEngine {
         return false;
     }
 
-	public void save() {
-		publishEvent("save");
-	}
+    public void save() {
+        publishEvent("save");
+    }
 
     public void setCurrentPlayer(Player p) {
         playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
     }
 
+    public String toString() {
+        return "PlayerController: " + playerController.toString() + "/n" +
+                "MoneyController: " + moneyController.toString() + "/n" +
+                "ServerInfo" + serverInfo.toString();
+    }
 
-    public boolean repOk() {    	
-        if(regularDie != null && speedDie != null && playerController != null && moneyController != null
-        		&& serverInfo != null && domainBoard != null) {
-            return  true;
+    public boolean repOk() {
+        if (regularDie != null && speedDie != null && playerController != null && moneyController != null
+                && serverInfo != null && domainBoard != null) {
+            return true;
         }
         return false;
     }
