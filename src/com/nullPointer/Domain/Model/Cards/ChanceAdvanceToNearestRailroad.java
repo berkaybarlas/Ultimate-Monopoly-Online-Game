@@ -30,8 +30,9 @@ public class ChanceAdvanceToNearestRailroad extends ChanceCard {
 		{
 			if (connections.get(pos).get(1) != -1)
 			{
-				gameEngine.publishEvent("teleport" + pos);
 				playerController.movePlayer(pos);
+				gameEngine.publishEvent("teleport" + pos);
+				
 				// set rent factor, etc.
 				currentPlayer.setRentMultiplier(2);
 				squares.get(pos).evaluateSquare(gameEngine);

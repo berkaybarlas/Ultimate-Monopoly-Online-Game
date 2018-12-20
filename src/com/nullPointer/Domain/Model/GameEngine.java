@@ -29,8 +29,17 @@ public class GameEngine {
     private DomainBoard domainBoard;
     private boolean gameIsPaused = false;
     private boolean roll3 = false;
+    private int chosenSquareIndex = -1;
 
-    public boolean getRoll3() {
+    public int getChosenSquareIndex() {
+		return chosenSquareIndex;
+	}
+
+	public void setChosenSquareIndex(int chosenSquareIndex) {
+		this.chosenSquareIndex = chosenSquareIndex;
+	}
+
+	public boolean getRoll3() {
         return roll3;
     }
 
@@ -190,9 +199,9 @@ public class GameEngine {
             if (type.equals("CommunityChestCardSquare")) {
                 card = domainBoard.getCCCards().element();
             } else if (type.equals("ChanceCardSquare")) {
-                card = domainBoard.getChanceCards().element();
+            	card = domainBoard.getChanceCards().element();
             } else {
-                card = domainBoard.getRoll3Cards().element();
+            	card = domainBoard.getRoll3Cards().element();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
