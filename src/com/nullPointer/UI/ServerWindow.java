@@ -36,6 +36,7 @@ public class ServerWindow extends JPanel implements Observer {
     private List<ClientDisplay> clientDisplayList;
     private ArrayList<CustomButton> bList = new ArrayList<CustomButton>();
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
+    private ArrayList<File> pawnFiles = new ArrayList<File>();
     private int cnt = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
@@ -192,6 +193,7 @@ public class ServerWindow extends JPanel implements Observer {
                 Player player = new Player(textField.getText(), serverInfo.getClientID());
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
+                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
                 textField.setText("Enter player name here!");
             }
         });
@@ -229,21 +231,27 @@ public class ServerWindow extends JPanel implements Observer {
             p1 = ImageIO.read(P1Src);
             p1 = p1.getScaledInstance(((BufferedImage) p1).getWidth()/8,((BufferedImage) p1).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p1);
+            pawnFiles.add(P1Src);
             p2 = ImageIO.read(P2Src);
             p2 = p2.getScaledInstance(((BufferedImage) p2).getWidth()/8,((BufferedImage) p2).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p2);
+            pawnFiles.add(P2Src);
             p3 = ImageIO.read(P3Src);
             p3 = p3.getScaledInstance(((BufferedImage) p3).getWidth()/8,((BufferedImage) p3).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p3);
+            pawnFiles.add(P3Src);
             p4 = ImageIO.read(P4Src);
             p4 = p4.getScaledInstance(((BufferedImage) p4).getWidth()/8,((BufferedImage) p4).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p4);
+            pawnFiles.add(P4Src);
             p5 = ImageIO.read(P5Src);
             p5 = p5.getScaledInstance(((BufferedImage) p5).getWidth()/8,((BufferedImage) p5).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p5);
+            pawnFiles.add(P5Src);
             p6 = ImageIO.read(P6Src);
             p6 = p6.getScaledInstance(((BufferedImage) p6).getWidth()/8,((BufferedImage) p6).getHeight()/8,Image.SCALE_SMOOTH);
             pawnImages.add(p6);
+            pawnFiles.add(P6Src);
         } catch (IOException e) {
             e.printStackTrace();
         }
