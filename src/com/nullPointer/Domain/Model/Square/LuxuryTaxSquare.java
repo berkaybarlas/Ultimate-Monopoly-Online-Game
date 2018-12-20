@@ -9,6 +9,12 @@ public class LuxuryTaxSquare extends Square {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @requires gameEngine != null
+	 * @modifies gameEngine.getPlayerController().getCurrentPlayer()
+	 * @effects reduces current player's money by 75.
+	 * @param gameEngine engine that controls the system
+	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub

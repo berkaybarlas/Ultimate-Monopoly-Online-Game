@@ -1,8 +1,8 @@
+package test;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class PropertySquareTest {

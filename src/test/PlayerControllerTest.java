@@ -1,8 +1,10 @@
+package test;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
-
+import org.junit.Test;
 import static org.junit.Assert.*;
+
 
 public class PlayerControllerTest {
 

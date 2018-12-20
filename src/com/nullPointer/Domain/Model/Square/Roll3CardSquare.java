@@ -1,11 +1,11 @@
 package com.nullPointer.Domain.Model.Square;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.RegularDie;
-import com.nullPointer.Domain.Model.Cards.Roll3;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Roll3CardSquare extends Square {
 
@@ -14,6 +14,16 @@ public class Roll3CardSquare extends Square {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	/**
+	 * @requires gameEngine != null
+	 * @modifies all players who are in possession of a Roll3 card.
+	 * @effects increases money of all players by amounts decided by Roll3 rules.
+	 * 		1 match: +50
+	 * 		2 matches: +200
+	 * 		3 matches: if currentPlayer has 3 matches, +1500; else +1000
+	 * @param gameEngine engine that controls the system
+	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		gameEngine.setRoll3(true);
@@ -33,6 +43,8 @@ public class Roll3CardSquare extends Square {
 		System.out.println("[Roll3CardSquare] Dice Values: "+diceValues.toString());
 		ArrayList<Player> players = gameEngine.getPlayerController().getPlayers();
 
+		Player current = gameEngine.getPlayerController().getCurrentPlayer();
+
 		for(int i=0;i<players.size();i++){
 			int totalMatch =0;
 			totalMatch = checkRoll3ForAPlayer(players.get(i), diceValues);
@@ -45,7 +57,7 @@ public class Roll3CardSquare extends Square {
 				System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+200);
 			}
 			else if(totalMatch == 3){
-				if(players.get(i).equals(gameEngine.getPlayerController().getCurrentPlayer())){
+				if(players.get(i).equals(current)){
 					gameEngine.getMoneyController().increaseMoney(players.get(i), 1500);
 					System.out.println("[Roll3CardSquare] "+players.get(i).getName()+" gained "+1500);
 				}

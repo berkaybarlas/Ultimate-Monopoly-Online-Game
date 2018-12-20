@@ -3,8 +3,6 @@ package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
-import java.util.Arrays;
-
 /**
  * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
  *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
@@ -229,10 +227,10 @@ public class PropertySquare extends Square {
         return "[PropertySquare]" +
                 "\nName: " + this.getName() +
                 "\nPrice: " + price +
-                "\nColor: " + color + '\'' +
-                "\nOwner: " + owner +
-                "\nCurrent Rent Factor: " + rentFactor +
-                "\nRents: " + Arrays.toString(rentList) +
-                "\nMortgage Situation: " + isMortgaged;
+                "\nColor: " + color + '\''; //+
+//                "\nOwner: " + owner +
+//                "\nCurrent Rent Factor: " + rentFactor +
+//                "\nRents: " + Arrays.toString(rentList) +
+//                "\nMortgage Situation: " + isMortgaged;
     }
 }

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>LuxuryTaxSquare.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #808080; font-weight: bold; font-style: italic;}
+.s4 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LuxuryTaxSquare.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.nullPointer.Domain.Model.Square;
+<span class="s0">import </span>com.nullPointer.Domain.Model.GameEngine;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Player;
+
+<span class="s0">public class </span>LuxuryTaxSquare <span class="s0">extends </span>Square {
+
+	<span class="s0">public </span>LuxuryTaxSquare(String n, String t) {
+		<span class="s0">super</span>(n, t);
+		<span class="s2">// TODO Auto-generated constructor stub</span>
+	}
+
+	<span class="s2">/**</span>
+	 * <span class="s3">@requires </span><span class="s2">gameEngine != null</span>
+	 * <span class="s3">@modifies </span><span class="s2">gameEngine.getPlayerController().getCurrentPlayer()</span>
+	 * <span class="s3">@effects </span><span class="s2">reduces current player's money by 75.</span>
+	 * <span class="s3">@param </span><span class="s2">gameEngine engine that controls the system</span>
+	 */
+	@Override
+	<span class="s0">public void </span>evaluateSquare(GameEngine gameEngine) {
+		<span class="s2">// TODO Auto-generated method stub</span>
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		gameEngine.getMoneyController().decreaseMoney(currentPlayer, <span class="s4">75</span>);
+	}
+
+}
+</pre>
+</body>
+</html>

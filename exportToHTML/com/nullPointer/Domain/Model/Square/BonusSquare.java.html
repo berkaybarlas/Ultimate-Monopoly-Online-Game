@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>BonusSquare.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #808080; font-weight: bold; font-style: italic;}
+.s4 { color: #0000ff;}
+.s5 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BonusSquare.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.nullPointer.Domain.Model.Square;
+<span class="s0">import </span>com.nullPointer.Domain.Model.GameEngine;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Player;
+
+<span class="s0">public class </span>BonusSquare <span class="s0">extends </span>Square {
+
+	<span class="s0">public </span>BonusSquare(String n, String t) {
+		<span class="s0">super</span>(n, t);
+		<span class="s2">// TODO Auto-generated constructor stub</span>
+		<span class="s0">this</span>.setFlyover(<span class="s0">true</span>);
+	}
+
+	<span class="s2">/**</span>
+	 * <span class="s3">@requires </span><span class="s2">gameEngine != null</span>
+	 * <span class="s3">@modifies </span><span class="s2">gameEngine.getPlayerController.getCurrentPlayer</span>
+	 * <span class="s3">@effects </span><span class="s2">Increases the current player's money by 300.</span>
+	 * <span class="s3">@param </span><span class="s2">gameEngine The gameEngine that controls the system.</span>
+	 */
+	@Override
+	<span class="s0">public void </span>evaluateSquare(GameEngine gameEngine) {
+		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+		gameEngine.getMoneyController().increaseMoney(currentPlayer, <span class="s4">300</span>);
+		
+	}
+
+	<span class="s2">/**</span>
+	 *  <span class="s3">@requires </span><span class="s2">gameEngine != null, args != null</span>
+	 *  <span class="s3">@modifies </span><span class="s2">gameEngine.getPlayerController.getCurrentPlayer</span>
+	 *  <span class="s3">@effects </span><span class="s2">If args = flyover, increases the current player's money by 250.</span>
+	 * 	<span class="s3">@param </span><span class="s2">gg The gameEngine that controls the system.</span>
+	 * 	<span class="s3">@param </span><span class="s2">args The string that contains additional information to be considered when evaluating the square.</span>
+	 * 	<span class="s3">@throws </span><span class="s2">IllegalArgumentException when {</span><span class="s3">@code </span><span class="s2">args} is not an expected string</span>
+	 */
+	@Override
+	<span class="s0">public void </span>evaluateSquare(GameEngine gg, String args) <span class="s0">throws </span>IllegalArgumentException
+	{
+		<span class="s0">if </span>(args.equals(<span class="s5">&quot;flyover&quot;</span>))
+		{
+			Player currentPlayer = gg.getPlayerController().getCurrentPlayer();
+			gg.getMoneyController().increaseMoney(currentPlayer, <span class="s4">250</span>);
+		}
+		<span class="s0">else</span>
+		{
+			<span class="s0">throw new </span>IllegalArgumentException(<span class="s5">&quot;Illegal argument: &quot; </span>+ args);
+		}
+	}
+}
+</pre>
+</body>
+</html>

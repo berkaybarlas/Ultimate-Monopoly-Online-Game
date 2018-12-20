@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Roll3CardSquare.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #808080; font-weight: bold; font-style: italic;}
+.s4 { color: #008000; font-weight: bold;}
+.s5 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Roll3CardSquare.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.nullPointer.Domain.Model.Square;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Cards.Roll3;
+<span class="s0">import </span>com.nullPointer.Domain.Model.GameEngine;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Player;
+<span class="s0">import </span>com.nullPointer.Domain.Model.RegularDie;
+
+<span class="s0">import </span>java.util.ArrayList;
+<span class="s0">import </span>java.util.Collections;
+
+<span class="s0">public class </span>Roll3CardSquare <span class="s0">extends </span>Square {
+
+	<span class="s0">public </span>Roll3CardSquare(String n, String t) {
+		<span class="s0">super</span>(n, t);
+		<span class="s2">// TODO Auto-generated constructor stub</span>
+	}
+
+
+	<span class="s2">/**</span>
+	 * <span class="s3">@requires </span><span class="s2">gameEngine != null</span>
+	 * <span class="s3">@modifies </span><span class="s2">all players who are in possession of a Roll3 card.</span>
+	 * <span class="s3">@effects </span><span class="s2">increases money of all players by amounts decided by Roll3 rules.</span>
+	 * 		1 match: +50
+	 * 		2 matches: +200
+	 * 		3 matches: if currentPlayer has 3 matches, +1500; else +1000
+	 * <span class="s3">@param </span><span class="s2">gameEngine engine that controls the system</span>
+	 */
+	@Override
+	<span class="s0">public void </span>evaluateSquare(GameEngine gameEngine) {
+		gameEngine.setRoll3(<span class="s0">true</span>);
+		gameEngine.publishEvent(<span class="s4">&quot;rollDice&quot;</span>);
+
+		RegularDie die = gameEngine.getRegularDie();
+		ArrayList&lt;Integer&gt; diceValues = die.getLastValues();
+		<span class="s0">while</span>(diceValues.size() != <span class="s5">3</span>){
+			<span class="s0">try </span>{
+				Thread.sleep(<span class="s5">10</span>);
+			} <span class="s0">catch </span>(InterruptedException e) {
+				<span class="s2">// TODO Auto-generated catch block</span>
+				e.printStackTrace();
+			}
+		}
+		Collections.sort(diceValues);
+		System.out.println(<span class="s4">&quot;[Roll3CardSquare] Dice Values: &quot;</span>+diceValues.toString());
+		ArrayList&lt;Player&gt; players = gameEngine.getPlayerController().getPlayers();
+
+		Player current = gameEngine.getPlayerController().getCurrentPlayer();
+
+		<span class="s0">for</span>(<span class="s0">int </span>i=<span class="s5">0</span>;i&lt;players.size();i++){
+			<span class="s0">int </span>totalMatch =<span class="s5">0</span>;
+			totalMatch = checkRoll3ForAPlayer(players.get(i), diceValues);
+			<span class="s0">if</span>(totalMatch == <span class="s5">1</span>){
+				gameEngine.getMoneyController().increaseMoney(players.get(i), <span class="s5">50</span>);
+				System.out.println(<span class="s4">&quot;[Roll3CardSquare] &quot;</span>+players.get(i).getName()+<span class="s4">&quot; gained &quot;</span>+<span class="s5">50</span>);
+			}
+			<span class="s0">else if</span>(totalMatch == <span class="s5">2</span>){
+				gameEngine.getMoneyController().increaseMoney(players.get(i), <span class="s5">200</span>);
+				System.out.println(<span class="s4">&quot;[Roll3CardSquare] &quot;</span>+players.get(i).getName()+<span class="s4">&quot; gained &quot;</span>+<span class="s5">200</span>);
+			}
+			<span class="s0">else if</span>(totalMatch == <span class="s5">3</span>){
+				<span class="s0">if</span>(players.get(i).equals(current)){
+					gameEngine.getMoneyController().increaseMoney(players.get(i), <span class="s5">1500</span>);
+					System.out.println(<span class="s4">&quot;[Roll3CardSquare] &quot;</span>+players.get(i).getName()+<span class="s4">&quot; gained &quot;</span>+<span class="s5">1500</span>);
+				}
+				<span class="s0">else</span>{
+					gameEngine.getMoneyController().increaseMoney(players.get(i), <span class="s5">1000</span>);
+					System.out.println(<span class="s4">&quot;[Roll3CardSquare] &quot;</span>+players.get(i).getName()+<span class="s4">&quot; gained &quot;</span>+<span class="s5">1000</span>);
+				}
+			}
+		}
+
+		gameEngine.nextTurn();
+	}
+	<span class="s0">private int </span>checkRoll3ForAPlayer(Player player, ArrayList&lt;Integer&gt; diceValues){
+		<span class="s0">int </span>total=<span class="s5">0</span>;
+		ArrayList&lt;Integer&gt; alreadyExists = <span class="s0">new </span>ArrayList&lt;Integer&gt;();
+		ArrayList&lt;Roll3&gt; cards = player.getRoll3Cards();
+		<span class="s0">for</span>(<span class="s0">int </span>i=<span class="s5">0</span>;i&lt;cards.size();i++){
+			Roll3 card = cards.get(i);
+			<span class="s0">for</span>(<span class="s0">int </span>k=<span class="s5">0</span>;k&lt;diceValues.size();k++){
+				<span class="s0">if</span>(card.getValues().contains(diceValues.get(k)) &amp;&amp; !alreadyExists.contains(diceValues.get(k))){
+					total++;
+					alreadyExists.add(diceValues.get(k));
+				}
+			}
+
+		}
+		<span class="s0">return </span>total;
+	}
+
+}
+</pre>
+</body>
+</html>

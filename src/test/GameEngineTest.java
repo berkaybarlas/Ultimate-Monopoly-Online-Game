@@ -1,21 +1,37 @@
-package com.nullPointer.Domain.Model;
+package test;
+
 import com.nullPointer.Domain.Model.Cards.CCBeKindRewind;
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.*;
 import com.nullPointer.Domain.Model.Square.CommunityChestCardSquare;
+import com.nullPointer.Domain.Model.Square.PropertySquare;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class JUnitGameEngineTest {
+public class GameEngineTest {
+	Player p1, p2;
+	PropertySquare pSq;
+	GameEngine gameEngine;
+	int[] rentList = {100, 200, 300, 400, 500, 600, 700, 800};
 
-	@org.junit.Test
-	public void testCalculatePath() {
-		//fail("Not yet implemented");
+	@org.junit.Before
+	public void setUp() throws Exception {
+		gameEngine = GameEngine.getInstance();
+		p1 = new Player("Player 1");
+		p2 = new Player("Player 2");
+		p1.setMoney(3200);
+		p2.setMoney(3200);
+		gameEngine.addPlayer(p1);
+		gameEngine.addPlayer(p2);
+		pSq = new PropertySquare("Test Avenue", "PropertySquare",150, "Blue", rentList);	
+		gameEngine.getDomainBoard().getSquareMap().clear();
+		gameEngine.getDomainBoard().getSquareMap().put(0, pSq);
+		//System.out.println("Test Board 0 indexed Sqaure "+gameEngine.getDomainBoard().getSquareAt(0).getName());
 	}
 
 	@org.junit.Test
@@ -57,41 +73,39 @@ public class JUnitGameEngineTest {
 		String type = square.getType();
 		Card card2;
 
-		if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
+		if (type.equals("CommunityChestCardSquare")) {
 			if (type.equals("CommunityChestCardSquare")) {
 				card2 = b.getCCCards().element();
 				assertTrue(card2.getClass().getName().contains("com.nullPointer.Domain.Model.Cards.CC"));
 			} 
 		}
-		/*else if(type.equals("ChanceCardSquare")) {
-                card = domainBoard.getChanceCards().element();
-            }
-            else{
-            	card = domainBoard.getRoll3Cards().element();
-            }
-            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
-            if (card.getImmediate()) {
-                card.playCard(this);
-                System.out.println();
-            } else {
-                playerController.addCardToCurrentPlayer(card);
-            }
-            nextTurn();
-        } else {
-            System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
-        }*/
-
-
 	}
 
 	@org.junit.Test
-	public void testBuy() {
-		//fail("Not yet implemented");
+	public void testBuyAnUnownedProperty() {
+		//setting p1 as the current player
+		gameEngine.getPlayerController().setCurrentPlayerIndex(0);
+		p1.setTargetPosition(0);
+		gameEngine.buy();
+		assertEquals(pSq, p1.getPropertySquares().get(0));
+		assertEquals(3050,p1.getMoney());
 	}
-
 	@org.junit.Test
 	public void testPayRent() {
-		//fail("Not yet implemented");
+		p1.addSquare(pSq);
+		p1.setMoney(3050);
+		pSq.setOwner(p1);
+		
+		gameEngine.getPlayerController().setCurrentPlayerIndex(1);
+		p2.setTargetPosition(0);
+		gameEngine.payRent(p2, p1, 100);
+		assertEquals(3100,p2.getMoney());
+		assertEquals(3150, p1.getMoney());
+	}
+
+	@org.junit.Test
+	public void repOkCorrect() {
+		gameEngine.repOk();
 	}
 
 }

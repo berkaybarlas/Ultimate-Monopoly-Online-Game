@@ -9,11 +9,16 @@ public class ReverseDirectionSquare extends Square {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @requires gameEngine != null
+	 * @modifies gameEngine.getPlayerController().getCurrentPlayer()
+	 * @effects Sets the direction of currentPlayer to the opposite of its current value.
+	 * @param gameEngine engine that controls the system
+	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		currentPlayer.setDirection(!gameEngine.getPlayerController().getCurrentPlayer().getDirection());
-		gameEngine.nextTurn();
 		// Moving the player should be done according to the direction boolean.
 	}
 

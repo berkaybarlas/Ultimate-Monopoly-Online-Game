@@ -2,6 +2,11 @@ package com.nullPointer.Domain.Controller;
 
 import com.nullPointer.Domain.Model.Player;
 
+/**
+ * @overview    This class performs the operations that are needed to be done in order to complete money
+ * 				transfers between the players and the game itself and/or other players.
+ *
+ */
 public class MoneyController {
 	private static MoneyController _instance;
 	private PlayerController playerController = PlayerController.getInstance();
@@ -44,7 +49,8 @@ public class MoneyController {
 
 	/**
 	  * 
-	  * @param player : current player
+	  * @param payer : current player
+	  * @param receiver : Player who receives the money.
 	  * @param amount : how much will the taken from payer and given to receiver
 	  * @requires player != null & amount >= 0
 	  * @modifies payer's and receiver's money

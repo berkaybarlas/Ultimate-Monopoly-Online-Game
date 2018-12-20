@@ -7,7 +7,7 @@ import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.LinkedList;
 
 
 public class PlayerController implements Serializable {
@@ -126,7 +126,17 @@ public class PlayerController implements Serializable {
         players = inputController.getPlayers();
         currentPlayer = inputController.getCurrentPlayerIndex();
     }
-    
+
+    public void setPath(Player p, LinkedList<Integer> path)
+    {
+        p.setPath(path);
+    }
+
+    public LinkedList<Integer> getPath(Player p)
+    {
+        return p.getPath();
+    }
+
     public boolean repOk() {
         if(players != null) {
             if(players.size() > 0) {

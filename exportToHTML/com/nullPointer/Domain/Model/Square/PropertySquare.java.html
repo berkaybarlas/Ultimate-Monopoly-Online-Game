@@ -1,0 +1,260 @@
+<html>
+<head>
+<title>PropertySquare.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #808080; font-weight: bold; font-style: italic;}
+.s4 { color: #0000ff;}
+.s5 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+PropertySquare.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.nullPointer.Domain.Model.Square;
+
+<span class="s0">import </span>com.nullPointer.Domain.Model.GameEngine;
+<span class="s0">import </span>com.nullPointer.Domain.Model.Player;
+
+<span class="s0">import </span>java.util.Arrays;
+
+<span class="s2">/**</span>
+ * <span class="s3">@overview    </span><span class="s2">This class represents the Propert Squares that form the majority of squares in the monopoly game.</span>
+ *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
+ *
+ */
+<span class="s0">public class </span>PropertySquare <span class="s0">extends </span>Square {
+    <span class="s0">private </span>Player owner = <span class="s0">null</span>;
+    <span class="s0">private int </span>price;
+    <span class="s0">private </span>String color;
+    <span class="s0">private int </span>rentFactor;
+    <span class="s2">/* 
+     * About priceList &amp; priceListIndex: 
+     * The list priceList keeps all the available info about the money on each property (base rent, rent after n houses, mortgage value etc.) 
+     * priceListIndex is the index used to access the list. 
+     * priceList(0) = base rent 
+     * priceList(1) = rent after 1 house 
+     * priceList(2) =   &quot;   &quot;   2   &quot; 
+     * priceList(3) =   &quot;   &quot;   3   &quot; 
+     * priceList(4) =   &quot;   &quot;   4   &quot; 
+     * priceList(5) = rent with hotel 
+     * priceList(6) = rent with skyscraper 
+     * priceList(7) = mortgage value 
+     * ps: not sure if mortgage value should be kept in that list 
+     */</span>
+    <span class="s0">private int </span>rentListIndex;
+    <span class="s0">private int</span>[] rentList;
+    <span class="s0">private boolean </span>isMortgaged;
+    <span class="s0">public </span>PropertySquare(String n, String t, <span class="s0">int </span>p, String color, <span class="s0">int</span>[] rentList) {
+        <span class="s0">super</span>(n, t);
+        setOwner(<span class="s0">null</span>);
+        setPrice(p);
+        setRentList(rentList);
+        setMortgage(<span class="s0">false</span>);
+        setRentListIndex(<span class="s4">0</span>);
+        setRentFactor(<span class="s4">1</span>);
+        setColor(color);
+    }
+
+
+
+    <span class="s2">/**</span>
+     * <span class="s3">@requires   </span><span class="s2">-</span>
+     * <span class="s3">@modifies   </span><span class="s2">-</span>
+     * <span class="s3">@effects    </span><span class="s2">Calls the calculateRent method in order to calculate the rent according to the</span>
+     *              required parameters.
+     */
+	<span class="s0">public int </span>getRent() {
+		<span class="s0">return </span>calculateRent();
+	}
+
+    <span class="s2">/**</span>
+     * <span class="s3">@requires    </span><span class="s2">rentList is not null.</span>
+     *              rentFactor is nonzero.
+     * <span class="s3">@modifies    </span><span class="s2">-</span>
+     * <span class="s3">@effects     </span><span class="s2">Calculates the rent according to the rentList index and retFactor</span>
+     *              of this PropertySquare and returns it.
+     */
+	<span class="s0">private int </span>calculateRent()
+	{
+		<span class="s0">if </span>(getRentListIndex() &lt;= <span class="s4">6</span>) <span class="s0">return </span>rentFactor * rentList[getRentListIndex()];
+		<span class="s0">else return </span><span class="s4">0</span>;
+	}
+
+    <span class="s0">public </span>String getColor() {
+        <span class="s0">return </span>color;
+    }
+
+    <span class="s0">public void </span>setColor(String color) {
+        <span class="s0">this</span>.color = color;
+    }
+
+    <span class="s0">public int </span>numHouses()
+    {
+        <span class="s0">if </span>(getRentListIndex() &lt;= <span class="s4">4</span>) <span class="s0">return </span>getRentListIndex();
+        <span class="s0">else return </span><span class="s4">0</span>;
+    }
+    <span class="s0">public boolean </span>hasHotel()
+    {
+        <span class="s0">return </span>(getRentListIndex() == <span class="s4">5</span>);
+    }
+    <span class="s0">public boolean </span>hasSkyscraper()
+    {
+        <span class="s0">return </span>(getRentListIndex() == <span class="s4">6</span>);
+    }
+
+    <span class="s0">public boolean </span>getMortgaged()
+    {
+        <span class="s0">return </span>isMortgaged;
+    }
+
+    <span class="s0">public void </span>mortgage() {
+        <span class="s0">if </span>(!isMortgaged) {
+            setMortgage(<span class="s0">true</span>);
+            rentListIndex = <span class="s4">7</span>;
+        }
+    }
+
+    <span class="s0">public void </span>removeMortgage() {
+        <span class="s0">if </span>(isMortgaged) {
+            setMortgage(<span class="s0">false</span>);
+            rentListIndex = <span class="s4">0</span>;
+        }
+    }
+
+    <span class="s0">private void </span>setMortgage(<span class="s0">boolean </span>mortgageVal) {
+        <span class="s0">this</span>.isMortgaged = mortgageVal;
+    }
+
+    <span class="s0">public boolean </span>canBeImproved() {
+        <span class="s0">return </span>(getRentListIndex() &lt; <span class="s4">6</span>);
+    }
+
+    <span class="s0">public boolean </span>canBeDowngraded() {
+        <span class="s0">return </span>(getRentListIndex() &gt; <span class="s4">0</span>);
+    }
+
+    <span class="s2">/**</span>
+     * <span class="s3">@requires    </span><span class="s2">-</span>
+     * <span class="s3">@modifies    </span><span class="s2">rentListIndex</span>
+     * <span class="s3">@effects     </span><span class="s2">Sets the rentListIndex of this PropertySquare, so that an upgraded</span>
+     *              rent can be obtained with the calculateRent() method.
+     */
+    <span class="s0">public void </span>improve() {
+        <span class="s2">//change inventory</span>
+        <span class="s0">if </span>(canBeImproved()) setRentListIndex(rentListIndex + <span class="s4">1</span>);
+    }
+    <span class="s2">/**</span>
+     * <span class="s3">@requires    </span><span class="s2">-</span>
+     * <span class="s3">@modifies    </span><span class="s2">rentListIndex</span>
+     * <span class="s3">@effects     </span><span class="s2">Sets the rentListIndex of this PropertySquare, so that a downgraded</span>
+     *              rent can be obtained with the calculateRent() method.
+     */
+    <span class="s0">public void </span>downgrade() {
+        <span class="s2">//change inventory</span>
+        <span class="s0">if </span>(canBeDowngraded()) setRentListIndex(rentListIndex - <span class="s4">1</span>);
+    }
+
+    <span class="s0">public int </span>getPrice() {
+        <span class="s0">return </span>price;
+    }
+
+    <span class="s0">public void </span>setPrice(<span class="s0">int </span>newPrice) {
+        <span class="s0">this</span>.price = newPrice;
+    }
+
+    <span class="s0">public </span>Player getOwner() {
+        <span class="s0">return </span>owner;
+    }
+
+    <span class="s2">/**</span>
+     * <span class="s3">@param </span><span class="s2">owner</span>
+     * <span class="s3">@requires    </span><span class="s2">-</span>
+     * <span class="s3">@modifies    </span><span class="s2">owner</span>
+     * <span class="s3">@effects     </span><span class="s2">Sets the owner Player of this PropertySquare.</span>
+     */
+    <span class="s0">public void </span>setOwner(Player owner) {
+        <span class="s0">if </span>(!isOwned()) <span class="s0">this</span>.owner = owner;
+    }
+
+    <span class="s0">public int </span>getRentFactor() {
+        <span class="s0">return </span>rentFactor;
+    }
+
+    <span class="s0">public void </span>setRentFactor(<span class="s0">int </span>rentFactor) {
+        <span class="s0">this</span>.rentFactor = rentFactor;
+    }
+
+    <span class="s0">public int </span>getRentListIndex() {
+        <span class="s0">return </span>rentListIndex;
+    }
+
+    <span class="s0">public void </span>setRentListIndex(<span class="s0">int </span>rentListIndex) {
+        <span class="s0">this</span>.rentListIndex = rentListIndex;
+    }
+
+    <span class="s0">public int</span>[] getRentList() {
+        <span class="s0">return </span>rentList;
+    }
+
+    <span class="s0">public void </span>setRentList(<span class="s0">int</span>[] rentList) {
+        <span class="s0">this</span>.rentList = rentList;
+    }
+
+    <span class="s0">public boolean </span>isOwned() {
+        <span class="s0">return </span>owner != <span class="s0">null</span>;
+    }
+
+    <span class="s2">/**</span>
+     * <span class="s3">@param       </span><span class="s2">gameEngine</span>
+     * <span class="s3">@requires    </span><span class="s2">currentPlayer is not null.</span>
+     * <span class="s3">@modifies    </span><span class="s2">currentPlayer</span>
+     * <span class="s3">@effects     </span><span class="s2">No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.</span>
+     *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
+     *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
+     *              it goes bankrupt.
+     */
+    @Override
+    <span class="s0">public void </span>evaluateSquare(GameEngine gameEngine) {
+        <span class="s0">if </span>(<span class="s0">this</span>.getOwner() == <span class="s0">null</span>) {
+            gameEngine.publishEvent(<span class="s5">&quot;buy&quot;</span>);
+        } <span class="s0">else </span>{
+            Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
+            gameEngine.payRent(currentPlayer, <span class="s0">this</span>.getOwner() , <span class="s0">this</span>.getRent());
+            gameEngine.publishEvent(<span class="s5">&quot;message/&quot; </span>+ <span class="s5">&quot;[System]: &quot; </span>+ currentPlayer.getName()+ <span class="s5">&quot; paid rent to &quot; </span>+ <span class="s0">this</span>.getOwner().getName());
+            gameEngine.nextTurn();
+        }
+
+    }
+
+    <span class="s0">public boolean </span>repOk() {
+        <span class="s0">if</span>(<span class="s0">this</span>.getName() != <span class="s0">null </span>&amp;&amp; price &gt; <span class="s4">0 </span>&amp;&amp; color != <span class="s0">null </span>&amp;&amp; rentFactor &gt; <span class="s4">0 </span>&amp;&amp; rentList != <span class="s0">null </span>&amp;&amp; rentList.length == <span class="s4">8</span>) {
+            <span class="s0">for</span>(<span class="s0">int </span>rentPrice : <span class="s0">this</span>.getRentList()) {
+                <span class="s0">if</span>(rentPrice &lt;= <span class="s4">0</span>) <span class="s0">return false</span>;
+            }
+            <span class="s0">return  true</span>;
+        }
+        <span class="s0">return false</span>;
+    }
+
+    @Override
+    <span class="s0">public </span>String toString() {
+        <span class="s0">return </span><span class="s5">&quot;[PropertySquare]&quot; </span>+
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Name: &quot; </span>+ <span class="s0">this</span>.getName() +
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Price: &quot; </span>+ price +
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Color: &quot; </span>+ color + <span class="s5">'</span><span class="s0">\'</span><span class="s5">' </span>+
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Owner: &quot; </span>+ owner +
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Current Rent Factor: &quot; </span>+ rentFactor +
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Rents: &quot; </span>+ Arrays.toString(rentList) +
+                <span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Mortgage Situation: &quot; </span>+ isMortgaged;
+    }
+}
+</pre>
+</body>
+</html>

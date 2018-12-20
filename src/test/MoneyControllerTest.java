@@ -1,14 +1,13 @@
+package test;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Player;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MoneyControllerTest {
 
-	@Test
+	@org.junit.Test
 	public void testIncreaseMoney() {
 		MoneyController playerController = MoneyController.getInstance();
 		Player ply = new Player("test player");
@@ -18,7 +17,7 @@ public class MoneyControllerTest {
 		assertEquals(200, ply.getMoney());
 	}
 
-	@Test
+	@org.junit.Test
 	public void testDecreaseMoney() {
 		MoneyController playerController = MoneyController.getInstance();
 		Player ply = new Player("test player");
@@ -28,7 +27,7 @@ public class MoneyControllerTest {
 		assertEquals(0, ply.getMoney());
 	}
 
-	@Test
+	@org.junit.Test
 	public void testTransferMoney() {
 		MoneyController playerController = MoneyController.getInstance();
 		Player payer = new Player("payer player");
@@ -41,7 +40,7 @@ public class MoneyControllerTest {
 		assertEquals(300, receiver.getMoney());	
 		}
 
-	@Test
+	@org.junit.Test
 	public void testGetMoneyFromAllPlayers() {
 		MoneyController moneyController = MoneyController.getInstance();
 		PlayerController playerController = PlayerController.getInstance();
@@ -72,7 +71,7 @@ public class MoneyControllerTest {
 		assertEquals(100, player4.getMoney());
 		assertEquals(100, player5.getMoney());
 	}
-	@Test
+	@org.junit.Test
 	public void hasEnoughMoney() {
 		MoneyController moneyController = MoneyController.getInstance();
 		PlayerController playerController = PlayerController.getInstance();
@@ -87,7 +86,7 @@ public class MoneyControllerTest {
 		
 	}
 	
-	@Test
+	@org.junit.Test
 	public void repOkCorrect() {
 		MoneyController moneyController = MoneyController.getInstance();
 //		PlayerController playerController = PlayerController.getInstance();
