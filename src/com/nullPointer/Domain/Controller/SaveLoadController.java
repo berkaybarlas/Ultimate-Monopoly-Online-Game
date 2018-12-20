@@ -46,13 +46,13 @@ public class SaveLoadController {
                     BufferedOutputStream(new FileOutputStream("./saveFiles/" + saveFile)));
             PlayerController playerController = PlayerController.getInstance();
             out.writeObject(playerController);
-            
-           // MoneyController moneyController = GameEngine.getInstance().getMoneyController();
-           // out.writeObject(moneyController);
-            
-            //DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();
-            //out.writeObject(domainBoard);
-            
+
+            MoneyController moneyController = GameEngine.getInstance().getMoneyController();
+            out.writeObject(moneyController);
+
+            DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();
+            out.writeObject(domainBoard);
+
             out.flush();
             System.out.println("Game state is saved to " + saveFile);
             out.close();
@@ -70,8 +70,8 @@ public class SaveLoadController {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_dd_MM_YY");
-    
-        String saveFile = "savefile " + sdf.format(cal.getTime()); //sdf.format(cal.getTime());
+
+        String saveFile = "savefile_" + sdf.format(cal.getTime());
         saveGame(saveFile);
 
     }
@@ -83,16 +83,16 @@ public class SaveLoadController {
         MoneyController moneyController;
         try {
             in = new ObjectInputStream(new
-                    BufferedInputStream(new FileInputStream(fileName)));
-            //read
+                    BufferedInputStream(new FileInputStream("./saveFiles/" + fileName)));
+
             playerController = (PlayerController) in.readObject();
             communicationController.sendClientMessage(playerController);
-            
-         //   moneyController = (MoneyController) in.readObject();
-         //   communicationController.sendClientMessage(moneyController);
-            
-            //domainBoard = (DomainBoard) in.readObject();
-            //communicationController.sendClientMessage(domainBoard);
+
+            moneyController = (MoneyController) in.readObject();
+            communicationController.sendClientMessage(moneyController);
+
+            domainBoard = (DomainBoard) in.readObject();
+            communicationController.sendClientMessage(domainBoard);
 
         } catch (EOFException e) {
             e.printStackTrace();
@@ -106,19 +106,15 @@ public class SaveLoadController {
     public ArrayList<String> getSavedFiles() {
         File dir = new File("./saveFiles/");
 
-        File[] matches = dir.listFiles(new FilenameFilter()
-        {
-            public boolean accept(File dir, String name)
-            {
+        File[] matches = dir.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
                 return name.startsWith("save");
             }
         });
-         ArrayList<String> fileList = new ArrayList<>();
+        ArrayList<String> fileList = new ArrayList<>();
         for (int i = 0; i < matches.length; i++) {
             File match = matches[i];
             fileList.add(match.getName());
-            System.out.println("[SaveLoadController]: " + match.getName());
-
         }
         return fileList;
     }

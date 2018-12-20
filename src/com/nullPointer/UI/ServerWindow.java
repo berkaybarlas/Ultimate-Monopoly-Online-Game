@@ -41,9 +41,9 @@ public class ServerWindow extends JPanel implements Observer {
     private int cnt = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
-    private ArrayList<String> savedFiles;
+
     private JPanel savePanel;
-    private String[] savedFilesArray;
+
 
     private int pButtonHeight = 50;
     private int pButtonWidth = 200;
@@ -78,8 +78,7 @@ public class ServerWindow extends JPanel implements Observer {
         addButtons(buttonPanel);
 
         savePanel = new JPanel();
-        savedFiles = new ArrayList<String>();
-        
+
         gameEngine.subscribe(this);
 
         try {
@@ -128,33 +127,21 @@ public class ServerWindow extends JPanel implements Observer {
         loadGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                savedFiles = saveLoadController.getSavedFiles();
-                
-                String loadFileName = (String) JOptionPane.showInputDialog(savePanel,  "Choose file \n",
+                ArrayList<String> savedFiles = saveLoadController.getSavedFiles();
+
+                String loadFileName = (String) JOptionPane.showInputDialog(savePanel, "Choose file \n",
                         "Load Panel", JOptionPane.PLAIN_MESSAGE, null, savedFiles.toArray(), null);
-                
+                System.out.println("[ServerWindow]: " + loadFileName);
+
                 try {
-					saveLoadController.loadGame(loadFileName);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                    saveLoadController.loadGame(loadFileName);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
             }
         });
         panel.add(loadGame);
-
-//        saveGame = new CustomButton("Save Game");
-//        saveGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-//        saveGame.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    saveLoadController.saveGame();
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        panel.add(saveGame);
 
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");
@@ -172,12 +159,6 @@ public class ServerWindow extends JPanel implements Observer {
     private void startServer() {
         communicationController.sendClientMessage("game/start");
     }
-
-//    public void createPlayerCreationDisplay() {
-//        pCreation = new PlayerCreationDisplay();
-//        pCreation.setPreferredSize(new Dimension(200,200));
-//        this.add(pCreation);
-//    }
 
     public List<ClientDisplay> createClientDisplay() {
         List<Integer> clientList = serverInfo.getClientList();
@@ -344,7 +325,18 @@ public class ServerWindow extends JPanel implements Observer {
                 communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });
-        newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientList.indexOf(player.getClientID())));
+        int clientPosition = clientList.indexOf(player.getClientID());
+        if (clientPosition == -1 ) {
+            clientPosition = 12;
+            /**
+             *
+             *
+             * this client does not exits if nobody choose this player it should be bot automaticly
+             *
+             *
+            */ //hata
+        }
+        newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientPosition));
         newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));
         newButton.setMaximumSize(new Dimension(pButtonWidth + 47, pButtonHeight));
         newButton.setMinimumSize(new Dimension(pButtonWidth + 47, pButtonHeight));

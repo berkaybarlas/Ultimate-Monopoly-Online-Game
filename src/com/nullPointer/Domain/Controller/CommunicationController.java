@@ -4,6 +4,7 @@ import com.nullPointer.Domain.Model.*;
 import com.nullPointer.Domain.Server.Client;
 import com.nullPointer.Domain.Server.GameServer;
 import com.nullPointer.Domain.Server.ServerInfo;
+import test.MoneyControllerTest;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public class CommunicationController {
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
+    private MoneyController moneyController = MoneyController.getInstance();
 
     private CommunicationController() {
 
@@ -93,12 +95,12 @@ public class CommunicationController {
                 }
             } else if (input.contains("improveProperty")) {
                 gameEngine.improveProperty();
-            } else if(input.contains("resume")) {
-            	gameEngine.resume();
-            } else if(input.contains("pause")) {
-            	gameEngine.pause();
-            } else if(input.contains("save")) {
-            	gameEngine.save();
+            } else if (input.contains("resume")) {
+                gameEngine.resume();
+            } else if (input.contains("pause")) {
+                gameEngine.pause();
+            } else if (input.contains("save")) {
+                gameEngine.save();
             } else if (input.contains("loadData")) {
                 gameEngine.publishEvent("refreshPlayerDisplay");
             }
@@ -110,8 +112,10 @@ public class CommunicationController {
             PlayerController.getInstance().exchangePlayerControllerData((PlayerController) objectInput);
             gameEngine.publishEvent("refreshPlayerDisplay");
         } else if (objectInput instanceof DomainBoard) {
-            GameEngine.getInstance().getDomainBoard().exchangeDomainBoardData((DomainBoard) objectInput);
+            gameEngine.getDomainBoard().exchangeDomainBoardData((DomainBoard) objectInput);
             gameEngine.publishEvent("refreshPlayerDisplay");
+        } else if (objectInput instanceof MoneyController) {
+            moneyController.exchangeMoneyControllerData((MoneyController) objectInput);
         }
     }
 
