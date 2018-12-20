@@ -282,7 +282,7 @@ public class SquareFactory {
             case 3:
                 return new UtilitySquare(squareNames_inner[index],"UtilitySquare",TelephonePrice);
             case 4:
-                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChesCardtSquare");
             case 5:
                 return new PropertySquare(squareNames_inner[index],"PropertySquare",BeaconPrice,BeaconColor,BeaconList);
             case 6:
@@ -488,7 +488,7 @@ public class SquareFactory {
             case 35:
                 return new RailRoadTransitStationsSquare(squareNames_outer[index],"RailRoadTransitionsSquare");
             case 36:
-                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestCardSquare");
             case 37:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", SouthTemplePrice, SouthTempleColor, SouthTempleList);
             case 38:
@@ -508,7 +508,7 @@ public class SquareFactory {
             case 45:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", WalnutPrice, WalnutColor, WalnutList);
             case 46:
-                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestCardSquare");
             case 47:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", MarketPrice, MarketColor, MarketList);
             case 48:

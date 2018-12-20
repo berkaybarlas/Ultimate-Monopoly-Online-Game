@@ -8,9 +8,7 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameWindow extends JPanel implements Observer {
@@ -96,6 +94,7 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
+                buttonPanel.endTurn.setEnabled(false);
             }
             if (message.equals("playCard")) {
                 buttonPanel.playCardButton.setEnabled(true);
