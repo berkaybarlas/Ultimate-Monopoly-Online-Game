@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class Board extends JPanel implements Observer {
     private Image image;
@@ -237,10 +236,10 @@ public class Board extends JPanel implements Observer {
         squareMap.put(119, createPointArray(startRightBottom, startLeftTop));
     }
 
-    public void initializePawns() {
-        playerList = playerController.getPlayers();
-        playerList.forEach(player -> addNewPawn(player));
-    }
+//    public void initializePawns() {
+//        playerList = playerController.getPlayers();
+//        playerList.forEach(player -> addNewPawn(player));
+//    }
 
 
     public void paint(Graphics g) {
@@ -262,14 +261,14 @@ public class Board extends JPanel implements Observer {
         //pawnList.forEach(pawn -> pawn.paint(g));
     }
 
-    public void addNewPawn(Player player) {
-        pawnList.add(new Pawn(initialPosition, player));
+    public void addNewPawn(Player player, File file) {
+        pawnList.add(new Pawn(initialPosition, player, file));
     }
 
     @Override
     public void onEvent(String message) {
         if (message.equals("initializePawns")) {
-            initializePawns();
+//            initializePawns();
             repaint();
         } else if (message.contains("path")) {
             proccessPath(message);
