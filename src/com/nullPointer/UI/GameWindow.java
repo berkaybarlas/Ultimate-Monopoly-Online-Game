@@ -34,8 +34,8 @@ public class GameWindow extends JPanel implements Observer {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         board = new Board(new Point(0, 0), height - offset);
-
-        contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        contentPane.setPreferredSize(new Dimension(width, height));
+        //contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         contentPane.add(board);          // BorderLayout.LINE_START
 
         JPanel middleSide = new JPanel();
