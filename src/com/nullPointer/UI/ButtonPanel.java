@@ -2,7 +2,6 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
-import com.nullPointer.UI.AppWindow;
 
 import javax.swing.*;
 import java.awt.*;

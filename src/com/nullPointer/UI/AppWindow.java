@@ -2,6 +2,7 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.SaveLoadController;
+import com.nullPointer.Domain.Model.BotBehaviour;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
@@ -28,6 +29,8 @@ public class AppWindow extends JFrame implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
+
+    private BotBehaviour botBehaviour;
 
     private final CardLayout mainLayout = new CardLayout();
     private final JPanel panels = new JPanel(mainLayout);
@@ -58,6 +61,8 @@ public class AppWindow extends JFrame implements Observer {
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
+
+        botBehaviour = new BotBehaviour();
 
         //scrollPane = new JScrollPane(gameWindow);
 
