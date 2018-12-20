@@ -210,6 +210,7 @@ public class PropertySquare extends Square {
                 gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
                 gameEngine.nextTurn();
             }
+            gameEngine.publishEvent("improve");
         }
 
     }
@@ -226,13 +227,6 @@ public class PropertySquare extends Square {
 
     @Override
     public String toString() {
-        return "[PropertySquare]" +
-                "\nName: " + this.getName() +
-                "\nPrice: " + price +
-                "\nColor: " + color + '\''; //+
-//                "\nOwner: " + owner +
-//                "\nCurrent Rent Factor: " + rentFactor +
-//                "\nRents: " + Arrays.toString(rentList) +
-//                "\nMortgage Situation: " + isMortgaged;
+        return "\nName: " + this.getName();
     }
 }

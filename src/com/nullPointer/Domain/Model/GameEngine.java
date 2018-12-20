@@ -208,7 +208,11 @@ public class GameEngine {
     }
 
     public void improveProperty() {
-    	
+
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
+        ((PropertySquare) square).improve();
+
     }
 
     /**

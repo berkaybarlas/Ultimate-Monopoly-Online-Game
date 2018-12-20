@@ -282,7 +282,7 @@ public class SquareFactory {
             case 3:
                 return new UtilitySquare(squareNames_inner[index],"UtilitySquare",TelephonePrice);
             case 4:
-                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChesCardtSquare");
+                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChesCardSquare");
             case 5:
                 return new PropertySquare(squareNames_inner[index],"PropertySquare",BeaconPrice,BeaconColor,BeaconList);
             case 6:
