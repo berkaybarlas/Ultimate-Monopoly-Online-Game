@@ -46,10 +46,16 @@ public class SaveLoadController {
                     BufferedOutputStream(new FileOutputStream("./saveFiles/" + saveFile)));
             PlayerController playerController = PlayerController.getInstance();
             out.writeObject(playerController);
+            
+           // MoneyController moneyController = GameEngine.getInstance().getMoneyController();
+           // out.writeObject(moneyController);
+            
             //DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();
             //out.writeObject(domainBoard);
+            
             out.flush();
             System.out.println("Game state is saved to " + saveFile);
+            out.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -64,7 +70,8 @@ public class SaveLoadController {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_dd_MM_YY");
-        String saveFile = "savefile";//sdf.format(cal.getTime());
+    
+        String saveFile = "savefile " + sdf.format(cal.getTime()); //sdf.format(cal.getTime());
         saveGame(saveFile);
 
     }
@@ -73,12 +80,17 @@ public class SaveLoadController {
         ObjectInputStream in = null;
         PlayerController playerController;
         DomainBoard domainBoard;
+        MoneyController moneyController;
         try {
             in = new ObjectInputStream(new
                     BufferedInputStream(new FileInputStream(fileName)));
             //read
             playerController = (PlayerController) in.readObject();
             communicationController.sendClientMessage(playerController);
+            
+         //   moneyController = (MoneyController) in.readObject();
+         //   communicationController.sendClientMessage(moneyController);
+            
             //domainBoard = (DomainBoard) in.readObject();
             //communicationController.sendClientMessage(domainBoard);
 

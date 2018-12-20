@@ -115,7 +115,6 @@ public class CommunicationController {
         }
     }
 
-
     private String rest(String word) {
         int slashIndex = word.indexOf('/');
         if (slashIndex == -1)

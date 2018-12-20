@@ -41,6 +41,9 @@ public class ServerWindow extends JPanel implements Observer {
     private int cnt = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
+    private ArrayList<String> savedFiles;
+    private JPanel savePanel;
+    private String[] savedFilesArray;
 
     private int pButtonHeight = 50;
     private int pButtonWidth = 200;
@@ -74,6 +77,9 @@ public class ServerWindow extends JPanel implements Observer {
         this.add(buttonPanel);
         addButtons(buttonPanel);
 
+        savePanel = new JPanel();
+        savedFiles = new ArrayList<String>();
+        
         gameEngine.subscribe(this);
 
         try {
@@ -122,23 +128,33 @@ public class ServerWindow extends JPanel implements Observer {
         loadGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveLoadController.getSavedFiles();
+                savedFiles = saveLoadController.getSavedFiles();
+                
+                String loadFileName = (String) JOptionPane.showInputDialog(savePanel,  "Choose file \n",
+                        "Load Panel", JOptionPane.PLAIN_MESSAGE, null, savedFiles.toArray(), null);
+                
+                try {
+					saveLoadController.loadGame(loadFileName);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         panel.add(loadGame);
 
-        saveGame = new CustomButton("Save Game");
-        saveGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-        saveGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    saveLoadController.saveGame();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        panel.add(saveGame);
+//        saveGame = new CustomButton("Save Game");
+//        saveGame.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+//        saveGame.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    saveLoadController.saveGame();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
+//            }
+//        });
+//        panel.add(saveGame);
 
         quitServer = new CustomButton("Quit Server ");
         quitServer.setToolTipText("Quit from the server");

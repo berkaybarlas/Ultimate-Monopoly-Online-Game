@@ -107,15 +107,15 @@ public class GameWindow extends JPanel implements Observer {
                 enableButtons();
                 System.out.println("[GameWindow: resumed]");
             }
-//            if (message.equals("save")) {
-//                try {
-//					saveLoadController.saveGame();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//                System.out.println("[GameWindow: saved]");
-//            }
+            if (message.equals("save")) {
+                try {
+					saveLoadController.saveGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                System.out.println("[GameWindow: saved]");
+            }
         }
         if (message.equals("pause")) {
             disableButtons();

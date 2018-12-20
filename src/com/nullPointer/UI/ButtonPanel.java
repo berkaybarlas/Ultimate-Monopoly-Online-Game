@@ -20,6 +20,9 @@ public class ButtonPanel extends JPanel {
 	protected JButton resumeButton;
 	protected JButton pauseButton;
 
+	private Panel pausePanel;
+	private Object[] saveOrResume = {"Save", "Resume"};
+	
     private int offset = 100;
     private int buttonHeight = 35;
 
@@ -45,17 +48,6 @@ public class ButtonPanel extends JPanel {
         pauseButton = new JButton("Pause");
 		saveButton = new JButton("Save");
 
-
-        // THESE ARE WORTHLESS, BOXLAYOUT DOESN'T CARE!
-//        purchaseButton.setBounds(150, offset, 100, 30);
-//        drawButton.setBounds(150, offset + buttonHeight, 100, 30);
-//        playCardButton.setBounds(150, offset + 2*buttonHeight, 100, 30);
-//        improveButton.setBounds(150, offset + 3*buttonHeight, 100, 30);
-//        rollDice.setBounds(150, offset + 4*buttonHeight, 100, 30);
-//        endTurn.setBounds(150, offset + 5*buttonHeight, 100, 30);
-//        resumeButton.setBounds(150, offset + 6*buttonHeight, 100, 30);
-//        pauseButton.setBounds(150, offset + 7*buttonHeight, 100, 30);
-
         panel.add(rollDice);
         panel.add(endTurn);
         panel.add(purchaseButton, BorderLayout.CENTER);
@@ -64,6 +56,8 @@ public class ButtonPanel extends JPanel {
         panel.add(improveButton);
         panel.add(resumeButton);
         panel.add(pauseButton);
+        
+        pausePanel = new Panel();
 
         this.setMaximumSize(panel.getMaximumSize());
 
@@ -115,6 +109,19 @@ public class ButtonPanel extends JPanel {
 				communicationController.sendClientMessage("pause");
 				pauseButton.setEnabled(false);
 				resumeButton.setEnabled(true);
+				
+				 int result = JOptionPane.showOptionDialog(null, pausePanel, "Pause Panel",
+			                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+			                null, saveOrResume, null);
+				 
+				 if(result == 0) {
+					 communicationController.sendClientMessage("save");
+				 }else if(result == 1) {
+					 communicationController.sendClientMessage("resume");
+					 pauseButton.setEnabled(true);
+				 }else {
+					 System.out.println("Error: Neither resume nor save is clicked");
+				 }
 			}
 		});
 

@@ -1,5 +1,7 @@
 package com.nullPointer.Domain.Controller;
 
+import java.io.Serializable;
+
 import com.nullPointer.Domain.Model.Player;
 
 /**
@@ -7,7 +9,7 @@ import com.nullPointer.Domain.Model.Player;
  * 				transfers between the players and the game itself and/or other players.
  *
  */
-public class MoneyController {
+public class MoneyController implements Serializable {
 	private static MoneyController _instance;
 	private PlayerController playerController = PlayerController.getInstance();
 	private int poolMoney = 0;
