@@ -68,9 +68,6 @@ public class Board extends JPanel implements Observer {
 
         gameEngine.subscribe(this);
         initializeSquarePositions();
-        for(int i=0;i<squareMap.keySet().size();i++){
-        	System.out.println(squareMap.get(i)[0]);
-        }
     }
     private Point[] createPointArray(Point startRightBottom, Point startLeftTop){
     	return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
