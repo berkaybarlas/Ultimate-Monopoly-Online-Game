@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model.Square;
 
 import com.nullPointer.Domain.Model.GameEngine;
 
-public abstract class Square {
+import java.io.Serializable;
+
+public abstract class Square implements Serializable {
     private String name;
     private String type;
     private boolean flyover;
