@@ -49,9 +49,6 @@ public class Board extends JPanel implements Observer {
 
     public Board(Point position, int length) {
         instance = this;
-        currentPath.add(57);
-        currentPath.add(58);
-        currentPath.add(59);
         try {
             image = ImageIO.read(imageSrc);
             image = image.getScaledInstance(length, length, Image.SCALE_SMOOTH);
@@ -71,238 +68,176 @@ public class Board extends JPanel implements Observer {
 
         gameEngine.subscribe(this);
         initializeSquarePositions();
+        for(int i=0;i<squareMap.keySet().size();i++){
+        	System.out.println(squareMap.get(i)[0]);
+        }
     }
-
+    private Point[] createPointArray(Point startRightBottom, Point startLeftTop){
+    	return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
+                new Point(startLeftTop.x, startLeftTop.y)};
+    }
     public void initializeSquarePositions() {
         int x = smallSide;
         Point startRightBottom = new Point(17 * x, 17 * x);
         Point startLeftTop = new Point(15 * x, 15 * x);
-        Point[] pair = new Point[]{startRightBottom, startLeftTop};
-        squareMap.put(0, pair);
+        squareMap.put(0, createPointArray(startRightBottom, startLeftTop));
 
         //outer layer
         startRightBottom.x -= 2 * x;
         startLeftTop.x -= x;
         for (int i = 1; i < 13; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x -= x;
             startLeftTop.x -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(13, pair);
+        squareMap.put(13, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x -= x;
         startLeftTop.x -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(14, pair);
+        squareMap.put(14, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= 2 * x;
         startLeftTop.y -= x;
         for (int i = 15; i < 27; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y -= x;
             startLeftTop.y -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(27, pair);
+        squareMap.put(27, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= x;
         startLeftTop.y -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(28, pair);
+        squareMap.put(28, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += x;
         startLeftTop.x += 2 * x;
         for (int i = 29; i < 41; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x += x;
             startLeftTop.x += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(41, pair);
+        squareMap.put(41, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += 2 * x;
         startLeftTop.x += x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(42, pair);
+        squareMap.put(42, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y += x;
         startLeftTop.y += 2 * x;
         for (int i = 43; i < 55; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y += x;
             startLeftTop.y += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(55, pair);
+        squareMap.put(55, createPointArray(startRightBottom, startLeftTop));
 
         //medium layer
         startRightBottom.x -= 2 * x;
         startLeftTop.x -= 2 * x;
         startLeftTop.y -= x;
-        squareMap.put(56, pair);
+        squareMap.put(56, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x -= 2 * x;
         startLeftTop.x -= x;
         for (int i = 57; i < 65; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x -= x;
             startLeftTop.x -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(65, pair);
+        squareMap.put(65, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x -= x;
         startLeftTop.x -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(66, pair);
+        squareMap.put(66, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= 2 * x;
         startLeftTop.y -= x;
         for (int i = 67; i < 75; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y -= x;
             startLeftTop.y -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(75, pair);
+        squareMap.put(75, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= x;
         startLeftTop.y -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(76, pair);
+        squareMap.put(76, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += x;
         startLeftTop.x += 2 * x;
         for (int i = 77; i < 85; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x += x;
             startLeftTop.x += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(85, pair);
+        squareMap.put(85, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += 2 * x;
         startLeftTop.x += x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(86, pair);
+        squareMap.put(86, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y += x;
         startLeftTop.y += 2 * x;
         for (int i = 87; i < 95; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y += x;
             startLeftTop.y += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(95, pair);
+        squareMap.put(95, createPointArray(startRightBottom, startLeftTop));
 
         //inner layer
         startRightBottom.x -= 2 * x;
         startLeftTop.x -= 2 * x;
         startLeftTop.y -= x;
-        squareMap.put(96, pair);
+        squareMap.put(96, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x -= 2 * x;
         startLeftTop.x -= x;
         for (int i = 97; i < 101; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x -= x;
             startLeftTop.x -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(101, pair);
+        squareMap.put(101, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x -= x;
         startLeftTop.x -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(102, pair);
+        squareMap.put(102, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= 2 * x;
         startLeftTop.y -= x;
         for (int i = 103; i < 107; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y -= x;
             startLeftTop.y -= x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(107, pair);
+        squareMap.put(107, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y -= x;
         startLeftTop.y -= 2 * x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(108, pair);
+        squareMap.put(108, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += x;
         startLeftTop.x += 2 * x;
         for (int i = 109; i < 113; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.x += x;
             startLeftTop.x += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(113, pair);
+        squareMap.put(113, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.x += 2 * x;
         startLeftTop.x += x;
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(114, pair);
+        squareMap.put(114, createPointArray(startRightBottom, startLeftTop));
 
         startRightBottom.y += x;
         startLeftTop.y += 2 * x;
         for (int i = 115; i < 119; i++) {
-            pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                    new Point(startLeftTop.x, startLeftTop.y)};
-            squareMap.put(i, pair);
+            squareMap.put(i, createPointArray(startRightBottom, startLeftTop));
             startRightBottom.y += x;
             startLeftTop.y += x;
         }
-        pair = new Point[]{new Point(startRightBottom.x, startRightBottom.y),
-                new Point(startLeftTop.x, startLeftTop.y)};
-        squareMap.put(119, pair);
-
+        squareMap.put(119, createPointArray(startRightBottom, startLeftTop));
     }
 
     public void initializePawns() {
