@@ -34,7 +34,7 @@ public class ButtonPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setOpaque(false);
         setOpaque(false);
-        purchaseButton = new JButton("Buy Property");
+        purchaseButton = new JButton("Buy");
         //purchaseButton = new CustomButton("Buy Property");
         drawButton = new JButton("Draw card");
         playCardButton = new JButton("Play card");
@@ -95,7 +95,7 @@ public class ButtonPanel extends JPanel {
 
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//communicationController.sendClientMessage("improveProperty");
+				communicationController.sendClientMessage("improveProperty");
 				improveButton.setEnabled(false);
 			}
 		});
