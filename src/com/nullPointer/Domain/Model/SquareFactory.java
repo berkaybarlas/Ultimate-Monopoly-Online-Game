@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Square.*;
 
-public class SquareFactory {
+import java.io.Serializable;
+
+public class SquareFactory implements Serializable {
     private static SquareFactory _instance;
 
     private SquareFactory() {

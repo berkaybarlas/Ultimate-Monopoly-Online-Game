@@ -1,12 +1,16 @@
 package com.nullPointer.Domain.Controller;
 
+import com.nullPointer.Domain.Model.DomainBoard;
+import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Controller.PlayerController;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 // about loading:
 //Previous ServerInfo
@@ -17,10 +21,10 @@ import java.util.Calendar;
 public class SaveLoadController {
 
     private static SaveLoadController _instance;
-  
-    static final Player player = new Player("Testplayer ");
-   // private PlayerController playerController = PlayerController.getInstance();
-    
+
+    private CommunicationController communicationController = CommunicationController.getInstance();
+    // private PlayerController playerController = PlayerController.getInstance();
+
     private SaveLoadController() {
 
     }
@@ -32,21 +36,26 @@ public class SaveLoadController {
         return _instance;
     }
 
-    public void saveGame() throws IOException {
-
+    public void saveGame(String saveFile) throws IOException {
         ObjectOutputStream out = null;
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_dd_MM_YY");
-        String saveFile = "savefile";//sdf.format(cal.getTime());
+
         try {
+            File dir = new File("./saveFiles/");
+            dir.mkdirs();
             out = new ObjectOutputStream(new
-                    BufferedOutputStream(new FileOutputStream(saveFile)));
-//            for(Player player : playerController.getPlayers()) {
-//            	out.writeObject(player);
-//            }
-            out.writeObject(player);
+                    BufferedOutputStream(new FileOutputStream("./saveFiles/" + saveFile)));
+            PlayerController playerController = PlayerController.getInstance();
+            out.writeObject(playerController);
+
+            MoneyController moneyController = GameEngine.getInstance().getMoneyController();
+            out.writeObject(moneyController);
+
+            DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();
+            out.writeObject(domainBoard);
+
             out.flush();
             System.out.println("Game state is saved to " + saveFile);
+            out.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -57,15 +66,34 @@ public class SaveLoadController {
         }
     }
 
+    public void saveGame() throws IOException {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_dd_MM_YY");
+
+        String saveFile = "savefile_" + sdf.format(cal.getTime());
+        saveGame(saveFile);
+
+    }
+
     public void loadGame(String fileName) throws IOException {
         ObjectInputStream in = null;
-        Player playerTest;
+        PlayerController playerController;
+        DomainBoard domainBoard;
+        MoneyController moneyController;
         try {
             in = new ObjectInputStream(new
-                    BufferedInputStream(new FileInputStream(fileName)));
-            //read
-            playerTest = (Player) in.readObject();
-            System.out.println(playerTest);
+                    BufferedInputStream(new FileInputStream("./saveFiles/" + fileName)));
+
+            playerController = (PlayerController) in.readObject();
+            communicationController.sendClientMessage(playerController);
+
+            moneyController = (MoneyController) in.readObject();
+            communicationController.sendClientMessage(moneyController);
+
+            domainBoard = (DomainBoard) in.readObject();
+            communicationController.sendClientMessage(domainBoard);
+
         } catch (EOFException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -73,6 +101,22 @@ public class SaveLoadController {
         } finally {
             in.close();
         }
+    }
+
+    public ArrayList<String> getSavedFiles() {
+        File dir = new File("./saveFiles/");
+
+        File[] matches = dir.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.startsWith("save");
+            }
+        });
+        ArrayList<String> fileList = new ArrayList<>();
+        for (int i = 0; i < matches.length; i++) {
+            File match = matches[i];
+            fileList.add(match.getName());
+        }
+        return fileList;
     }
 }
 

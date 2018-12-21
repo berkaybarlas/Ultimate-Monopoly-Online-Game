@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Cards.*;
 
-public class CardFactory {
+import java.io.Serializable;
+
+public class CardFactory implements Serializable {
 
     private static CardFactory _instance;
 
