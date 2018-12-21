@@ -24,6 +24,7 @@ public class Player implements Serializable {
     private boolean direction = true;
     private int rentMultiplier = 1;
     private LinkedList<Integer> path = null;
+    private int placeHolder;
     
     private ArrayList<Roll3> roll3Cards = new ArrayList<Roll3>();
 
@@ -40,7 +41,7 @@ public class Player implements Serializable {
 		this.roll3Cards.add(roll3);
 	}
 
-	public Player(String name, int ClientID) {
+	public Player(String name, int ClientID, int placeHolder) {
         this.name = name;
 		this.ClientID = ClientID;
         propertyCardsMap = new HashMap<>();
@@ -48,6 +49,7 @@ public class Player implements Serializable {
         utilityList = new ArrayList<>();
         roll3Cards = new ArrayList<Roll3>();
         cardList = new ArrayList<>();
+        this.placeHolder = placeHolder;
     }
 
     public Player(String name) {
@@ -149,6 +151,14 @@ public class Player implements Serializable {
     public void addSquare(PropertySquare propertySquare) {
         // propertyCardsMap.put(propertySquare)
         propertySquares.add(propertySquare);
+    }
+
+    public int getPlaceHolder() {
+        return placeHolder;
+    }
+
+    public void setPlaceHolder(int placeHolder) {
+        this.placeHolder = placeHolder;
     }
 
     public void addCard(Card card) {

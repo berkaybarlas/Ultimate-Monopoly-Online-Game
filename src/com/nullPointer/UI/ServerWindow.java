@@ -200,7 +200,7 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID());
+                Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
                 Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
@@ -334,7 +334,7 @@ public class ServerWindow extends JPanel implements Observer {
                 // Ayrica basladigi konumun da duzeltilmesi lazim.
                 int xCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].x + Board.getInstance().getSquareMap().get(player.getPosition())[1].x;
                 int yCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].y + Board.getInstance().getSquareMap().get(player.getPosition())[1].y;
-                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt),new Point(xCoord, yCoord));
+                Board.getInstance().addNewPawn(player,pawnFiles.get(player.getPlaceHolder()),new Point(xCoord, yCoord));
                 // Basladigi konumdan duzgun hareket ediyor ama baska gozukmuyor. Needs to be fixed.
                 Board.getInstance().repaint();
                 communicationController.sendClientMessage(PlayerController.getInstance());
