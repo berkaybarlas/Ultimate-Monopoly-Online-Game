@@ -227,6 +227,6 @@ public class PropertySquare extends Square {
 
     @Override
     public String toString() {
-        return this.getName() + ", " + this.getColor();
+        return this.getName() + ", " + this.getColor() + "(Current rent: " + this.getRent() + ")";
     }
 }

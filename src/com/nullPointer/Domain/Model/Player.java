@@ -193,8 +193,8 @@ public class Player implements Serializable {
         }
         return "Name: " + this.getName() + "\n" +
                 "Money: " + this.getMoney() + "\n"+
-                "Properties: " + playerProps + "\n"+
-                "Utilities: " + playerUtils;
+                "Properties: \n" + playerProps +
+                "Utilities: \n" + playerUtils;
     }
 
 }
