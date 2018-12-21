@@ -328,7 +328,7 @@ public class SquareFactory implements Serializable {
             case 3:
                 return new UtilitySquare(squareNames_inner[index],"UtilitySquare",TelephonePrice);
             case 4:
-                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChesCardSquare");
+                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChestCardSquare");
             case 5:
                 return new PropertySquare(squareNames_inner[index],"PropertySquare",BeaconPrice,BeaconColor,BeaconList);
             case 6:

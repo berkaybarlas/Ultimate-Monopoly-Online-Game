@@ -82,7 +82,7 @@ public class DomainBoard implements Serializable {
     }
 
     public void createCards() {
-        CCCards.add(cardFactory.createCCCard(8));
+        CCCards.add(cardFactory.createCCCard(7));
         ChanceCards.add(cardFactory.createChanceCard(12));
         meta_card_gen_info.add(8);
         meta_card_gen_info.add(12);

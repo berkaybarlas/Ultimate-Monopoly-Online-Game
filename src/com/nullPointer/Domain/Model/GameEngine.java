@@ -201,7 +201,7 @@ public class GameEngine {
             } else {
                 playerController.addCardToCurrentPlayer(card);
             }
-            nextTurn();
+            //nextTurn();
         } else {
             System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
         }
