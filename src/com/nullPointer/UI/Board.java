@@ -261,8 +261,14 @@ public class Board extends JPanel implements Observer {
         //pawnList.forEach(pawn -> pawn.paint(g));
     }
 
-    public void addNewPawn(Player player, File file) {
-        pawnList.add(new Pawn(initialPosition, player, file));
+    public void addNewPawn(Player player, File file, Point position) {
+
+        if(position == null) {
+            pawnList.add(new Pawn(initialPosition, player, file));
+        } else {
+            pawnList.add(new Pawn(position, player, file));
+        }
+
     }
 
     @Override

@@ -203,7 +203,7 @@ public class ServerWindow extends JPanel implements Observer {
                 Player player = new Player(textField.getText(), serverInfo.getClientID());
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
-                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
+                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
                 textField.setText("Enter player name here!");
             }
         });
@@ -332,7 +332,11 @@ public class ServerWindow extends JPanel implements Observer {
                 player.setClientID(serverInfo.getClientID());
                 // Simdilik haznede gosterilen pawn'i aliyor ama o oyuncunun pawnina cevrilmesi lazim.
                 // Ayrica basladigi konumun da duzeltilmesi lazim.
-                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
+                int xCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].x + Board.getInstance().getSquareMap().get(player.getPosition())[1].x;
+                int yCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].y + Board.getInstance().getSquareMap().get(player.getPosition())[1].y;
+                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt),new Point(xCoord, yCoord));
+                // Basladigi konumdan duzgun hareket ediyor ama baska gozukmuyor. Needs to be fixed.
+                Board.getInstance().repaint();
                 communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });
