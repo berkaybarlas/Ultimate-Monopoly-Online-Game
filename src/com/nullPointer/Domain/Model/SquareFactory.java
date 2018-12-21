@@ -233,45 +233,89 @@ public class SquareFactory implements Serializable {
     /*
      * Color values for each property square
      */
-    String LombardColor, EmbarcaderoColor, FishermansWharfColor = "White";
+    String LombardColor = "White";
+    String EmbarcaderoColor = "White";
+    String FishermansWharfColor = "White";
 
-    String BeaconColor, BoylstonColor, NewburyColor = "Black";
+    String BeaconColor = "Black";
+    String BoylstonColor = "Black";
+    String NewburyColor = "Black";
 
-    String FifthColor, MadisonColor, WallColor = "Dark Gray";
+    String FifthColor = "Dark Gray";
+    String MadisonColor = "Dark Gray";
+    String WallColor = "Dark Gray";
 
-    String FloridaColor, MiamiColor, BiscayneColor = "Brown";
+    String FloridaColor = "Brown";
+    String MiamiColor = "Brown";
+    String BiscayneColor = "Brown";
 
-    String MediterranianColor, BalticColor = "Dark Purple";
+    String MediterranianColor = "Dark Purple";
+    String BalticColor = "Dark Purple";
 
-    String OrientalColor, VermontColor, ConnecticutColor = "Light Blue";
+    String OrientalColor = "Light Blue";
+    String VermontColor = "Light Blue";
+    String ConnecticutColor = "Light Blue";
 
-    String StCharlesColor, StatesColor, VirginiaColor = "Purple";
+    String StCharlesColor = "Purple";
+    String StatesColor = "Purple";
+    String VirginiaColor = "Purple";
 
-    String StJamesColor, TennesseeColor, NewYorkColor = "Orange";
+    String StJamesColor = "Orange";
+    String TennesseeColor = "Orange";
+    String NewYorkColor = "Orange";
 
-    String KentuckyColor, IndianaColor, IllinoisColor = "Red";
+    String KentuckyColor = "Red";
+    String IndianaColor = "Red";
+    String IllinoisColor = "Red";
 
-    String AtlanticColor, VentnorColor, MarvinColor = "Yellow";
+    String AtlanticColor = "Yellow";
+    String VentnorColor = "Yellow";
+    String MarvinColor = "Yellow";
 
-    String PacificColor, NorthCarolinaColor, PennsylvaniaColor = "Green";
+    String PacificColor = "Green";
+    String NorthCarolinaColor = "Green";
+    String PennsylvaniaColor = "Green";
 
-    String ParkColor, BoardwalkColor = "Dark Blue";
+    String ParkColor = "Dark Blue";
+    String BoardwalkColor = "Dark Blue";
 
-    String LakeColor, NicolletColor, HennepinColor = "Pink";
+    String LakeColor = "Pink";
+    String NicolletColor = "Pink";
+    String HennepinColor = "Pink";
 
-    String EsplanadeColor, CanalColor, MagazineColor, BourbonColor = "Pistachio";
+    String EsplanadeColor = "Pistachio";
+    String CanalColor = "Pistachio";
+    String MagazineColor = "Pistachio";
+    String BourbonColor = "Pistachio";
 
-    String KatyColor, WestheimerColor, KirbyColor, CullenColor = "Light Yellow";
+    String KatyColor = "Light Yellow";
+    String WestheimerColor = "Light Yellow";
+    String KirbyColor = "Light Yellow";
+    String CullenColor = "Light Yellow";
 
-    String DekalbColor, AndrewColor, DecaturColor, PeachtreeColor = "Dark Green";
+    String DekalbColor = "Dark Green";
+    String AndrewColor = "Dark Green";
+    String DecaturColor = "Dark Green";
+    String PeachtreeColor = "Dark Green";
 
-    String RandolphColor, LakeShoreColor, WackerColor, MichiganColor = "Burgundy";
+    String RandolphColor = "Burgundy";
+    String LakeShoreColor = "Burgundy";
+    String WackerColor = "Burgundy";
+    String MichiganColor = "Burgundy";
 
-    String SouthTempleColor, WestTempleColor, NorthTempleColor, TempleColor = "Curry";
+    String SouthTempleColor = "Curry";
+    String WestTempleColor = "Curry";
+    String NorthTempleColor = "Curry";
+    String TempleColor = "Curry";
 
-    String SouthColor, BroadColor, WalnutColor, MarketColor = "Peach";
+    String SouthColor = "Peach";
+    String BroadColor = "Peach";
+    String WalnutColor = "Peach";
+    String MarketColor = "Peach";
 
-    String MulhollandColor, VenturaColor, RodeoColor = "Dark Brown";
+    String MulhollandColor = "Dark Brown";
+    String VenturaColor = "Dark Brown";
+    String RodeoColor = "Dark Brown";
 
     public Square createInnerSquares(int index) {
         switch(index) {
