@@ -330,6 +330,9 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 player.setClientID(serverInfo.getClientID());
+                // Simdilik haznede gosterilen pawn'i aliyor ama o oyuncunun pawnina cevrilmesi lazim.
+                // Ayrica basladigi konumun da duzeltilmesi lazim.
+                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
                 communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });
