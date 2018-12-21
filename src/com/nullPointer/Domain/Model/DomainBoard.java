@@ -4,16 +4,18 @@ import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.Square.Square;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class DomainBoard {
+public class DomainBoard implements Serializable {
+
+    private SquareFactory squareFactory = SquareFactory.getInstance();
+    private CardFactory cardFactory = CardFactory.getInstance();
 
     private int numSquares = 120;
     private HashMap<Integer, Square> domainSquareMap;
     private HashMap<Integer, ArrayList<Integer>> connectionsMap;
     private Queue<Card> CCCards, ChanceCards, Roll3Cards;
-	private SquareFactory squareFactory = SquareFactory.getInstance();
-    private CardFactory cardFactory = CardFactory.getInstance();
 
     private int layer1begin = 0;
     private int layer1end = 55;
@@ -178,5 +180,8 @@ public class DomainBoard {
 		ChanceCards = chanceCards;
 	}
     
+    public void exchangeDomainBoardData(DomainBoard domainBoard){
+        domainSquareMap = domainBoard.getSquareMap();
 
+    }
 }

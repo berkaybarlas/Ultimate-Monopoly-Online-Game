@@ -37,6 +37,8 @@ public class ColorSet {
 
     public final static Color computer12Color = new Color(255, 0, 127);
 
+    public final static Color computerDefault = new Color(90, 96, 97);
+
     public final static Color SERVERBACKGROUND_LIGHT = new Color(230,241,227);
 
     public final static Color SERVERBACKGROUND_DARK = new Color(136, 201, 161);
@@ -61,6 +63,7 @@ public class ColorSet {
         playerColors.add(computer10Color);
         playerColors.add(computer11Color);
         playerColors.add(computer12Color);
+        playerColors.add(computerDefault);
         return playerColors;
     }
 

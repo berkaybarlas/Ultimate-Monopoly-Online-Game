@@ -201,11 +201,18 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        String temp = "";
-        return "Player name: " + name + "\n" +
-                "Money: " + money + "\n" +
-                "Owned properties: " + propertySquares.toString() + "\n" +
-                "Owned utilities (" + utilityList.size() + " utilities are owned.): " + utilityList.toString();
+        String playerProps = "";
+        for(PropertySquare pSq : this.getPropertySquares()) {
+            playerProps += pSq.toString() + "\n";
+        }
+        String playerUtils = "";
+        for(UtilitySquare uSq : this.getUtilityList()) {
+            playerUtils += uSq.getName() + "\n";
+        }
+        return "Name: " + this.getName() + "\n" +
+                "Money: " + this.getMoney() + "\n"+
+                "Properties: \n" + playerProps +
+                "Utilities: \n" + playerUtils;
     }
 
 }

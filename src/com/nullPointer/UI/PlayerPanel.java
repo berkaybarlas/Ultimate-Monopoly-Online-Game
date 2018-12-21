@@ -3,7 +3,6 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
-import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,8 +62,9 @@ public class PlayerPanel extends JPanel implements Observer {
             Player player = pList.get(i);
             pButtons.get(i).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(pList.get(currentPlayerIndex).getName());
-                    textArea.setText(pList.get(currentPlayerIndex).toString());
+                    Player currentPlayer = pList.get(currentPlayerIndex);
+//                    System.out.println(.getName());
+                    textArea.setText(currentPlayer.toString());
                     lastSelected = currentPlayerIndex;
                     gameEngine.getPlayerController().setChosen(player);
                 }

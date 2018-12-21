@@ -8,7 +8,6 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,8 +33,8 @@ public class GameWindow extends JPanel implements Observer {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         board = new Board(new Point(0, 0), height - offset);
-
-        contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        contentPane.setPreferredSize(new Dimension(width, height));
+        //contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         contentPane.add(board);          // BorderLayout.LINE_START
 
         JPanel middleSide = new JPanel();
@@ -90,12 +89,17 @@ public class GameWindow extends JPanel implements Observer {
             if (message.equals("buy")) {
                 buttonPanel.purchaseButton.setEnabled(true);
             }
+            if(message.equals("improve")) {
+                buttonPanel.purchaseButton.setEnabled(false);
+                buttonPanel.improveButton.setEnabled(true);
+            }
             if (message.equals("rollDice")) {
                 buttonPanel.rollDice.setEnabled(true);
                 buttonPanel.endTurn.setEnabled(true);
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
+                buttonPanel.endTurn.setEnabled(false);
             }
             if (message.equals("playCard")) {
                 buttonPanel.playCardButton.setEnabled(true);
@@ -107,15 +111,15 @@ public class GameWindow extends JPanel implements Observer {
                 enableButtons();
                 System.out.println("[GameWindow: resumed]");
             }
-//            if (message.equals("save")) {
-//                try {
-//					saveLoadController.saveGame();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//                System.out.println("[GameWindow: saved]");
-//            }
+            if (message.equals("save")) {
+                try {
+					saveLoadController.saveGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                System.out.println("[GameWindow: saved]");
+            }
         }
         if (message.equals("pause")) {
             disableButtons();

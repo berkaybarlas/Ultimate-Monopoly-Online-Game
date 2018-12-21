@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Square.*;
 
-public class SquareFactory {
+import java.io.Serializable;
+
+public class SquareFactory implements Serializable {
     private static SquareFactory _instance;
 
     private SquareFactory() {
@@ -115,7 +117,7 @@ public class SquareFactory {
     public String[] squareNames_middle = {"GO", "MEDITERRANEAN AVENUE", "COMMUNITY CHEST", "BALTIC AVENUE", "INCOME TAX", "READING RAILROAD", "ORIENTAL AVENUE",
             "CHANCE", "VERMONT AVENUE", "CONNECTICUT AVENUE", "IN JAIL", "ST. CHARLES PLACE", "ELECTRIC COMPANY", "STATES AVENUE", "VIRGINIA AVENUE",
             "PENNSYLVANIA RAILROAD", "ST. JAMES PLACE", "COMMUNITY CHEST", "TENNESSE AVENUE", "NEW YORK AVENUE", "FREE PARKING", "KENTUCKY AVENUE", "CHANCE",
-            "INDIANA AVENUE", "ILLINOIS AVENUE", "B&O RAILROAD", "ATLANTIC AVENUE", "VENTNOR AVENUE", "WATER WORKS", "MARVIN GARDENS", "ROLL ONCE", "PACIFIC AVENUE",
+            "INDIANA AVENUE", "ILLINOIS AVENUE", "B&O RAILROAD", "ATLANTIC AVENUE", "VENTNOR AVENUE", "WATER WORKS", "MARVIN GARDENS", "ROLL THREE", "PACIFIC AVENUE",
             "NORTH CAROLINA AVENUE", "COMMUNITY CHEST", "PENNSYLVANIA AVENUE", "SHORT LINE", "CHANCE", "PARK PLACE", "LUXURY TAX", "BOARDWALK"};
 
     public String[] squareNames_outer = {"SUBWAY", "LAKE STREET", "COMMUNITY CHEST", "NICOLLET AVENUE", "HENNEPIN AVENUE", "BUS TICKET", "CHECKER CAB CO.", "READING RAILROAD",
@@ -231,45 +233,89 @@ public class SquareFactory {
     /*
      * Color values for each property square
      */
-    String LombardColor, EmbarcaderoColor, FishermansWharfColor = "White";
+    String LombardColor = "White";
+    String EmbarcaderoColor = "White";
+    String FishermansWharfColor = "White";
 
-    String BeaconColor, BoylstonColor, NewburyColor = "Black";
+    String BeaconColor = "Black";
+    String BoylstonColor = "Black";
+    String NewburyColor = "Black";
 
-    String FifthColor, MadisonColor, WallColor = "Dark Gray";
+    String FifthColor = "Dark Gray";
+    String MadisonColor = "Dark Gray";
+    String WallColor = "Dark Gray";
 
-    String FloridaColor, MiamiColor, BiscayneColor = "Brown";
+    String FloridaColor = "Brown";
+    String MiamiColor = "Brown";
+    String BiscayneColor = "Brown";
 
-    String MediterranianColor, BalticColor = "Dark Purple";
+    String MediterranianColor = "Dark Purple";
+    String BalticColor = "Dark Purple";
 
-    String OrientalColor, VermontColor, ConnecticutColor = "Light Blue";
+    String OrientalColor = "Light Blue";
+    String VermontColor = "Light Blue";
+    String ConnecticutColor = "Light Blue";
 
-    String StCharlesColor, StatesColor, VirginiaColor = "Purple";
+    String StCharlesColor = "Purple";
+    String StatesColor = "Purple";
+    String VirginiaColor = "Purple";
 
-    String StJamesColor, TennesseeColor, NewYorkColor = "Orange";
+    String StJamesColor = "Orange";
+    String TennesseeColor = "Orange";
+    String NewYorkColor = "Orange";
 
-    String KentuckyColor, IndianaColor, IllinoisColor = "Red";
+    String KentuckyColor = "Red";
+    String IndianaColor = "Red";
+    String IllinoisColor = "Red";
 
-    String AtlanticColor, VentnorColor, MarvinColor = "Yellow";
+    String AtlanticColor = "Yellow";
+    String VentnorColor = "Yellow";
+    String MarvinColor = "Yellow";
 
-    String PacificColor, NorthCarolinaColor, PennsylvaniaColor = "Green";
+    String PacificColor = "Green";
+    String NorthCarolinaColor = "Green";
+    String PennsylvaniaColor = "Green";
 
-    String ParkColor, BoardwalkColor = "Dark Blue";
+    String ParkColor = "Dark Blue";
+    String BoardwalkColor = "Dark Blue";
 
-    String LakeColor, NicolletColor, HennepinColor = "Pink";
+    String LakeColor = "Pink";
+    String NicolletColor = "Pink";
+    String HennepinColor = "Pink";
 
-    String EsplanadeColor, CanalColor, MagazineColor, BourbonColor = "Pistachio";
+    String EsplanadeColor = "Pistachio";
+    String CanalColor = "Pistachio";
+    String MagazineColor = "Pistachio";
+    String BourbonColor = "Pistachio";
 
-    String KatyColor, WestheimerColor, KirbyColor, CullenColor = "Light Yellow";
+    String KatyColor = "Light Yellow";
+    String WestheimerColor = "Light Yellow";
+    String KirbyColor = "Light Yellow";
+    String CullenColor = "Light Yellow";
 
-    String DekalbColor, AndrewColor, DecaturColor, PeachtreeColor = "Dark Green";
+    String DekalbColor = "Dark Green";
+    String AndrewColor = "Dark Green";
+    String DecaturColor = "Dark Green";
+    String PeachtreeColor = "Dark Green";
 
-    String RandolphColor, LakeShoreColor, WackerColor, MichiganColor = "Burgundy";
+    String RandolphColor = "Burgundy";
+    String LakeShoreColor = "Burgundy";
+    String WackerColor = "Burgundy";
+    String MichiganColor = "Burgundy";
 
-    String SouthTempleColor, WestTempleColor, NorthTempleColor, TempleColor = "Curry";
+    String SouthTempleColor = "Curry";
+    String WestTempleColor = "Curry";
+    String NorthTempleColor = "Curry";
+    String TempleColor = "Curry";
 
-    String SouthColor, BroadColor, WalnutColor, MarketColor = "Peach";
+    String SouthColor = "Peach";
+    String BroadColor = "Peach";
+    String WalnutColor = "Peach";
+    String MarketColor = "Peach";
 
-    String MulhollandColor, VenturaColor, RodeoColor = "Dark Brown";
+    String MulhollandColor = "Dark Brown";
+    String VenturaColor = "Dark Brown";
+    String RodeoColor = "Dark Brown";
 
     public Square createInnerSquares(int index) {
         switch(index) {
@@ -282,7 +328,7 @@ public class SquareFactory {
             case 3:
                 return new UtilitySquare(squareNames_inner[index],"UtilitySquare",TelephonePrice);
             case 4:
-                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_inner[index],"CommunityChesCardSquare");
             case 5:
                 return new PropertySquare(squareNames_inner[index],"PropertySquare",BeaconPrice,BeaconColor,BeaconList);
             case 6:
@@ -488,7 +534,7 @@ public class SquareFactory {
             case 35:
                 return new RailRoadTransitStationsSquare(squareNames_outer[index],"RailRoadTransitionsSquare");
             case 36:
-                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestCardSquare");
             case 37:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", SouthTemplePrice, SouthTempleColor, SouthTempleList);
             case 38:
@@ -508,7 +554,7 @@ public class SquareFactory {
             case 45:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", WalnutPrice, WalnutColor, WalnutList);
             case 46:
-                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestSquare");
+                return new CommunityChestCardSquare(squareNames_outer[index],"CommunityChestCardSquare");
             case 47:
                 return new PropertySquare(squareNames_outer[index], "PropertySquare", MarketPrice, MarketColor, MarketList);
             case 48:
