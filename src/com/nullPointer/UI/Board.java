@@ -31,7 +31,16 @@ public class Board extends JPanel implements Observer {
     private GameEngine gameEngine = GameEngine.getInstance();
     //new added things below
     private HashMap<Integer, Point[]> squareMap = new HashMap<Integer, Point[]>();
+    private HashMap<Player, Point> playerCoords = new HashMap<Player, Point>();
     private ArrayList<Integer> currentPath = new ArrayList<Integer>();
+    private ArrayList<File> pawnFiles = new ArrayList<File>();
+    private File P1Src = new File("./assets/pawns/hat.png");
+    private File P2Src = new File("./assets/pawns/iron.png");
+    private File P3Src = new File("./assets/pawns/rende.png");
+    private File P4Src = new File("./assets/pawns/car.png");
+    private File P5Src = new File("./assets/pawns/ship.png");
+    private File P6Src = new File("./assets/pawns/boot.png");
+
     public static Board instance;
 
     public ArrayList<Integer> getCurrentPath() {
@@ -40,6 +49,11 @@ public class Board extends JPanel implements Observer {
 
     public HashMap<Integer, Point[]> getSquareMap() {
         return squareMap;
+    }
+
+
+    public HashMap<Player, Point> getPlayerCoords() {
+        return playerCoords;
     }
 
     public static Board getInstance() {
@@ -61,9 +75,15 @@ public class Board extends JPanel implements Observer {
         setPreferredSize(new Dimension(length, length));
 
         pawnList = new ArrayList<>();
-
+        pawnFiles.add(P1Src);
+        pawnFiles.add(P2Src);
+        pawnFiles.add(P3Src);
+        pawnFiles.add(P4Src);
+        pawnFiles.add(P5Src);
+        pawnFiles.add(P6Src);
         smallSide = length / 17;
         initialPosition = new Point(14 * smallSide - 20, 14 * smallSide - 20);
+        for(int i = 0; i < playerCoords.size(); i++) playerCoords = null;
 
         gameEngine.subscribe(this);
         initializeSquarePositions();
@@ -236,10 +256,10 @@ public class Board extends JPanel implements Observer {
         squareMap.put(119, createPointArray(startRightBottom, startLeftTop));
     }
 
-//    public void initializePawns() {
-//        playerList = playerController.getPlayers();
-//        playerList.forEach(player -> addNewPawn(player));
-//    }
+    public void initializePawns() {
+        playerList = playerController.getPlayers();
+        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder()), playerCoords.get(player)));
+    }
 
 
     public void paint(Graphics g) {
@@ -247,7 +267,7 @@ public class Board extends JPanel implements Observer {
         g.fillRect(position.x, position.y, length, length);
         g.drawImage(image, position.x, position.y, length, length, null);
         g.setColor(Color.RED);
-
+        pawnList.forEach(pawn -> pawn.paint(g));
 		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
 		{
 			g.fillOval(entry.getValue()[0].x, entry.getValue()[0].y,20, 20);
@@ -274,7 +294,7 @@ public class Board extends JPanel implements Observer {
     @Override
     public void onEvent(String message) {
         if (message.equals("initializePawns")) {
-//            initializePawns();
+            initializePawns();
             repaint();
         } else if (message.contains("path")) {
             proccessPath(message);
