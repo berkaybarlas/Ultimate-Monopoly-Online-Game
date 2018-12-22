@@ -330,8 +330,10 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 player.setClientID(serverInfo.getClientID());
-                // Simdilik haznede gosterilen pawn'i aliyor ama o oyuncunun pawnina cevrilmesi lazim.
-                // Ayrica basladigi konumun da duzeltilmesi lazim.
+                // Basladigi konumun dogru, ancak oyun ilk basladiginda gosterilmiyor. Zar attiktan sonra o konumdan harekete basliyor.
+                // URGENT
+                // Iki ayri bilgisayarla oynayinca isler karisiyor (iki oyuncu birbirinden ayrilamiyor gibi bir durum var.)
+                // Ayrica pawn secenekleri de, ornegin, bir bilgisayarda iki utu, diger bilgisayarda iki sapka gibi oluyor.
                 int xCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].x + Board.getInstance().getSquareMap().get(player.getPosition())[1].x;
                 int yCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].y + Board.getInstance().getSquareMap().get(player.getPosition())[1].y;
                 Board.getInstance().addNewPawn(player,pawnFiles.get(player.getPlaceHolder()),new Point(xCoord, yCoord));
