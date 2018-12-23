@@ -83,8 +83,6 @@ public class Board extends JPanel implements Observer {
         pawnFiles.add(P6Src);
         smallSide = length / 17;
         initialPosition = new Point(14 * smallSide - 20, 14 * smallSide - 20);
-        for(int i = 0; i < playerCoords.size(); i++) playerCoords = null;
-
         gameEngine.subscribe(this);
         initializeSquarePositions();
     }
@@ -259,6 +257,7 @@ public class Board extends JPanel implements Observer {
     public void initializePawns() {
         playerList = playerController.getPlayers();
         playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder()), playerCoords.get(player)));
+        repaint();
     }
 
 
@@ -267,7 +266,7 @@ public class Board extends JPanel implements Observer {
         g.fillRect(position.x, position.y, length, length);
         g.drawImage(image, position.x, position.y, length, length, null);
         g.setColor(Color.RED);
-        pawnList.forEach(pawn -> pawn.paint(g));
+//        pawnList.forEach(pawn -> pawn.paint(g));
 		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
 		{
 			g.fillOval(entry.getValue()[0].x, entry.getValue()[0].y,20, 20);
@@ -287,6 +286,7 @@ public class Board extends JPanel implements Observer {
             pawnList.add(new Pawn(initialPosition, player, file));
         } else {
             pawnList.add(new Pawn(position, player, file));
+            repaint();
         }
 
     }
