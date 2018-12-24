@@ -221,6 +221,7 @@ public class GameEngine {
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         ((PropertySquare) square).improve();
+        publishEvent("improve");
 
     }
 
