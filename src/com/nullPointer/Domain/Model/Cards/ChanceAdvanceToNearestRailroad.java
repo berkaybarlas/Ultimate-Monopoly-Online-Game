@@ -26,11 +26,14 @@ public class ChanceAdvanceToNearestRailroad extends ChanceCard {
 		HashMap<Integer, ArrayList<Integer>> connections =  db.getConnectionsMap();
 		HashMap<Integer, Square> squares = db.getSquareMap();
 		int pos = currentPlayer.getPosition();
+		System.out.println("[Chance Advance to ..] Start pos: "+pos);
 		while(true)
 		{
 			if (connections.get(pos).get(1) != -1)
 			{
+				
 				playerController.movePlayer(pos);
+				System.out.println("[Chance Advance to ..] Target pos: "+currentPlayer.getTargetPosition());
 				gameEngine.publishEvent("teleport" + pos);
 				
 				// set rent factor, etc.

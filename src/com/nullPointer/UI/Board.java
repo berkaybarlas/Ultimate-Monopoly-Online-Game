@@ -290,6 +290,7 @@ public class Board extends JPanel implements Observer {
         else if (message.contains("teleport")){
         	currentPath.clear();
         	currentPath.add(playerController.getCurrentPlayer().getTargetPosition());
+        	playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
         	pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         }
     }
