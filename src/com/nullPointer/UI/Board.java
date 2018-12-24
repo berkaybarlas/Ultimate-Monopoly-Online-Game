@@ -275,28 +275,34 @@ public class Board extends JPanel implements Observer {
 			Square currentSquare = gameEngine.getDomainBoard().getSquareAt(i);
 			if(currentSquare.getType().equals("PropertySquare")){
 				int numHouses = ((PropertySquare) currentSquare).numHouses();
+				boolean hasHotel = ((PropertySquare) currentSquare).hasHotel();
+				boolean hasSkyscraper = ((PropertySquare) currentSquare).hasSkyscraper();
 				Point[] points = squareMap.get(i);
 				Point center = new Point((points[0].x + points[1].x)/2, 
 						(points[0].y + points[1].y)/2);
 				if(numHouses != 0){
 					if(numHouses == 1)
 						g.fillOval(center.x, center.y, 5, 5);
-					if(numHouses == 2){
+					else if(numHouses == 2){
 						g.fillOval(center.x, center.y, 5, 5);
-						g.fillOval(center.x-6, center.y-6, 5, 5);
+						g.fillOval(center.x-6, center.y, 5, 5);
 					}
-					if(numHouses == 3){
+					else if(numHouses == 3){
 						g.fillOval(center.x, center.y, 5, 5);
 						g.fillOval(center.x-6, center.y, 5, 5);
 						g.fillOval(center.x-12, center.y, 5, 5);
 					}
-					if(numHouses == 4){
+					else if(numHouses == 4){
 						g.fillOval(center.x, center.y, 5, 5);
 						g.fillOval(center.x-6, center.y, 5, 5);
 						g.fillOval(center.x-12, center.y, 5, 5);
 						g.fillOval(center.x-18, center.y, 5, 5);
 					}
 				}
+				else if (hasHotel)
+					g.fillOval(center.x, center.y, 10, 10);
+				else if (hasSkyscraper)
+					g.fillOval(center.x, center.y, 20, 20);
 			}
 		}
 	}
@@ -326,7 +332,7 @@ public class Board extends JPanel implements Observer {
 			currentPath.add(playerController.getCurrentPlayer().getTargetPosition());
 			playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
 			pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
-		} else if(message.contains("improve")) {
+		} else if(message.contains("improved")) {
 			repaint();
 		}
 	}
