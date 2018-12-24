@@ -297,7 +297,7 @@ public class Board extends JPanel implements Observer {
         	playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
         	pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         } else if(message.contains("improve")) {
-            
+            repaint();
         }
     }
 
