@@ -8,6 +8,8 @@ import com.nullPointer.Domain.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,6 +79,16 @@ public class Board extends JPanel implements Observer {
         initialPosition = new Point(14 * smallSide - 20, 14 * smallSide - 20);
         gameEngine.subscribe(this);
         initializeSquarePositions();
+        
+        
+        this.addMouseListener(new MouseAdapter(){
+        	@Override
+        	public void mouseClicked(MouseEvent e){
+        		Point clicked = new Point(e.getX(), e.getY());
+        		int squareIndex = findSquare(clicked);
+        		gameEngine.setChosenSquareIndex(squareIndex);
+        	}
+        });
     }
     private Point[] createPointArray(Point startRightBottom, Point startLeftTop){
     	return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
@@ -279,6 +291,12 @@ public class Board extends JPanel implements Observer {
             proccessPath(message);
             pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         }
+        else if (message.contains("teleport")){
+        	currentPath.clear();
+        	currentPath.add(playerController.getCurrentPlayer().getTargetPosition());
+        	playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
+        	pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
+        }
     }
 
     private void proccessPath(String message) {
@@ -291,5 +309,22 @@ public class Board extends JPanel implements Observer {
             path.add(Integer.parseInt(string));
         }
         currentPath = path;
+    }
+    
+    
+    private int findSquare(Point p){
+    	for(int i=0;i<squareMap.keySet().size();i++){
+    		Point rightBottom = squareMap.get(i)[0];
+    		Point leftTop = squareMap.get(i)[1];
+    		int rightBottomX = rightBottom.x;
+    		int rightBottomY = rightBottom.y;
+    		int leftTopX = leftTop.x;
+    		int leftTopY = leftTop.y;
+    		int x = p.x;
+    		int y = p.y;
+    		if(x>leftTopX && x<rightBottomX && y>leftTopY && y<rightBottomY)
+    			return i;
+    	}
+    	return -1;
     }
 }
