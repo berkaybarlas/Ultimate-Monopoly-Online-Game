@@ -47,7 +47,7 @@ public class Player implements Serializable {
         propertyCardsMap = new HashMap<>();
         propertySquares = new ArrayList<>();
         utilityList = new ArrayList<>();
-        roll3Cards = new ArrayList<Roll3>();
+        roll3Cards = new ArrayList<>();
         cardList = new ArrayList<>();
         this.placeHolder = placeHolder;
     }
