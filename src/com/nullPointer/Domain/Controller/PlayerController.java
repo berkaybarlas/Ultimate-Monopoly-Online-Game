@@ -58,8 +58,11 @@ public class PlayerController implements Serializable {
      * @effects Updates currentPlayer by setting it to currentPlayer+1 (mod size(players)) & returns the next {@code Player} object.
      */
     public Player nextPlayer() {
-        currentPlayer = (currentPlayer + 1) % players.size();
-        return players.get(currentPlayer);
+    	if(players.size()>0) {
+    		currentPlayer = (currentPlayer + 1) % players.size();
+    	}
+    	return players.get(currentPlayer);
+    	
     }
 
     /**
@@ -116,6 +119,10 @@ public class PlayerController implements Serializable {
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+    
+	public void removePlayer(Player player) {
+    	players.remove(player);
     }
 
     public void addCardToCurrentPlayer(Card card) {

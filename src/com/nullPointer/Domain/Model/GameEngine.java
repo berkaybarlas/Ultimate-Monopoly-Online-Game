@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
  * Most of the game logic related operations are done by this class and other components are
@@ -242,13 +245,13 @@ public class GameEngine {
 
         if (type.equals("PropertySquare") && !((PropertySquare) square).isOwned()) {
             if (moneyController.hasEnoughMoney(currentPlayer, ((PropertySquare) square).getPrice())) {
-                moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
-                playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
-                ((PropertySquare) square).setOwner(currentPlayer);
+            	moneyController.decreaseMoney(currentPlayer, ((PropertySquare) square).getPrice());
+            	playerController.upgradePropertyList((PropertySquare) square, currentPlayer);
+            	((PropertySquare) square).setOwner(currentPlayer);
             }
         } else if (type.equals("UtilitySquare")) {
-            UtilitySquare utilitySquare = (UtilitySquare) square;
-            if (moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice())) {
+        	UtilitySquare utilitySquare = (UtilitySquare) square;
+        	if (moneyController.hasEnoughMoney(currentPlayer, utilitySquare.getPrice())) {
                 moneyController.decreaseMoney(currentPlayer, utilitySquare.getPrice());
                 playerController.upgradeUtilityList(utilitySquare, currentPlayer);
                 utilitySquare.setOwner(currentPlayer);
