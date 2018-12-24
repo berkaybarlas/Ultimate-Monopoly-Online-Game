@@ -98,7 +98,7 @@ public class PlayerController implements Serializable {
     }
 
     public void increaseCurrentPosition(Player player) {
-        player.setPosition((player.getPosition() + 1) % 40);
+        player.setPosition((player.getPosition() + 1) % 120);
     }
 
     public void removeProperty(PropertySquare propertySquare) {

@@ -14,8 +14,6 @@ public class RailRoadTransitStationsSquare extends Square {
 		// TODO Auto-generated method stub
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		System.out.println("[TransitSquare] Player: " + currentPlayer.getName() + " at " + currentPlayer.getPosition());
-
-		gameEngine.nextTurn();
 	}
 
 }

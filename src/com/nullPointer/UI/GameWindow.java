@@ -107,6 +107,9 @@ public class GameWindow extends JPanel implements Observer {
             if (message.equals("improve")) {
                 buttonPanel.improveButton.setEnabled(true);
             }
+            if (message.equals("improved")) {
+                buttonPanel.improveButton.setEnabled(false);
+            }
             if (message.equals("resume")) {
                 enableButtons();
                 System.out.println("[GameWindow: resumed]");
