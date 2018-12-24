@@ -62,6 +62,7 @@ public class Client extends Thread {
             e.printStackTrace();
         } finally {
             System.out.println("[Client]: Client is not listening anymore");
+
         }
     }
 

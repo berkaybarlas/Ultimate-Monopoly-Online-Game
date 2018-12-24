@@ -8,6 +8,8 @@ import com.nullPointer.Domain.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ public class Board extends JPanel implements Observer {
 
     private Point position;
     private int length;
-    private int sleepTime = 3;
     private List<Pawn> pawnList;
     private List<Player> playerList = new ArrayList<>();
 
@@ -29,9 +30,7 @@ public class Board extends JPanel implements Observer {
 
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
-    //new added things below
     private HashMap<Integer, Point[]> squareMap = new HashMap<Integer, Point[]>();
-    private HashMap<Player, Point> playerCoords = new HashMap<Player, Point>();
     private ArrayList<Integer> currentPath = new ArrayList<Integer>();
     private ArrayList<File> pawnFiles = new ArrayList<File>();
     private File P1Src = new File("./assets/pawns/hat.png");
@@ -49,11 +48,6 @@ public class Board extends JPanel implements Observer {
 
     public HashMap<Integer, Point[]> getSquareMap() {
         return squareMap;
-    }
-
-
-    public HashMap<Player, Point> getPlayerCoords() {
-        return playerCoords;
     }
 
     public static Board getInstance() {
@@ -85,6 +79,16 @@ public class Board extends JPanel implements Observer {
         initialPosition = new Point(14 * smallSide - 20, 14 * smallSide - 20);
         gameEngine.subscribe(this);
         initializeSquarePositions();
+        
+        
+        this.addMouseListener(new MouseAdapter(){
+        	@Override
+        	public void mouseClicked(MouseEvent e){
+        		Point clicked = new Point(e.getX(), e.getY());
+        		int squareIndex = findSquare(clicked);
+        		gameEngine.setChosenSquareIndex(squareIndex);
+        	}
+        });
     }
     private Point[] createPointArray(Point startRightBottom, Point startLeftTop){
     	return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
@@ -256,7 +260,7 @@ public class Board extends JPanel implements Observer {
 
     public void initializePawns() {
         playerList = playerController.getPlayers();
-        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder()), playerCoords.get(player)));
+        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder())));
         repaint();
     }
 
@@ -265,30 +269,17 @@ public class Board extends JPanel implements Observer {
         //g.setColor(color);
         g.fillRect(position.x, position.y, length, length);
         g.drawImage(image, position.x, position.y, length, length, null);
-        g.setColor(Color.RED);
-//        pawnList.forEach(pawn -> pawn.paint(g));
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[0].x, entry.getValue()[0].y,20, 20);
-			g.setColor(Color.CYAN);
-		}*/
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[1].x, entry.getValue()[1].y,20, 20);
-			g.setColor(Color.GREEN);
-		}*/
-        //pawnList.forEach(pawn -> pawn.paint(g));
     }
 
-    public void addNewPawn(Player player, File file, Point position) {
+    public void addNewPawn(Player player, File file) {
 
-        if(position == null) {
-            pawnList.add(new Pawn(initialPosition, player, file));
-        } else {
-            pawnList.add(new Pawn(position, player, file));
-            repaint();
-        }
+        int xCoord = (squareMap.get(player.getTargetPosition())[0].x + squareMap.get(player.getTargetPosition())[1].x) / 2;
+        int yCoord = (squareMap.get(player.getTargetPosition())[0].y + squareMap.get(player.getTargetPosition())[1].y) / 2;
 
+        Point position =  new Point(xCoord, yCoord);
+
+        pawnList.add(new Pawn(position,player,file));
+        repaint();
     }
 
     @Override
@@ -299,6 +290,12 @@ public class Board extends JPanel implements Observer {
         } else if (message.contains("path")) {
             proccessPath(message);
             pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
+        }
+        else if (message.contains("teleport")){
+        	currentPath.clear();
+        	currentPath.add(playerController.getCurrentPlayer().getTargetPosition());
+        	playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
+        	pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         }
     }
 
@@ -312,5 +309,22 @@ public class Board extends JPanel implements Observer {
             path.add(Integer.parseInt(string));
         }
         currentPath = path;
+    }
+    
+    
+    private int findSquare(Point p){
+    	for(int i=0;i<squareMap.keySet().size();i++){
+    		Point rightBottom = squareMap.get(i)[0];
+    		Point leftTop = squareMap.get(i)[1];
+    		int rightBottomX = rightBottom.x;
+    		int rightBottomY = rightBottom.y;
+    		int leftTopX = leftTop.x;
+    		int leftTopY = leftTop.y;
+    		int x = p.x;
+    		int y = p.y;
+    		if(x>leftTopX && x<rightBottomX && y>leftTopY && y<rightBottomY)
+    			return i;
+    	}
+    	return -1;
     }
 }
