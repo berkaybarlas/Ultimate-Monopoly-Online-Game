@@ -25,9 +25,6 @@ public class DomainBoard implements Serializable {
     private int layer3end = 119;
 
 
-    // List that holds card generation orders for CC & chance cards. I appended the CCIndexList & ChanceIndexList, you can make changes as you see fit.
-    public ArrayList<Integer> meta_card_gen_info = new ArrayList<Integer>();
-
     public DomainBoard() {
         domainSquareMap = new HashMap<Integer, Square>(numSquares);
         connectionsMap = new HashMap<Integer, ArrayList<Integer>>(numSquares);
@@ -76,16 +73,23 @@ public class DomainBoard implements Serializable {
             ChanceCards.add(cardFactory.createChanceCard(ChanceIndexList.get(j)));
         }
 
-        // set meta_card_gen_info
-        meta_card_gen_info.addAll(CCindexList);
-        meta_card_gen_info.addAll(ChanceIndexList);
     }
 
     public void createCards() {
-        CCCards.add(cardFactory.createCCCard(8));
-        ChanceCards.add(cardFactory.createChanceCard(12));
-        meta_card_gen_info.add(8);
-        meta_card_gen_info.add(12);
+        CCCards.add(cardFactory.createCCCard(7));
+        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad
+        ChanceCards.add(cardFactory.createChanceCard(13)); //hurricane card
+        ChanceCards.add(cardFactory.createChanceCard(19)); ////see you in court +
+        ChanceCards.add(cardFactory.createChanceCard(1)); //advance to pay corner +
+        ChanceCards.add(cardFactory.createChanceCard(12)); //holiday bonus +
+        ChanceCards.add(cardFactory.createChanceCard(0)); 
+        ChanceCards.add(cardFactory.createChanceCard(10));
+        ChanceCards.add(cardFactory.createChanceCard(14));
+        ChanceCards.add(cardFactory.createChanceCard(2));
+        ChanceCards.add(cardFactory.createChanceCard(17));
+        ChanceCards.add(cardFactory.createChanceCard(20));
+        
+        
     }
 
     public void createSquares() {
