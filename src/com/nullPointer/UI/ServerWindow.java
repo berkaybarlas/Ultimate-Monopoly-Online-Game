@@ -26,6 +26,7 @@ import java.util.Random;
 
 public class ServerWindow extends JPanel implements Observer {
     private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
+    private JCheckBox botOrPlayerButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -209,12 +210,24 @@ public class ServerWindow extends JPanel implements Observer {
                 textField.setText("Enter player name here!");
             }
         });
+        botOrPlayerButton = new JCheckBox("Bot player");
+        botOrPlayerButton.setFont(new Font(addPlayer.getName(), addPlayer.getFont().getStyle(), addPlayer.getFont().getSize()));
+        botOrPlayerButton.setIcon(new SimpleCheckboxStyle(20));
+        botOrPlayerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
         initSelectionButtons();
         cPanel.add(textField);
         cPanel.add(leftButton);
         cPanel.add(pPanel);
         cPanel.add(rightButton);
         cPanel.add(addPlayer);
+        cPanel.add(botOrPlayerButton);
         this.add(scrollPane);
         this.add(cPanel);
     }
@@ -437,5 +450,57 @@ class ClientDisplay {
         g2.drawString(clientName, position.x + 50, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
         g2.drawRoundRect(position.x, position.y, width, height, 5, 5);
+    }
+}
+
+class SimpleCheckboxStyle implements Icon {
+
+    int dim = 10;
+
+    public SimpleCheckboxStyle (int dimension){
+        this.dim = dimension;
+    }
+
+    protected int getDimension() {
+        return dim;
+    }
+
+    public void paintIcon(Component component, Graphics g, int x, int y) {
+        ButtonModel buttonModel = ((AbstractButton) component).getModel();
+
+        int y_offset = (int) (component.getSize().getHeight() / 2) - (int) (getDimension() / 2);
+        int x_offset = 2;
+
+        if (buttonModel.isRollover()) {
+            g.setColor(new Color(0, 60, 120));
+        } else if (buttonModel.isRollover()) {
+            g.setColor(Color.BLACK);
+        } else {
+            g.setColor(Color.DARK_GRAY);
+        }
+       
+		int fontsize = 20;
+		g.fillRect(x_offset, y_offset, fontsize , fontsize);
+        if (buttonModel.isPressed()) {
+            g.setColor(Color.GRAY);
+        } else if (buttonModel.isRollover()) {
+            g.setColor(new Color(240, 240, 250));
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.fillRect(1 + x_offset, y_offset + 1, fontsize - 2, fontsize - 2);
+        if (buttonModel.isSelected()) {
+            int r_x = 1;
+            g.setColor(Color.GRAY);
+            g.fillRect(x_offset + r_x + 3, y_offset + 3 + r_x, fontsize - (7 + r_x), fontsize - (7 + r_x));
+        }
+    }
+
+    public int getIconWidth() {
+        return getDimension();
+    }
+
+    public int getIconHeight() {
+        return getDimension();
     }
 }

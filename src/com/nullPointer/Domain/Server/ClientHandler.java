@@ -39,6 +39,7 @@ class ClientHandler extends Thread {
         } catch (IOException e) {
             System.out.println("[ClientHandler]: Exception caught when trying to listen on port ");
             System.out.println(e.getMessage());
+            
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
