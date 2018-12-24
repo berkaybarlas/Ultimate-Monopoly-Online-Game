@@ -319,6 +319,7 @@ public class GameEngine {
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
+        publishEvent("endTurn");
     }
 
     public void loadData() {
