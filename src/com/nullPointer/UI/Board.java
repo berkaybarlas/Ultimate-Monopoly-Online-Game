@@ -22,7 +22,6 @@ public class Board extends JPanel implements Observer {
 
     private Point position;
     private int length;
-    private int sleepTime = 3;
     private List<Pawn> pawnList;
     private List<Player> playerList = new ArrayList<>();
 
@@ -31,9 +30,7 @@ public class Board extends JPanel implements Observer {
 
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
-    //new added things below
     private HashMap<Integer, Point[]> squareMap = new HashMap<Integer, Point[]>();
-    private HashMap<Player, Point> playerCoords = new HashMap<Player, Point>();
     private ArrayList<Integer> currentPath = new ArrayList<Integer>();
     private ArrayList<File> pawnFiles = new ArrayList<File>();
     private File P1Src = new File("./assets/pawns/hat.png");
@@ -51,11 +48,6 @@ public class Board extends JPanel implements Observer {
 
     public HashMap<Integer, Point[]> getSquareMap() {
         return squareMap;
-    }
-
-
-    public HashMap<Player, Point> getPlayerCoords() {
-        return playerCoords;
     }
 
     public static Board getInstance() {
@@ -268,7 +260,7 @@ public class Board extends JPanel implements Observer {
 
     public void initializePawns() {
         playerList = playerController.getPlayers();
-        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder()), playerCoords.get(player)));
+        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder())));
         repaint();
     }
 
@@ -277,30 +269,17 @@ public class Board extends JPanel implements Observer {
         //g.setColor(color);
         g.fillRect(position.x, position.y, length, length);
         g.drawImage(image, position.x, position.y, length, length, null);
-        g.setColor(Color.RED);
-//        pawnList.forEach(pawn -> pawn.paint(g));
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[0].x, entry.getValue()[0].y,20, 20);
-			g.setColor(Color.CYAN);
-		}*/
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[1].x, entry.getValue()[1].y,20, 20);
-			g.setColor(Color.GREEN);
-		}*/
-        //pawnList.forEach(pawn -> pawn.paint(g));
     }
 
-    public void addNewPawn(Player player, File file, Point position) {
+    public void addNewPawn(Player player, File file) {
 
-        if(position == null) {
-            pawnList.add(new Pawn(initialPosition, player, file));
-        } else {
-            pawnList.add(new Pawn(position, player, file));
-            repaint();
-        }
+        int xCoord = (squareMap.get(player.getTargetPosition())[0].x + squareMap.get(player.getTargetPosition())[1].x) / 2;
+        int yCoord = (squareMap.get(player.getTargetPosition())[0].y + squareMap.get(player.getTargetPosition())[1].y) / 2;
 
+        Point position =  new Point(xCoord, yCoord);
+
+        pawnList.add(new Pawn(position,player,file));
+        repaint();
     }
 
     @Override

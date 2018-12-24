@@ -205,7 +205,6 @@ public class ServerWindow extends JPanel implements Observer {
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
 //                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
-                Board.getInstance().getPlayerCoords().put(player, null);
                 textField.setText("Enter player name here!");
             }
         });
@@ -333,15 +332,6 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 player.setClientID(serverInfo.getClientID());
                 communicationController.sendClientMessage(PlayerController.getInstance());
-                // Basladigi konumun dogru, ancak oyun ilk basladiginda gosterilmiyor. Zar attiktan sonra o konumdan harekete basliyor.
-                // URGENT
-                // Iki ayri bilgisayarla oynayinca isler karisiyor (iki oyuncu birbirinden ayrilamiyor gibi bir durum var.)
-                // Ayrica pawn secenekleri de, ornegin, bir bilgisayarda iki utu, diger bilgisayarda iki sapka gibi oluyor.
-                int xCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].x + Board.getInstance().getSquareMap().get(player.getPosition())[1].x;
-                int yCoord = Board.getInstance().getSquareMap().get(player.getPosition())[0].y + Board.getInstance().getSquareMap().get(player.getPosition())[1].y;
-//                Board.getInstance().addNewPawn(player,pawnFiles.get(player.getPlaceHolder()),new Point(xCoord, yCoord));
-                // Basladigi konumdan duzgun hareket ediyor ama baska gozukmuyor. Needs to be fixed.
-                Board.getInstance().getPlayerCoords().put(player, new Point(xCoord, yCoord));
             }
         });
         int clientPosition = clientList.indexOf(player.getClientID());
