@@ -25,7 +25,7 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -150,7 +150,7 @@ public class ServerWindow extends JPanel implements Observer {
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.removeClient();
+                communicationController.removeClient(serverInfo.getClientID());
                 navigator.menuScreen();
             }
         });
@@ -163,7 +163,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public List<ClientDisplay> createClientDisplay() {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
@@ -326,7 +326,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addPlayerButton(Player player) {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

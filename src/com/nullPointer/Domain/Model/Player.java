@@ -11,7 +11,7 @@ import java.util.*;
 public class Player implements Serializable {
 
     private String name;
-    private int ClientID;
+    private String ClientID;
     private int position = 56;
     private int layer = 1;
     private int targetPosition = 56;
@@ -41,7 +41,7 @@ public class Player implements Serializable {
 		this.roll3Cards.add(roll3);
 	}
 
-	public Player(String name, int ClientID, int placeHolder) {
+	public Player(String name, String ClientID, int placeHolder) {
         this.name = name;
 		this.ClientID = ClientID;
         propertyCardsMap = new HashMap<>();
@@ -165,11 +165,11 @@ public class Player implements Serializable {
         cardList.add(card);
     }
 
-    public int getClientID() {
+    public String getClientID() {
         return ClientID;
     }
 
-    public void setClientID(int clientID) {
+    public void setClientID(String clientID) {
         ClientID = clientID;
     }
 

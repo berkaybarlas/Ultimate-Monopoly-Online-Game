@@ -273,6 +273,11 @@ public class GameEngine {
         publishEvent("newClient");
     }
 
+    public void removeClient(String clientId) {
+        serverInfo.removeClient(clientId);
+        publishEvent("newClient");
+    }
+
     public PlayerController getPlayerController() {
         return playerController;
     }
@@ -341,7 +346,7 @@ public class GameEngine {
 
     public boolean isMyTurn() {
         Player player = playerController.getCurrentPlayer();
-        if (player != null && (player.getClientID() == serverInfo.getClientID())) {
+        if (player != null && (player.getClientID().equals(serverInfo.getClientID()))) {
             return true;
         }
         return false;

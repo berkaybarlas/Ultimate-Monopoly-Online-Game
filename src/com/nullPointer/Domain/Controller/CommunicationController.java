@@ -33,6 +33,7 @@ public class CommunicationController {
     public void startServer() {
         gameServer = new GameServer("SERVER");
         gameServer.start();
+        serverInfo.setClientList(new ArrayList<>());
     }
 
     public void createClient(String IP) {
@@ -49,8 +50,8 @@ public class CommunicationController {
         client.sendMessage(msg);
     }
 
-    public void removeClient() {
-
+    public void removeClient(String clientId) {
+        sendClientMessage("client/remove/" + clientId);
     }
 
     public void processInput(Object objectInput) {
@@ -72,6 +73,9 @@ public class CommunicationController {
                 if (includes(rest(input), "create")) {
                     String clientId = (rest(rest(input)));
                     gameEngine.newClient(clientId);
+                } else if (includes(rest(input), "remove")) {
+                    String clientId = (rest(rest(input)));
+                    gameEngine.removeClient(clientId);
                 }
             } else if (input.contains("dice")) {
                 ArrayList<Integer> regularDice = new ArrayList<>();
