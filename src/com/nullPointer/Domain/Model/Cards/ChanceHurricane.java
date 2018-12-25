@@ -23,6 +23,7 @@ public class ChanceHurricane extends ChanceCard {
 		System.out.println("[Hurricane Card] Remove 1 House from each property in any player’s 1 color group. (Downgrade Skyscrapers to Hotels; Hotels to 4 houses.) ");
 		//Remove 1 House from each property in any player’s 1 color group. (Downgrade Skyscrapers to Hotels; Hotels to 4 houses.) 
 		//in the end of the turn
+		
 		gameEngine.setChosenSquareIndex(-1);
 		
 	}

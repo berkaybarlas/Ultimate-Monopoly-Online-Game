@@ -10,25 +10,25 @@ import java.util.LinkedList;
 
 public class CommunicationController {
 
-    private static CommunicationController _instance;
-    private GameServer gameServer;
-    private Client client;
-    private GameEngine gameEngine = GameEngine.getInstance();
-    private RegularDie regularDie = RegularDie.getInstance();
-    private SpeedDie speedDie = SpeedDie.getInstance();
-    private ServerInfo serverInfo = ServerInfo.getInstance();
-    private MoneyController moneyController = MoneyController.getInstance();
+	private static CommunicationController _instance;
+	private GameServer gameServer;
+	private Client client;
+	private GameEngine gameEngine = GameEngine.getInstance();
+	private RegularDie regularDie = RegularDie.getInstance();
+	private SpeedDie speedDie = SpeedDie.getInstance();
+	private ServerInfo serverInfo = ServerInfo.getInstance();
+	private MoneyController moneyController = MoneyController.getInstance();
 
-    private CommunicationController() {
+	private CommunicationController() {
 
-    }
+	}
 
-    public static CommunicationController getInstance() {
-        if (_instance == null) {
-            _instance = new CommunicationController();
-        }
-        return _instance;
-    }
+	public static CommunicationController getInstance() {
+		if (_instance == null) {
+			_instance = new CommunicationController();
+		}
+		return _instance;
+	}
 
     public void startServer() {
         gameServer = new GameServer("SERVER");
@@ -36,33 +36,33 @@ public class CommunicationController {
         serverInfo.setClientList(new ArrayList<>());
     }
 
-    public void createClient(String IP) {
-        client = new Client(IP, "Client");
-        client.start();
-    }
+	public void createClient(String IP) {
+		client = new Client(IP, "Client");
+		client.start();
+	}
 
-    public void createClient() {
-        client = new Client("Client");
-        client.start();
-    }
+	public void createClient() {
+		client = new Client("Client");
+		client.start();
+	}
 
-    public void sendClientMessage(Object msg) {
-        client.sendMessage(msg);
-    }
+	public void sendClientMessage(Object msg) {
+		client.sendMessage(msg);
+	}
 
     public void removeClient(String clientId) {
         sendClientMessage("client/remove/" + clientId);
     }
 
-    public void processInput(Object objectInput) {
-        if (objectInput instanceof String) {
-            String input = (String) objectInput;
-            if (input.contains("game")) {
-                if (includes(rest(input), "start")) {
-                    gameEngine.startGame();
-                }
-            } else if (input.contains("player")) {
-                if (includes(rest(input), "create")) {
+	public void processInput(Object objectInput) {
+		if (objectInput instanceof String) {
+			String input = (String) objectInput;
+			if (input.contains("game")) {
+				if (includes(rest(input), "start")) {
+					gameEngine.startGame();
+				}
+			} else if (input.contains("player")) {
+				if (includes(rest(input), "create")) {
 
                 } else if (includes(rest(input), "next")) {
                     gameEngine.nextTurn();
@@ -122,22 +122,22 @@ public class CommunicationController {
         }
     }
 
-    private String rest(String word) {
-        int slashIndex = word.indexOf('/');
-        if (slashIndex == -1)
-            return word;
-        return word.substring(slashIndex + 1);
-    }
+	private String rest(String word) {
+		int slashIndex = word.indexOf('/');
+		if (slashIndex == -1)
+			return word;
+		return word.substring(slashIndex + 1);
+	}
 
-    private boolean includes(String sentence, String word) {
-        return (sentence.indexOf(word) != -1);
-    }
+	private boolean includes(String sentence, String word) {
+		return (sentence.indexOf(word) != -1);
+	}
 
-    public GameServer getGameServer() {
-        return this.gameServer;
-    }
+	public GameServer getGameServer() {
+		return this.gameServer;
+	}
 
-    public Client getClient() {
-        return this.client;
-    }
+	public Client getClient() {
+		return this.client;
+	}
 }

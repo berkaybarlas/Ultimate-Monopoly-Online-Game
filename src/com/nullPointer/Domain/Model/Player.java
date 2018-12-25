@@ -151,6 +151,14 @@ public class Player implements Serializable {
     public void addSquare(PropertySquare propertySquare) {
         // propertyCardsMap.put(propertySquare)
         propertySquares.add(propertySquare);
+        if(propertyCardsMap.get(propertySquare.getColor()) != null) {
+            propertyCardsMap.get(propertySquare.getColor()).add(propertySquare);
+        } else {
+            ArrayList<PropertySquare> pSA = new ArrayList<PropertySquare>();
+            propertyCardsMap.put(propertySquare.getColor(),pSA);
+            propertyCardsMap.get(propertySquare.getColor()).add(propertySquare);
+        }
+        System.out.println(propertyCardsMap.get(propertySquare.getColor()));
     }
 
     public int getPlaceHolder() {
