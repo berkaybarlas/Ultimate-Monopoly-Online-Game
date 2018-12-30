@@ -144,6 +144,11 @@ public class PropertySquare extends Square {
         return price;
     }
 
+    public int getHousePrice()
+    {
+        return rentList[8];
+    }
+
     public void setPrice(int newPrice) {
         this.price = newPrice;
     }
