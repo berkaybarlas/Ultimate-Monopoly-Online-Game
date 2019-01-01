@@ -351,6 +351,16 @@ public class GameEngine {
         return false;
     }
 
+    public boolean amIBot()
+    {
+        Player current = playerController.getCurrentPlayer();
+        if (current != null && current.isBot())
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void save() {
         publishEvent("save");
     }

@@ -20,7 +20,7 @@ public class BonusSquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		gameEngine.getMoneyController().increaseMoney(currentPlayer, 300);
-		
+		gameEngine.publishEvent("empty");
 	}
 
 	/**
@@ -38,6 +38,7 @@ public class BonusSquare extends Square {
 		{
 			Player currentPlayer = gg.getPlayerController().getCurrentPlayer();
 			gg.getMoneyController().increaseMoney(currentPlayer, 250);
+			gg.publishEvent("empty");
 		}
 		else
 		{

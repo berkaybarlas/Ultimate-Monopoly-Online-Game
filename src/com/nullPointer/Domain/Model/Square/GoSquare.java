@@ -21,6 +21,7 @@ public class GoSquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		gameEngine.getMoneyController().increaseMoney(currentPlayer, 300);
+		gameEngine.publishEvent("empty");
 	}
 
 	/**
