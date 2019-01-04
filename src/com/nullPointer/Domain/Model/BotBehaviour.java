@@ -26,21 +26,24 @@ public class BotBehaviour implements Observer {
     }
 
 
-    public void setBehaviour(int n)
+
+
+    public void setBehaviour(Player p)
     {
-        if (n==1)
+        int n = p.getBotBehaviourNumber();
+        if (n == 1)
         {
             setLazyBot(true);
             setRandomBot(false);
             setSemiIntelligentBot(false);
         }
-        if (n==2)
+        else if (n == 2)
         {
             setLazyBot(false);
             setRandomBot(true);
             setSemiIntelligentBot(false);
         }
-        if (n==3)
+        else if (n == 3)
         {
             setLazyBot(false);
             setRandomBot(false);
@@ -48,7 +51,7 @@ public class BotBehaviour implements Observer {
         }
         else
         {
-            throw new IllegalArgumentException("Unknown behaviour index.");
+            throw new IllegalArgumentException("Unknown behaviour index: " + n);
         }
     }
     @Override
@@ -67,8 +70,14 @@ public class BotBehaviour implements Observer {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
+                            setBehaviour(gg.getPlayerController().getCurrentPlayer());
                             String botName = gg.getPlayerController().getCurrentPlayer().getName();
+                            System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
                             System.out.println(botName +" is thinking about " + message);
+//                            if(message.equals("endTurn"))
+//                            {
+//                                yieldTurn();
+//                            }
                             if(message.equals("rollDice"))
                             {
                                 if(gg.getRoll3())  gg.roll3Dice();
@@ -144,6 +153,7 @@ public class BotBehaviour implements Observer {
         int action = rand.nextInt(AvailableActions.size());
 
         String command = AvailableActions.get(action);
+        System.out.println("Random bot decided to " + command);
         if(command.equals("Yield"))
         {
             yieldTurn();
@@ -179,7 +189,7 @@ public class BotBehaviour implements Observer {
             }
             if(currentProp instanceof UtilitySquare)
             {
-                System.out.println("A utility square? I heard that those places pay off in meny years! Must stay away!");
+                System.out.println("A utility square? I heard that those places pay off in many years! Must stay away!");
                 tryImproving(current, msg);
             }
             else if (currentProp instanceof PropertySquare)
@@ -364,7 +374,7 @@ public class BotBehaviour implements Observer {
     private void buyAction(Player current) {
         System.out.println(current.getName() + " decided to buy!");
         cc.sendClientMessage("purchase");
-        //yieldTurn();
+        yieldTurn();
     }
 
 

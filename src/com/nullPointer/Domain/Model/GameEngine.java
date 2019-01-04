@@ -197,15 +197,22 @@ public class GameEngine {
 
         if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
             if (type.equals("CommunityChestCardSquare")) {
-                card = domainBoard.getCCCards().element();
+                card = domainBoard.getCCCards().remove();
             } else if (type.equals("ChanceCardSquare")) {
-            	card = domainBoard.getChanceCards().element();
+            	card = domainBoard.getChanceCards().remove();
             } else {
-            	card = domainBoard.getRoll3Cards().element();
+            	card = domainBoard.getRoll3Cards().remove();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
                 card.playCard(this);
+                if (type.equals("CommunityChestCardSquare")) {
+                    domainBoard.getCCCards().add(card);
+                } else if (type.equals("ChanceCardSquare")) {
+                    domainBoard.getChanceCards().add(card);
+                } else {
+                    domainBoard.getRoll3Cards().add(card);
+                }
                 System.out.println();
             } else {
                 playerController.addCardToCurrentPlayer(card);

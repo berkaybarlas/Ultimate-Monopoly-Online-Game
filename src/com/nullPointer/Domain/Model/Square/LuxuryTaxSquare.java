@@ -20,6 +20,7 @@ public class LuxuryTaxSquare extends Square {
 		// TODO Auto-generated method stub
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		gameEngine.getMoneyController().decreaseMoney(currentPlayer, 75);
+		gameEngine.publishEvent("empty");
 	}
 
 }
