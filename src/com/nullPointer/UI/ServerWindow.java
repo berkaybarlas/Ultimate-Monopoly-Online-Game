@@ -205,8 +205,6 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
                 communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
-//                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
                 textField.setText("Enter player name here!");
             }
         });

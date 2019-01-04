@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Server;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -91,16 +92,22 @@ public class Client extends Thread {
 
     public void createOrJoin() {
         String nextServerIP = serverInfo.next();
+        GameEngine.getInstance().publishEvent("serverScreen");
         if (nextServerIP.equals(localIp)) {
             serverInfo.getClientList();
             communicationController.startServer();
             hostName = "localhost";
         } else {
             int doubleDotIndex = nextServerIP.indexOf(":");
-            hostName = nextServerIP.substring(0,doubleDotIndex);
-            if(hostName.equals(localIp.substring(0,doubleDotIndex))){
+            if(nextServerIP == "" || doubleDotIndex == -1 || nextServerIP.contains(localIp.substring(0,doubleDotIndex))){
                 hostName = "localhost";
             }
+            hostName = nextServerIP.substring(0,doubleDotIndex);
+        }
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         this.run();
     }

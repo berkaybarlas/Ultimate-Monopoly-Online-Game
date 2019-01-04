@@ -73,7 +73,7 @@ public class GameEngine {
 		observers.forEach(listener -> listener.onEvent(message));
 	}
 
-	public void initPlayers(int playerNumber) {
+	public void initPlayers() {
 		publishEvent("initializePawns");
 		publishEvent("initializePlayers");
 	}
@@ -86,7 +86,7 @@ public class GameEngine {
 
 	public void startGame() {
 		publishEvent("screen/gameScreen");
-		initPlayers(2);
+		initPlayers();
 		publishEvent("rollDice");
 	}
 

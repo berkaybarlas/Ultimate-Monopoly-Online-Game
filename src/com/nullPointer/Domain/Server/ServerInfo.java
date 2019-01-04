@@ -55,8 +55,9 @@ public class ServerInfo {
     }
 
     public String next() {
-        if (clientList == null || clientList.size() < 2) return clientList.get(0);
-
+        if (clientList == null || clientList.size() == 1 ) return "";
+        if(clientList.size() < 2)
+            return clientList.get(0);
         return clientList.get(1);
     }
 

@@ -110,7 +110,6 @@ public class ButtonPanel extends JPanel {
                 communicationController.sendClientMessage("pause");
                 pauseButton.setEnabled(false);
                 resumeButton.setEnabled(true);
-
                 int result = JOptionPane.showOptionDialog(null, pausePanel, "Pause Panel",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, saveOrResume, null);
