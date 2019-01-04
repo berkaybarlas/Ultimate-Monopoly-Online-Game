@@ -92,7 +92,6 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
-				improveButton.setEnabled(false);
 			}
 		});
 
@@ -152,7 +151,7 @@ public class ButtonPanel extends JPanel {
         endTurn.setEnabled(false);
         drawButton.setEnabled(false);
         playCardButton.setEnabled(false);
-        improveButton.setEnabled(false);
+        improveButton.setEnabled(true);
         rollDice.setEnabled(false);
         resumeButton.setEnabled(false);
         pauseButton.setEnabled(true);
