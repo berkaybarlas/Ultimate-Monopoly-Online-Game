@@ -10,7 +10,7 @@ public class GameServer extends Thread {
     private Thread thread;
     private String threadName;
     private int portNumber = 4000;
-
+    private ServerSocket serverSocket;
 
     private ResponseController responseController;
 
@@ -21,7 +21,7 @@ public class GameServer extends Thread {
 
     @Override
     public void run() {
-        ServerSocket serverSocket;
+
         try {
             serverSocket = new ServerSocket(portNumber);
             while (true) {
@@ -55,11 +55,15 @@ public class GameServer extends Thread {
         }
     }
 
-    public int getPortNumber() {
-        return portNumber;
+    public void close() {
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            System.out.println("[GamerServer]: There was an error during server close.");
+        }
+        if(responseController!=null){
+            responseController.closeConnections();
+        }
     }
 
-    public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
-    }
 }

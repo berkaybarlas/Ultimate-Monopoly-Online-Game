@@ -76,4 +76,27 @@ public class ResponseController {
             System.out.println("[ResponseController]:" + "sending object finished.");
         }
     }
+
+    public void closeConnections() {
+        if (listenerClientOutputs != null) {
+            listenerClientOutputs.forEach(out -> {
+                try {
+                    out.close();
+                    listenerClientOutputs.remove(out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        if(listenerClients != null){
+            listenerClients.forEach(socket -> {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
 }
