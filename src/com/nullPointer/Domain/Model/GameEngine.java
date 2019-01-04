@@ -212,16 +212,16 @@ public class GameEngine {
 	public void improveProperty() {
 
 		while(getChosenSquareIndex() == -1){
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		Player currentPlayer = playerController.getCurrentPlayer();
 		Square square = domainBoard.getSquareAt(getChosenSquareIndex());
 
-		if(square.getType() == "PropertySquare"){
+		if(square.getType().equals("PropertySquare")){
 
 			PropertySquare propertySquare = ((PropertySquare) square);
 			HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
