@@ -259,6 +259,22 @@ public class GameEngine {
 
 	}
 
+	public void improveSelectedProperty(PropertySquare p)    // This is added only for bots to use
+	{
+		Player currentPlayer = playerController.getCurrentPlayer();
+		HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
+		if(!p.hasHotel() && !p.hasSkyscraper() && p.numHouses()!=4){
+			p.improve();
+			publishEvent("improve");
+		}
+		else if(p.hasHotel() || p.numHouses()==4){
+			if(propertyCardsMap.get(p.getColor()).size()==3){
+				p.improve();
+				publishEvent("improve");
+			}
+		}
+	}
+
 	/**
 	 * @param -
 	 * @requires 1)currentPlayer's not being null
@@ -379,7 +395,13 @@ public class GameEngine {
 
 	public boolean isMyTurn() {
 		Player player = playerController.getCurrentPlayer();
-		if (player != null && (player.getClientID() == serverInfo.getClientID())) {
+		System.out.println(player==null);
+		if(player != null)
+		{
+			System.out.println(player.getClientID());
+			System.out.println(serverInfo.getClientID());
+		}
+		if (player != null && (player.getClientID().equals(serverInfo.getClientID()))) {
 			return true;
 		}
 		return false;
@@ -392,6 +414,8 @@ public class GameEngine {
 	public void setCurrentPlayer(Player p) {
 		playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
 	}
+
+
     public boolean amIBot()
     {
         Player current = playerController.getCurrentPlayer();
@@ -400,10 +424,6 @@ public class GameEngine {
             return true;
         }
         return false;
-    }
-
-    public void save() {
-        publishEvent("save");
     }
 
 	public String toString() {

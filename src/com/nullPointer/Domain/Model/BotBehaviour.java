@@ -12,17 +12,17 @@ import java.util.*;
 
 public class BotBehaviour implements Observer {
 
-    private GameEngine gg = GameEngine.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
     private CommunicationController cc = CommunicationController.getInstance();
     private boolean lazyBot = false;
     private boolean randomBot = false;
     private boolean semiIntelligentBot = true;
-    private ArrayList<String> acceptibleMessages = new ArrayList<String>(Arrays.asList("rollDice", "drawCard", "buy", "improve", "paid rent", "empty"));
+    private ArrayList<String> acceptibleMessages = new ArrayList<String>(Arrays.asList("rollDice", "drawCard", "buy", "paid rent", "empty"));
 
 
     public BotBehaviour()
     {
-        gg.subscribe(this);
+        gameEngine.subscribe(this);
     }
 
 
@@ -63,15 +63,16 @@ public class BotBehaviour implements Observer {
         {
             if (message.contains(t))
             {
-                if(gg.amIBot() && gg.isMyTurn())
+                System.out.println(gameEngine.amIBot() + "    " + gameEngine.isMyTurn());
+                if(gameEngine.amIBot() && gameEngine.isMyTurn())
                 {
                     Timer timer = new Timer();
 
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            setBehaviour(gg.getPlayerController().getCurrentPlayer());
-                            String botName = gg.getPlayerController().getCurrentPlayer().getName();
+                            setBehaviour(gameEngine.getPlayerController().getCurrentPlayer());
+                            String botName = gameEngine.getPlayerController().getCurrentPlayer().getName();
                             System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
                             System.out.println(botName +" is thinking about " + message);
 //                            if(message.equals("endTurn"))
@@ -80,10 +81,10 @@ public class BotBehaviour implements Observer {
 //                            }
                             if(message.equals("rollDice"))
                             {
-                                if(gg.getRoll3())  gg.roll3Dice();
-                                else gg.rollDice();
+                                if(gameEngine.getRoll3())  gameEngine.roll3Dice();
+                                else gameEngine.rollDice();
                                 System.out.println(botName + " must Roll the Dice!");
-                                cc.sendClientMessage("dice/" + gg.getLastDiceValues());
+                                cc.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
                             }
                             else if (message.equals("drawCard"))
                             {
@@ -117,7 +118,7 @@ public class BotBehaviour implements Observer {
     }
 
     private void yieldTurn() {
-        System.out.println(gg.getPlayerController().getCurrentPlayer().getName() + " decided to Yield its Turn!");
+        System.out.println(gameEngine.getPlayerController().getCurrentPlayer().getName() + " decided to Yield its Turn!");
         cc.sendClientMessage("player/next");
     }
 
@@ -127,7 +128,7 @@ public class BotBehaviour implements Observer {
 
         AvailableActions.add("Yield");
 
-        Player current = gg.getPlayerController().getCurrentPlayer();
+        Player current = gameEngine.getPlayerController().getCurrentPlayer();
         ArrayList<PropertySquare> props = new ArrayList<PropertySquare>();
 
         if(current.getPropertySquares() != null)
@@ -173,14 +174,14 @@ public class BotBehaviour implements Observer {
     }
 
     private void semiIntelligentAction(String msg) {
-        Player current = gg.getPlayerController().getCurrentPlayer();
+        Player current = gameEngine.getPlayerController().getCurrentPlayer();
 
         System.out.println(current.getName() + " is thinking very hard right now, believe me.");
         if(msg.contains("buy"))
         {
             System.out.println(current.getName() + " sees that it can buy this place! Hmm, should it do that?");
             boolean doOthersHaveAnyPropertyFromThisColorGroup = false;
-            Square currentProp = gg.getDomainBoard().getSquareAt(current.getTargetPosition());
+            Square currentProp = gameEngine.getDomainBoard().getSquareAt(current.getTargetPosition());
             System.out.println("The property that " + current.getName() + " stands on right now is:   " + currentProp.getName());
             if(currentProp instanceof RailRoadTransitStationsSquare)
             {
@@ -207,7 +208,7 @@ public class BotBehaviour implements Observer {
                 else                                                            // Nobody bought any property from this color group, might be a valuable investment!
                 {
                     ArrayList<Player> others = new ArrayList<Player>();
-                    others.addAll(gg.getPlayerController().getPlayers());
+                    others.addAll(gameEngine.getPlayerController().getPlayers());
                     Iterator<Player> iter = others.iterator();
                     while (iter.hasNext())
                     {
@@ -248,8 +249,8 @@ public class BotBehaviour implements Observer {
     }
 
     private void tryImproving(Player current, String msg) {
-        boolean doIHaveAnyHousesAnywhere = false;
 
+        boolean doIHaveAnyHousesAnywhere = false;
         ArrayList<PropertySquare> props = new ArrayList<PropertySquare>();
 
         if(current.getPropertySquares() != null)
@@ -306,39 +307,6 @@ public class BotBehaviour implements Observer {
     }
 
 
-//    private void everythingElse(Player current) {
-//        int numberOfAvailableActions = 0;
-//
-//        Random rand = new Random();
-//
-//        if(current.getPropertySquares() != null) numberOfAvailableActions++;
-//        if(current.getCardList() != null) numberOfAvailableActions++;
-//
-//        if (numberOfAvailableActions == 0) yieldTurn();
-//        else if (numberOfAvailableActions == 1)
-//        {
-//            if(current.getPropertySquares() != null)
-//            {
-//                improveAction(current, props);
-//            }
-//            else if(current.getCardList() != null)
-//            {
-//                cardAction(current);
-//            }
-//        }
-//        else if(numberOfAvailableActions == 2)
-//        {
-//            int action = rand.nextInt(numberOfAvailableActions);
-//            if(action == 0) improveAction(current, props);
-//            else if (action == 1) cardAction(current);
-//            else throw new IllegalArgumentException("Undefined action.");
-//        }
-//        else
-//        {
-//            throw new IllegalArgumentException("Number of available actions exceeds its maximum possible value.");
-//        }
-//    }
-
     private void cardAction(Player current) {
         Random rand = new Random();
         ArrayList<Card> cards = current.getCardList();
@@ -359,14 +327,14 @@ public class BotBehaviour implements Observer {
         Random rand = new Random();
         PropertySquare randProp = props.get(rand.nextInt(props.size()));
         System.out.println(current.getName() + " decided to improve!");
-        //    cc.sendClientMessage("purchase");                 Will be added once improveProperty method for distant squares is added
+        gameEngine.improveSelectedProperty(randProp);
         yieldTurn();
     }
 
     private void improveAction(Player current, PropertySquare p)
     {
         System.out.println(current.getName() + " decided to improve!");
-        //    cc.sendClientMessage("purchase");                 Will be added once improveProperty method for distant squares is added
+        gameEngine.improveSelectedProperty(p);
         yieldTurn();
     }
 
