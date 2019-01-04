@@ -214,7 +214,6 @@ public class PropertySquare extends Square {
                 gameEngine.payRent(currentPlayer, this.getOwner() , this.getRent());
                 gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
             }
-            gameEngine.publishEvent("improve");
         }
 
     }

@@ -47,7 +47,7 @@ public class SaveLoadController {
             PlayerController playerController = PlayerController.getInstance();
             out.writeObject(playerController);
 
-            MoneyController moneyController = GameEngine.getInstance().getMoneyController();
+            MoneyController moneyController = MoneyController.getInstance();
             out.writeObject(moneyController);
 
             DomainBoard domainBoard = GameEngine.getInstance().getDomainBoard();

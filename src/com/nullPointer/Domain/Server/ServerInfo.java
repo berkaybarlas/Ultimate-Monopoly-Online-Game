@@ -3,7 +3,7 @@ package com.nullPointer.Domain.Server;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  ServerInfo {
+public class ServerInfo {
 
     private static ServerInfo _instance;
     private String serverIp;
@@ -44,7 +44,7 @@ public class  ServerInfo {
 
     public void removeClient(String clientId) {
         int clientIndex = clientList.indexOf(clientId);
-        if(clientIndex == -1){
+        if (clientIndex == -1) {
             return;
         }
         clientList.remove(clientIndex);
@@ -52,6 +52,12 @@ public class  ServerInfo {
 
     public List<String> getClientList() {
         return clientList;
+    }
+
+    public String next() {
+        if (clientList == null || clientList.size() < 2) return "";
+
+        return clientList.get(1);
     }
 
     public void setClientList(List<String> clientList) {

@@ -151,8 +151,10 @@ public class ServerWindow extends JPanel implements Observer {
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.removeClient(serverInfo.getClientID());
                 navigator.menuScreen();
+                communicationController.removeClient(serverInfo.getClientID());
+                communicationController.closeServer();
+
             }
         });
         panel.add(quitServer);
