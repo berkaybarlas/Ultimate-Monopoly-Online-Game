@@ -14,17 +14,10 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        PrintWriter out;
-        ObjectOutputStream oOut;
-        BufferedReader in;
-        Object inputLine, outputLine;
+        Object inputLine;
 
         try {
-            //out = new PrintWriter(clientSocket.getOutputStream(), true);
-            //in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
-            //oOut = new ObjectOutputStream(clientSocket.getOutputStream());
             oin = new ObjectInputStream(clientSocket.getInputStream());
-
 
             //bak
             // out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
@@ -38,6 +31,9 @@ class ClientHandler extends Thread {
             }
         } catch (IOException e) {
             System.out.println("[ClientHandler]: Exception caught when trying to listen on port ");
+            //
+            //delete client from list
+            //
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

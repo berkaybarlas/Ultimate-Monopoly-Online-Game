@@ -11,7 +11,6 @@ public class CommunityChestCardSquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		// make them draw some card? 
 		// maybe we can keep a community chest card deck here, and make the player draw a card and call its playCard()
 		// open to suggestions

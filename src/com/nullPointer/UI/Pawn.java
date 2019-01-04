@@ -95,4 +95,7 @@ public class Pawn implements Drawable {
         paint(g);
     }
 
+    public void delete() {
+        animator.deleteDrawable(this);
+    }
 }

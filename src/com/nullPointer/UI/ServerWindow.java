@@ -25,7 +25,7 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -40,6 +40,7 @@ public class ServerWindow extends JPanel implements Observer {
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
     private ArrayList<File> pawnFiles = new ArrayList<File>();
     private int cnt = 0;
+    private int countMod = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -150,8 +151,10 @@ public class ServerWindow extends JPanel implements Observer {
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.removeClient();
                 navigator.menuScreen();
+                communicationController.removeClient(serverInfo.getClientID());
+                communicationController.closeServer();
+
             }
         });
         panel.add(quitServer);
@@ -163,7 +166,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public List<ClientDisplay> createClientDisplay() {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
@@ -201,10 +204,8 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
+                Player player = new Player(textField.getText(), serverInfo.getClientID(),countMod);
                 communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
-//                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
                 textField.setText("Enter player name here!");
             }
         });
@@ -294,7 +295,9 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt++;
-                dispImg = new ImageIcon(pawnImages.get(cnt % pawnImages.size()));
+                countMod = cnt % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
+
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -305,7 +308,8 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt--;
-                dispImg = new ImageIcon(pawnImages.get((cnt + pawnImages.size()) % pawnImages.size()));
+                countMod = (cnt + pawnImages.size()) % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -326,7 +330,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addPlayerButton(Player player) {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
