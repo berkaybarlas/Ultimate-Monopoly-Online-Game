@@ -40,6 +40,7 @@ public class ServerWindow extends JPanel implements Observer {
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
     private ArrayList<File> pawnFiles = new ArrayList<File>();
     private int cnt = 0;
+    private int countMod = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -297,7 +298,9 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt++;
-                dispImg = new ImageIcon(pawnImages.get(cnt % pawnImages.size()));
+                countMod = cnt % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
+
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -308,7 +311,8 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt--;
-                dispImg = new ImageIcon(pawnImages.get((cnt + pawnImages.size()) % pawnImages.size()));
+                countMod = (cnt + pawnImages.size()) % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
