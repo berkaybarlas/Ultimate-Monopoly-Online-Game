@@ -16,6 +16,7 @@ public class Player implements Serializable {
     private int layer = 1;
     private int targetPosition = 56;
     private int money = 3200;
+    private boolean isBot = false;
     private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
     private ArrayList<PropertySquare> propertySquares;
     private ArrayList<UtilitySquare> utilityList;
@@ -24,6 +25,7 @@ public class Player implements Serializable {
     private boolean direction = true;
     private int rentMultiplier = 1;
     private LinkedList<Integer> path = null;
+    private int botBehaviourNumber = 15;
     private int placeHolder;
     
     private ArrayList<Roll3> roll3Cards = new ArrayList<Roll3>();
@@ -199,6 +201,23 @@ public class Player implements Serializable {
         return false;
     }
 
+
+    public boolean isBot()
+    {
+        return this.isBot;
+    }
+
+    public void setBot()
+    {
+        this.isBot = true;
+    }
+
+    public void setPerson()
+    {
+        this.isBot = false;
+    }
+
+
     @Override
     public String toString() {
         String playerProps = "";
@@ -212,7 +231,21 @@ public class Player implements Serializable {
         return "Name: " + this.getName() + "\n" +
                 "Money: " + this.getMoney() + "\n"+
                 "Properties: \n" + playerProps +
-                "Utilities: \n" + playerUtils;
+                "Utilities: \n" + playerUtils +
+                "Is Bot? \t" + ((isBot()) ? "yes\nBehaviour Index:\t" + getBotBehaviourNumber() : "no") + "\n";
+
     }
 
+    public int getBotBehaviourNumber() {
+        return botBehaviourNumber;
+    }
+
+    public void setBotBehaviourNumberManually(int botBehaviourNumber) {
+        this.botBehaviourNumber = botBehaviourNumber;
+    }
+
+    public void setBotBehaviourNumber() {
+        Random rand = new Random();
+        this.botBehaviourNumber = rand.nextInt(3) + 1;
+    }
 }

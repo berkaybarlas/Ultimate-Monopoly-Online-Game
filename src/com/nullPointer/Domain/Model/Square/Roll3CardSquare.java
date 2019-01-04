@@ -65,7 +65,9 @@ public class Roll3CardSquare extends Square {
                 }
             }
         }
+        gameEngine.publishEvent("empty");
     }
+
 
     private int checkRoll3ForAPlayer(Player player, ArrayList<Integer> diceValues) {
         int total = 0;

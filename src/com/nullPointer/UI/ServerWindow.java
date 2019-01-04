@@ -25,7 +25,8 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
+    private int botCounter = 0;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton, addBot;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -205,6 +206,20 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Player player = new Player(textField.getText(), serverInfo.getClientID(),countMod);
+                player.setPerson();         // Just to make sure it doesn't come out as a bot
+                communicationController.sendClientMessage(player);
+                textField.setText("Enter player name here!");
+            }
+        });
+
+        addBot = new CustomButton("Add Bot");
+        addBot.setPreferredSize(new Dimension(230, buttonHeight));
+        addBot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Player player = new Player("bot" + ++botCounter, serverInfo.getClientID(),cnt);
+                player.setBot();
+                player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
                 communicationController.sendClientMessage(player);
                 textField.setText("Enter player name here!");
             }
@@ -215,6 +230,7 @@ public class ServerWindow extends JPanel implements Observer {
         cPanel.add(pPanel);
         cPanel.add(rightButton);
         cPanel.add(addPlayer);
+        cPanel.add(addBot);
         this.add(scrollPane);
         this.add(cPanel);
     }

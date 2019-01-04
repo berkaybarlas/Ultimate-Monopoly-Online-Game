@@ -20,6 +20,7 @@ public class ReverseDirectionSquare extends Square {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		currentPlayer.setDirection(!gameEngine.getPlayerController().getCurrentPlayer().getDirection());
 		// Moving the player should be done according to the direction boolean.
+		gameEngine.publishEvent("empty");
 	}
 
 }

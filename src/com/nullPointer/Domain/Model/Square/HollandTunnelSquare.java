@@ -11,6 +11,7 @@ public class HollandTunnelSquare extends Square {
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
+		gameEngine.publishEvent("empty");
 	}
 
 }

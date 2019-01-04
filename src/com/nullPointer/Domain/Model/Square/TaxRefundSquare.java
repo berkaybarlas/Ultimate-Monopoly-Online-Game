@@ -18,6 +18,7 @@ public class TaxRefundSquare extends Square {
 		Player currentPlayer = PlayerController.getInstance().getCurrentPlayer();
 		int poolMoney =  moneyController.getPoolMoney();
 		moneyController.increaseMoney(currentPlayer,poolMoney/2);
+		gameEngine.publishEvent("empty");
 	}
 
 }

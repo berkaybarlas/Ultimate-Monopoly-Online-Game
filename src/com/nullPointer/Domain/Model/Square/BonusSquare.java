@@ -21,6 +21,7 @@ public class BonusSquare extends Square {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		MoneyController.getInstance().increaseMoney(currentPlayer, 300);
 		
+		gameEngine.publishEvent("empty");
 	}
 
 	/**
