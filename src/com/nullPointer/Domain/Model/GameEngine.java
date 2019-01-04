@@ -373,7 +373,7 @@ public class GameEngine {
 
 	public boolean isMyTurn() {
 		Player player = playerController.getCurrentPlayer();
-		if (player != null && (player.getClientID() == serverInfo.getClientID())) {
+		if (player != null && (player.getClientID().equals(serverInfo.getClientID()))) {
 			return true;
 		}
 		return false;
