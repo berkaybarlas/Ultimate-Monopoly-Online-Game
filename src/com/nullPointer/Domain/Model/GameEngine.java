@@ -304,9 +304,11 @@ public class GameEngine {
 		return playerController;
 	}
 
-	public MoneyController getMoneyController() {
-		return moneyController;
-	}
+    public void removeClient(String clientId) {
+        serverInfo.removeClient(clientId);
+        publishEvent("newClient");
+    }
+
 
 	/**
 	 * @param player, owner, amount
