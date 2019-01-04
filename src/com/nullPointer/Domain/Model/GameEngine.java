@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
  * Most of the game logic related operations are done by this class and other components are
@@ -212,16 +215,16 @@ public class GameEngine {
 	public void improveProperty() {
 
 		while(getChosenSquareIndex() == -1){
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		Player currentPlayer = playerController.getCurrentPlayer();
 		Square square = domainBoard.getSquareAt(getChosenSquareIndex());
 
-		if(square.getType() == "PropertySquare"){
+		if(square.getType().equals("PropertySquare")){
 
 			PropertySquare propertySquare = ((PropertySquare) square);
 			HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();

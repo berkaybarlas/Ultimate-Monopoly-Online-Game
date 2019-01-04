@@ -70,7 +70,7 @@ public class MessageBox extends JPanel implements Observer {
     @Override
     public void onEvent(String message) {
         if(message.contains("message/")){
-            addMessage(message.substring("message/".length()+1));
+            addMessage(message.substring("message/".length()));
         }
     }
 }
