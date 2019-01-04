@@ -203,9 +203,11 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
-                communicationController.sendClientMessage(player);
-                textField.setText("Enter player name here!");
+                if(!textField.getText().equals("Enter player name here!") && !textField.getText().equals("")) {
+                    Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
+                    communicationController.sendClientMessage(player);
+                    textField.setText("Enter player name here!");
+                }
             }
         });
         initSelectionButtons();
@@ -234,6 +236,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void mousePressed(MouseEvent e) {
                 textField.setText("");
             }
+
         });
     }
 
