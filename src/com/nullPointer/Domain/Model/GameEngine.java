@@ -309,9 +309,6 @@ public class GameEngine {
         publishEvent("newClient");
     }
 
-    public PlayerController getPlayerController() {
-        return playerController;
-    }
 
 	/**
 	 * @param player, owner, amount
@@ -382,13 +379,9 @@ public class GameEngine {
 		return false;
 	}
 
-    public boolean isMyTurn() {
-        Player player = playerController.getCurrentPlayer();
-        if (player != null && (player.getClientID().equals(serverInfo.getClientID()))) {
-            return true;
-        }
-        return false;
-    }
+	public void save() {
+		publishEvent("save");
+	}
 
 	public void setCurrentPlayer(Player p) {
 		playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
