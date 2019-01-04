@@ -90,13 +90,6 @@ public class GameEngine {
 		publishEvent("rollDice");
 	}
 
-	//    public void movePlayer() {                old code
-	//        publishEvent("refresh");
-	//        Player currentPlayer = playerController.getCurrentPlayer();
-	//        playerController.movePlayer(calculateMoveAmount(), domainBoard.getSquaresInLayer(currentPlayer.getLayer()).size());
-	//        evaluateSquare();
-	//    }
-
 	public LinkedList<Integer> calculatePath() {
 		publishEvent("refresh");
 		LinkedList<Integer> path = new LinkedList<Integer>();
@@ -350,7 +343,6 @@ public class GameEngine {
 		Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
 		square.evaluateSquare(this);
 		if(square.getType() !="ChanceCardSquare" && square.getType() != "CommunityChestCardSquare"){
-			System.out.println(square.getType());
 			publishEvent("endTurn");
 		}
 	}
