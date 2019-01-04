@@ -215,26 +215,28 @@ public class GameEngine {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		Player currentPlayer = playerController.getCurrentPlayer();
 		Square square = domainBoard.getSquareAt(getChosenSquareIndex());
+
 		if(square.getType() == "PropertySquare"){
-			PropertySquare pS = ((PropertySquare) square);
+
+			PropertySquare propertySquare = ((PropertySquare) square);
 			HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
+
 			if(propertyCardsMap !=null){
-				if(propertyCardsMap.get(pS.getColor()) !=null){
-					if(!pS.hasHotel() && !pS.hasSkyscraper() && pS.numHouses()!=4){
-						if(propertyCardsMap.get(pS.getColor()).size()>=2){
-							pS.improve();
+				if(propertyCardsMap.get(propertySquare.getColor()) !=null){
+					if(!propertySquare.hasHotel() && !propertySquare.hasSkyscraper() && propertySquare.numHouses()!=4){
+						if(propertyCardsMap.get(propertySquare.getColor()).size()>=2){
+							propertySquare.improve();
 							publishEvent("improve");
 						}
 					}
-					else if(pS.hasHotel() || pS.numHouses()==4){
-						if(propertyCardsMap.get(pS.getColor()).size()==3){
-							pS.improve();
+					else if(propertySquare.hasHotel() || propertySquare.numHouses()==4){
+						if(propertyCardsMap.get(propertySquare.getColor()).size()>=3){
+							propertySquare.improve();
 							publishEvent("improve");
 						}
 					}
@@ -242,8 +244,6 @@ public class GameEngine {
 			}	
 		}
 		chosenSquareIndex =-1;
-		publishEvent("endTurn");
-
 	}
 
 	/**
