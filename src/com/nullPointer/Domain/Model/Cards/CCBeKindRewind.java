@@ -6,13 +6,12 @@ public class CCBeKindRewind extends CommunityChestCard {
 
 	public CCBeKindRewind(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

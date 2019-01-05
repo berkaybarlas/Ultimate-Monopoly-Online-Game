@@ -1,13 +1,18 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
+import com.nullPointer.Domain.Model.Square.PropertySquare;
+import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +25,6 @@ public class Board extends JPanel implements Observer {
 
     private Point position;
     private int length;
-    private int sleepTime = 3;
     private List<Pawn> pawnList;
     private List<Player> playerList = new ArrayList<>();
 
@@ -29,9 +33,16 @@ public class Board extends JPanel implements Observer {
 
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
-    //new added things below
     private HashMap<Integer, Point[]> squareMap = new HashMap<Integer, Point[]>();
     private ArrayList<Integer> currentPath = new ArrayList<Integer>();
+    private ArrayList<File> pawnFiles = new ArrayList<File>();
+    private File P1Src = new File("./assets/pawns/hat.png");
+    private File P2Src = new File("./assets/pawns/iron.png");
+    private File P3Src = new File("./assets/pawns/rende.png");
+    private File P4Src = new File("./assets/pawns/car.png");
+    private File P5Src = new File("./assets/pawns/ship.png");
+    private File P6Src = new File("./assets/pawns/boot.png");
+
     public static Board instance;
 
     public ArrayList<Integer> getCurrentPath() {
@@ -61,17 +72,33 @@ public class Board extends JPanel implements Observer {
         setPreferredSize(new Dimension(length, length));
 
         pawnList = new ArrayList<>();
-
+        pawnFiles.add(P1Src);
+        pawnFiles.add(P2Src);
+        pawnFiles.add(P3Src);
+        pawnFiles.add(P4Src);
+        pawnFiles.add(P5Src);
+        pawnFiles.add(P6Src);
         smallSide = length / 17;
         initialPosition = new Point(14 * smallSide - 20, 14 * smallSide - 20);
-
         gameEngine.subscribe(this);
         initializeSquarePositions();
+
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point clicked = new Point(e.getX(), e.getY());
+                int squareIndex = findSquare(clicked);
+                gameEngine.setChosenSquareIndex(squareIndex);
+            }
+        });
     }
-    private Point[] createPointArray(Point startRightBottom, Point startLeftTop){
-    	return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
+
+    private Point[] createPointArray(Point startRightBottom, Point startLeftTop) {
+        return new Point[]{new Point(startRightBottom.x, startRightBottom.y),
                 new Point(startLeftTop.x, startLeftTop.y)};
     }
+
     public void initializeSquarePositions() {
         int x = smallSide;
         Point startRightBottom = new Point(17 * x, 17 * x);
@@ -236,43 +263,88 @@ public class Board extends JPanel implements Observer {
         squareMap.put(119, createPointArray(startRightBottom, startLeftTop));
     }
 
-//    public void initializePawns() {
-//        playerList = playerController.getPlayers();
-//        playerList.forEach(player -> addNewPawn(player));
-//    }
+    public void initializePawns() {
+        pawnList.forEach(pawn -> {
+            pawn.delete();
+            pawn = null;
+        } );
+        pawnList = new ArrayList<>();
+        playerList = playerController.getPlayers();
+        playerList.forEach(player -> addNewPawn(player, pawnFiles.get(player.getPlaceHolder())));
+        repaint();
+    }
 
 
     public void paint(Graphics g) {
         //g.setColor(color);
         g.fillRect(position.x, position.y, length, length);
         g.drawImage(image, position.x, position.y, length, length, null);
-        g.setColor(Color.RED);
 
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[0].x, entry.getValue()[0].y,20, 20);
-			g.setColor(Color.CYAN);
-		}*/
-		/*for (Entry<Integer, Point[]> entry : squareMap.entrySet())
-		{
-			g.fillOval(entry.getValue()[1].x, entry.getValue()[1].y,20, 20);
-			g.setColor(Color.GREEN);
-		}*/
-        //pawnList.forEach(pawn -> pawn.paint(g));
+        drawBuildings(g);
+    }
+
+    public void drawBuildings(Graphics g) {
+        for (int i = 0; i < 120; i++) {
+            Square currentSquare = gameEngine.getDomainBoard().getSquareAt(i);
+            if (currentSquare.getType().equals("PropertySquare")) {
+                int numHouses = ((PropertySquare) currentSquare).numHouses();
+                boolean hasHotel = ((PropertySquare) currentSquare).hasHotel();
+                boolean hasSkyscraper = ((PropertySquare) currentSquare).hasSkyscraper();
+                Point[] points = squareMap.get(i);
+                Point center = new Point((points[0].x + points[1].x) / 2,
+                        (points[0].y + points[1].y) / 2);
+                if (numHouses != 0) {
+                    if (numHouses == 1)
+                        g.fillOval(center.x, center.y, 5, 5);
+                    else if (numHouses == 2) {
+                        g.fillOval(center.x, center.y, 5, 5);
+                        g.fillOval(center.x - 6, center.y, 5, 5);
+                    } else if (numHouses == 3) {
+                        g.fillOval(center.x, center.y, 5, 5);
+                        g.fillOval(center.x - 6, center.y, 5, 5);
+                        g.fillOval(center.x - 12, center.y, 5, 5);
+                    } else if (numHouses == 4) {
+                        g.fillOval(center.x, center.y, 5, 5);
+                        g.fillOval(center.x - 6, center.y, 5, 5);
+                        g.fillOval(center.x - 12, center.y, 5, 5);
+                        g.fillOval(center.x - 18, center.y, 5, 5);
+                    }
+                } else if (hasHotel)
+                    g.fillOval(center.x, center.y, 10, 10);
+                else if (hasSkyscraper)
+                    g.fillOval(center.x, center.y, 20, 20);
+            }
+        }
     }
 
     public void addNewPawn(Player player, File file) {
-        pawnList.add(new Pawn(initialPosition, player, file));
+
+        int xCoord = (squareMap.get(player.getTargetPosition())[0].x + squareMap.get(player.getTargetPosition())[1].x) / 2;
+        int yCoord = (squareMap.get(player.getTargetPosition())[0].y + squareMap.get(player.getTargetPosition())[1].y) / 2;
+
+        Point position = new Point(xCoord, yCoord);
+
+        pawnList.add(new Pawn(position, player, file));
+        repaint();
     }
 
     @Override
     public void onEvent(String message) {
         if (message.equals("initializePawns")) {
-//            initializePawns();
+            initializePawns();
             repaint();
         } else if (message.contains("path")) {
             proccessPath(message);
             pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
+        } else if (message.contains("teleport")) {
+            currentPath.clear();
+            currentPath.add(playerController.getCurrentPlayer().getTargetPosition());
+            playerController.getCurrentPlayer().setPosition(playerController.getCurrentPlayer().getTargetPosition());
+            pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
+        } else if (message.contains("refresh")) {
+            repaint();
+        } else if (message.contains("improve/")) {
+            CommunicationController.getInstance().sendClientMessage(message);
         }
     }
 
@@ -286,5 +358,22 @@ public class Board extends JPanel implements Observer {
             path.add(Integer.parseInt(string));
         }
         currentPath = path;
+    }
+
+
+    private int findSquare(Point p) {
+        for (int i = 0; i < squareMap.keySet().size(); i++) {
+            Point rightBottom = squareMap.get(i)[0];
+            Point leftTop = squareMap.get(i)[1];
+            int rightBottomX = rightBottom.x;
+            int rightBottomY = rightBottom.y;
+            int leftTopX = leftTop.x;
+            int leftTopY = leftTop.y;
+            int x = p.x;
+            int y = p.y;
+            if (x > leftTopX && x < rightBottomX && y > leftTopY && y < rightBottomY)
+                return i;
+        }
+        return -1;
     }
 }

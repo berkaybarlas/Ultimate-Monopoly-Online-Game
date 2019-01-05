@@ -61,7 +61,7 @@ public class ResponseController {
         try {
             System.out.println("[ResponseController]:" + "trying to send object.");
             outObject = listenerClientOutputs.get(indexOfClient);
-            List<Integer> clientList = serverInfo.getClientList();
+            List<String> clientList = serverInfo.getClientList();
             outObject.writeObject(clientList);
             //outObject.writeObject(PlayerController.getInstance());
             outObject.writeObject(playerController);
@@ -70,9 +70,33 @@ public class ResponseController {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("[ResponseController]:" + "sending object failed.");
+            outObject.close();
+            listenerClients.remove(indexOfClient);
         } finally {
-            // outObject.close();
             System.out.println("[ResponseController]:" + "sending object finished.");
+        }
+    }
+
+    public void closeConnections() {
+        if (listenerClientOutputs != null) {
+            listenerClientOutputs.forEach(out -> {
+                try {
+                    out.close();
+                    listenerClientOutputs.remove(out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        if(listenerClients != null){
+            listenerClients.forEach(socket -> {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 }

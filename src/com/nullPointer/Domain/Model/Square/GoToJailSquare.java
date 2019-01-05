@@ -5,7 +5,7 @@ public class GoToJailSquare extends Square {
 
 	public GoToJailSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -19,6 +19,6 @@ public class GoToJailSquare extends Square {
 		// TODO Auto-generated method stub
 		gameEngine.getPlayerController().putInJail();
 		// also need a method to put the player on Jail square.
-
+		gameEngine.publishEvent("empty");
 	}
 }

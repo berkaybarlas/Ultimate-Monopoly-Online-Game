@@ -6,15 +6,14 @@ public class JailSquare extends Square {
 
 	public JailSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		System.out.println("jailSquare" + currentPlayer.getName() + " " + currentPlayer.getPosition());
-
-		gameEngine.nextTurn();
+		gameEngine.publishEvent("empty");
 	}
 
 }

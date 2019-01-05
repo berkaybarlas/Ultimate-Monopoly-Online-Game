@@ -10,7 +10,7 @@ public class UtilitySquare extends Square {
 	public UtilitySquare(String n, String t, int p) {
 		super(n, t);
 		this.price = p;
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int calculateRent(int diceVal) {
@@ -43,7 +43,6 @@ public class UtilitySquare extends Square {
 		} else {
 			int diceVal = gameEngine.getRegularDie().getLastValues().get(0) + gameEngine.getRegularDie().getLastValues().get(1) + gameEngine.getSpeedDie().getLastValues().get(0);
 			gameEngine.payRent(currentPlayer, this.getOwner(), calculateRent(diceVal));
-			gameEngine.nextTurn();
 		}
 		
 	}

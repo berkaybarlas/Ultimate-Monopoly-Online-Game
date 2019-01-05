@@ -25,7 +25,8 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
+    private int botCounter = 0;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -40,6 +41,7 @@ public class ServerWindow extends JPanel implements Observer {
     private ArrayList<Image> pawnImages = new ArrayList<Image>();
     private ArrayList<File> pawnFiles = new ArrayList<File>();
     private int cnt = 0;
+    private int countMod = 0;
     private int buttonHeight = 40;
     private int buttonWidth = 180;
 
@@ -67,6 +69,8 @@ public class ServerWindow extends JPanel implements Observer {
     private File logoSrc = new File("./assets/monopoly_logo.png");
 
     JLabel back, buffer, logoIcon;
+
+    private boolean botBox = false;
 
     public ServerWindow() {
 
@@ -118,6 +122,7 @@ public class ServerWindow extends JPanel implements Observer {
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startServer();
+                System.out.println("Game started with " + GameEngine.getInstance().getPlayerController().getPlayers().size() + " players.");
                 //navigator.gameScreen();
             }
         });
@@ -149,8 +154,10 @@ public class ServerWindow extends JPanel implements Observer {
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.removeClient();
                 navigator.menuScreen();
+                communicationController.removeClient(serverInfo.getClientID());
+                communicationController.closeServer();
+
             }
         });
         panel.add(quitServer);
@@ -162,7 +169,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public List<ClientDisplay> createClientDisplay() {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
@@ -200,15 +207,38 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID());
-                communicationController.sendClientMessage(player);
-                //navigator.gameScreen();
-                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
-                textField.setText("Enter player name here!");
+                if (textField.getText() != null && !textField.getText().equals("Enter player name here!") && !textField.getText().equals("")) {
+                    Player player = new Player(textField.getText(), serverInfo.getClientID(), cnt);
+                    player.setPerson();
+                    if (botBox) {
+                        player.setBot();
+                        player.setClientID("bot");
+                        player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
+                    }
+                    communicationController.sendClientMessage(player);
+                    textField.setText("Enter player name here!");
+                }
             }
         });
+        JPanel checkBox = new JPanel();
+        checkBox.setPreferredSize(new Dimension(230, 30));
+        checkBox.setOpaque(false);
+
+        JCheckBox botCheckBox = new JCheckBox("Bot player");
+        botCheckBox.setFont(new Font("Tahoma", Font.BOLD, 20));
+        botCheckBox.setForeground(ColorSet.ButtonPrimary);
+        botCheckBox.setIcon(new SimpleCheckboxStyle(20));
+        botCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //  Player player = new Player("bot" + ++botCounter, serverInfo.getClientID(), cnt)
+                botBox = !botBox;
+            }
+        });
+        checkBox.add(botCheckBox, BorderLayout.WEST);
+
         initSelectionButtons();
         cPanel.add(textField);
+        cPanel.add(checkBox);
         cPanel.add(leftButton);
         cPanel.add(pPanel);
         cPanel.add(rightButton);
@@ -233,6 +263,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void mousePressed(MouseEvent e) {
                 textField.setText("");
             }
+
         });
     }
 
@@ -293,7 +324,9 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt++;
-                dispImg = new ImageIcon(pawnImages.get(cnt % pawnImages.size()));
+                countMod = cnt % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
+
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -304,7 +337,8 @@ public class ServerWindow extends JPanel implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cnt--;
-                dispImg = new ImageIcon(pawnImages.get((cnt + pawnImages.size()) % pawnImages.size()));
+                countMod = (cnt + pawnImages.size()) % pawnImages.size();
+                dispImg = new ImageIcon(pawnImages.get(countMod));
                 buffer.setIcon(dispImg);
                 validate();
                 repaint();
@@ -325,19 +359,17 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addPlayerButton(Player player) {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 player.setClientID(serverInfo.getClientID());
-                // Simdilik haznede gosterilen pawn'i aliyor ama o oyuncunun pawnina cevrilmesi lazim.
-                // Ayrica basladigi konumun da duzeltilmesi lazim.
-                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt));
+                player.setPerson();
                 communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });
         int clientPosition = clientList.indexOf(player.getClientID());
-        if (clientPosition == -1 ) {
+        if (clientPosition == -1) {
             clientPosition = 12;
             /**
              *
@@ -345,7 +377,7 @@ public class ServerWindow extends JPanel implements Observer {
              * this client does not exits if nobody choose this player it should be bot automaticly
              *
              *
-            */ //hata
+             */ //hata
         }
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientPosition));
         newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));
@@ -364,15 +396,6 @@ public class ServerWindow extends JPanel implements Observer {
         if (pList.size() > 0) {
             Player player = pList.get(pList.size() - 1);
             addPlayerButton(player);
-        }
-    }
-
-    public void addOtherPlayers() {
-        if (bList.size() == 0) {
-            ArrayList<Player> pList = playerController.getPlayers();
-            for (Player player : pList) {
-                addPlayerButton(player);
-            }
         }
     }
 
@@ -429,5 +452,59 @@ class ClientDisplay {
         g2.drawString(clientName, position.x + 50, position.y + height / 2);
         g2.setStroke(new BasicStroke(2.0F));
         g2.drawRoundRect(position.x, position.y, width, height, 5, 5);
+    }
+}
+
+class SimpleCheckboxStyle implements Icon {
+
+    int dimension = 10;
+
+    public SimpleCheckboxStyle(int dimension) {
+        this.dimension = dimension;
+    }
+
+    protected int getDimension() {
+        return dimension;
+    }
+
+    public void paintIcon(Component component, Graphics g, int x, int y) {
+        ButtonModel buttonModel = ((AbstractButton) component).getModel();
+
+        int y_offset = (int) (component.getSize().getHeight() / 2) - (int) (getDimension() / 2);
+        int x_offset = 2;
+
+        if (buttonModel.isRollover()) {
+            g.setColor(new Color(0, 60, 120));
+        } else if (buttonModel.isRollover()) {
+            g.setColor(Color.BLACK);
+        } else {
+            g.setColor(Color.DARK_GRAY);
+        }
+
+        g.setColor(ColorSet.ButtonPrimary);
+        int fontsize = 20;
+        g.fillRect(x_offset, y_offset, fontsize, fontsize);
+
+        if (buttonModel.isPressed()) {
+            g.setColor(ColorSet.ButtonPrimary);
+        } else if (buttonModel.isRollover()) {
+            g.setColor(new Color(240, 240, 250));
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.fillRect(1 + x_offset, y_offset + 1, fontsize - 2, fontsize - 2);
+        if (buttonModel.isSelected()) {
+            int r_x = 1;
+            g.setColor(ColorSet.ButtonPrimary);
+            g.fillRect(x_offset + r_x + 3, y_offset + 3 + r_x, fontsize - (7 + r_x), fontsize - (7 + r_x));
+        }
+    }
+
+    public int getIconWidth() {
+        return getDimension();
+    }
+
+    public int getIconHeight() {
+        return getDimension();
     }
 }

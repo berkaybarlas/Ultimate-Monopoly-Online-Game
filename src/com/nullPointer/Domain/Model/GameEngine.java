@@ -25,23 +25,10 @@ public class GameEngine {
     private PlayerController playerController = PlayerController.getInstance();
     private MoneyController moneyController = MoneyController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
-    private static int ownedUtilities = 0;
     private DomainBoard domainBoard;
-    private boolean gameIsPaused = false;
+    private boolean paused = false;
     private boolean roll3 = false;
-
-    public boolean getRoll3() {
-        return roll3;
-    }
-
-    public void setRoll3(boolean set) {
-        roll3 = set;
-    }
-
-    public DomainBoard getDomainBoard() {
-        return domainBoard;
-    }
-
+    private int chosenSquareIndex = -1;
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -56,6 +43,30 @@ public class GameEngine {
         return _instance;
     }
 
+    public void setSquareUnselected() {
+        this.chosenSquareIndex = -1;
+    }
+
+    public void setChosenSquareIndex(int squareIndex) {
+        this.chosenSquareIndex = squareIndex;
+    }
+
+    public int getChosenSquareIndex() {
+        return chosenSquareIndex;
+    }
+
+    public boolean getRoll3() {
+        return roll3;
+    }
+
+    public void setRoll3(boolean set) {
+        roll3 = set;
+    }
+
+    public DomainBoard getDomainBoard() {
+        return domainBoard;
+    }
+
     public void subscribe(Observer observer) {
         observers.add(observer);
     }
@@ -64,7 +75,7 @@ public class GameEngine {
         observers.forEach(listener -> listener.onEvent(message));
     }
 
-    public void initPlayers(int playerNumber) {
+    public void initPlayers() {
         publishEvent("initializePawns");
         publishEvent("initializePlayers");
     }
@@ -77,16 +88,9 @@ public class GameEngine {
 
     public void startGame() {
         publishEvent("screen/gameScreen");
-        initPlayers(2);
+        initPlayers();
         publishEvent("rollDice");
     }
-
-    //    public void movePlayer() {                old code
-    //        publishEvent("refresh");
-    //        Player currentPlayer = playerController.getCurrentPlayer();
-    //        playerController.movePlayer(calculateMoveAmount(), domainBoard.getSquaresInLayer(currentPlayer.getLayer()).size());
-    //        evaluateSquare();
-//    }
 
     public LinkedList<Integer> calculatePath() {
         publishEvent("refresh");
@@ -188,31 +192,109 @@ public class GameEngine {
 
         if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
             if (type.equals("CommunityChestCardSquare")) {
-                card = domainBoard.getCCCards().element();
+                card = domainBoard.getCCCards().remove();
             } else if (type.equals("ChanceCardSquare")) {
-                card = domainBoard.getChanceCards().element();
+                card = domainBoard.getChanceCards().remove();
             } else {
-                card = domainBoard.getRoll3Cards().element();
+                card = domainBoard.getRoll3Cards().remove();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
             if (card.getImmediate()) {
                 card.playCard(this);
+                if (type.equals("CommunityChestCardSquare")) {
+                    domainBoard.getCCCards().add(card);
+                } else if (type.equals("ChanceCardSquare")) {
+                    domainBoard.getChanceCards().add(card);
+                } else {
+                    domainBoard.getRoll3Cards().add(card);
+                }
                 System.out.println();
             } else {
                 playerController.addCardToCurrentPlayer(card);
             }
-            //nextTurn();
+            publishEvent("endTurn");
         } else {
             System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
         }
     }
 
-    public void improveProperty() {
+    public void downgradeProperty(int propertySquareIndex) {
+        Square currentSquare = getDomainBoard().getSquareAt(propertySquareIndex);
+        PropertySquare propertySquare = ((PropertySquare) currentSquare);
+        if (propertySquare.isOwned()) {
+            if (propertySquare.numHouses() > 0 || propertySquare.hasHotel() || propertySquare.hasSkyscraper())
+                propertySquare.downgrade();
+        }
+        setSquareUnselected();
+        publishEvent("refresh");
+    }
+
+    public void improveProperty(int propertySquareIndex) {
+        Square square = domainBoard.getSquareAt(propertySquareIndex);
+        PropertySquare propertySquare = ((PropertySquare) square);
+        System.out.println("Chose "+propertySquare.getName());
+        Player currentPlayer = playerController.getCurrentPlayer();
+        MoneyController.getInstance().decreaseMoney(currentPlayer,propertySquare.getRentList()[8]);
+        propertySquare.improve();
+        setSquareUnselected();
+        publishEvent("refresh");
+    }
+
+    public boolean tryImproveProperty() {
+        if (!isMyTurn()) {
+            return false;
+        }
+
+        while (chosenSquareIndex == -1) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException er) {
+                er.printStackTrace();
+            }
+        }
 
         Player currentPlayer = playerController.getCurrentPlayer();
-        Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
-        ((PropertySquare) square).improve();
+        Square square = domainBoard.getSquareAt(getChosenSquareIndex());
 
+        if (square.getType().equals("PropertySquare")) {
+
+            PropertySquare propertySquare = ((PropertySquare) square);
+            HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
+
+            if (propertyCardsMap != null) {
+                if (propertyCardsMap.get(propertySquare.getColor()) != null) {
+                    if (!propertySquare.hasHotel() && !propertySquare.hasSkyscraper() && propertySquare.numHouses() != 4) {
+                        if (propertyCardsMap.get(propertySquare.getColor()).size() >= 2) {
+                            publishEvent("improve/" + chosenSquareIndex);
+                            return true;
+                        }
+                    } else if (propertySquare.hasHotel() || propertySquare.numHouses() == 4) {
+                        if (propertyCardsMap.get(propertySquare.getColor()).size() >= 3) {
+                            publishEvent("improve/" + chosenSquareIndex);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        setSquareUnselected();
+        return false;
+    }
+
+    public void improveSelectedProperty(PropertySquare p)    // This is added only for bots to use
+    {
+        Player currentPlayer = playerController.getCurrentPlayer();
+        HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
+        if (!p.hasHotel() && !p.hasSkyscraper() && p.numHouses() != 4) {
+            p.improve();
+            publishEvent("improve");
+        } else if (p.hasHotel() || p.numHouses() == 4) {
+            if (propertyCardsMap.get(p.getColor()).size() == 3) {
+                p.improve();
+                publishEvent("improve");
+            }
+        }
     }
 
     /**
@@ -245,12 +327,10 @@ public class GameEngine {
                 utilitySquare.setOwner(currentPlayer);
             }
         }
-        nextTurn();
     }
 
     public void nextTurn() {
         playerController.nextPlayer();
-
         publishEvent("rollDice");
         publishEvent("refresh");
     }
@@ -268,9 +348,11 @@ public class GameEngine {
         return playerController;
     }
 
-    public MoneyController getMoneyController() {
-        return moneyController;
+    public void removeClient(String clientId) {
+        serverInfo.removeClient(clientId);
+        publishEvent("newClient");
     }
+
 
     /**
      * @param player, owner, amount
@@ -288,7 +370,6 @@ public class GameEngine {
         } else {
             moneyController.increaseMoney(owner, amount);
         }
-        nextTurn();
     }
 
     public RegularDie getRegularDie() {
@@ -304,7 +385,6 @@ public class GameEngine {
     }
 
     public void playCard() {
-        // TODO Auto-generated method stub
 
     }
 
@@ -312,6 +392,9 @@ public class GameEngine {
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
+        if (square.getType() != "ChanceCardSquare" && square.getType() != "CommunityChestCardSquare") {
+            publishEvent("endTurn");
+        }
     }
 
     public void loadData() {
@@ -319,32 +402,34 @@ public class GameEngine {
     }
 
     public void resume() {
-        gameIsPaused = false;
+        paused = false;
         System.out.println("Game Engine: Game resumed");
         publishEvent("resume");
     }
 
     public void pause() {
-        gameIsPaused = true;
+        paused = true;
         System.out.println("Game Engine: Game paused");
         publishEvent("pause");
     }
 
-    public boolean isMyTurn() {
-        Player player = playerController.getCurrentPlayer();
-        if (player != null && (player.getClientID() == serverInfo.getClientID())) {
-            return true;
-        }
-        return false;
+    public boolean isPaused() {
+        return paused;
     }
 
-    public boolean amIBot()
-    {
-        Player current = playerController.getCurrentPlayer();
-        if (current != null && current.isBot())
-        {
+    public boolean isMyTurn() {
+        Player player = playerController.getCurrentPlayer();
+        if (player == null) {
+            return false;
+        }
+        if (player.getClientID().equals(serverInfo.getClientID())) {
             return true;
         }
+
+        if (!serverInfo.isOnline(player.getClientID()) && serverInfo.isServer()) {
+            return true;
+        }
+
         return false;
     }
 
@@ -354,6 +439,21 @@ public class GameEngine {
 
     public void setCurrentPlayer(Player p) {
         playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
+    }
+
+    public boolean isBot() {
+        Player currentPlayer = playerController.getCurrentPlayer();
+        if (currentPlayer == null) {
+            return false;
+        }
+        if (currentPlayer != null && currentPlayer.isBot()) {
+            return true;
+        }
+        if (!serverInfo.isOnline(currentPlayer.getClientID())) {
+            currentPlayer.setBot();
+            return true;
+        }
+        return false;
     }
 
     public String toString() {

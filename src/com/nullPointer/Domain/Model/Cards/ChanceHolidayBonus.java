@@ -12,7 +12,7 @@ public class ChanceHolidayBonus extends ChanceCard {
 
 	public ChanceHolidayBonus(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

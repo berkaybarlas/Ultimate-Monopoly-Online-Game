@@ -37,7 +37,7 @@ public class PlayerController implements Serializable {
     }
 
     public Player getCurrentPlayer() {
-        if (players.size() > 0) {
+        if (players.size() > 0 && currentPlayer < players.size()) {
             return players.get(currentPlayer);
         }
         return null;
@@ -58,8 +58,11 @@ public class PlayerController implements Serializable {
      * @effects Updates currentPlayer by setting it to currentPlayer+1 (mod size(players)) & returns the next {@code Player} object.
      */
     public Player nextPlayer() {
-        currentPlayer = (currentPlayer + 1) % players.size();
-        return players.get(currentPlayer);
+    	if(players.size()>0) {
+    		currentPlayer = (currentPlayer + 1) % players.size();
+    	}
+    	return players.get(currentPlayer);
+    	
     }
 
     /**
@@ -95,7 +98,7 @@ public class PlayerController implements Serializable {
     }
 
     public void increaseCurrentPosition(Player player) {
-        player.setPosition((player.getPosition() + 1) % 40);
+        player.setPosition((player.getPosition() + 1) % 120);
     }
 
     public void removeProperty(PropertySquare propertySquare) {
@@ -116,6 +119,10 @@ public class PlayerController implements Serializable {
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+    
+	public void removePlayer(Player player) {
+    	players.remove(player);
     }
 
     public void addCardToCurrentPlayer(Card card) {

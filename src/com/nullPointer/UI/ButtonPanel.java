@@ -18,16 +18,10 @@ public class ButtonPanel extends JPanel {
     protected JButton improveButton;
     protected JButton rollDice;
     protected JButton endTurn;
-    protected JButton resumeButton;
     protected JButton pauseButton;
 
     private Panel pausePanel;
     private String[] saveOrResume = {"Save", "Resume"};
-
-    private int offset = 100;
-    private int buttonHeight = 35;
-
-    protected JButton saveButton;
 
     private CommunicationController communicationController = CommunicationController.getInstance();
     private SaveLoadController saveLoadController = SaveLoadController.getInstance();
@@ -46,9 +40,7 @@ public class ButtonPanel extends JPanel {
         improveButton = new JButton("Improve Property");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
-        resumeButton = new JButton("Resume");
         pauseButton = new JButton("Pause");
-        saveButton = new JButton("Save");
 
         panel.add(rollDice);
         panel.add(endTurn);
@@ -56,7 +48,6 @@ public class ButtonPanel extends JPanel {
         panel.add(drawButton);
         panel.add(playCardButton);
         panel.add(improveButton);
-        panel.add(resumeButton);
         panel.add(pauseButton);
 
         pausePanel = new Panel();
@@ -91,26 +82,20 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
-				improveButton.setEnabled(false);
+
+//                if(gameEngine.tryImproveProperty()){
+//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
+//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
+//                }
+//                gameEngine.setSquareUnselected();
 			}
 		});
-
-        resumeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Game resumed");
-                communicationController.sendClientMessage("resume");
-                pauseButton.setEnabled(true);
-                resumeButton.setEnabled(false);
-            }
-        });
 
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Game paused");
                 communicationController.sendClientMessage("pause");
-                pauseButton.setEnabled(false);
-                resumeButton.setEnabled(true);
-
+            
                 int result = JOptionPane.showOptionDialog(null, pausePanel, "Pause Panel",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, saveOrResume, null);
@@ -143,9 +128,11 @@ public class ButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 communicationController.sendClientMessage("player/next");
                 endTurn.setEnabled(false);
+                purchaseButton.setEnabled(false);
+                improveButton.setEnabled(false);
+
             }
         });
-
 
         purchaseButton.setEnabled(false);
         endTurn.setEnabled(false);
@@ -153,7 +140,6 @@ public class ButtonPanel extends JPanel {
         playCardButton.setEnabled(false);
         improveButton.setEnabled(false);
         rollDice.setEnabled(false);
-        resumeButton.setEnabled(false);
         pauseButton.setEnabled(true);
         this.setVisible(true);
 

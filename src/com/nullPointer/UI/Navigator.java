@@ -18,7 +18,7 @@ public class Navigator implements Observer {
     }
 
     public static Navigator getInstance() {
-        if(_instance == null) {
+        if (_instance == null) {
             _instance = new Navigator();
         }
         return _instance;
@@ -41,23 +41,25 @@ public class Navigator implements Observer {
     }
 
     public void menuScreen() {
-        layout.show(panels,"Menu Panel");
+        layout.show(panels, "Menu Panel");
     }
 
     public void serverScreen() {
-        layout.show(panels,"Server Panel");
+        layout.show(panels, "Server Panel");
     }
 
     public void gameScreen() {
-        layout.show(panels,"Game Panel");
+        layout.show(panels, "Game Panel");
 
     }
 
     @Override
     public void onEvent(String message) {
-        if(message.contains("screen")){
-            if(message.contains("gameScreen")){
+        if (message.contains("Screen")) {
+            if (message.contains("gameScreen")) {
                 gameScreen();
+            } else if (message.contains("serverScreen")) {
+                serverScreen();
             }
 
         }

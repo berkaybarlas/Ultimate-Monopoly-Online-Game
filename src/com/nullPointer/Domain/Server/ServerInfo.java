@@ -3,13 +3,13 @@ package com.nullPointer.Domain.Server;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  ServerInfo {
+public class ServerInfo {
 
     private static ServerInfo _instance;
     private String serverIp;
-    private int clientID;
+    private String clientID;
     private int maxPlayer = 12;
-    private List<Integer> clientList;
+    private List<String> clientList;
 
     private ServerInfo() {
         clientList = new ArrayList<>();
@@ -30,23 +30,53 @@ public class  ServerInfo {
         this.serverIp = serverIp;
     }
 
-    public int getClientID() {
+    public String getClientID() {
         return clientID;
     }
 
-    public void setClientID(int clientID) {
+    public void setClientID(String clientID) {
         this.clientID = clientID;
     }
 
     public void addClient(String clientId) {
-        clientList.add(Integer.parseInt(clientId));
+        clientList.add(clientId);
     }
 
-    public List<Integer> getClientList() {
+    public void removeClient(String clientId) {
+        int clientIndex = clientList.indexOf(clientId);
+        if (clientIndex == -1) {
+            return;
+        }
+        clientList.remove(clientIndex);
+    }
+
+    public List<String> getClientList() {
         return clientList;
     }
 
-    public void setClientList(List<Integer> clientList) {
+    public String next() {
+        if (clientList == null || clientList.size() == 1) return "";
+        if (clientList.size() < 2)
+            return clientList.get(0);
+        return clientList.get(1);
+    }
+
+    public void setClientList(List<String> clientList) {
         this.clientList = clientList;
+    }
+
+    public boolean isServer() {
+        if (clientList == null || clientList.size() < 1) {
+            return false;
+        }
+        return clientList.get(0).equals(clientID);
+    }
+
+    public boolean isOnline(String clientID) {
+
+        if(clientList == null || clientID == null || clientID == ""){
+            return  false;
+        }
+        return clientList.contains(clientID);
     }
 }

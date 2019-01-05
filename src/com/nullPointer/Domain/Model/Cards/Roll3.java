@@ -8,7 +8,7 @@ public class Roll3 extends Card {
 	private ArrayList<Integer> roll3Values;
 	public Roll3(String title, boolean isImmediate, int first, int second, int third) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 		roll3Values = new ArrayList<Integer>();
 		roll3Values.add(first);
 		roll3Values.add(second);
