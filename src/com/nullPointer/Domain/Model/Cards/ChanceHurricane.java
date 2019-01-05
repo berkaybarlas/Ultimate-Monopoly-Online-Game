@@ -1,7 +1,9 @@
 package com.nullPointer.Domain.Model.Cards;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 public class ChanceHurricane extends ChanceCard {
 
@@ -12,7 +14,8 @@ public class ChanceHurricane extends ChanceCard {
 
     @Override
     public void playCard(GameEngine gameEngine) {
-        if(gameEngine.isMyTurn()) {
+        Player currentPlayer = PlayerController.getInstance().getCurrentPlayer();
+        if(gameEngine.isMyTurn() || !currentPlayer.isBot()) {
             while (gameEngine.getChosenSquareIndex() == -1) {
                 try {
                     Thread.sleep(100);
