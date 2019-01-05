@@ -16,7 +16,6 @@ public class ChanceAdvanceToSaintCharles extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		int StCharles = 67;
 		Player currenPlayer = playerController.getCurrentPlayer();
 		gameEngine.publishEvent("teleport" + StCharles);

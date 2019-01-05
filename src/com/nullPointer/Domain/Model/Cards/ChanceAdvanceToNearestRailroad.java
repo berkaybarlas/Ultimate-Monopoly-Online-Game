@@ -20,7 +20,6 @@ public class ChanceAdvanceToNearestRailroad extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		Player currentPlayer = playerController.getCurrentPlayer();
 		DomainBoard db = gameEngine.getDomainBoard();
 		HashMap<Integer, ArrayList<Integer>> connections =  db.getConnectionsMap();

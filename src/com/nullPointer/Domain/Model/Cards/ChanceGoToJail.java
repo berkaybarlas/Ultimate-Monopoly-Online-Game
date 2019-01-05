@@ -16,7 +16,6 @@ public class ChanceGoToJail extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		int jail = 66;
 		Player currentPlayer = playerController.getCurrentPlayer();
 		playerController.putInJail();

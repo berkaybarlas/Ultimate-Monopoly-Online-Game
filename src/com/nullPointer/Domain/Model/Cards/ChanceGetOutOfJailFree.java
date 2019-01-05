@@ -19,7 +19,6 @@ public class ChanceGetOutOfJailFree extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		DomainBoard db = gameEngine.getDomainBoard();
 		HashMap<Integer, Square> squares = db.getSquareMap();
 		Player currentPlayer = playerController.getCurrentPlayer();
