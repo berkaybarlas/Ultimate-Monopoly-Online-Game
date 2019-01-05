@@ -74,18 +74,25 @@ public class DomainBoard implements Serializable {
     }
 
     public void createCards() {
-        CCCards.add(cardFactory.createCCCard(7));
-        ChanceCards.add(cardFactory.createChanceCard(13)); //hurricane card
-        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad +  
-        ChanceCards.add(cardFactory.createChanceCard(19)); ////see you in court +
-        ChanceCards.add(cardFactory.createChanceCard(1)); //advance to pay corner +
-        ChanceCards.add(cardFactory.createChanceCard(12)); //holiday bonus +
-        ChanceCards.add(cardFactory.createChanceCard(0)); 
-        ChanceCards.add(cardFactory.createChanceCard(10));
-        ChanceCards.add(cardFactory.createChanceCard(14));
-        ChanceCards.add(cardFactory.createChanceCard(2));
-        ChanceCards.add(cardFactory.createChanceCard(17));
-        ChanceCards.add(cardFactory.createChanceCard(20));       
+        for (int i=0; i< cardFactory.CCCard_names.length; i++) {
+            CCCards.add(cardFactory.createCCCard(i));
+        }
+
+        for (int i=0; i<cardFactory.ChanceCard_names.length; i++) {
+            ChanceCards.add(cardFactory.createChanceCard(i));
+        }
+//        CCCards.add(cardFactory.createCCCard(7));
+//        ChanceCards.add(cardFactory.createChanceCard(13)); //hurricane card
+//        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad +
+//        ChanceCards.add(cardFactory.createChanceCard(19)); ////see you in court +
+//        ChanceCards.add(cardFactory.createChanceCard(1)); //advance to pay corner +
+//        ChanceCards.add(cardFactory.createChanceCard(12)); //holiday bonus +
+//        ChanceCards.add(cardFactory.createChanceCard(0));
+//        ChanceCards.add(cardFactory.createChanceCard(10));
+//        ChanceCards.add(cardFactory.createChanceCard(14));
+//        ChanceCards.add(cardFactory.createChanceCard(2));
+//        ChanceCards.add(cardFactory.createChanceCard(17));
+//        ChanceCards.add(cardFactory.createChanceCard(20));
         
     }
 
