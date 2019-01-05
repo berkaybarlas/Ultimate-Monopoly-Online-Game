@@ -207,19 +207,21 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID(), cnt);
-                player.setPerson();
-                if (botBox) {
-                    player.setBot();
-                    player.setClientID("bot");
-                    player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
+                if (textField.getText() != null && !textField.getText().equals("Enter player name here!") && !textField.getText().equals("")) {
+                    Player player = new Player(textField.getText(), serverInfo.getClientID(), cnt);
+                    player.setPerson();
+                    if (botBox) {
+                        player.setBot();
+                        player.setClientID("bot");
+                        player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
+                    }
+                    communicationController.sendClientMessage(player);
+                    textField.setText("Enter player name here!");
                 }
-                communicationController.sendClientMessage(player);
-                textField.setText("Enter player name here!");
             }
         });
         JPanel checkBox = new JPanel();
-        checkBox.setPreferredSize(new Dimension(230,30 ));
+        checkBox.setPreferredSize(new Dimension(230, 30));
         checkBox.setOpaque(false);
 
         JCheckBox botCheckBox = new JCheckBox("Bot player");
@@ -232,7 +234,7 @@ public class ServerWindow extends JPanel implements Observer {
                 botBox = !botBox;
             }
         });
-        checkBox.add(botCheckBox,BorderLayout.WEST);
+        checkBox.add(botCheckBox, BorderLayout.WEST);
 
         initSelectionButtons();
         cPanel.add(textField);
@@ -394,15 +396,6 @@ public class ServerWindow extends JPanel implements Observer {
         if (pList.size() > 0) {
             Player player = pList.get(pList.size() - 1);
             addPlayerButton(player);
-        }
-    }
-
-    public void addOtherPlayers() {
-        if (bList.size() == 0) {
-            ArrayList<Player> pList = playerController.getPlayers();
-            for (Player player : pList) {
-                addPlayerButton(player);
-            }
         }
     }
 

@@ -128,6 +128,7 @@ public class ButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 communicationController.sendClientMessage("player/next");
                 endTurn.setEnabled(false);
+                purchaseButton.setEnabled(false);
                 improveButton.setEnabled(false);
 
             }

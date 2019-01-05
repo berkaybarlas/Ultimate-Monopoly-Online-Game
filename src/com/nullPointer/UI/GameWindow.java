@@ -121,8 +121,6 @@ public class GameWindow extends JPanel implements Observer {
     private void enableButtons() {
         buttonPanel.pauseButton.setEnabled(true);
 
-        System.out.println("entering enable buttons");
-
         for (int i = 0; i < disabledButtons.size(); i++) {
             JButton currButton = disabledButtons.get(i);
             currButton.setEnabled(true);
