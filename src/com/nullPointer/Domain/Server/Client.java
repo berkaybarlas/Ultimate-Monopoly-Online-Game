@@ -51,7 +51,7 @@ public class Client extends Thread {
             while (true) {
                 if ((fromServer = inObject.readObject()) != null) {
                     System.out.println("[Client]: Server -> " + fromServer);
-                    System.out.println(fromServer.getClass());
+                    //System.out.println(fromServer.getClass());
 
                     communicationController.processInput(fromServer);
                 }

@@ -14,7 +14,7 @@ class ClientHandler extends Thread {
     }
 
     public void run() {
-        Object inputLine;
+        Object inputLine = null;
 
         try {
             oin = new ObjectInputStream(clientSocket.getInputStream());
@@ -34,7 +34,9 @@ class ClientHandler extends Thread {
             //
             //delete client from list
             //
-            System.out.println(e.getMessage());
+            System.out.println(inputLine);
+            System.out.println(oin);
+            e.printStackTrace();
             
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

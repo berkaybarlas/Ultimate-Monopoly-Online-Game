@@ -75,6 +75,9 @@ public class Player implements Serializable {
 
 
     public String getName() {
+        if(bot){
+            return "Bot | " + name;
+        }
         return name;
     }
 

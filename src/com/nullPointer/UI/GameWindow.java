@@ -80,7 +80,7 @@ public class GameWindow extends JPanel implements Observer {
 
     @Override
     public void onEvent(String message) {
-        if (gameEngine.isMyTurn()) {
+        if (gameEngine.isMyTurn() && !gameEngine.isBot()) {
             if (message.equals("buy")) {
                 buttonPanel.purchaseButton.setEnabled(true);
             }

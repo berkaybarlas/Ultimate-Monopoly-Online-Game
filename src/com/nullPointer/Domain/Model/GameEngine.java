@@ -431,6 +431,7 @@ public class GameEngine {
             return true;
         }
         if (!serverInfo.isOnline(currentPlayer.getClientID())) {
+            currentPlayer.setBot();
             return true;
         }
         return false;
