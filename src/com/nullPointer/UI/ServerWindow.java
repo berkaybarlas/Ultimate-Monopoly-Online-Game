@@ -208,7 +208,7 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (textField.getText() != null && !textField.getText().equals("Enter player name here!") && !textField.getText().equals("")) {
-                    Player player = new Player(textField.getText(), serverInfo.getClientID(), cnt);
+                    Player player = new Player(textField.getText(), serverInfo.getClientID(), countMod);
                     player.setPerson();
                     if (botBox) {
                         player.setBot();
@@ -316,7 +316,7 @@ public class ServerWindow extends JPanel implements Observer {
         pPanel.setPreferredSize(new Dimension(100, 45));
         pPanel.setBackground(ColorSet.SERVERBACKGROUND_LIGHT);
         pPanel.setBorder(BorderFactory.createLineBorder(ColorSet.ButtonPrimary, 2, true));
-        dispImg = new ImageIcon(pawnImages.get(cnt));
+        dispImg = new ImageIcon(pawnImages.get(countMod));
         buffer = new JLabel();
         buffer.setIcon(dispImg);
         pPanel.add(buffer);
