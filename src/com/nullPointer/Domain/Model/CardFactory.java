@@ -158,8 +158,8 @@ public class CardFactory implements Serializable {
 //                return new CCHappyBirthday(CCCard_names[index], happyBirthdayImmediate);
 //            case 3:
 //                return new CCHouseCondemned(CCCard_names[index], houseCondemnedImmediate);
-//            case 4:
-//                return new CCInsidersEdge(CCCard_names[index], insidersEdgeImmediate);
+            case 4:
+                return new CCInsidersEdge(CCCard_names[index], insidersEdgeImmediate);
 //            case 5:
 //                return new CCMovingExperience(CCCard_names[index], movingExperienceImmediate);
             case 6:
