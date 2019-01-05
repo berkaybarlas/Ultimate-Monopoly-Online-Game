@@ -58,7 +58,7 @@ public class Client extends Thread {
             }
         } catch (UnknownHostException er) {
             System.err.println("[Client]: Unknown host " + hostName);
-            System.exit(1);
+            createOrJoin();
         } catch (IOException er) {
             System.err.println("[Client]: Couldn't get I/O for the connection to " +
                     hostName + ". Error : " + er);

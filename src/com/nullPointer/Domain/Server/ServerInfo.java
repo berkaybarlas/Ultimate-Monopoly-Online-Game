@@ -10,7 +10,7 @@ public class ServerInfo {
     private String clientID;
     private int maxPlayer = 12;
     private List<String> clientList;
-
+    private int failedAttempt = 0;
     private ServerInfo() {
         clientList = new ArrayList<>();
     }
@@ -58,7 +58,8 @@ public class ServerInfo {
         if (clientList == null || clientList.size() == 1) return "";
         if (clientList.size() < 2)
             return clientList.get(0);
-        return clientList.get(1);
+        failedAttempt = ( failedAttempt + 1 ) % clientList.size();
+        return clientList.get(failedAttempt);
     }
 
     public void setClientList(List<String> clientList) {
