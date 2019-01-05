@@ -1,5 +1,6 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
@@ -342,6 +343,8 @@ public class Board extends JPanel implements Observer {
             pawnList.get(playerController.getCurrentPlayerIndex()).setPath(currentPath);
         } else if (message.contains("refresh")) {
             repaint();
+        } else if (message.contains("improve/")) {
+            CommunicationController.getInstance().sendClientMessage(message);
         }
     }
 

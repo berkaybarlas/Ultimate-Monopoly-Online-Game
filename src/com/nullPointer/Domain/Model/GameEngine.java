@@ -221,7 +221,11 @@ public class GameEngine {
     public void improveProperty(int propertySquareIndex) {
         Square square = domainBoard.getSquareAt(propertySquareIndex);
         PropertySquare propertySquare = ((PropertySquare) square);
+        System.out.println("Chose "+propertySquare.getName());
+        Player currentPlayer = playerController.getCurrentPlayer();
+        MoneyController.getInstance().decreaseMoney(currentPlayer,propertySquare.getRentList()[8]);
         propertySquare.improve();
+        setSquareUnselected();
         publishEvent("refresh");
     }
 

@@ -117,7 +117,7 @@ public class BotBehaviour implements Observer {
     private void semiIntelligentAction(String msg) {
         Player current = gameEngine.getPlayerController().getCurrentPlayer();
 
-        sendMessage("I'm thinking very hard right now, believe me.");
+//        sendMessage("I'm thinking very hard right now, believe me.");
 
         try {
             Thread.sleep(100);

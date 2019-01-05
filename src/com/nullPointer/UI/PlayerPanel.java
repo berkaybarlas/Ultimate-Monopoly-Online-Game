@@ -33,7 +33,7 @@ public class PlayerPanel extends JPanel implements Observer {
         //scrollPane.setBounds(0, 0, 120, 300);
 
         panel = new JPanel();
-        panel.setPreferredSize(new Dimension(110, 300));
+        panel.setPreferredSize(new Dimension(100, 300));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
         panel.add(scrollPane);
