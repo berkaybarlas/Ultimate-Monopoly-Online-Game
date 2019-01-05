@@ -15,7 +15,7 @@ public class ChanceHurricane extends ChanceCard {
     @Override
     public void playCard(GameEngine gameEngine) {
         Player currentPlayer = PlayerController.getInstance().getCurrentPlayer();
-        if(gameEngine.isMyTurn() || !currentPlayer.isBot()) {
+        if(gameEngine.isMyTurn() && !currentPlayer.isBot()) {
             while (gameEngine.getChosenSquareIndex() == -1) {
                 try {
                     Thread.sleep(100);
