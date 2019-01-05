@@ -12,7 +12,7 @@ public class SubwaySquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		// TODO Auto-generated method stub
 //		gameEngine.publishEvent("chooseTeleportatDestination");
-		gameEngine.nextTurn();
+		gameEngine.publishEvent("empty");
 	}
 
 }

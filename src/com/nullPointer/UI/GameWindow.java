@@ -89,13 +89,15 @@ public class GameWindow extends JPanel implements Observer {
             if (message.equals("buy")) {
                 buttonPanel.purchaseButton.setEnabled(true);
             }
-            if(message.equals("improve")) {
-                buttonPanel.purchaseButton.setEnabled(false);
-                buttonPanel.improveButton.setEnabled(true);
-            }
             if (message.equals("rollDice")) {
                 buttonPanel.rollDice.setEnabled(true);
+                buttonPanel.endTurn.setEnabled(false);
+                if(buttonPanel.purchaseButton.isEnabled())
+                	buttonPanel.purchaseButton.setEnabled(false);
+            }
+            if(message.equals("endTurn")) {
                 buttonPanel.endTurn.setEnabled(true);
+                
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
@@ -103,9 +105,6 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("playCard")) {
                 buttonPanel.playCardButton.setEnabled(true);
-            }
-            if (message.equals("improve")) {
-                buttonPanel.improveButton.setEnabled(true);
             }
             if (message.equals("resume")) {
                 enableButtons();

@@ -25,8 +25,8 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private JButton startGame, addPlayer, loadGame, saveGame, quitServer, rightButton, leftButton;
-    private JCheckBox botOrPlayerButton;
+    private int botCounter = 0;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton, addBot;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -151,8 +151,10 @@ public class ServerWindow extends JPanel implements Observer {
         quitServer.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         quitServer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                communicationController.removeClient();
                 navigator.menuScreen();
+                communicationController.removeClient(serverInfo.getClientID());
+                communicationController.closeServer();
+
             }
         });
         panel.add(quitServer);
@@ -164,7 +166,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public List<ClientDisplay> createClientDisplay() {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         clientDisplayList = new ArrayList<>();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         for (int i = 0; i < clientList.size(); i++) {
@@ -203,30 +205,33 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
+                player.setPerson();         // Just to make sure it doesn't come out as a bot
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
 //                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
                 textField.setText("Enter player name here!");
             }
         });
-        botOrPlayerButton = new JCheckBox("Bot player");
-        botOrPlayerButton.setFont(new Font(addPlayer.getName(), addPlayer.getFont().getStyle(), addPlayer.getFont().getSize()));
-        botOrPlayerButton.setIcon(new SimpleCheckboxStyle(20));
-        botOrPlayerButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+
+        addBot = new CustomButton("Add Bot");
+        addBot.setPreferredSize(new Dimension(230, buttonHeight));
+        addBot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Player player = new Player("bot" + ++botCounter, serverInfo.getClientID(),cnt);
+                player.setBot();
+                player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
+                communicationController.sendClientMessage(player);
+                textField.setText("Enter player name here!");
+            }
+        });
         initSelectionButtons();
         cPanel.add(textField);
         cPanel.add(leftButton);
         cPanel.add(pPanel);
         cPanel.add(rightButton);
         cPanel.add(addPlayer);
-        cPanel.add(botOrPlayerButton);
+        cPanel.add(addBot);
         this.add(scrollPane);
         this.add(cPanel);
     }
@@ -339,7 +344,7 @@ public class ServerWindow extends JPanel implements Observer {
     }
 
     public void addPlayerButton(Player player) {
-        List<Integer> clientList = serverInfo.getClientList();
+        List<String> clientList = serverInfo.getClientList();
         CustomButton newButton = new CustomButton(player.getName());
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -3,18 +3,19 @@ package com.nullPointer.Domain.Server;
 import com.nullPointer.Domain.Controller.CommunicationController;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class Client extends Thread {
     private Thread thread;
     private String threadName;
     private Socket socket;
     private String hostName = "localhost";
+    private  String localIp;
     private int portNumber = 4000;
-    private PrintWriter out;
     private ObjectOutputStream outObject;
-    private BufferedReader in;
     private ObjectInputStream inObject;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
@@ -33,7 +34,10 @@ public class Client extends Thread {
         //args[0];
         try {
             socket = new Socket(hostName, portNumber);
-            System.out.println("Client created with IP: " + socket.getInetAddress() + ". Port: " + socket.getLocalPort());
+            System.out.println("Client connected to IP: " + socket.getInetAddress() + ". Port: " + socket.getLocalPort());
+            localIp = InetAddress.getLocalHost().getHostAddress() + ":" + socket.getLocalPort();
+            System.out.println("Client created with IP: " + localIp);
+
 
             outObject = new ObjectOutputStream(socket.getOutputStream());
 
@@ -42,7 +46,7 @@ public class Client extends Thread {
             Object fromServer;
 
             System.out.println("[Client]: Listening!");
-            serverInfo.setClientID(socket.getLocalPort());
+            serverInfo.setClientID(localIp);
             while (true) {
                 if ((fromServer = inObject.readObject()) != null) {
                     System.out.println("[Client]: Server -> " + fromServer);
@@ -57,7 +61,8 @@ public class Client extends Thread {
         } catch (IOException er) {
             System.err.println("[Client]: Couldn't get I/O for the connection to " +
                     hostName + ". Error : " + er);
-            System.exit(1);
+
+            createOrJoin();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -82,6 +87,22 @@ public class Client extends Thread {
             thread = new Thread(this, threadName);
             thread.start();
         }
+    }
+
+    public void createOrJoin() {
+        String nextServerIP = serverInfo.next();
+        if (nextServerIP.equals(localIp)) {
+            serverInfo.getClientList();
+            communicationController.startServer();
+            hostName = "localhost";
+        } else {
+            int doubleDotIndex = nextServerIP.indexOf(":");
+            hostName = nextServerIP.substring(0,doubleDotIndex);
+            if(hostName.equals(localIp.substring(0,doubleDotIndex))){
+                hostName = "localhost";
+            }
+        }
+        this.run();
     }
 
     public int getPortNumber() {

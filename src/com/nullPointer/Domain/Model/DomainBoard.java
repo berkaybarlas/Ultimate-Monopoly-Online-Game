@@ -60,8 +60,6 @@ public class DomainBoard implements Serializable {
         for (int i = 0; i < CCLength; i++) {
             CCCards.add(cardFactory.createCCCard(CCindexList.get(i)));
         }
-
-
         // same goes for chance cards
         int ChanceLength = cardFactory.ChanceCard_names.length;
         ArrayList<Integer> ChanceIndexList = new ArrayList<Integer>(ChanceLength);
@@ -77,8 +75,8 @@ public class DomainBoard implements Serializable {
 
     public void createCards() {
         CCCards.add(cardFactory.createCCCard(7));
-        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad
         ChanceCards.add(cardFactory.createChanceCard(13)); //hurricane card
+        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad +  
         ChanceCards.add(cardFactory.createChanceCard(19)); ////see you in court +
         ChanceCards.add(cardFactory.createChanceCard(1)); //advance to pay corner +
         ChanceCards.add(cardFactory.createChanceCard(12)); //holiday bonus +
@@ -87,8 +85,7 @@ public class DomainBoard implements Serializable {
         ChanceCards.add(cardFactory.createChanceCard(14));
         ChanceCards.add(cardFactory.createChanceCard(2));
         ChanceCards.add(cardFactory.createChanceCard(17));
-        ChanceCards.add(cardFactory.createChanceCard(20));
-        
+        ChanceCards.add(cardFactory.createChanceCard(20));       
         
     }
 

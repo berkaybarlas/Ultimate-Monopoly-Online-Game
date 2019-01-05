@@ -3,7 +3,6 @@ package com.nullPointer.UI;
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
-import com.nullPointer.UI.AppWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,7 +91,6 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
-				improveButton.setEnabled(false);
 			}
 		});
 
@@ -152,7 +150,7 @@ public class ButtonPanel extends JPanel {
         endTurn.setEnabled(false);
         drawButton.setEnabled(false);
         playCardButton.setEnabled(false);
-        improveButton.setEnabled(false);
+        improveButton.setEnabled(true);
         rollDice.setEnabled(false);
         resumeButton.setEnabled(false);
         pauseButton.setEnabled(true);
