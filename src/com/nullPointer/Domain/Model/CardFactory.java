@@ -102,8 +102,8 @@ public class CardFactory implements Serializable {
                 return new ChanceAdvanceToNearestRailroad(ChanceCard_names[index], advanceToNearestRailRoadImmediate);
             case 1:
                 return new ChanceAdvanceToPayCorner(ChanceCard_names[index], advanceToPayCornerImmediate);
-            case 2:
-                return new ChanceAdvanceToSaintCharles(ChanceCard_names[index], advanceToStCharlesImmediate);
+//            case 2:
+//                return new ChanceAdvanceToSaintCharles(ChanceCard_names[index], advanceToStCharlesImmediate);
 //            case 3:
 //                return new ChanceBuyersMarket(ChanceCard_names[index], buyersMarketImmediate);
 //            case 4:
@@ -112,14 +112,14 @@ public class CardFactory implements Serializable {
 //                return new ChanceChangingLanesBelow(ChanceCard_names[index], changingLianesBelowImmediate);
 //            case 6:
 //                return new ChanceForeclosedPropertySale(ChanceCard_names[index], foreclosedPropSaleImmediate);
-            case 7:
-                return new ChanceForwardThinker(ChanceCard_names[index], forwardThinkerImmediate);
-            case 8:
-                return new ChanceGetOutOfJailFree(ChanceCard_names[index], getOutOfJailFreeImmediate);
+//            case 7:
+//                return new ChanceForwardThinker(ChanceCard_names[index], forwardThinkerImmediate);
+//            case 8:
+//                return new ChanceGetOutOfJailFree(ChanceCard_names[index], getOutOfJailFreeImmediate);
 //            case 9:
 //                return new ChanceGetRollin(ChanceCard_names[index], getRollinImmediate);
-            case 10:
-                return new ChanceGoToJail(ChanceCard_names[index], goToJailImmediate);
+//            case 10:
+//                return new ChanceGoToJail(ChanceCard_names[index], goToJailImmediate);
 //            case 11:
 //                return new ChanceGPSNotWorking(ChanceCard_names[index], GPSNotWorkingImmediate);
             case 12:
@@ -132,14 +132,14 @@ public class CardFactory implements Serializable {
 //                return new ChanceMardiGras(ChanceCard_names[index], mardiGrasImmediate);
 //            case 16:
 //                return new ChancePayBack(ChanceCard_names[index], payBackImmediate);
-            case 17:
-                return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
+//            case 17:
+//                return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
 //            case 18:
 //                return new ChanceRideTheSubway(ChanceCard_names[index], rideTheSubwayImmediate);
             case 19:
                 return new ChanceSeeUInCourt(ChanceCard_names[index], CUInCourtImmediate);
-            case 20:
-                return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
+//            case 20:
+//                return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
 //            case 21:
 //                return new ChanceZeroDollarsDown(ChanceCard_names[index], zeroDollarsDownImmediate);
             default:
