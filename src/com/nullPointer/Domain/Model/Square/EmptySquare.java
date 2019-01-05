@@ -10,7 +10,7 @@ public class EmptySquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-
+		gameEngine.publishEvent("empty");
 	}
 
 }

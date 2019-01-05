@@ -19,6 +19,7 @@ public class LuxuryTaxSquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		MoneyController.getInstance().decreaseMoney(currentPlayer, 75);
+		gameEngine.publishEvent("empty");
 	}
 
 }

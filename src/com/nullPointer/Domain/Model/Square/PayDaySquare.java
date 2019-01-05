@@ -15,7 +15,7 @@ public class PayDaySquare extends Square {
 		MoneyController.getInstance().increaseMoney(currentPlayer, 400);
 		// Not so sure about this. The explanations aren't clear enough, but it says that if someone moves directly to this square,
 		// they should collect $400.
-		
+		gameEngine.publishEvent("empty");
 	}
 
 }

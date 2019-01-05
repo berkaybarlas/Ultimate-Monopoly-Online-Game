@@ -191,26 +191,32 @@ public class GameEngine {
 		Card card;
 		String type = square.getType();
 
-		if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
-			if (type.equals("CommunityChestCardSquare")) {
-				card = domainBoard.getCCCards().element();
-			} else if (type.equals("ChanceCardSquare")) {
-				card = domainBoard.getChanceCards().element();
-			} else {
-				card = domainBoard.getRoll3Cards().element();
-			}
-			publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
-			if (card.getImmediate()) {
-				card.playCard(this);
-				System.out.println();
-			} else {
-				playerController.addCardToCurrentPlayer(card);
-			}
-		} else {
-			System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
-		}
-		publishEvent("endTurn");
-	}
+        if (type.equals("CommunityChestCardSquare") || type.equals("ChanceCardSquare")) {
+            if (type.equals("CommunityChestCardSquare")) {
+                card = domainBoard.getCCCards().remove();
+            } else if (type.equals("ChanceCardSquare")) {
+            	card = domainBoard.getChanceCards().remove();
+            } else {
+            	card = domainBoard.getRoll3Cards().remove();
+            }
+            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
+            if (card.getImmediate()) {
+                card.playCard(this);
+                if (type.equals("CommunityChestCardSquare")) {
+                    domainBoard.getCCCards().add(card);
+                } else if (type.equals("ChanceCardSquare")) {
+                    domainBoard.getChanceCards().add(card);
+                } else {
+                    domainBoard.getRoll3Cards().add(card);
+                }
+                System.out.println();
+            } else {
+                playerController.addCardToCurrentPlayer(card);
+            }
+        } else {
+            System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
+        }
+    }
 
 	public void improveProperty() {
 
@@ -247,6 +253,22 @@ public class GameEngine {
 			}	
 		}
 		chosenSquareIndex =-1;
+	}
+
+	public void improveSelectedProperty(PropertySquare p)    // This is added only for bots to use
+	{
+		Player currentPlayer = playerController.getCurrentPlayer();
+		HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
+		if(!p.hasHotel() && !p.hasSkyscraper() && p.numHouses()!=4){
+			p.improve();
+			publishEvent("improve");
+		}
+		else if(p.hasHotel() || p.numHouses()==4){
+			if(propertyCardsMap.get(p.getColor()).size()==3){
+				p.improve();
+				publishEvent("improve");
+			}
+		}
 	}
 
 	/**
@@ -380,6 +402,17 @@ public class GameEngine {
 	public void setCurrentPlayer(Player p) {
 		playerController.setCurrentPlayerIndex(playerController.getPlayers().indexOf(p));
 	}
+
+
+    public boolean amIBot()
+    {
+        Player current = playerController.getCurrentPlayer();
+        if (current != null && current.isBot())
+        {
+            return true;
+        }
+        return false;
+    }
 
 	public String toString() {
 		return "PlayerController: " + playerController.toString() + "/n" +

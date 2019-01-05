@@ -13,6 +13,7 @@ public class JailSquare extends Square {
 	public void evaluateSquare(GameEngine gameEngine) {
 		Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
 		System.out.println("jailSquare" + currentPlayer.getName() + " " + currentPlayer.getPosition());
+		gameEngine.publishEvent("empty");
 	}
 
 }

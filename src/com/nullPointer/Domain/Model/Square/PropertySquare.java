@@ -144,6 +144,11 @@ public class PropertySquare extends Square {
         return price;
     }
 
+    public int getHousePrice()
+    {
+        return rentList[8];
+    }
+
     public void setPrice(int newPrice) {
         this.price = newPrice;
     }
@@ -205,7 +210,7 @@ public class PropertySquare extends Square {
             gameEngine.publishEvent("buy");
         } else {
             Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
-            if(!this.getOwner().getName().equals(currentPlayer)) {
+            if(!this.getOwner().getName().equals(currentPlayer.getName())) {
                 gameEngine.payRent(currentPlayer, this.getOwner() , this.getRent());
                 gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
             }
