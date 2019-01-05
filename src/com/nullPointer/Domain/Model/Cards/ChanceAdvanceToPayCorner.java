@@ -11,12 +11,11 @@ public class ChanceAdvanceToPayCorner extends ChanceCard {
 
 	public ChanceAdvanceToPayCorner(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		int go = 56;
 		int goMoney = 200;
 		int payDay = 28;
@@ -29,20 +28,23 @@ public class ChanceAdvanceToPayCorner extends ChanceCard {
 
 		if (currentPos <= 55 && currentPos >= 0)
 		{
-			gameEngine.publishEvent("teleport" + payDay);
 			playerController.movePlayer(payDay);
+			gameEngine.publishEvent("teleport " + payDay);
+			
 			moneyController.increaseMoney(currentPlayer, payDayMoney);
 		}
 		else if (currentPos <= 95 && currentPos >= 56)
 		{
-			gameEngine.publishEvent("teleport" + go);
 			playerController.movePlayer(go);
+			gameEngine.publishEvent("teleport " + go);
+			
 			moneyController.increaseMoney(currentPlayer, goMoney);
 		}
 		else if (currentPos <= 119 && currentPos >= 96)
 		{
-			gameEngine.publishEvent("teleport" + bonus);
 			playerController.movePlayer(bonus);
+			gameEngine.publishEvent("teleport " + bonus);
+			
 			moneyController.increaseMoney(currentPlayer, bonusMoney);
 		}
 		else

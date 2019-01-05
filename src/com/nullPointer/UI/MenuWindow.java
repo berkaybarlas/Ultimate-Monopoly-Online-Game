@@ -27,7 +27,7 @@ public class MenuWindow extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private int buttonHeight = 60;
-    private int buttonWidth =  300;
+    private int buttonWidth = 300;
     private JLabel back;
     private JLabel logoIcon;
 
@@ -36,7 +36,7 @@ public class MenuWindow extends JPanel {
 
         buttonPanel = new JPanel();
         //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
-        buttonPanel.setPreferredSize(new Dimension(buttonWidth, 3* buttonHeight));
+        buttonPanel.setPreferredSize(new Dimension(buttonWidth, 3 * buttonHeight));
         try {
             logo = ImageIO.read(logoSrc);
             logo = logo.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
@@ -60,21 +60,23 @@ public class MenuWindow extends JPanel {
         back.setIcon(backgroundIcon);
         add(back);
     }
+
     @Override
-    public boolean isOptimizedDrawingEnabled(){
+    public boolean isOptimizedDrawingEnabled() {
         return false;
     }
+
     public void paint(Graphics g) {
         //g.setColor(color);
         //g.fillRect(position.x, position.y, length, length);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         super.paint(g);
-        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
         //g.drawImage(background, 0, 0, null);
         //g.drawImage(logo, position.x, position.y, null);
         buttonPanel.setLocation((screenSize.width - buttonPanel.getWidth()) / 2, 300);
-        back.setLocation(0,0);
-        logoIcon.setLocation(position.x,position.y);
+        back.setLocation(0, 0);
+        Point position = new Point((screenSize.width - logo.getWidth(null)) / 2, 0);
+        logoIcon.setLocation(position.x, position.y);
     }
 
     private void addButtons(JPanel panel) {
@@ -82,7 +84,7 @@ public class MenuWindow extends JPanel {
         serverCreateButton = new CustomButton("Start Server");
         serverCreateButton.setToolTipText("Start the game server");
         //serverCreateButton.setBounds(screenSize.width / 2 - buttonWidth / 2, screenSize.height / 2 - buttonHeight / 2 - 75, buttonWidth,
-         //       buttonHeight);
+        //       buttonHeight);
         serverCreateButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
         serverCreateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -90,8 +92,8 @@ public class MenuWindow extends JPanel {
                 communicationController.createClient();
                 navigator.serverScreen();
 
-                String playerNumberString = (String) JOptionPane.showInputDialog(panel, "Please choose the number of players \n",
-                        "Player No Window", JOptionPane.PLAIN_MESSAGE, null, playerNumOptions, "2");
+//                String playerNumberString = (String) JOptionPane.showInputDialog(panel, "Please choose the number of players \n",
+//                        "Player No Window", JOptionPane.PLAIN_MESSAGE, null, playerNumOptions, "2");
             }
         });
         serverCreateButton.setVisible(true);

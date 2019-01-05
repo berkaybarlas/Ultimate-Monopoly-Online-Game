@@ -18,7 +18,7 @@ public class CustomButton extends JButton {
     public CustomButton(String text) {
         super(text);
         this.setToolTipText("Join the game server");
-        this.setBackground(ColorSet.ButtonPrimary);
+        this.setBackground(primaryColor);
         //super.setBounds(this.getWidth() / 2 - 100, this.getHeight() / 2 - 100, 100, 400);
         this.setForeground(Color.WHITE);
         this.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -42,4 +42,9 @@ public class CustomButton extends JButton {
         });
     }
 
+    public void setPrimaryColor(Color primaryColor) {
+        this.setBackground(primaryColor);
+        this.primaryColor = primaryColor;
+        this.pressedColor = primaryColor.brighter().brighter();
+    }
 }

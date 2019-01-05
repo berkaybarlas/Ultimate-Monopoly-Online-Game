@@ -10,7 +10,7 @@ public class ChanceForeclosedPropertySale extends ChanceCard {
 
 	public ChanceForeclosedPropertySale(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
@@ -19,7 +19,6 @@ public class ChanceForeclosedPropertySale extends ChanceCard {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model.Cards;
 
 import com.nullPointer.Domain.Model.GameEngine;
 
-public abstract class Card implements iCard {
+import java.io.Serializable;
+
+public abstract class Card implements iCard, Serializable {
 	
 	private String title;
 	private boolean isImmediate;

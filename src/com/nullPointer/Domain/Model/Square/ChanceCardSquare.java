@@ -5,7 +5,6 @@ public class ChanceCardSquare extends Square {
 
 	public ChanceCardSquare(String name, String type) {
 		super(name, type);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

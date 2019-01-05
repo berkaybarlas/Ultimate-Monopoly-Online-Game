@@ -5,12 +5,12 @@ public class EmptySquare extends Square {
 
 	public EmptySquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		gameEngine.nextTurn();
+		gameEngine.publishEvent("empty");
 	}
 
 }
