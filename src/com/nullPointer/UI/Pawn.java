@@ -1,24 +1,30 @@
 package com.nullPointer.UI;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Player;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Pawn implements Drawable {
     private Point position;
     private Path myPath;
     private int positionIndex;
     private Player player;
+    private Image pawnImage;
     Animator animator = Animator.getInstance();
     ArrayList<Integer> path = new ArrayList<>();
     HashMap<Integer, Point[]> squareMap = Board.getInstance().getSquareMap();
 
-    public Pawn(Point point, Player player) {
+    public Pawn(Point point, Player player, File imFile) {
         this.position = new Point(point.x, point.y);
         this.player = player;
+        setupPawnImage(imFile);
         animator.addDrawable(this);
 
     }
@@ -29,6 +35,17 @@ public class Pawn implements Drawable {
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+
+    public void setupPawnImage(File imFile) {
+        try {
+            File imageSource = new File(imFile.getPath());
+            this.pawnImage = ImageIO.read(imageSource);
+            pawnImage = pawnImage.getScaledInstance(((BufferedImage) pawnImage).getWidth()/8,((BufferedImage) pawnImage).getHeight()/8,Image.SCALE_SMOOTH);
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changeX(int x) {
@@ -52,8 +69,9 @@ public class Pawn implements Drawable {
     }
 
     public void paint(Graphics g) {
-        g.fillOval(position.x, position.y, 20, 20);
-        g.setColor(Color.RED);
+//        g.setColor(Color.RED);
+//        g.fillOval(position.x, position.y, 20, 20);
+        g.drawImage(pawnImage,position.x,position.y,null);
     }
 
     public void draw(Graphics g) {
@@ -74,8 +92,10 @@ public class Pawn implements Drawable {
                 path.remove(i);
             }
         }
-
         paint(g);
     }
 
+    public void delete() {
+        animator.deleteDrawable(this);
+    }
 }

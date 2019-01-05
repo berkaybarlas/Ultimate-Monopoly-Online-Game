@@ -14,12 +14,11 @@ public class ChanceGetOutOfJailFree extends ChanceCard {
 
 	public ChanceGetOutOfJailFree(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		DomainBoard db = gameEngine.getDomainBoard();
 		HashMap<Integer, Square> squares = db.getSquareMap();
 		Player currentPlayer = playerController.getCurrentPlayer();

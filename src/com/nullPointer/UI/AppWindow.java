@@ -1,9 +1,10 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
+import com.nullPointer.Domain.BotBehaviour;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
-import com.nullPointer.Domain.SaveLoadManager;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import javax.swing.*;
@@ -19,11 +20,12 @@ public class AppWindow extends JFrame implements Observer {
     private GameWindow gameWindow;
     private MenuWindow menuWindow;
     private ServerWindow serverWindow;
-    private JButton button = null;
-    private JButton messageButton = null;
+    private JButton loadButton = null;
+    private JButton saveButton = null;
     private JButton menuButton = null;
     private JButton gameButton = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private SaveLoadController saveGameController =  SaveLoadController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
     private Navigator navigator = Navigator.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
@@ -36,8 +38,11 @@ public class AppWindow extends JFrame implements Observer {
     public AppWindow() {
         super("Ultimate Monopoly");
 
-        int width = screenSize.width - 15;
-        int height = screenSize.height - 30;
+
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);   // allows the app to open in fullscreen from the start
+
+        int width = screenSize.width;   //used to be screenSize.width - 15
+        int height = screenSize.height;  //used to be screenSize.height - 30
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -49,23 +54,23 @@ public class AppWindow extends JFrame implements Observer {
         JToolBar toolBar = new JToolBar();
         addButtons(toolBar);
 
-        Animator animator = new Animator(this);
-        Thread thread = new Thread(animator);
-        thread.start();
-        animator.setVisible(true);
+
 
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
+        BotBehaviour botBehaviour = new BotBehaviour();
 
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.setPreferredSize(new Dimension(width, height));
-        contentPane.add(toolBar);
-        contentPane.add(animator);
+
+
+        //contentPane.add(toolBar);
         setContentPane(contentPane);
+
 
         JPanel menuPanel = menuWindow;
         //menuPanel.setBorder(border);
@@ -90,32 +95,38 @@ public class AppWindow extends JFrame implements Observer {
         gameEngine.subscribe(this::onEvent);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setVisible(true);   IDK if I should open this, window is already visible? -B.H.
     }
 
 
     protected void addButtons(JToolBar toolBar) {
 
-        messageButton = new JButton("Save Game");
-        messageButton.setToolTipText("Save the game server");
-        messageButton.addActionListener(new ActionListener() {
+        saveButton = new JButton("Save Game");
+        saveButton.setToolTipText("Save the game server");
+        saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SaveLoadManager.getInstance().saveGame();
+                	// whether the game is paused or not will be checked.
+                    saveGameController.saveGame();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         });
-        toolBar.add(messageButton);
+        toolBar.add(saveButton);
 
-        button = new JButton("Load");
-        button.setToolTipText("Load the program");
-        button.addActionListener(new ActionListener() {
+        loadButton = new JButton("Load");
+        loadButton.setToolTipText("Load the program");
+        loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                try {
+					saveGameController.loadGame("savefile");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
             }
         });
-        toolBar.add(button);
+        toolBar.add(loadButton);
 
         menuButton = new JButton("Menu");
         menuButton.setToolTipText("Menu window");
@@ -134,7 +145,6 @@ public class AppWindow extends JFrame implements Observer {
             }
         });
         toolBar.add(gameButton);
-
 
     }
 

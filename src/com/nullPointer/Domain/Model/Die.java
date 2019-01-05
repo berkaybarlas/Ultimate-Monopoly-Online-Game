@@ -14,6 +14,9 @@ public void roll(int times){
 	lastValues.add(n);
 	}
 }
+
+
+
 public ArrayList<Integer> getLastValues(){
 	return lastValues;
 }

@@ -3,6 +3,11 @@ package com.nullPointer.Domain.Model.Square;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
+/**
+ * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
+ *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
+ *
+ */
 public class PropertySquare extends Square {
     private Player owner = null;
     private int price;
@@ -36,12 +41,25 @@ public class PropertySquare extends Square {
         setColor(color);
     }
 
-	
-	
-	
+
+
+    /**
+     * @requires   -
+     * @modifies   -
+     * @effects    Calls the calculateRent method in order to calculate the rent according to the
+     *              required parameters.
+     */
 	public int getRent() {
 		return calculateRent();
 	}
+
+    /**
+     * @requires    rentList is not null.
+     *              rentFactor is nonzero.
+     * @modifies    -
+     * @effects     Calculates the rent according to the rentList index and retFactor
+     *              of this PropertySquare and returns it.
+     */
 	private int calculateRent()
 	{
 		if (getRentListIndex() <= 6) return rentFactor * rentList[getRentListIndex()];
@@ -101,11 +119,22 @@ public class PropertySquare extends Square {
         return (getRentListIndex() > 0);
     }
 
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that an upgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void improve() {
         //change inventory
         if (canBeImproved()) setRentListIndex(rentListIndex + 1);
     }
-
+    /**
+     * @requires    -
+     * @modifies    rentListIndex
+     * @effects     Sets the rentListIndex of this PropertySquare, so that a downgraded
+     *              rent can be obtained with the calculateRent() method.
+     */
     public void downgrade() {
         //change inventory
         if (canBeDowngraded()) setRentListIndex(rentListIndex - 1);
@@ -113,6 +142,11 @@ public class PropertySquare extends Square {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getHousePrice()
+    {
+        return rentList[8];
     }
 
     public void setPrice(int newPrice) {
@@ -123,6 +157,12 @@ public class PropertySquare extends Square {
         return owner;
     }
 
+    /**
+     * @param owner
+     * @requires    -
+     * @modifies    owner
+     * @effects     Sets the owner Player of this PropertySquare.
+     */
     public void setOwner(Player owner) {
         if (!isOwned()) this.owner = owner;
     }
@@ -143,7 +183,7 @@ public class PropertySquare extends Square {
         this.rentListIndex = rentListIndex;
     }
 
-    public int[] rentList() {
+    public int[] getRentList() {
         return rentList;
     }
 
@@ -155,22 +195,41 @@ public class PropertySquare extends Square {
         return owner != null;
     }
 
+    /**
+     * @param       gameEngine
+     * @requires    currentPlayer is not null.
+     * @modifies    currentPlayer
+     * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
+     *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
+     *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
+     *              it goes bankrupt.
+     */
     @Override
     public void evaluateSquare(GameEngine gameEngine) {
         if (this.getOwner() == null) {
             gameEngine.publishEvent("buy");
         } else {
             Player currentPlayer = gameEngine.getPlayerController().getCurrentPlayer();
-            gameEngine.payRent(currentPlayer, this.getOwner() , this.getRent());
-            gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
-            gameEngine.nextTurn();
+            if(!this.getOwner().getName().equals(currentPlayer.getName())) {
+                gameEngine.payRent(currentPlayer, this.getOwner() , this.getRent());
+                gameEngine.publishEvent("message/" + "[System]: " + currentPlayer.getName()+ " paid rent to " + this.getOwner().getName());
+            }
         }
 
     }
 
-    @Override
-    public String toString() {
-        return getName();
+    public boolean repOk() {
+        if(this.getName() != null && price > 0 && color != null && rentFactor > 0 && rentList != null && rentList.length == 8) {
+            for(int rentPrice : this.getRentList()) {
+                if(rentPrice <= 0) return false;
+            }
+            return  true;
+        }
+        return false;
     }
 
+    @Override
+    public String toString() {
+        return this.getName() + ", " + this.getColor() + "( Current rent: " + this.getRent() + ")";
+    }
 }

@@ -1,12 +1,14 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ButtonPanel extends JPanel {
 
@@ -16,10 +18,13 @@ public class ButtonPanel extends JPanel {
     protected JButton improveButton;
     protected JButton rollDice;
     protected JButton endTurn;
-    protected JButton resumeButton;
     protected JButton pauseButton;
 
+    private Panel pausePanel;
+    private String[] saveOrResume = {"Save", "Resume"};
+
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private SaveLoadController saveLoadController = SaveLoadController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
 
     public ButtonPanel() {
@@ -28,23 +33,14 @@ public class ButtonPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setOpaque(false);
         setOpaque(false);
-        purchaseButton = new JButton("Buy Property");
+        purchaseButton = new JButton("Buy");
+        //purchaseButton = new CustomButton("Buy Property");
         drawButton = new JButton("Draw card");
         playCardButton = new JButton("Play card");
         improveButton = new JButton("Improve Property");
         rollDice = new JButton("Roll Dice");
         endTurn = new JButton("End Turn");
-        resumeButton = new JButton("Resume");
         pauseButton = new JButton("Pause");
-
-        purchaseButton.setBounds(150, 0, 100, 30);
-        drawButton.setBounds(150, 35, 100, 30);
-        playCardButton.setBounds(150, 70, 100, 30);
-        improveButton.setBounds(150, 105, 100, 30);
-        rollDice.setBounds(150, 140, 100, 30);
-        endTurn.setBounds(150, 175, 100, 30);
-        resumeButton.setBounds(150, 210, 100, 30);
-        pauseButton.setBounds(150, 245, 100, 30);
 
         panel.add(rollDice);
         panel.add(endTurn);
@@ -52,8 +48,11 @@ public class ButtonPanel extends JPanel {
         panel.add(drawButton);
         panel.add(playCardButton);
         panel.add(improveButton);
-        panel.add(resumeButton);
         panel.add(pauseButton);
+
+        pausePanel = new Panel();
+
+        this.setMaximumSize(panel.getMaximumSize());
 
         this.add(panel);
 
@@ -62,7 +61,6 @@ public class ButtonPanel extends JPanel {
                 System.out.println("purchase");
                 communicationController.sendClientMessage("purchase");
                 purchaseButton.setEnabled(false);
-                ;
             }
         });
 
@@ -81,34 +79,46 @@ public class ButtonPanel extends JPanel {
             }
         });
 
-        improveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //communicationController.sendClientMessage("improveProperty");
-                improveButton.setEnabled(false);
-            }
-        });
+		improveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				communicationController.sendClientMessage("improveProperty");
 
-        resumeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Game resumed");
-                communicationController.sendClientMessage("resume");
-                pauseButton.setEnabled(true);
-                resumeButton.setEnabled(false);
-            }
-        });
+//                if(gameEngine.tryImproveProperty()){
+//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
+//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
+//                }
+//                gameEngine.setSquareUnselected();
+			}
+		});
 
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Game paused");
                 communicationController.sendClientMessage("pause");
-                pauseButton.setEnabled(false);
-                resumeButton.setEnabled(true);
+            
+                int result = JOptionPane.showOptionDialog(null, pausePanel, "Pause Panel",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, saveOrResume, null);
+
+                if (result == 0) {
+                    try {
+                        saveLoadController.saveGame();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    communicationController.sendClientMessage("resume");
+                    pauseButton.setEnabled(true);
+                }
             }
         });
 
         rollDice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gameEngine.rollDice();
+                if (!gameEngine.getRoll3())
+                    gameEngine.rollDice();
+                else
+                    gameEngine.roll3Dice();
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
                 rollDice.setEnabled(false);
             }
@@ -118,9 +128,11 @@ public class ButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 communicationController.sendClientMessage("player/next");
                 endTurn.setEnabled(false);
+                purchaseButton.setEnabled(false);
+                improveButton.setEnabled(false);
+
             }
         });
-
 
         purchaseButton.setEnabled(false);
         endTurn.setEnabled(false);
@@ -128,7 +140,6 @@ public class ButtonPanel extends JPanel {
         playCardButton.setEnabled(false);
         improveButton.setEnabled(false);
         rollDice.setEnabled(false);
-        resumeButton.setEnabled(false);
         pauseButton.setEnabled(true);
         this.setVisible(true);
 

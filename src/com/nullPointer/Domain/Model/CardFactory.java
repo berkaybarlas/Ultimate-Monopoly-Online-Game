@@ -2,7 +2,9 @@ package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Cards.*;
 
-public class CardFactory {
+import java.io.Serializable;
+
+public class CardFactory implements Serializable {
 
     private static CardFactory _instance;
 
@@ -100,46 +102,46 @@ public class CardFactory {
                 return new ChanceAdvanceToNearestRailroad(ChanceCard_names[index], advanceToNearestRailRoadImmediate);
             case 1:
                 return new ChanceAdvanceToPayCorner(ChanceCard_names[index], advanceToPayCornerImmediate);
-            case 2:
-                return new ChanceAdvanceToSaintCharles(ChanceCard_names[index], advanceToStCharlesImmediate);
-            case 3:
-                return new ChanceBuyersMarket(ChanceCard_names[index], buyersMarketImmediate);
-            case 4:
-                return new ChanceChangingLanesAbove(ChanceCard_names[index], changingLanesAboveImmediate);
-            case 5:
-                return new ChanceChangingLanesBelow(ChanceCard_names[index], changingLianesBelowImmediate);
-            case 6:
-                return new ChanceForeclosedPropertySale(ChanceCard_names[index], foreclosedPropSaleImmediate);
-            case 7:
-                return new ChanceForwardThinker(ChanceCard_names[index], forwardThinkerImmediate);
-            case 8:
-                return new ChanceGetOutOfJailFree(ChanceCard_names[index], getOutOfJailFreeImmediate);
-            case 9:
-                return new ChanceGetRollin(ChanceCard_names[index], getRollinImmediate);
-            case 10:
-                return new ChanceGoToJail(ChanceCard_names[index], goToJailImmediate);
-            case 11:
-                return new ChanceGPSNotWorking(ChanceCard_names[index], GPSNotWorkingImmediate);
+//            case 2:
+//                return new ChanceAdvanceToSaintCharles(ChanceCard_names[index], advanceToStCharlesImmediate);
+//            case 3:
+//                return new ChanceBuyersMarket(ChanceCard_names[index], buyersMarketImmediate);
+//            case 4:
+//                return new ChanceChangingLanesAbove(ChanceCard_names[index], changingLanesAboveImmediate);
+//            case 5:
+//                return new ChanceChangingLanesBelow(ChanceCard_names[index], changingLianesBelowImmediate);
+//            case 6:
+//                return new ChanceForeclosedPropertySale(ChanceCard_names[index], foreclosedPropSaleImmediate);
+//            case 7:
+//                return new ChanceForwardThinker(ChanceCard_names[index], forwardThinkerImmediate);
+//            case 8:
+//                return new ChanceGetOutOfJailFree(ChanceCard_names[index], getOutOfJailFreeImmediate);
+//            case 9:
+//                return new ChanceGetRollin(ChanceCard_names[index], getRollinImmediate);
+//            case 10:
+//                return new ChanceGoToJail(ChanceCard_names[index], goToJailImmediate);
+//            case 11:
+//                return new ChanceGPSNotWorking(ChanceCard_names[index], GPSNotWorkingImmediate);
             case 12:
                 return new ChanceHolidayBonus(ChanceCard_names[index], holidayBonusImmediate);
             case 13:
                 return new ChanceHurricane(ChanceCard_names[index], hurricaneImmediate);
-            case 14:
-                return new ChanceMakeGeneralRepairs(ChanceCard_names[index], generakRepairsImmediate);
-            case 15:
-                return new ChanceMardiGras(ChanceCard_names[index], mardiGrasImmediate);
-            case 16:
-                return new ChancePayBack(ChanceCard_names[index], payBackImmediate);
-            case 17:
-                return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
-            case 18:
-                return new ChanceRideTheSubway(ChanceCard_names[index], rideTheSubwayImmediate);
+//            case 14:
+//                return new ChanceMakeGeneralRepairs(ChanceCard_names[index], generakRepairsImmediate);
+//            case 15:
+//                return new ChanceMardiGras(ChanceCard_names[index], mardiGrasImmediate);
+//            case 16:
+//                return new ChancePayBack(ChanceCard_names[index], payBackImmediate);
+//            case 17:
+//                return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
+//            case 18:
+//                return new ChanceRideTheSubway(ChanceCard_names[index], rideTheSubwayImmediate);
             case 19:
                 return new ChanceSeeUInCourt(ChanceCard_names[index], CUInCourtImmediate);
-            case 20:
-                return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
-            case 21:
-                return new ChanceZeroDollarsDown(ChanceCard_names[index], zeroDollarsDownImmediate);
+//            case 20:
+//                return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
+//            case 21:
+//                return new ChanceZeroDollarsDown(ChanceCard_names[index], zeroDollarsDownImmediate);
             default:
                 return null;
         }
@@ -148,22 +150,22 @@ public class CardFactory {
 
     public CommunityChestCard createCCCard(int index) {
         switch (index) {
-            case 0:
-                return new CCBeKindRewind(CCCard_names[index], bekindRewindImmediate);
-            case 1:
-                return new CCGameNight(CCCard_names[index], gameNightImmediate);
-            case 2:
-                return new CCHappyBirthday(CCCard_names[index], happyBirthdayImmediate);
-            case 3:
-                return new CCHouseCondemned(CCCard_names[index], houseCondemnedImmediate);
+//            case 0:
+//                return new CCBeKindRewind(CCCard_names[index], bekindRewindImmediate);
+//            case 1:
+//                return new CCGameNight(CCCard_names[index], gameNightImmediate);
+//            case 2:
+//                return new CCHappyBirthday(CCCard_names[index], happyBirthdayImmediate);
+//            case 3:
+//                return new CCHouseCondemned(CCCard_names[index], houseCondemnedImmediate);
             case 4:
                 return new CCInsidersEdge(CCCard_names[index], insidersEdgeImmediate);
-            case 5:
-                return new CCMovingExperience(CCCard_names[index], movingExperienceImmediate);
+//            case 5:
+//                return new CCMovingExperience(CCCard_names[index], movingExperienceImmediate);
             case 6:
                 return new CCPayHospitalBills(CCCard_names[index], payHospitalBillsImmediate);
-            case 7:
-                return new CCTornadoHits(CCCard_names[index], tornadoImmediate);
+//            case 7:
+//                return new CCTornadoHits(CCCard_names[index], tornadoImmediate);
             default:
                 return null;
         }

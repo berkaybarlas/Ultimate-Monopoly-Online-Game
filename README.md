@@ -38,3 +38,10 @@ We added also a rentIndex to PropertySquare to show which rent now is the curren
 	Player panel is on the right side of the Button Panel. The name of the players are displayed as buttons on a scrollable panel. When the names of the players are clicked, several information about them are displayed such as the Player name, Money, Owned properties and Owned utilities. 
 	Lastly, on the bottom left part of the game window screen, we have the Message Box Panel. Messages can be written into the text field and by using the Submit button, we messages be sent. The messages are displayed on the screen below the Player Panel. When new messages are added, they are first fitted into the message box screen and after a certain number of messages, we messages are displayed as a scrollable panel.
 	We also have an additional panel (Menu Window) on the top part of the screen. In that panel, there are Send Message, Menu, Game and Quit buttons. This part is currently used by the developer and its main purpose is to test the game more easily. When the Send Message button is clicked, if the server is working, �hello� message is displayed on the console. Menu and Game buttons allows the developer to quickly switch through the game and the server menu. Finally, Quit button is used to close the game window. 
+	
+# Tested Classes:
+    - GameEngine
+    - PlayerController	
+    - MoneyController
+    - PropertySquare
+    - Square (Various Square types such as Go to Jail, Go, Bonus, Reverse Direction, Roll 3, and Luxury Tax.)

@@ -1,18 +1,21 @@
 package com.nullPointer.Domain.Model;
 
 import com.nullPointer.Domain.Model.Cards.Card;
+import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.Square.Square;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class DomainBoard {
+public class DomainBoard implements Serializable {
+
+    private SquareFactory squareFactory = SquareFactory.getInstance();
+    private CardFactory cardFactory = CardFactory.getInstance();
 
     private int numSquares = 120;
     private HashMap<Integer, Square> domainSquareMap;
     private HashMap<Integer, ArrayList<Integer>> connectionsMap;
-    private Queue<Card> CCCards, ChanceCards;
-    private SquareFactory squareFactory = SquareFactory.getInstance();
-    private CardFactory cardFactory = CardFactory.getInstance();
+    private Queue<Card> CCCards, ChanceCards, Roll3Cards;
 
     private int layer1begin = 0;
     private int layer1end = 55;
@@ -22,9 +25,6 @@ public class DomainBoard {
     private int layer3end = 119;
 
 
-    // List that holds card generation orders for CC & chance cards. I appended the CCIndexList & ChanceIndexList, you can make changes as you see fit.
-    public ArrayList<Integer> meta_card_gen_info = new ArrayList<Integer>();
-
     public DomainBoard() {
         domainSquareMap = new HashMap<Integer, Square>(numSquares);
         connectionsMap = new HashMap<Integer, ArrayList<Integer>>(numSquares);
@@ -33,7 +33,15 @@ public class DomainBoard {
         createConnectionsMap();
         createSquares();
         createCards();
+        createRoll3Cards();
     }
+    
+    public Queue<Card> getRoll3Cards() {
+		return Roll3Cards;
+	}
+	public void setRoll3Cards(Queue<Card> roll3Cards) {
+		Roll3Cards = roll3Cards;
+	}
 
     /*
      * This is the real method for creating all cards, which will be activated
@@ -52,8 +60,6 @@ public class DomainBoard {
         for (int i = 0; i < CCLength; i++) {
             CCCards.add(cardFactory.createCCCard(CCindexList.get(i)));
         }
-
-
         // same goes for chance cards
         int ChanceLength = cardFactory.ChanceCard_names.length;
         ArrayList<Integer> ChanceIndexList = new ArrayList<Integer>(ChanceLength);
@@ -65,16 +71,18 @@ public class DomainBoard {
             ChanceCards.add(cardFactory.createChanceCard(ChanceIndexList.get(j)));
         }
 
-        // set meta_card_gen_info
-        meta_card_gen_info.addAll(CCindexList);
-        meta_card_gen_info.addAll(ChanceIndexList);
     }
 
     public void createCards() {
-        CCCards.add(cardFactory.createCCCard(8));
-        ChanceCards.add(cardFactory.createChanceCard(12));
-        meta_card_gen_info.add(8);
-        meta_card_gen_info.add(12);
+
+        CCCards.add(cardFactory.createCCCard(4));
+        CCCards.add(cardFactory.createCCCard(6));
+        ChanceCards.add(cardFactory.createChanceCard(13)); //hurricane card
+        ChanceCards.add(cardFactory.createChanceCard(0)); //advance to the nearest railroad +
+        ChanceCards.add(cardFactory.createChanceCard(19)); ////see you in court +
+        ChanceCards.add(cardFactory.createChanceCard(1)); //advance to pay corner +
+        ChanceCards.add(cardFactory.createChanceCard(12)); //holiday bonus +
+        
     }
 
     public void createSquares() {
@@ -128,6 +136,18 @@ public class DomainBoard {
 
 
     }
+    public void createRoll3Cards(){
+    	Roll3Cards = new LinkedList<Card>();
+    	Roll3 card1 = new Roll3("Roll 3 Card", false, 1, 2, 3);
+    	Roll3Cards.add(card1);
+    	Roll3 card2 = new Roll3("Roll 3 Card", false, 1, 2, 4);
+    	Roll3Cards.add(card2);
+    	Roll3 card3 = new Roll3("Roll 3 Card", false, 1, 2, 5);
+    	Roll3Cards.add(card3);
+    	Roll3 card4 = new Roll3("Roll 3 Card", false, 1, 2, 6);
+    	Roll3Cards.add(card4);
+    }
+    
 
     public HashMap<Integer, Square> getSquareMap() {
         return domainSquareMap;
@@ -149,4 +169,16 @@ public class DomainBoard {
         return ChanceCards;
     }
 
+	public void setCCCards(Queue<Card> cCCards) {
+		CCCards = cCCards;
+	}
+
+	public void setChanceCards(Queue<Card> chanceCards) {
+		ChanceCards = chanceCards;
+	}
+    
+    public void exchangeDomainBoardData(DomainBoard domainBoard){
+        domainSquareMap = domainBoard.getSquareMap();
+
+    }
 }

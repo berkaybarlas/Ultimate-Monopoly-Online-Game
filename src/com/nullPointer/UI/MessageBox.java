@@ -1,62 +1,85 @@
 package com.nullPointer.UI;
+
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
+import com.nullPointer.Domain.Server.ServerInfo;
+import com.nullPointer.Utils.ColorSet;
 
 import java.awt.*;
 import javax.swing.*;
 
 public class MessageBox extends JPanel implements Observer {
-	private JScrollPane scrollPane;
-	private JTextField textEnter;
-	private JButton submit;
-	private JPanel panel;
-	private CommunicationController communicationController = CommunicationController.getInstance();
-	private GameEngine gameEngine = GameEngine.getInstance();
+    private JScrollPane scrollPane;
+    private JTextField textEnter;
+    private JButton submit;
+    private JPanel panel;
+    private CommunicationController communicationController = CommunicationController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
 
-	public MessageBox(){
-		this.setLayout(new BorderLayout());
+    public MessageBox(int width, int height) {
+        this.setPreferredSize(new Dimension(width, height));
+        this.setOpaque(false);
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setOpaque(false);
+        panel.setBackground(Color.WHITE);
+        panel.validate();
+        scrollPane = new JScrollPane(panel);
+        // scrollPane.setOpaque(false);
+        scrollPane.setPreferredSize(new Dimension(width, height - 100));
+        //scrollPane.setBounds(0, 0, 500, 200);
 
-		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		scrollPane = new JScrollPane(panel);
-		scrollPane.setBounds(0, 0,500,200);
-		JPanel contentPane = new JPanel(null);
-		contentPane.setPreferredSize(new Dimension(500, 200));
-		contentPane.add(scrollPane);
-		this.add(contentPane,BorderLayout.NORTH);
+        JPanel contentPane = new JPanel();
+        contentPane.setOpaque(false);
+        contentPane.setPreferredSize(new Dimension(width, height - 100));
+        contentPane.add(scrollPane);
+        this.add(contentPane);
 
-		JPanel enterPane = new JPanel(null);
-		enterPane.setPreferredSize(new Dimension(100, 200));
-		this.add(enterPane,BorderLayout.SOUTH);
+        JPanel enterPane = new JPanel();
+        enterPane.setPreferredSize(new Dimension(width, 50));
+        enterPane.setOpaque(false);
 
-		submit = new JButton();
-		submit.setBounds(401,0,100,30);
-		submit.setText("Submit");
-		textEnter=new JTextField();
-		textEnter.setBounds(0,0, 400, 30);
-		textEnter.addActionListener(e -> {
-			if(textEnter.getText() != "") {
-				communicationController.sendClientMessage("message/" + textEnter.getText());
-				textEnter.setText("");
-			}
-		});
-		enterPane.add(submit);
-		enterPane.add(textEnter);
 
-		submit.addActionListener(e -> {
-			if(textEnter.getText() != "") {
-				communicationController.sendClientMessage("message/" + textEnter.getText());
-				textEnter.setText("");
-			}
+        textEnter = new JTextField();
+        textEnter.setPreferredSize(new Dimension(width - 110, 30));
+        //textEnter.setBounds(0, 0, 400, 30);
+        textEnter.addActionListener(e -> {
+            if (textEnter.getText() != "") {
+                communicationController.sendClientMessage("message/" + messageWithClient(textEnter.getText()));
+                textEnter.setText("");
+            }
         });
-		this.setVisible(true);
-		gameEngine.subscribe(this);
-	}
+        enterPane.add(textEnter);
 
-	public void addMessage(String msg) {
-        Label message=new Label();
-        message.setText(msg);
+        submit = new JButton();
+        //submit.setBounds(401, 0, 100, 30);
+        submit.setPreferredSize(new Dimension(100, 30));
+        submit.setMaximumSize(new Dimension(100, 30));
+        submit.setMinimumSize(new Dimension(100, 30));
+        submit.setText("Submit");
+        submit.addActionListener(e -> {
+            if (textEnter.getText() != "") {
+                communicationController.sendClientMessage("message/" + messageWithClient(textEnter.getText()));
+                textEnter.setText("");
+            }
+        });
+        enterPane.add(submit);
+
+        this.add(enterPane);
+        this.setVisible(true);
+        gameEngine.subscribe(this);
+    }
+
+    public String messageWithClient(String message) {
+        String client = ServerInfo.getInstance().getClientID();
+        return "Computer " + (ServerInfo.getInstance().getClientList().indexOf(client) + 1) + " : " + message;
+
+    }
+
+    public void addMessage(String msg) {
+        Label message = new Label();
+        message.setText(" " + msg);
         panel.add(message);
         panel.validate();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -65,8 +88,8 @@ public class MessageBox extends JPanel implements Observer {
 
     @Override
     public void onEvent(String message) {
-        if(message.contains("message/")){
-            addMessage(message.substring("message/".length()+1));
+        if (message.contains("message/")) {
+            addMessage(message.substring("message/".length()));
         }
     }
 }
