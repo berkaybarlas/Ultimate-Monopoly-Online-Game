@@ -22,25 +22,29 @@ public class PlayerPanel extends JPanel implements Observer {
     private int lastSelected = 0;
 
     public PlayerPanel() {
+        this.setOpaque(false);
+        this.setPreferredSize(new Dimension(500, 310));
+        this.setMaximumSize(new Dimension(500, 310));
 
         userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.Y_AXIS));
-        userPanel.setBounds(0, 0, 120, 600);
+        //userPanel.setPreferredSize(new Dimension(120,300));
         scrollPane = new JScrollPane(userPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0, 0, 120, 300);
+        //scrollPane.setBounds(0, 0, 120, 300);
+
         panel = new JPanel();
-        panel.setPreferredSize(new Dimension(100, 300));
+        panel.setPreferredSize(new Dimension(110, 300));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
+        panel.add(scrollPane);
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(390, 300));
+        textArea.setPreferredSize(new Dimension(380, 300));
         textArea.setEditable(false);
 
-        addPlayerButtons();
-        panel.add(scrollPane);
-        this.add(panel);
-        this.add(textArea);
-        gameEngine.subscribe(this);
+       addPlayerButtons();
+       this.add(panel);
+       this.add(textArea);
+       gameEngine.subscribe(this);
     }
 
     public void paint(Graphics g) {
@@ -48,7 +52,7 @@ public class PlayerPanel extends JPanel implements Observer {
         if (pList.size() != 0) {
             textArea.setText(pList.get(lastSelected).toString());
         }
-        g.drawRect(800, 800, 1000, 100);
+        //g.drawRect(800, 800, 1000, 100);
     }
 
     public void addPlayerButtons() {

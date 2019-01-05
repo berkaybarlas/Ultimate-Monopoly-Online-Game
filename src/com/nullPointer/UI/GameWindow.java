@@ -16,12 +16,9 @@ public class GameWindow extends JPanel implements Observer {
     protected Board board;
     protected DiceDisplay diceDisplay;
     protected ButtonPanel buttonPanel;
-    protected PlayerPanel playerPanel;
-    Animator animator;
+    private Animator animator;
     private GameEngine gameEngine = GameEngine.getInstance();
-    private PlayerController playerController = PlayerController.getInstance();
     private SaveLoadController saveLoadController = SaveLoadController.getInstance();
-    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     private ArrayList<JButton> disabledButtons = new ArrayList<JButton>();
 
@@ -46,19 +43,21 @@ public class GameWindow extends JPanel implements Observer {
 
         diceDisplay = new DiceDisplay();
         middleSide.add(diceDisplay);
-        middleSide.add(Box.createRigidArea(new Dimension(0, 100)));
-        contentPane.add(middleSide);    // BorderLayout.CENTER
+        middleSide.add(Box.createRigidArea(new Dimension(10, 100)));
         middleSide.setOpaque(false);
+        contentPane.add(middleSide);    // BorderLayout.CENTER
 
         JPanel rightSide = new JPanel();
+        rightSide.setOpaque(false);
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
 
-        playerPanel = new PlayerPanel();
-        rightSide.add(playerPanel);
-        MessageBox msg = new MessageBox();
-        rightSide.add(msg);
+        PlayerPanel playerPanel = new PlayerPanel();
+        MessageBox messageBox = new MessageBox(500,height / 2 - 50 );
+        rightSide.add(Box.createRigidArea(new Dimension(10, 100)));
+        rightSide.add(playerPanel, BorderLayout.CENTER);
+        rightSide.add(Box.createRigidArea(new Dimension(10, 50)));
+        rightSide.add(messageBox);
         contentPane.add(rightSide);    // BorderLayout.LINE_END
-        rightSide.setOpaque(false);
 
         this.add(contentPane);
         setOpaque(false);
@@ -71,10 +70,6 @@ public class GameWindow extends JPanel implements Observer {
         animator.setVisible(true);
         contentPane.add(animator);
 
-    }
-
-    public ButtonPanel getButtonPanel() {
-        return buttonPanel;
     }
 
     public void paint(Graphics g) {

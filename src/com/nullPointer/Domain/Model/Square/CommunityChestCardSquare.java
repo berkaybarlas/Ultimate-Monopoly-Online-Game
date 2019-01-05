@@ -3,9 +3,8 @@ import com.nullPointer.Domain.Model.GameEngine;
 
 public class CommunityChestCardSquare extends Square {
 
-	public CommunityChestCardSquare(String n, String t) {
-		super(n, t);
-		// TODO Auto-generated constructor stub
+	public CommunityChestCardSquare(String name, String type) {
+		super(name, type);
 	}
 
 

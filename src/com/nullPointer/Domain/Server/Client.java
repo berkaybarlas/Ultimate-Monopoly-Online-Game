@@ -95,7 +95,6 @@ public class Client extends Thread {
             String nextServerIP = serverInfo.next();
             GameEngine.getInstance().publishEvent("serverScreen");
             if (nextServerIP.equals(localIp)) {
-                serverInfo.getClientList();
                 communicationController.startServer();
                 hostName = "localhost";
             } else {
