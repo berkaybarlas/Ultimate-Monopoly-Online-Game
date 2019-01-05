@@ -1,6 +1,5 @@
 package com.nullPointer.Domain.Model;
 
-import com.nullPointer.Domain.BotBehaviour;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Card;
@@ -35,19 +34,25 @@ public class GameEngine {
 
     private GameEngine() {
         domainBoard = new DomainBoard();
-        BotBehaviour botBehaviour = new BotBehaviour();
     }
 
-	public void setSquareUnselected() {
-		this.chosenSquareIndex = -1;
-	}
-
-    public int getChosenSquareIndex() {
-        return chosenSquareIndex;
+    public static GameEngine getInstance() {
+        if (_instance == null) {
+            _instance = new GameEngine();
+        }
+        return _instance;
     }
 
     public void setSquareUnselected() {
         this.chosenSquareIndex = -1;
+    }
+
+    public void setChosenSquareIndex(int squareIndex) {
+        this.chosenSquareIndex = squareIndex;
+    }
+
+    public int getChosenSquareIndex() {
+        return chosenSquareIndex;
     }
 
     public boolean getRoll3() {
@@ -215,15 +220,15 @@ public class GameEngine {
 
     public void improveProperty() {
 
-		while(getChosenSquareIndex() == -1){
+        while(getChosenSquareIndex() == -1){
 //			try {
 //				Thread.sleep(100);
 //			} catch (InterruptedException e) {
 //				e.printStackTrace();
 //			}
-		}
-		Player currentPlayer = playerController.getCurrentPlayer();
-		Square square = domainBoard.getSquareAt(getChosenSquareIndex());
+        }
+        Player currentPlayer = playerController.getCurrentPlayer();
+        Square square = domainBoard.getSquareAt(getChosenSquareIndex());
 
         if (square.getType().equals("PropertySquare")) {
 
@@ -382,7 +387,10 @@ public class GameEngine {
 
     public boolean isMyTurn() {
         Player player = playerController.getCurrentPlayer();
-        if (player != null && (player.getClientID().equals(serverInfo.getClientID()))) {
+        if(player == null){
+            return false;
+        }
+        if (player.getClientID().equals(serverInfo.getClientID())) {
             return true;
         }
 
@@ -403,6 +411,9 @@ public class GameEngine {
 
     public boolean isBot() {
         Player currentPlayer = playerController.getCurrentPlayer();
+        if(currentPlayer == null){
+            return false;
+        }
         if (currentPlayer != null && currentPlayer.isBot()) {
             return true;
         }

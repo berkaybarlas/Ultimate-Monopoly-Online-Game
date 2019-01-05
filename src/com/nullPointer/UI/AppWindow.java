@@ -59,8 +59,7 @@ public class AppWindow extends JFrame implements Observer {
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
-
-
+        BotBehaviour botBehaviour = new BotBehaviour();
 
         //scrollPane = new JScrollPane(gameWindow);
 
