@@ -52,7 +52,7 @@ public class GameWindow extends JPanel implements Observer {
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
 
         PlayerPanel playerPanel = new PlayerPanel();
-        MessageBox messageBox = new MessageBox(500, height / 2 - 50);
+        MessageBox messageBox = new MessageBox(500,height / 2 - 50 );
         rightSide.add(Box.createRigidArea(new Dimension(10, 100)));
         rightSide.add(playerPanel, BorderLayout.CENTER);
         rightSide.add(Box.createRigidArea(new Dimension(10, 50)));
@@ -75,6 +75,7 @@ public class GameWindow extends JPanel implements Observer {
     public void paint(Graphics g) {
         super.paint(g);
         animator.paint(g);
+        //board.paint(g);
     }
 
     @Override
@@ -89,8 +90,9 @@ public class GameWindow extends JPanel implements Observer {
                 buttonPanel.purchaseButton.setEnabled(false);
                 buttonPanel.improveButton.setEnabled(true);
             }
-            if (message.equals("endTurn")) {
-                buttonPanel.endTurn.setEnabled(true);
+            if(message.equals("endTurn")) {
+                buttonPanel.endTurn.setEnabled(true);    
+                buttonPanel.improveButton.setEnabled(false);
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
@@ -101,10 +103,11 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("save")) {
                 try {
-                    saveLoadController.saveGame();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+					saveLoadController.saveGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 System.out.println("[GameWindow: saved]");
             }
         }
@@ -115,6 +118,7 @@ public class GameWindow extends JPanel implements Observer {
         if (message.equals("resume")) {
             enableButtons();
             System.out.println("[GameWindow: resumed]");
+            
         }
     }
 
@@ -149,13 +153,11 @@ public class GameWindow extends JPanel implements Observer {
             disabledButtons.add(buttonPanel.improveButton);
             buttonPanel.improveButton.setEnabled(false);
         }
-        if (buttonPanel.endTurn.isEnabled()) {
-            disabledButtons.add(buttonPanel.endTurn);
-            buttonPanel.endTurn.setEnabled(false);
+        if(buttonPanel.endTurn.isEnabled()) {
+        	disabledButtons.add(buttonPanel.endTurn);
+        	buttonPanel.endTurn.setEnabled(false);
         }
         buttonPanel.pauseButton.setEnabled(false);
         disabledButtons.add(buttonPanel.pauseButton);
-
-        System.out.println("DISABLED BUTTON SIZE: " + disabledButtons.size());
     }
 }
