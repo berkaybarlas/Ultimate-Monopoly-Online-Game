@@ -45,10 +45,6 @@ public class BotBehaviour implements Observer {
         }
     }
 
-    public boolean isLazyBot() {
-        return lazyBot;
-    }
-
     public void setLazyBot(boolean lazyBot) {
         this.lazyBot = lazyBot;
     }
@@ -112,9 +108,9 @@ public class BotBehaviour implements Observer {
         } else if (message.equals("rollDice")) {
             if (gameEngine.getRoll3())
                 gameEngine.roll3Dice();
-            else gameEngine.rollDice();
+            else
+                gameEngine.rollDice();
 
-            //System.out.println(botName + " must Roll the Dice!");
             communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 
         } else if (message.equals("drawCard")) {
@@ -125,7 +121,6 @@ public class BotBehaviour implements Observer {
             } else if (message.contains("improve")) {
                 botBehaviourStrategy.improveAction();
             }
-
         }
     }
 

@@ -13,6 +13,7 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
@@ -284,15 +285,12 @@ public class GameEngine {
 
     public void improveSelectedProperty(PropertySquare p)    // This is added only for bots to use
     {
-        Player currentPlayer = playerController.getCurrentPlayer();
-        HashMap<String, ArrayList<PropertySquare>> propertyCardsMap = currentPlayer.getPropertyCardsMap();
-        if (!p.hasHotel() && !p.hasSkyscraper() && p.numHouses() != 4) {
-            p.improve();
-            publishEvent("improve");
-        } else if (p.hasHotel() || p.numHouses() == 4) {
-            if (propertyCardsMap.get(p.getColor()).size() == 3) {
-                p.improve();
-                publishEvent("improve");
+        HashMap<Integer, Square> squareMap = domainBoard.getSquareMap();
+        for (int i = 0; i < squareMap.size(); i++) {
+            if(squareMap.get(i).getName().equals(p.getName())){
+                chosenSquareIndex = i;
+                tryImproveProperty();
+                return;
             }
         }
     }

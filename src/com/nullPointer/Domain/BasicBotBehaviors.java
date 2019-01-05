@@ -18,17 +18,16 @@ public abstract class BasicBotBehaviors {
 
 	protected void buyAction(Player current) {
 		communicationController.sendClientMessage("purchase");
-		//yieldTurn();
 	}
 
 	protected void sendMessage(String message) {
 		communicationController.sendClientMessage("message/" + playerController.getCurrentPlayer().getName() + " : " + message);
 	}
 
-	protected void tryImproving(Player current, String msg) {
+	protected void tryImproving(Player current) {
 
 		boolean doIHaveAnyHousesAnywhere = false;
-		ArrayList<PropertySquare> props = new ArrayList<PropertySquare>();
+		ArrayList<PropertySquare> props = new ArrayList<>();
 
 		if (current.getPropertySquares() != null) {
 			HashMap<String, ArrayList<PropertySquare>> deeds = current.getPropertyCardsMap();
@@ -40,8 +39,8 @@ public abstract class BasicBotBehaviors {
 					}
 				}
 				if (!props.isEmpty()) {
-					for (PropertySquare p : props) {                     
-						improveAction(current, p);
+					for (PropertySquare p : props) {
+						improveAction(p);
 						break;
 					}
 				}
@@ -49,10 +48,9 @@ public abstract class BasicBotBehaviors {
 		}
 	}
 
-	protected void improveAction(Player current, PropertySquare p) {
+	protected void improveAction(PropertySquare propertySquare) {
 		sendMessage("I decided to improve!");
-		gameEngine.improveSelectedProperty(p);
-		//yieldTurn();
+		gameEngine.improveSelectedProperty(propertySquare);
 	}
 
 	protected void cardAction(Player current) {
