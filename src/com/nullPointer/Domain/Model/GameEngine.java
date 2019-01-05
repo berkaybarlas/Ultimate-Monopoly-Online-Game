@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
  * Most of the game logic related operations are done by this class and other components are
@@ -38,8 +35,8 @@ public class GameEngine {
 		return chosenSquareIndex;
 	}
 
-	public void setSquareUnselected() {
-		this.chosenSquareIndex = -1;
+	public void setChosenSquareIndex(int chosenSquare) {
+		this.chosenSquareIndex = chosenSquare;
 	}
 
 	public boolean getRoll3() {
@@ -222,11 +219,11 @@ public class GameEngine {
 	public void improveProperty() {
 
 		while(getChosenSquareIndex() == -1){
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		Player currentPlayer = playerController.getCurrentPlayer();
 		Square square = domainBoard.getSquareAt(getChosenSquareIndex());
