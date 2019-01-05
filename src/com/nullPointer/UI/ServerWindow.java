@@ -251,6 +251,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void mousePressed(MouseEvent e) {
                 textField.setText("");
             }
+
         });
     }
 
