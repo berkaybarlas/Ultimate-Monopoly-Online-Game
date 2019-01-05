@@ -103,6 +103,8 @@ public class CommunicationController {
                 }
             } else if (input.contains("improve/")) {
                 gameEngine.improveProperty(Integer.parseInt(rest(input)));
+            } else if (input.contains("demolished/")) {
+                gameEngine.downgradeProperty(Integer.parseInt(rest(input)));
             } else if (input.contains("improveProperty")){
                 gameEngine.tryImproveProperty();
             } else if (input.contains("resume")) {

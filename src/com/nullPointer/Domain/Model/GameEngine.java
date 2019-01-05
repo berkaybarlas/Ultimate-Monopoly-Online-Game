@@ -218,6 +218,17 @@ public class GameEngine {
         }
     }
 
+    public void downgradeProperty(int propertySquareIndex) {
+        Square currentSquare = getDomainBoard().getSquareAt(propertySquareIndex);
+        PropertySquare propertySquare = ((PropertySquare) currentSquare);
+        if (propertySquare.isOwned()) {
+            if (propertySquare.numHouses() > 0 || propertySquare.hasHotel() || propertySquare.hasSkyscraper())
+                propertySquare.downgrade();
+        }
+        setSquareUnselected();
+        publishEvent("refresh");
+    }
+
     public void improveProperty(int propertySquareIndex) {
         Square square = domainBoard.getSquareAt(propertySquareIndex);
         PropertySquare propertySquare = ((PropertySquare) square);
