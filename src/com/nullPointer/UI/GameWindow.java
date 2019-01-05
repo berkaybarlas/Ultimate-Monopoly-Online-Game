@@ -1,10 +1,8 @@
 package com.nullPointer.UI;
 
-import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Controller.SaveLoadController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
-import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;

@@ -2,13 +2,8 @@ package com.nullPointer.Domain;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
-import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
-import com.nullPointer.Domain.Model.Square.PropertySquare;
-import com.nullPointer.Domain.Model.Square.RailRoadTransitStationsSquare;
-import com.nullPointer.Domain.Model.Square.Square;
-import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
 import java.util.*;
 
@@ -123,7 +118,4 @@ public class BotBehaviour implements Observer {
             }
         }
     }
-
 }
-
-

@@ -27,7 +27,7 @@ public class CardFactory implements Serializable {
     public String ChanceCard_names[] = {"Advance To The Nearest Railroad", "Advance To The Pay Corner", "Advance To St. Charles Place", "Buyer's Market", "Changing Lanes",
             /*This is not a typo, 2 cards with same name exist*/ "Changing Lanes", "Foreclosed Property Sale", "Forward Thinker", "Get Out Of Jail Free", "Get Rollin'",
             "Go To Jail", "GPS Not Working", "Holiday Bonus", "Hurricane Makes Landfall", "Make General Repairs", "Mardi Gras", "Pay Back",
-            "Property Taxes", "Ride The Subway", "See You In Court", "Social Media Fail", "Zero Dollars Down"};
+            "Property Taxes", "Ride The Subway", "Social Media Fail", "Zero Dollars Down"};
 
     /*
      * isImmediate values for community chest cards
