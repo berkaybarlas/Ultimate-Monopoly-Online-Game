@@ -55,13 +55,28 @@ public class ServerInfo {
     }
 
     public String next() {
-        if (clientList == null || clientList.size() == 1 ) return "";
-        if(clientList.size() < 2)
+        if (clientList == null || clientList.size() == 1) return "";
+        if (clientList.size() < 2)
             return clientList.get(0);
         return clientList.get(1);
     }
 
     public void setClientList(List<String> clientList) {
         this.clientList = clientList;
+    }
+
+    public boolean isServer() {
+        if (clientList == null || clientList.size() < 1) {
+            return false;
+        }
+        return clientList.get(0).equals(clientID);
+    }
+
+    public boolean isOnline(String clientID) {
+
+        if(clientList == null || clientID == null || clientID == ""){
+            return  false;
+        }
+        return clientList.contains(clientID);
     }
 }

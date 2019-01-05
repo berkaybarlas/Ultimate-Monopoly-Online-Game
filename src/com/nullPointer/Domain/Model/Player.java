@@ -16,7 +16,7 @@ public class Player implements Serializable {
     private int layer = 1;
     private int targetPosition = 56;
     private int money = 3200;
-    private boolean isBot = false;
+    private boolean bot = false;
     private HashMap<String, ArrayList<PropertySquare>> propertyCardsMap;
     private ArrayList<PropertySquare> propertySquares;
     private ArrayList<UtilitySquare> utilityList;
@@ -204,17 +204,17 @@ public class Player implements Serializable {
 
     public boolean isBot()
     {
-        return this.isBot;
+        return this.bot;
     }
 
     public void setBot()
     {
-        this.isBot = true;
+        this.bot = true;
     }
 
     public void setPerson()
     {
-        this.isBot = false;
+        this.bot = false;
     }
 
 
