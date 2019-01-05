@@ -11,8 +11,7 @@ public class CCGameNight extends CommunityChestCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

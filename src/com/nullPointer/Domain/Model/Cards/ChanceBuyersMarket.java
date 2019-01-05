@@ -11,8 +11,7 @@ public class ChanceBuyersMarket extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -16,7 +16,6 @@ public class ChanceAdvanceToPayCorner extends ChanceCard {
 
 	@Override
 	public void playCard(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
 		int go = 56;
 		int goMoney = 200;
 		int payDay = 28;
