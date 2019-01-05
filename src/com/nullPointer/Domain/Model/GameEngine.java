@@ -218,15 +218,26 @@ public class GameEngine {
         }
     }
 
-    public void improveProperty() {
+    public void improveProperty(int propertySquareIndex) {
+        Square square = domainBoard.getSquareAt(propertySquareIndex);
+        PropertySquare propertySquare = ((PropertySquare) square);
+        propertySquare.improve();
+        publishEvent("refresh");
+    }
 
-        while(getChosenSquareIndex() == -1){
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+    public boolean tryImproveProperty() {
+        if (!isMyTurn()) {
+            return false;
         }
+
+        while (chosenSquareIndex == -1) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException er) {
+                er.printStackTrace();
+            }
+        }
+
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(getChosenSquareIndex());
 
@@ -239,19 +250,21 @@ public class GameEngine {
                 if (propertyCardsMap.get(propertySquare.getColor()) != null) {
                     if (!propertySquare.hasHotel() && !propertySquare.hasSkyscraper() && propertySquare.numHouses() != 4) {
                         if (propertyCardsMap.get(propertySquare.getColor()).size() >= 2) {
-                            propertySquare.improve();
-                            publishEvent("improve");
+                            publishEvent("improve/" + chosenSquareIndex);
+                            return true;
                         }
                     } else if (propertySquare.hasHotel() || propertySquare.numHouses() == 4) {
                         if (propertyCardsMap.get(propertySquare.getColor()).size() >= 3) {
-                            propertySquare.improve();
-                            publishEvent("improve");
+                            publishEvent("improve/" + chosenSquareIndex);
+                            return true;
                         }
                     }
                 }
             }
         }
-        chosenSquareIndex = -1;
+
+        setSquareUnselected();
+        return false;
     }
 
     public void improveSelectedProperty(PropertySquare p)    // This is added only for bots to use
@@ -387,14 +400,14 @@ public class GameEngine {
 
     public boolean isMyTurn() {
         Player player = playerController.getCurrentPlayer();
-        if(player == null){
+        if (player == null) {
             return false;
         }
         if (player.getClientID().equals(serverInfo.getClientID())) {
             return true;
         }
 
-        if(!serverInfo.isOnline(player.getClientID()) && serverInfo.isServer()){
+        if (!serverInfo.isOnline(player.getClientID()) && serverInfo.isServer()) {
             return true;
         }
 
@@ -411,13 +424,13 @@ public class GameEngine {
 
     public boolean isBot() {
         Player currentPlayer = playerController.getCurrentPlayer();
-        if(currentPlayer == null){
+        if (currentPlayer == null) {
             return false;
         }
         if (currentPlayer != null && currentPlayer.isBot()) {
             return true;
         }
-        if (serverInfo.isOnline(currentPlayer.getClientID())){
+        if (!serverInfo.isOnline(currentPlayer.getClientID())) {
             return true;
         }
         return false;

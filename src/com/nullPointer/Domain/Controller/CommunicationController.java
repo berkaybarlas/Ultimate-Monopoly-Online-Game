@@ -101,8 +101,10 @@ public class CommunicationController {
                 } else if (rest(input).contains("play")) {
                     gameEngine.playCard();
                 }
-            } else if (input.contains("improveProperty")) {
-                gameEngine.improveProperty();
+            } else if (input.contains("improve/")) {
+                gameEngine.improveProperty(Integer.parseInt(rest(input)));
+            } else if (input.contains("improveProperty")){
+                gameEngine.tryImproveProperty();
             } else if (input.contains("resume")) {
                 gameEngine.resume();
             } else if (input.contains("pause")) {

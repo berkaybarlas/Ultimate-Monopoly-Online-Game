@@ -254,11 +254,9 @@ public class BotBehaviour implements Observer {
 
     @Override
     public void onEvent(String message) {
-
-        System.out.println("Incoming message: " + message);
         if (gameEngine.isBot() && gameEngine.isMyTurn()) {
-            for (String t : acceptibleMessages) {
-                if (message.contains(t)) {
+            for (String type : acceptibleMessages) {
+                if (message.contains(type)) {
 
                     Timer timer = new Timer();
 

@@ -25,10 +25,10 @@ public class Player implements Serializable {
     private boolean direction = true;
     private int rentMultiplier = 1;
     private LinkedList<Integer> path = null;
-    private int botBehaviourNumber = 15;
+    private int botBehaviourNumber = 1;
     private int placeHolder;
     
-    private ArrayList<Roll3> roll3Cards = new ArrayList<Roll3>();
+    private ArrayList<Roll3> roll3Cards = new ArrayList<>();
 
     public ArrayList<Roll3> getRoll3Cards() {
 		return roll3Cards;

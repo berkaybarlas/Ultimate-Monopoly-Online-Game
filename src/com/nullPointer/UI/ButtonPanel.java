@@ -91,6 +91,12 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
+
+//                if(gameEngine.tryImproveProperty()){
+//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
+//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
+//                }
+//                gameEngine.setSquareUnselected();
 			}
 		});
 
