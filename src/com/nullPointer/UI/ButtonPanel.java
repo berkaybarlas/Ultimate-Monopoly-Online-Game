@@ -23,9 +23,6 @@ public class ButtonPanel extends JPanel {
     private Panel pausePanel;
     private String[] saveOrResume = {"Save", "Resume"};
 
-    private int offset = 100;
-    private int buttonHeight = 35;
-
     private CommunicationController communicationController = CommunicationController.getInstance();
     private SaveLoadController saveLoadController = SaveLoadController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -131,6 +128,8 @@ public class ButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 communicationController.sendClientMessage("player/next");
                 endTurn.setEnabled(false);
+                improveButton.setEnabled(false);
+
             }
         });
 
@@ -138,7 +137,7 @@ public class ButtonPanel extends JPanel {
         endTurn.setEnabled(false);
         drawButton.setEnabled(false);
         playCardButton.setEnabled(false);
-        improveButton.setEnabled(true);
+        improveButton.setEnabled(false);
         rollDice.setEnabled(false);
         pauseButton.setEnabled(true);
         this.setVisible(true);

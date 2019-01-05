@@ -26,7 +26,7 @@ public class GameEngine {
     private MoneyController moneyController = MoneyController.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private DomainBoard domainBoard;
-    private boolean gameIsPaused = false;
+    private boolean paused = false;
     private boolean roll3 = false;
     private int chosenSquareIndex = -1;
     private static GameEngine _instance;
@@ -402,15 +402,19 @@ public class GameEngine {
     }
 
     public void resume() {
-        gameIsPaused = false;
+        paused = false;
         System.out.println("Game Engine: Game resumed");
         publishEvent("resume");
     }
 
     public void pause() {
-        gameIsPaused = true;
+        paused = true;
         System.out.println("Game Engine: Game paused");
         publishEvent("pause");
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
 
     public boolean isMyTurn() {
