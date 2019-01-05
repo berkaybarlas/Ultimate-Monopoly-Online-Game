@@ -6,7 +6,7 @@ public class CCMovingExperience extends CommunityChestCard {
 
 	public CCMovingExperience(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

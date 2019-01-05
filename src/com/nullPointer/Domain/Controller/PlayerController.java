@@ -37,7 +37,7 @@ public class PlayerController implements Serializable {
     }
 
     public Player getCurrentPlayer() {
-        if (players.size() > 0) {
+        if (players.size() > 0 && currentPlayer < players.size()) {
             return players.get(currentPlayer);
         }
         return null;

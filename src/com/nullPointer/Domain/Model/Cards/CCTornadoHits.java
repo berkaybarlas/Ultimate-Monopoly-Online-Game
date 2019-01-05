@@ -6,7 +6,7 @@ public class CCTornadoHits extends CommunityChestCard {
 
 	public CCTornadoHits(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public class ChanceForeclosedPropertySale extends ChanceCard {
 
 	public ChanceForeclosedPropertySale(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

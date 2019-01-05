@@ -7,7 +7,7 @@ public class GoSquare extends Square {
 
 	public GoSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 		this.setFlyover(true);
 	}
 

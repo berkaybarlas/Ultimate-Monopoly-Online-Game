@@ -12,7 +12,7 @@ public class ChanceSocialMediaFail extends ChanceCard {
 	private PlayerController playerController = PlayerController.getInstance();
 	public ChanceSocialMediaFail(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

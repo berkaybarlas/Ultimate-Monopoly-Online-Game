@@ -6,7 +6,7 @@ public class RailRoadTransitStationsSquare extends Square {
 
 	public RailRoadTransitStationsSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

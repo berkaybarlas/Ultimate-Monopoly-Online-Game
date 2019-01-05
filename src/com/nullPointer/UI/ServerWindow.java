@@ -362,6 +362,7 @@ public class ServerWindow extends JPanel implements Observer {
         newButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 player.setClientID(serverInfo.getClientID());
+                player.setPerson();
                 communicationController.sendClientMessage(PlayerController.getInstance());
             }
         });

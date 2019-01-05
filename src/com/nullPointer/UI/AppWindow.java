@@ -122,7 +122,6 @@ public class AppWindow extends JFrame implements Observer {
                 try {
 					saveGameController.loadGame("savefile");
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
             }

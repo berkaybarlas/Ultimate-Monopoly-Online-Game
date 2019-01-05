@@ -5,7 +5,7 @@ public class GoToJailSquare extends Square {
 
 	public GoToJailSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**

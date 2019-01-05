@@ -104,7 +104,7 @@ public class BotBehaviour implements Observer {
         String command = AvailableActions.get(action);
         System.out.println("Random bot decided to " + command);
         if (command.equals("Yield")) {
-           // yieldTurn();
+            // yieldTurn();
         } else if (command.equals("Improve")) {
             improveAction(current, props);
         } else if (command.equals("PlayCard")) {
@@ -254,7 +254,7 @@ public class BotBehaviour implements Observer {
         PropertySquare randProp = props.get(rand.nextInt(props.size()));
         sendMessage("I decided to improve!");
         gameEngine.improveSelectedProperty(randProp);
-       // yieldTurn();
+        // yieldTurn();
     }
 
     private void improveAction(Player current, PropertySquare p) {
@@ -282,44 +282,41 @@ public class BotBehaviour implements Observer {
     }
 
     public void makeBotAction(String message) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        setBehaviour(gameEngine.getPlayerController().getCurrentPlayer());
+        //  String botName = gameEngine.getPlayerController().getCurrentPlayer().getName();
+        //    System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
+        if (message.equals("endTurn")) {
+            yieldTurn();
+        }
+        if (message.equals("rollDice")) {
+            if (gameEngine.getRoll3())
+                gameEngine.roll3Dice();
+            else gameEngine.rollDice();
 
-        Timer timer = new Timer();
+            //System.out.println(botName + " must Roll the Dice!");
+            communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
 
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                setBehaviour(gameEngine.getPlayerController().getCurrentPlayer());
-                //  String botName = gameEngine.getPlayerController().getCurrentPlayer().getName();
-                //    System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
-                if (message.equals("endTurn")) {
-                    yieldTurn();
-                }
-                if (message.equals("rollDice")) {
-                    if (gameEngine.getRoll3())
-                        gameEngine.roll3Dice();
-                    else gameEngine.rollDice();
-
-                    //System.out.println(botName + " must Roll the Dice!");
-                    communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
-
-                } else if (message.equals("drawCard")) {
-                    //System.out.println(botName + " must Draw a Card!");
-                    communicationController.sendClientMessage("card/draw");
+        } else if (message.equals("drawCard")) {
+            //System.out.println(botName + " must Draw a Card!");
+            communicationController.sendClientMessage("card/draw");
 
 
-                } else if (message.contains("buy") || message.contains("improve") || message.contains("paid rent") || message.contains("gained") || message.contains("empty")) {
-                    if (isLazyBot()) {
-                       // yieldTurn();
-                    }
-                    if (isRandomBot()) {
-                        randomAction(message);
-                    }
-                    if (isSemiIntelligentBot()) {
-                        semiIntelligentAction(message);
-                    }
-                }
+        } else if (message.contains("buy") || message.contains("improve") || message.contains("paid rent") || message.contains("gained") || message.contains("empty")) {
+            if (isLazyBot()) {
+                // yieldTurn();
             }
-        }, 3 * 1000);
+            if (isRandomBot()) {
+                randomAction(message);
+            }
+            if (isSemiIntelligentBot()) {
+                semiIntelligentAction(message);
+            }
+        }
     }
 
 }

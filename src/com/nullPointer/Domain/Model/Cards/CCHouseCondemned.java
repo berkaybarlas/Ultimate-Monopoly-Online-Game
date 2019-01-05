@@ -6,7 +6,7 @@ public class CCHouseCondemned extends CommunityChestCard {
 
 	public CCHouseCondemned(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

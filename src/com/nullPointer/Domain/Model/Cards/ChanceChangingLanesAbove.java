@@ -6,7 +6,7 @@ public class ChanceChangingLanesAbove extends ChanceCard {
 
 	public ChanceChangingLanesAbove(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

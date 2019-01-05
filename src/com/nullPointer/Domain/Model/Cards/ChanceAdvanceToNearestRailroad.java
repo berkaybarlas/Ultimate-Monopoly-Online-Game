@@ -15,7 +15,7 @@ public class ChanceAdvanceToNearestRailroad extends ChanceCard {
 
 	public ChanceAdvanceToNearestRailroad(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

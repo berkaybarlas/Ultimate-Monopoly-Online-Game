@@ -9,7 +9,7 @@ public class TaxRefundSquare extends Square {
 	private MoneyController moneyController = MoneyController.getInstance();
 	public TaxRefundSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

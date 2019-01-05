@@ -12,7 +12,7 @@ public class ChancePropertyTaxes extends ChanceCard {
 	private PlayerController playerController = PlayerController.getInstance();
 	public ChancePropertyTaxes(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

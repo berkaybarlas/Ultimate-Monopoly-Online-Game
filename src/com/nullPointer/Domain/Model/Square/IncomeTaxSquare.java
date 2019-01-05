@@ -6,7 +6,7 @@ public class IncomeTaxSquare extends Square {
 
 	public IncomeTaxSquare(String n, String t) {
 		super(n, t);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override

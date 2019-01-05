@@ -108,7 +108,6 @@ public class GameWindow extends JPanel implements Observer {
                 try {
 					saveLoadController.saveGame();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 System.out.println("[GameWindow: saved]");

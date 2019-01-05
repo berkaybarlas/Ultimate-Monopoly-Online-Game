@@ -6,7 +6,7 @@ public class ChanceMardiGras extends ChanceCard {
 
 	public ChanceMardiGras(String title, boolean isImmediate) {
 		super(title, isImmediate);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
