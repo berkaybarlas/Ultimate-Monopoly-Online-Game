@@ -88,7 +88,7 @@ public class Board extends JPanel implements Observer {
             public void mouseClicked(MouseEvent e) {
                 Point clicked = new Point(e.getX(), e.getY());
                 int squareIndex = findSquare(clicked);
-                gameEngine.setChosenSquareIndex(squareIndex);
+                gameEngine.setSquareUnselected(squareIndex);
             }
         });
     }
