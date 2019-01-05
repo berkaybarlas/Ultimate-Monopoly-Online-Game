@@ -212,6 +212,7 @@ public class ServerWindow extends JPanel implements Observer {
                     player.setPerson();
                     if (botBox) {
                         player.setBot();
+                        player.setBotBehaviourNumber();
                         player.setClientID("bot");
                         player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
                     }
