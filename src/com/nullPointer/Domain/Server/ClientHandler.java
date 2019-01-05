@@ -35,6 +35,7 @@ class ClientHandler extends Thread {
             //delete client from list
             //
             System.out.println(e.getMessage());
+            
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
