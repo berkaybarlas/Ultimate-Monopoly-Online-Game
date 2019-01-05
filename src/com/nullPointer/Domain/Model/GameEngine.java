@@ -38,8 +38,8 @@ public class GameEngine {
 		return chosenSquareIndex;
 	}
 
-	public void setChosenSquareIndex(int chosenSquareIndex) {
-		this.chosenSquareIndex = chosenSquareIndex;
+	public void setSquareUnselected() {
+		this.chosenSquareIndex = -1;
 	}
 
 	public boolean getRoll3() {
