@@ -6,9 +6,7 @@ import java.util.List;
 public class ServerInfo {
 
     private static ServerInfo _instance;
-    private String serverIp;
     private String clientID;
-    private int maxPlayer = 12;
     private List<String> clientList;
     private int failedAttempt = 0;
     private ServerInfo() {
@@ -20,14 +18,6 @@ public class ServerInfo {
             _instance = new ServerInfo();
         }
         return _instance;
-    }
-
-    public String getServerIp() {
-        return serverIp;
-    }
-
-    public void setServerIp(String serverIp) {
-        this.serverIp = serverIp;
     }
 
     public String getClientID() {

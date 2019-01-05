@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class RandomBotStrategy extends BasicBotBehaviors implements BotBehaviourStrategy {
     private PlayerController playerController = PlayerController.getInstance();
-    private Random rand = new Random();
+
 
     @Override
     public void buyAction() {
@@ -21,6 +21,7 @@ public class RandomBotStrategy extends BasicBotBehaviors implements BotBehaviour
         } else {
             sendMessage("I'm not buying B*tches!");
         }
+        randomMessage();
     }
 
     @Override

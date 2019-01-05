@@ -82,12 +82,6 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
-
-//                if(gameEngine.tryImproveProperty()){
-//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
-//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
-//                }
-//                gameEngine.setSquareUnselected();
 			}
 		});
 
@@ -103,6 +97,7 @@ public class ButtonPanel extends JPanel {
                 if (result == 0) {
                     try {
                         saveLoadController.saveGame();
+                        communicationController.sendClientMessage("resume");
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }

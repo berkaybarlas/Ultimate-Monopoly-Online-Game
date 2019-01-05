@@ -46,7 +46,8 @@ public class MessageBox extends JPanel implements Observer {
         //textEnter.setBounds(0, 0, 400, 30);
         textEnter.addActionListener(e -> {
             if (textEnter.getText() != "") {
-                communicationController.sendClientMessage("message/" + messageWithClient(textEnter.getText()));
+                String message = textEnter.getText().substring(0,100);
+                communicationController.sendClientMessage("message/" + messageWithClient(message));
                 textEnter.setText("");
             }
         });
@@ -60,7 +61,8 @@ public class MessageBox extends JPanel implements Observer {
         submit.setText("Submit");
         submit.addActionListener(e -> {
             if (textEnter.getText() != "") {
-                communicationController.sendClientMessage("message/" + messageWithClient(textEnter.getText()));
+                String message = textEnter.getText().substring(0,100);
+                communicationController.sendClientMessage("message/" + messageWithClient(message));
                 textEnter.setText("");
             }
         });

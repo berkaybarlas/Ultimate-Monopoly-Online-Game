@@ -4,6 +4,7 @@ public class LazyBotStrategy extends BasicBotBehaviors implements BotBehaviourSt
     @Override
     public void buyAction() {
         communicationController.sendClientMessage("purchase");
+        randomMessage();
     }
 
     @Override

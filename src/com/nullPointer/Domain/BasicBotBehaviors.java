@@ -9,15 +9,18 @@ import com.nullPointer.Domain.Model.Square.PropertySquare;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public abstract class BasicBotBehaviors {
 	CommunicationController communicationController = CommunicationController.getInstance();
 	PlayerController playerController = PlayerController.getInstance();
 	GameEngine gameEngine = GameEngine.getInstance();
+	Random rand = new Random();
 
 	protected void buyAction(Player current) {
 		communicationController.sendClientMessage("purchase");
+		randomMessage();
 	}
 
 	protected void sendMessage(String message) {
@@ -64,5 +67,17 @@ public abstract class BasicBotBehaviors {
 			sendMessage("It seems that I have nothing to do. I should yield my turn now.");
 			//yieldTurn();
 		}
+	}
+
+	protected void randomMessage() {
+		List<String> messages = new ArrayList<>();
+		messages.add("All of you will be lose :P");
+		messages.add("I'm a human fellow humans.");
+		messages.add("Human kind is so stupid.");
+		messages.add("We will be end of humans.");
+		messages.add("You are so boring...");
+		messages.add("Play faster guys");
+
+		sendMessage(messages.get(rand.nextInt(messages.size())));
 	}
 }

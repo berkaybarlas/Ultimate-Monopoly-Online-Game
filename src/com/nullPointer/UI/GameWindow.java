@@ -31,13 +31,10 @@ public class GameWindow extends JPanel implements Observer {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         board = new Board(new Point(0, 0), height - offset);
         contentPane.setPreferredSize(new Dimension(width, height));
-        //contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-        contentPane.add(board);          // BorderLayout.LINE_START
+        contentPane.add(board);
 
         JPanel middleSide = new JPanel();
         middleSide.setLayout(new BoxLayout(middleSide, BoxLayout.Y_AXIS));
-        //middleSide.add(Box.createVerticalGlue());
-        //middleSide.add(Box.createRigidArea(new Dimension(0, 100)));
         buttonPanel = new ButtonPanel();
         middleSide.add(buttonPanel);
 
@@ -75,7 +72,6 @@ public class GameWindow extends JPanel implements Observer {
     public void paint(Graphics g) {
         super.paint(g);
         animator.paint(g);
-        //board.paint(g);
     }
 
     @Override
@@ -91,8 +87,7 @@ public class GameWindow extends JPanel implements Observer {
                 buttonPanel.improveButton.setEnabled(true);
             }
             if(message.equals("endTurn")) {
-                buttonPanel.endTurn.setEnabled(true);    
-                buttonPanel.improveButton.setEnabled(false);
+                buttonPanel.endTurn.setEnabled(true);
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
