@@ -38,7 +38,9 @@ public class Animator extends JPanel implements Runnable {
                 System.out.println("Program Interrupted");
                 System.exit(0);
             }
-            animFrame.repaint();
+            if(!GameEngine.getInstance().isPaused()) {
+                animFrame.repaint();
+            }
         }
     }
 
