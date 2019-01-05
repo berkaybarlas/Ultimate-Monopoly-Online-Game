@@ -91,6 +91,12 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
+
+//                if(gameEngine.tryImproveProperty()){
+//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
+//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
+//                }
+//                gameEngine.setSquareUnselected();
 			}
 		});
 
@@ -109,7 +115,6 @@ public class ButtonPanel extends JPanel {
                 communicationController.sendClientMessage("pause");
                 pauseButton.setEnabled(false);
                 resumeButton.setEnabled(true);
-
                 int result = JOptionPane.showOptionDialog(null, pausePanel, "Pause Panel",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, saveOrResume, null);

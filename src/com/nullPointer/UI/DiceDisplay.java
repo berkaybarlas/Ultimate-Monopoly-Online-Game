@@ -15,16 +15,11 @@ import java.util.ArrayList;
 
 public class DiceDisplay extends JPanel implements Observer {
 
-    private JLabel diceValues;
-    private JLabel label;
     private RegularDie regularDie = RegularDie.getInstance();
     private SpeedDie speedDie = SpeedDie.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
 
-
-
-    // new attempt
-    private JPanel regular1Panel, regular2Panel, speedPanel, regular3Panel;
+    private JPanel regular1Panel, regular2Panel, speedPanel;
     private int panelSize = 40;
     private ImageIcon dispDie1, dispDie2, dispDie3;
     private JLabel buffer1, buffer2, buffer3;
@@ -44,62 +39,25 @@ public class DiceDisplay extends JPanel implements Observer {
     private File mrMonopolySrc = new File("./assets/dieFaces/mrMonopoly.jpg");
 
     private ArrayList<Image> diceImages = new ArrayList<Image>();
-    private int diceImagesIndex = 0;
-    private int imageScaleFactor = 0;
-
     public DiceDisplay() {
 
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setLayout(new BorderLayout());              // NEW
-        this.setMaximumSize(new Dimension(4*panelSize, panelSize));
+        this.setMaximumSize(new Dimension(4 * panelSize, panelSize));
         this.setBackground(Color.pink);
-
-        //this.setPreferredSize(new Dimension(50 ,50 ));
-        //JPanel contentPane = new JPanel(null);
-        //contentPane.setPreferredSize(new Dimension(200, 200));
-        //this.add(contentPane, BorderLayout.NORTH);
-
-        // 0, 0, 100, 300
-//    	this.setBounds(0,0,100,300);
-//        this.setBackground(Color.PINK);
-//
-//        label=new JLabel("Dice Values");
-//        label.setLocation(0,0);
-//    	this.add(label);
-//    	diceValues = new JLabel();
-//        diceValues.setText("Total of dice: " + ((regularDie.getLastValues().size() == 0) ? new ArrayList<Integer>(Arrays.asList(0,0)).toString() : regularDie.getLastValues().toString()));
-//        diceValues.setLocation(0,30);
-//        this.add(diceValues);
-//    	this.setVisible(true);
-//        gameEngine.subscribe(this::onEvent);
 
         Dimension panelSizeSquare = new Dimension(panelSize, panelSize);
 
-
         initDiceImages();
-
-        if(regularDie.getLastValues().size() != 0)
-        {
-            regDie1 = regularDie.getLastValues().get(0);
-            regDie2 = regularDie.getLastValues().get(1);
-        }
-        else
-        {
-            regDie1 = 0;
-            regDie2 = 0;
-        }
-
-
         regular1Panel = new JPanel();
         regular2Panel = new JPanel();
-        regular3Panel = new JPanel();
         speedPanel = new JPanel();
 
         regular1Panel.setMaximumSize(panelSizeSquare);
-        regular1Panel.setBackground(Color.RED);
-        regular1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
+        //regular1Panel.setBackground(Color.RED);
+        regular1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         dispDie1 = new ImageIcon(diceImages.get(regDie1));
-        
+
         buffer1 = new JLabel();
         buffer1.setIcon(dispDie1);
         regular1Panel.add(buffer1);
@@ -107,8 +65,8 @@ public class DiceDisplay extends JPanel implements Observer {
 
 
         regular2Panel.setMaximumSize(panelSizeSquare);
-        regular2Panel.setBackground(Color.GREEN);
-        regular2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
+        //regular2Panel.setBackground(Color.GREEN);
+        regular2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         dispDie2 = new ImageIcon(diceImages.get(regDie2));
         buffer2 = new JLabel();
         buffer2.setIcon(dispDie2);
@@ -118,8 +76,8 @@ public class DiceDisplay extends JPanel implements Observer {
 
         // This part will be updated for Speed Die!
         speedPanel.setMaximumSize(panelSizeSquare);
-        speedPanel.setBackground(Color.BLUE);
-        speedPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
+       // speedPanel.setBackground(Color.BLUE);
+        speedPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         dispDie3 = new ImageIcon(diceImages.get(8));
         buffer3 = new JLabel();
         buffer3.setIcon(dispDie3);
@@ -130,35 +88,34 @@ public class DiceDisplay extends JPanel implements Observer {
     }
 
 
-    public void initDiceImages()
-    {
+    public void initDiceImages() {
         try {
             empty = ImageIO.read(emptySrc);
-            empty = empty.getScaledInstance(((BufferedImage) empty).getWidth()/15,((BufferedImage) empty).getHeight()/15,Image.SCALE_SMOOTH);
+            empty = empty.getScaledInstance(((BufferedImage) empty).getWidth() / 15, ((BufferedImage) empty).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(empty);
             die1 = ImageIO.read(die1Src);
-            die1 = die1.getScaledInstance(((BufferedImage) die1).getWidth()/15,((BufferedImage) die1).getHeight()/15,Image.SCALE_SMOOTH);
+            die1 = die1.getScaledInstance(((BufferedImage) die1).getWidth() / 15, ((BufferedImage) die1).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die1);
             die2 = ImageIO.read(die2Src);
-            die2 = die2.getScaledInstance(((BufferedImage) die2).getWidth()/15,((BufferedImage) die2).getHeight()/15,Image.SCALE_SMOOTH);
+            die2 = die2.getScaledInstance(((BufferedImage) die2).getWidth() / 15, ((BufferedImage) die2).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die2);
             die3 = ImageIO.read(die3Src);
-            die3 = die3.getScaledInstance(((BufferedImage) die3).getWidth()/15,((BufferedImage) die3).getHeight()/15,Image.SCALE_SMOOTH);
+            die3 = die3.getScaledInstance(((BufferedImage) die3).getWidth() / 15, ((BufferedImage) die3).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die3);
             die4 = ImageIO.read(die4Src);
-            die4 = die4.getScaledInstance(((BufferedImage) die4).getWidth()/15,((BufferedImage) die4).getHeight()/15,Image.SCALE_SMOOTH);
+            die4 = die4.getScaledInstance(((BufferedImage) die4).getWidth() / 15, ((BufferedImage) die4).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die4);
             die5 = ImageIO.read(die5Src);
-            die5 = die5.getScaledInstance(((BufferedImage) die5).getWidth()/15,((BufferedImage) die5).getHeight()/15,Image.SCALE_SMOOTH);
+            die5 = die5.getScaledInstance(((BufferedImage) die5).getWidth() / 15, ((BufferedImage) die5).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die5);
             die6 = ImageIO.read(die6Src);
-            die6 = die6.getScaledInstance(((BufferedImage) die6).getWidth()/15,((BufferedImage) die6).getHeight()/15,Image.SCALE_SMOOTH);
+            die6 = die6.getScaledInstance(((BufferedImage) die6).getWidth() / 15, ((BufferedImage) die6).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(die6);
             bus = ImageIO.read(busSrc);
-            bus = bus.getScaledInstance(((BufferedImage) bus).getWidth()/15,((BufferedImage) bus).getHeight()/15,Image.SCALE_SMOOTH);
+            bus = bus.getScaledInstance(((BufferedImage) bus).getWidth() / 15, ((BufferedImage) bus).getHeight() / 15, Image.SCALE_SMOOTH);
             diceImages.add(bus);
             mrMonopoly = ImageIO.read(mrMonopolySrc);
-            mrMonopoly = mrMonopoly.getScaledInstance(((BufferedImage) mrMonopoly).getWidth()/10,((BufferedImage) mrMonopoly).getHeight()/10,Image.SCALE_SMOOTH);
+            mrMonopoly = mrMonopoly.getScaledInstance(((BufferedImage) mrMonopoly).getWidth() / 10, ((BufferedImage) mrMonopoly).getHeight() / 10, Image.SCALE_SMOOTH);
             diceImages.add(mrMonopoly);
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,17 +124,13 @@ public class DiceDisplay extends JPanel implements Observer {
 
     public void paint() {
         //diceValues.setText("Total of dice: "+ regularDie.getLastValues().toString());
-        if(regularDie.getLastValues().size() != 0)
-        {
+        if (regularDie.getLastValues().size() != 0) {
             regDie1 = regularDie.getLastValues().get(0);
             regDie2 = regularDie.getLastValues().get(1);
-        }
-        else
-        {
+        } else {
             regDie1 = 0;
             regDie2 = 0;
         }
-
 
 
         dispDie1 = new ImageIcon(diceImages.get(regDie1));
@@ -194,7 +147,6 @@ public class DiceDisplay extends JPanel implements Observer {
         regular2Panel.add(buffer2);
 
 
-
         dispDie3 = new ImageIcon(diceImages.get(8));
         buffer3 = new JLabel();
         buffer3.setIcon(dispDie3);
@@ -206,7 +158,7 @@ public class DiceDisplay extends JPanel implements Observer {
 
     @Override
     public void onEvent(String message) {
-        if(message.equals("refresh")) {
+        if (message.equals("refresh")) {
             this.paint();
         }
     }

@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Server;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -13,7 +14,7 @@ public class Client extends Thread {
     private String threadName;
     private Socket socket;
     private String hostName = "localhost";
-    private  String localIp;
+    private String localIp;
     private int portNumber = 4000;
     private ObjectOutputStream outObject;
     private ObjectInputStream inObject;
@@ -90,20 +91,24 @@ public class Client extends Thread {
     }
 
     public void createOrJoin() {
-        String nextServerIP = serverInfo.next();
-        if (nextServerIP == null || nextServerIP == ""){
-            return;
-        }
-        if (nextServerIP.equals(localIp)) {
-            serverInfo.getClientList();
-            communicationController.startServer();
-            hostName = "localhost";
-        } else {
-            int doubleDotIndex = nextServerIP.indexOf(":");
-            hostName = nextServerIP.substring(0,doubleDotIndex);
-            if(hostName.equals(localIp.substring(0,doubleDotIndex))){
+        try {
+            String nextServerIP = serverInfo.next();
+            GameEngine.getInstance().publishEvent("serverScreen");
+            if (nextServerIP.equals(localIp)) {
+                communicationController.startServer();
                 hostName = "localhost";
+            } else {
+                Thread.sleep(300);
+                int doubleDotIndex = nextServerIP.indexOf(":");
+                if (nextServerIP == "" || doubleDotIndex == -1 || nextServerIP.contains(localIp.substring(0, doubleDotIndex))) {
+                    hostName = "localhost";
+                }
+                hostName = nextServerIP.substring(0, doubleDotIndex);
             }
+
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         this.run();
     }

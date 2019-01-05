@@ -40,10 +40,17 @@ public class MoneyController implements Serializable {
      * @param amount : how much will the player's money be decreased
      * @requires player != null & amount >= 0
      * @modifies player's money
-     * @effects decreases the player's money by amount
+     * @effects decreases the player's money by amount. If the player's money is less than 0,
+     * the player is removed from the players list.
      */
     public void decreaseMoney(Player player, int amount) {
         player.setMoney(player.getMoney() - amount);
+        
+        if(player.getMoney()<0) {
+        	System.out.println("[Money Controller]: Player is bankrupted");
+        	(playerController).removePlayer(player);
+        	//System.out.println(playerController.getPlayers().toString());
+        }
     }
 
     /**
