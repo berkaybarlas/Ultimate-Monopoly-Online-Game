@@ -91,6 +91,9 @@ public class Client extends Thread {
 
     public void createOrJoin() {
         String nextServerIP = serverInfo.next();
+        if (nextServerIP == null || nextServerIP == ""){
+            return;
+        }
         if (nextServerIP.equals(localIp)) {
             serverInfo.getClientList();
             communicationController.startServer();

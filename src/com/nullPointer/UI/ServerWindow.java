@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class ServerWindow extends JPanel implements Observer {
     private int botCounter = 0;
-    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton, addBot;
+    private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
     private GameEngine gameEngine = GameEngine.getInstance();
@@ -68,6 +68,8 @@ public class ServerWindow extends JPanel implements Observer {
     private File logoSrc = new File("./assets/monopoly_logo.png");
 
     JLabel back, buffer, logoIcon;
+
+    private boolean botBox = false;
 
     public ServerWindow() {
 
@@ -204,34 +206,42 @@ public class ServerWindow extends JPanel implements Observer {
         addPlayer.setPreferredSize(new Dimension(230, buttonHeight));
         addPlayer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player(textField.getText(), serverInfo.getClientID(),cnt);
-                player.setPerson();         // Just to make sure it doesn't come out as a bot
+                Player player = new Player(textField.getText(), serverInfo.getClientID(), cnt);
+                player.setPerson();
+                if (botBox) {
+                    player.setBot();
+                    player.setClientID("bot");
+                    player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
+                }
                 communicationController.sendClientMessage(player);
                 //navigator.gameScreen();
 //                Board.getInstance().addNewPawn(player,pawnFiles.get(cnt), null);
                 textField.setText("Enter player name here!");
             }
         });
+        JPanel checkBox = new JPanel();
+        checkBox.setPreferredSize(new Dimension(230,30 ));
+        checkBox.setOpaque(false);
 
-        addBot = new CustomButton("Add Bot");
-        addBot.setPreferredSize(new Dimension(230, buttonHeight));
-        addBot.addActionListener(new ActionListener() {
-            @Override
+        JCheckBox botCheckBox = new JCheckBox("Bot player");
+        botCheckBox.setFont(new Font("Tahoma", Font.BOLD, 20));
+        botCheckBox.setForeground(ColorSet.ButtonPrimary);
+        botCheckBox.setIcon(new SimpleCheckboxStyle(20));
+        botCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Player player = new Player("bot" + ++botCounter, serverInfo.getClientID(),cnt);
-                player.setBot();
-                player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
-                communicationController.sendClientMessage(player);
-                textField.setText("Enter player name here!");
+                //  Player player = new Player("bot" + ++botCounter, serverInfo.getClientID(), cnt)
+                botBox = !botBox;
             }
         });
+        checkBox.add(botCheckBox,BorderLayout.WEST);
+
         initSelectionButtons();
         cPanel.add(textField);
+        cPanel.add(checkBox);
         cPanel.add(leftButton);
         cPanel.add(pPanel);
         cPanel.add(rightButton);
         cPanel.add(addPlayer);
-        cPanel.add(addBot);
         this.add(scrollPane);
         this.add(cPanel);
     }
@@ -353,7 +363,7 @@ public class ServerWindow extends JPanel implements Observer {
             }
         });
         int clientPosition = clientList.indexOf(player.getClientID());
-        if (clientPosition == -1 ) {
+        if (clientPosition == -1) {
             clientPosition = 12;
             /**
              *
@@ -361,7 +371,7 @@ public class ServerWindow extends JPanel implements Observer {
              * this client does not exits if nobody choose this player it should be bot automaticly
              *
              *
-            */ //hata
+             */ //hata
         }
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientPosition));
         newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));
@@ -450,14 +460,14 @@ class ClientDisplay {
 
 class SimpleCheckboxStyle implements Icon {
 
-    int dim = 10;
+    int dimension = 10;
 
-    public SimpleCheckboxStyle (int dimension){
-        this.dim = dimension;
+    public SimpleCheckboxStyle(int dimension) {
+        this.dimension = dimension;
     }
 
     protected int getDimension() {
-        return dim;
+        return dimension;
     }
 
     public void paintIcon(Component component, Graphics g, int x, int y) {
@@ -473,11 +483,13 @@ class SimpleCheckboxStyle implements Icon {
         } else {
             g.setColor(Color.DARK_GRAY);
         }
-       
-		int fontsize = 20;
-		g.fillRect(x_offset, y_offset, fontsize , fontsize);
+
+        g.setColor(ColorSet.ButtonPrimary);
+        int fontsize = 20;
+        g.fillRect(x_offset, y_offset, fontsize, fontsize);
+
         if (buttonModel.isPressed()) {
-            g.setColor(Color.GRAY);
+            g.setColor(ColorSet.ButtonPrimary);
         } else if (buttonModel.isRollover()) {
             g.setColor(new Color(240, 240, 250));
         } else {
@@ -486,7 +498,7 @@ class SimpleCheckboxStyle implements Icon {
         g.fillRect(1 + x_offset, y_offset + 1, fontsize - 2, fontsize - 2);
         if (buttonModel.isSelected()) {
             int r_x = 1;
-            g.setColor(Color.GRAY);
+            g.setColor(ColorSet.ButtonPrimary);
             g.fillRect(x_offset + r_x + 3, y_offset + 3 + r_x, fontsize - (7 + r_x), fontsize - (7 + r_x));
         }
     }
