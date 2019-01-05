@@ -90,8 +90,7 @@ public class GameWindow extends JPanel implements Observer {
                 buttonPanel.purchaseButton.setEnabled(false);
             }
             if(message.equals("endTurn")) {
-                buttonPanel.endTurn.setEnabled(true);
-                
+                buttonPanel.endTurn.setEnabled(true);    
             }
             if (message.equals("drawCard")) {
                 buttonPanel.drawButton.setEnabled(true);
@@ -99,10 +98,6 @@ public class GameWindow extends JPanel implements Observer {
             }
             if (message.equals("playCard")) {
                 buttonPanel.playCardButton.setEnabled(true);
-            }
-            if (message.equals("resume")) {
-                enableButtons();
-                System.out.println("[GameWindow: resumed]");
             }
             if (message.equals("save")) {
                 try {
@@ -117,16 +112,25 @@ public class GameWindow extends JPanel implements Observer {
             disableButtons();
             System.out.println("[GameWindow: paused]");
         }
+        if (message.equals("resume")) {
+            enableButtons();
+            System.out.println("[GameWindow: resumed]");
+            
+            System.out.println("SIZE: "+ disabledButtons.size());
+            
+        }
     }
 
     private void enableButtons() {
         buttonPanel.pauseButton.setEnabled(true);
+        
+        System.out.println("entering enable buttons");
+        
         for (int i = 0; i < disabledButtons.size(); i++) {
             JButton currButton = disabledButtons.get(i);
             currButton.setEnabled(true);
         }
         disabledButtons.clear();
-        buttonPanel.resumeButton.setEnabled(false);
     }
 
     private void disableButtons() {
@@ -150,7 +154,13 @@ public class GameWindow extends JPanel implements Observer {
             disabledButtons.add(buttonPanel.improveButton);
             buttonPanel.improveButton.setEnabled(false);
         }
+        if(buttonPanel.endTurn.isEnabled()) {
+        	disabledButtons.add(buttonPanel.endTurn);
+        	buttonPanel.endTurn.setEnabled(false);
+        }
         buttonPanel.pauseButton.setEnabled(false);
         disabledButtons.add(buttonPanel.pauseButton);
+        
+        System.out.println("DISABLED BUTTON SIZE: "+ disabledButtons.size());
     }
 }
