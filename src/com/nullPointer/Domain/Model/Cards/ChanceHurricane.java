@@ -32,7 +32,7 @@ public class ChanceHurricane extends ChanceCard {
             if (propertySquare.numHouses() > 0 || propertySquare.hasHotel() || propertySquare.hasSkyscraper())
                 propertySquare.downgrade();
         }
-        gameEngine.setSquareUnselected();
+        gameEngine.setChosenSquareIndex(-1);
 
     }
 
