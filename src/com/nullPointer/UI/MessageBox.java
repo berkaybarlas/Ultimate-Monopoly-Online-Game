@@ -4,7 +4,6 @@ import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;
-import com.nullPointer.Utils.ColorSet;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
