@@ -102,7 +102,7 @@ public class MenuWindow extends JPanel {
         joinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ip = JOptionPane.showInputDialog(panel, "Enter the IP address you'd like to join.", "IP address needed.");
-
+                ip = "172.20." + ip;
                 if (validateIP(ip)) {
                     communicationController.createClient(ip);
                     navigator.serverScreen();
