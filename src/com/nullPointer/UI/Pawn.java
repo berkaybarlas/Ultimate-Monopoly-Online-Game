@@ -81,7 +81,7 @@ public class Pawn implements Drawable {
         } else {
             if (path.size() != 0) {
                 int i = 0;
-                PlayerController.getInstance().increaseCurrentPosition(player);
+                PlayerController.getInstance().getCurrentPlayer().setPosition(path.get(i));
                 int numberOfSteps = (int) (10.0);
 
                 myPath = new StraightLinePath(position.x, position.y

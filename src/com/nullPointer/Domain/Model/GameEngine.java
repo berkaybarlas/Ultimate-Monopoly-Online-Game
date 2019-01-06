@@ -205,7 +205,7 @@ public class GameEngine {
                 card = domainBoard.getCCCards().remove();
             } else if (type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().remove();
-            } else {
+            } else{
                 card = domainBoard.getRoll3Cards().remove();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
@@ -320,6 +320,8 @@ public class GameEngine {
      * the square is added to propertyList or utilityList of currentPlayer
      */
     public void buy() {
+    	//playerController.getCurrentPlayer().setTargetPosition(86);
+    	//domainBoard.getSquareAt(86).evaluateSquare(this);
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();

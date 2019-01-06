@@ -25,7 +25,6 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private int botCounter = 0;
     private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
