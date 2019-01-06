@@ -1,4 +1,4 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Model.Bot;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
@@ -78,10 +78,16 @@ public abstract class BasicBotBehaviors {
 		messages.add("You are so boring...");
 		messages.add("Play faster guys :/");
 		messages.add("I created by a person called Berkay.");
+		messages.add("Tumay is the most beautiful girl among this game's creators .");
+		messages.add("Alihan how you doing?");
+		messages.add("Baran likes Furkan secretly.");
+		messages.add("I wonder who will first see our scripts.");
+		messages.add("Thinking that we are all scripted makes me sick !!");
 		messages.add("This game is sucks.");
 		messages.add("Hello.");
 		messages.add("^_^");
 		messages.add("'_'");
+		messages.add("$_$");
 		messages.add("0_0");
 		messages.add("!@##!%#@%@$^!$%!@%");
 		messages.add("%&*^&%*%^&*%^#");

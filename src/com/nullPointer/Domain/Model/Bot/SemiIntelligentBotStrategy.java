@@ -1,6 +1,5 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Model.Bot;
 
-import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 import com.nullPointer.Domain.Model.Square.RailRoadTransitStationsSquare;
@@ -8,9 +7,7 @@ import com.nullPointer.Domain.Model.Square.Square;
 import com.nullPointer.Domain.Model.Square.UtilitySquare;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
 
 public class SemiIntelligentBotStrategy extends BasicBotBehaviors implements BotBehaviourStrategy  {
     @Override
