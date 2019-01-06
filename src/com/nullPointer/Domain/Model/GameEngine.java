@@ -138,12 +138,13 @@ public class GameEngine {
 
         if (path.getLast() == 114) {
             path.add(14);
+            playerController.movePlayer(14);
         } else if (path.getLast() == 14) {
             path.add(114);
+            playerController.movePlayer(114);
         }
 
         publishEvent("path/" + path);
-        playerController.movePlayer(target);
 
         playerController.setPath(currentPlayer, path);
         for (int j = 0; j < path.size() - 1; j++) {
