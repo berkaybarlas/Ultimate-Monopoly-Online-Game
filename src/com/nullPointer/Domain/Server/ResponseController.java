@@ -1,6 +1,7 @@
 package com.nullPointer.Domain.Server;
 
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -67,6 +68,7 @@ public class ResponseController {
             outObject.writeObject(clientList);
             //outObject.writeObject(PlayerController.getInstance());
             outObject.writeObject(playerController);
+            outObject.writeObject(GameEngine.getInstance().getDomainBoard());
             outObject.writeObject("loadData");
             outObject.reset();
         } catch (IOException e) {
