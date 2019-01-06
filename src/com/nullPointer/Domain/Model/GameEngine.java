@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Card;
@@ -13,7 +14,6 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
@@ -29,7 +29,9 @@ public class GameEngine {
     private DomainBoard domainBoard;
     private boolean paused = false;
     private boolean roll3 = false;
+    private boolean gameStarted = false;
     private int chosenSquareIndex = -1;
+    int doublesCnt = 0;
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -87,10 +89,25 @@ public class GameEngine {
         publishEvent("newPlayer");
     }
 
+    public void gameStopped() {
+        gameStarted = false;
+    }
+
     public void startGame() {
-        publishEvent("screen/gameScreen");
-        initPlayers();
-        publishEvent("rollDice");
+        if (!isGameStarted()) {
+            publishEvent("screen/gameScreen");
+            initPlayers();
+            publishEvent("rollDice");
+        }
+        gameStarted();
+    }
+
+    public void gameStarted() {
+        gameStarted = true;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 
     public LinkedList<Integer> calculatePath() {
@@ -102,35 +119,47 @@ public class GameEngine {
         int currentPos;
         int regularDiceTotal = calculateMoveAmount();
         int target = -2;
+        if (currentPlayer != null) {
+
+            for (int i = 0; i < regularDiceTotal; i++) {
+                currentPos = currentPlayer.getTargetPosition();
+
+                int placeToGo = connections.get(currentPos).get(0);
+
+                if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
+                    if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
+                    else System.out.println("[GameEngine]: There seems to be a problem.");
+                }
 
 
-        for (int i = 0; i < regularDiceTotal; i++) {
-            currentPos = currentPlayer.getTargetPosition();
-
-            int placeToGo = connections.get(currentPos).get(0);
-
-            if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
-                if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
-                else System.out.println("[GameEngine]: There seems to be a problem.");
+                //playerController.changeCurrentPosition(currentPlayer, placeToGo);
+                path.add(placeToGo);
+                target = placeToGo;
+                playerController.movePlayer(target);
             }
 
-            //playerController.changeCurrentPosition(currentPlayer, placeToGo);
-            path.add(placeToGo);
-            target = placeToGo;
             playerController.movePlayer(target);
 
-        }
+            if (path.getLast() == 114) {
+                path.add(14);
+                playerController.movePlayer(14);
+            } else if (path.getLast() == 14) {
+                path.add(114);
+                playerController.movePlayer(114);
+            }
 
-        publishEvent("path/" + path);
-        playerController.movePlayer(target);
-        playerController.setPath(currentPlayer, path);
-        for (int j = 0; j < path.size() - 1; j++) {
-            int i = path.get(j);
-            Square onTheWay = squares.get(i);
-            if (onTheWay.getFlyover()) {
-                onTheWay.evaluateSquare(this, "flyover");
+            publishEvent("path/" + path);
+
+            playerController.setPath(currentPlayer, path);
+            for (int j = 0; j < path.size() - 1; j++) {
+                int i = path.get(j);
+                Square onTheWay = squares.get(i);
+                if (onTheWay.getFlyover()) {
+                    onTheWay.evaluateSquare(this, "flyover");
+                }
             }
         }
+
         evaluateSquare();
         return path;
     }
@@ -149,6 +178,12 @@ public class GameEngine {
         list.add(regularDie.getLastValues().get(0));
         list.add(regularDie.getLastValues().get(1));
         list.add(speedDie.getLastValues().get(0));
+        if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+            doublesCnt++;
+            if (doublesCnt == 3) {
+                CommunicationController.getInstance().sendClientMessage("penalty");
+            }
+        }
         return list;
     }
 
@@ -199,21 +234,27 @@ public class GameEngine {
             } else {
                 card = domainBoard.getRoll3Cards().remove();
             }
-            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
-            if (card.getImmediate()) {
-                card.playCard(this);
-                if (type.equals("CommunityChestCardSquare")) {
-                    domainBoard.getCCCards().add(card);
-                } else if (type.equals("ChanceCardSquare")) {
-                    domainBoard.getChanceCards().add(card);
+            if(card != null){
+                publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
+                if (card.getImmediate()) {
+                    card.playCard(this);
+                    if (type.equals("CommunityChestCardSquare")) {
+                        domainBoard.getCCCards().add(card);
+                    } else if (type.equals("ChanceCardSquare")) {
+                        domainBoard.getChanceCards().add(card);
+                    } else {
+                        domainBoard.getRoll3Cards().add(card);
+                    }
                 } else {
-                    domainBoard.getRoll3Cards().add(card);
+                    playerController.addCardToCurrentPlayer(card);
                 }
-                System.out.println();
-            } else {
-                playerController.addCardToCurrentPlayer(card);
             }
-            publishEvent("endTurn");
+
+            if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+                publishEvent("doubles");
+            } else {
+                publishEvent("endTurn");
+            }
         } else {
             System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
         }
@@ -233,9 +274,9 @@ public class GameEngine {
     public void improveProperty(int propertySquareIndex) {
         Square square = domainBoard.getSquareAt(propertySquareIndex);
         PropertySquare propertySquare = ((PropertySquare) square);
-        System.out.println("Chose "+propertySquare.getName());
+        System.out.println("Chose " + propertySquare.getName());
         Player currentPlayer = playerController.getCurrentPlayer();
-        MoneyController.getInstance().decreaseMoney(currentPlayer,propertySquare.getRentList()[8]);
+        MoneyController.getInstance().decreaseMoney(currentPlayer, propertySquare.getRentList()[8]);
         propertySquare.improve();
         setSquareUnselected();
         publishEvent("refresh");
@@ -287,7 +328,7 @@ public class GameEngine {
     {
         HashMap<Integer, Square> squareMap = domainBoard.getSquareMap();
         for (int i = 0; i < squareMap.size(); i++) {
-            if(squareMap.get(i).getName().equals(p.getName())){
+            if (squareMap.get(i).getName().equals(p.getName())) {
                 chosenSquareIndex = i;
                 tryImproveProperty();
                 return;
@@ -307,6 +348,8 @@ public class GameEngine {
      * the square is added to propertyList or utilityList of currentPlayer
      */
     public void buy() {
+        //playerController.getCurrentPlayer().setTargetPosition(86);
+        //domainBoard.getSquareAt(86).evaluateSquare(this);
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
@@ -329,6 +372,7 @@ public class GameEngine {
 
     public void nextTurn() {
         playerController.nextPlayer();
+        doublesCnt = 0;
         publishEvent("rollDice");
         publishEvent("refresh");
     }
@@ -391,8 +435,13 @@ public class GameEngine {
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
         if (square.getType() != "ChanceCardSquare" && square.getType() != "CommunityChestCardSquare") {
-            publishEvent("endTurn");
+            if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+                publishEvent("doubles");
+            } else {
+                publishEvent("endTurn");
+            }
         }
+
     }
 
     public void loadData() {

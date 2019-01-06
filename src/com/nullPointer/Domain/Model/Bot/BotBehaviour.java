@@ -1,14 +1,10 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Model.Bot;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
-import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
-import com.nullPointer.Domain.Model.Square.PropertySquare;
-import com.nullPointer.Domain.Model.Square.RailRoadTransitStationsSquare;
-import com.nullPointer.Domain.Model.Square.Square;
-import com.nullPointer.Domain.Model.Square.UtilitySquare;
+import com.nullPointer.Domain.Observer;
 
 import java.util.*;
 
@@ -19,7 +15,7 @@ public class BotBehaviour implements Observer {
     private boolean lazyBot = false;
     private boolean randomBot = false;
     private boolean semiIntelligentBot = true;
-    private ArrayList<String> acceptibleMessages = new ArrayList<String>(Arrays.asList("rollDice", "endTurn", "drawCard", "buy", "empty"));
+    private ArrayList<String> acceptibleMessages = new ArrayList<String>(Arrays.asList("rollDice", "endTurn", "drawCard", "buy", "doubles", "empty"));
     private PlayerController playerController = PlayerController.getInstance();
 
     public BotBehaviour() {
@@ -82,48 +78,51 @@ public class BotBehaviour implements Observer {
     public void makeBotAction(String message) {
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
+
+
+            setBehaviour(playerController.getCurrentPlayer());
+
+            BotBehaviourStrategy botBehaviourStrategy;
+
+            if (isRandomBot()) {
+                //randomAction(message);
+                botBehaviourStrategy = new RandomBotStrategy();
+            } else if (isSemiIntelligentBot()) {
+                // semiIntelligentAction(message);
+                botBehaviourStrategy = new SemiIntelligentBotStrategy();
+            } else {
+                botBehaviourStrategy = new LazyBotStrategy();
+            }
+
+            //  String botName = gameEngine.getPlayerController().getCurrentPlayer().getName();
+            //    System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
+            if (message.equals("endTurn")) {
+                Thread.sleep(1000);
+                System.out.println("[BotBehavior]: end turn.");
+                yieldTurn();
+            } else if (message.equals("rollDice")) {
+                if (gameEngine.getRoll3())
+                    gameEngine.roll3Dice();
+                else
+                    gameEngine.rollDice();
+
+                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+            } else if (message.equals("doubles")) {
+                gameEngine.rollDice();
+                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                System.out.println("[BotBehavior]: double.");
+            } else if (message.equals("drawCard")) {
+                communicationController.sendClientMessage("card/draw");
+            } else if (message.contains("buy") || message.contains("improve") || message.contains("gained") || message.contains("empty")) {
+                if (message.contains("buy")) {
+                    botBehaviourStrategy.buyAction();
+                } else if (message.contains("improve")) {
+                    botBehaviourStrategy.improveAction();
+                }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        setBehaviour(playerController.getCurrentPlayer());
-
-        BotBehaviourStrategy botBehaviourStrategy;
-
-        if (isRandomBot()) {
-            //randomAction(message);
-            botBehaviourStrategy = new RandomBotStrategy();
-        } else if (isSemiIntelligentBot()) {
-            // semiIntelligentAction(message);
-            botBehaviourStrategy = new SemiIntelligentBotStrategy();
-        } else {
-            botBehaviourStrategy = new LazyBotStrategy();
-        }
-
-        //  String botName = gameEngine.getPlayerController().getCurrentPlayer().getName();
-        //    System.out.println(botName + "is a " + ((isLazyBot()) ? "lazy bot" : ((isRandomBot()) ? "random bot" : "semi-intelligent bot")));
-        if (message.equals("endTurn")) {
-            yieldTurn();
-        } else if (message.equals("rollDice")) {
-            if (gameEngine.getRoll3())
-                gameEngine.roll3Dice();
-            else
-                gameEngine.rollDice();
-
-            communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
-
-        } else if (message.equals("drawCard")) {
-            communicationController.sendClientMessage("card/draw");
-        } else if (message.contains("buy") || message.contains("improve") || message.contains("gained") || message.contains("empty")) {
-            if (message.contains("buy")) {
-                botBehaviourStrategy.buyAction();
-            } else if (message.contains("improve")) {
-                botBehaviourStrategy.improveAction();
-            }
-        }
     }
-
 }
-
-

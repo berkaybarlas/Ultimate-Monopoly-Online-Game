@@ -49,7 +49,9 @@ public class PlayerController implements Serializable {
 
     public void setCurrentPlayerIndex(int cP) {
         this.currentPlayer = cP;
-    };
+    }
+
+    ;
 
     /**
      * @return The next {@code Player} object in the list.
@@ -58,11 +60,15 @@ public class PlayerController implements Serializable {
      * @effects Updates currentPlayer by setting it to currentPlayer+1 (mod size(players)) & returns the next {@code Player} object.
      */
     public Player nextPlayer() {
-    	if(players.size()>0) {
-    		currentPlayer = (currentPlayer + 1) % players.size();
-    	}
-    	return players.get(currentPlayer);
-    	
+        if (players.size() > 0) {
+            currentPlayer = (currentPlayer + 1) % players.size();
+        }
+        if (currentPlayer < players.size() && currentPlayer > -1) {
+            return players.get(currentPlayer);
+        }
+
+        return null;
+
     }
 
     /**
@@ -84,9 +90,9 @@ public class PlayerController implements Serializable {
     }
 
     /**
+     * @param targetIndex new value of {@code TargetPosition}
      * @requires players != null & size(players) >= currentPlayer
      * @modifies players.get(currentPlayer)
-     * @param targetIndex new value of {@code TargetPosition}
      * @effects Alters {@code Player}'s {@code TargetPosition} by setting it to targetIndex.
      */
     public void movePlayer(int targetIndex) {
@@ -120,9 +126,9 @@ public class PlayerController implements Serializable {
     public void addPlayer(Player player) {
         players.add(player);
     }
-    
-	public void removePlayer(Player player) {
-    	players.remove(player);
+
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
 
     public void addCardToCurrentPlayer(Card card) {
@@ -134,21 +140,19 @@ public class PlayerController implements Serializable {
         currentPlayer = inputController.getCurrentPlayerIndex();
     }
 
-    public void setPath(Player p, LinkedList<Integer> path)
-    {
+    public void setPath(Player p, LinkedList<Integer> path) {
         p.setPath(path);
     }
 
-    public LinkedList<Integer> getPath(Player p)
-    {
+    public LinkedList<Integer> getPath(Player p) {
         return p.getPath();
     }
 
     public boolean repOk() {
-        if(players != null) {
-            if(players.size() > 0) {
-                for(Player p : players) {
-                    if(!p.repOk()) return false;
+        if (players != null) {
+            if (players.size() > 0) {
+                for (Player p : players) {
+                    if (!p.repOk()) return false;
                 }
                 return true;
             }

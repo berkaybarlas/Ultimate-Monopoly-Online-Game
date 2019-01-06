@@ -4,8 +4,8 @@ import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 
 /**
- * @overview    This class represents the Propert Squares that form the majority of squares in the monopoly game.
- *              These squares can be bought, upgraded, downgraded, modified, mortgaged, etc.
+ * @overview    This class represents the Property Squares that form the majority of squares in the monopoly game.
+ *              These squares can be bought, upgraded, down graded, modified, mortgaged, etc.
  *
  */
 public class PropertySquare extends Square {
@@ -199,7 +199,7 @@ public class PropertySquare extends Square {
      * @param       gameEngine
      * @requires    currentPlayer is not null.
      * @modifies    currentPlayer
-     * @effects     No money tansfer occurs if the currentPlayer is the owner of this PropertySquare.
+     * @effects     No money transfer occurs if the currentPlayer is the owner of this PropertySquare.
      *              If the currentPlayer is not the owner of this propertySquare, it pays the rent.
      *              if the currentPlayer does not have enough money to pay this PropertySquare's rent,
      *              it goes bankrupt.

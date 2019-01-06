@@ -82,12 +82,6 @@ public class ButtonPanel extends JPanel {
 		improveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				communicationController.sendClientMessage("improveProperty");
-
-//                if(gameEngine.tryImproveProperty()){
-//                    int chosenSquareIndex = gameEngine.getChosenSquareIndex();
-//                    communicationController.sendClientMessage("improve/" + chosenSquareIndex );
-//                }
-//                gameEngine.setSquareUnselected();
 			}
 		});
 
@@ -103,6 +97,7 @@ public class ButtonPanel extends JPanel {
                 if (result == 0) {
                     try {
                         saveLoadController.saveGame();
+                        communicationController.sendClientMessage("resume");
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -115,11 +110,13 @@ public class ButtonPanel extends JPanel {
 
         rollDice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!gameEngine.getRoll3())
+                if (!gameEngine.getRoll3()){
                     gameEngine.rollDice();
+                    communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                }
                 else
                     gameEngine.roll3Dice();
-                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                
                 rollDice.setEnabled(false);
             }
         });
@@ -130,7 +127,6 @@ public class ButtonPanel extends JPanel {
                 endTurn.setEnabled(false);
                 purchaseButton.setEnabled(false);
                 improveButton.setEnabled(false);
-
             }
         });
 

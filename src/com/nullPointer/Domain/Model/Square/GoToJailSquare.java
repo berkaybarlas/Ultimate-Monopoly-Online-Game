@@ -1,4 +1,5 @@
 package com.nullPointer.Domain.Model.Square;
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 
 public class GoToJailSquare extends Square {
@@ -16,9 +17,7 @@ public class GoToJailSquare extends Square {
 	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-		gameEngine.getPlayerController().putInJail();
-		// also need a method to put the player on Jail square.
+		CommunicationController.getInstance().sendClientMessage("penalty");
 		gameEngine.publishEvent("empty");
 	}
 }

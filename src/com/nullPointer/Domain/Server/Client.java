@@ -3,11 +3,12 @@ package com.nullPointer.Domain.Server;
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.List;
 
 public class Client extends Thread {
     private Thread thread;
@@ -19,6 +20,7 @@ public class Client extends Thread {
     private ObjectOutputStream outObject;
     private ObjectInputStream inObject;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
 
     public Client(String name) {
@@ -91,9 +93,11 @@ public class Client extends Thread {
     }
 
     public void createOrJoin() {
+
         try {
             String nextServerIP = serverInfo.next();
-            GameEngine.getInstance().publishEvent("serverScreen");
+            gameEngine.gameStopped();
+            gameEngine.publishEvent("serverScreen");
             if (nextServerIP.equals(localIp)) {
                 communicationController.startServer();
                 hostName = "localhost";

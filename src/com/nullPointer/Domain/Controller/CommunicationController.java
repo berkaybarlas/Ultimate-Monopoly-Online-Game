@@ -6,7 +6,6 @@ import com.nullPointer.Domain.Server.GameServer;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class CommunicationController {
 
@@ -85,7 +84,6 @@ public class CommunicationController {
             } else if (input.contains("dice")) {
                 ArrayList<Integer> regularDice = new ArrayList<>();
                 ArrayList<Integer> speedDice = new ArrayList<>();
-                LinkedList<Integer> path = new LinkedList<Integer>();
                 String[] values = input.split("/");
                 regularDice.add(Integer.parseInt(values[1]));
                 regularDice.add(Integer.parseInt(values[2]));
@@ -93,7 +91,11 @@ public class CommunicationController {
                 regularDie.setLastValues(regularDice);
                 speedDie.setLastValues(speedDice);
                 gameEngine.calculatePath();
-            } else if (input.contains("purchase")) {
+            } else if (input.contains("penalty")) {
+                PlayerController.getInstance().putInJail();
+                PlayerController.getInstance().movePlayer(66);
+                GameEngine.getInstance().publishEvent("teleport"+66);
+            }else if (input.contains("purchase")) {
                 gameEngine.buy();
             } else if (input.contains("card")) {
                 if (rest(input).contains("draw")) {
@@ -103,9 +105,12 @@ public class CommunicationController {
                 }
             } else if (input.contains("improve/")) {
                 gameEngine.improveProperty(Integer.parseInt(rest(input)));
+            } else if (input.contains("teleport/")) {
+                PlayerController.getInstance().movePlayer(Integer.parseInt(rest(input)));
+                gameEngine.publishEvent("teleport" + Integer.parseInt(rest(input)));
             } else if (input.contains("demolished/")) {
                 gameEngine.downgradeProperty(Integer.parseInt(rest(input)));
-            } else if (input.contains("improveProperty")){
+            } else if (input.contains("improveProperty")) {
                 gameEngine.tryImproveProperty();
             } else if (input.contains("resume")) {
                 gameEngine.resume();
@@ -142,11 +147,4 @@ public class CommunicationController {
         return (sentence.indexOf(word) != -1);
     }
 
-    public GameServer getGameServer() {
-        return this.gameServer;
-    }
-
-    public Client getClient() {
-        return this.client;
-    }
 }

@@ -1,6 +1,8 @@
 package com.nullPointer.Domain.Model.Square;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.MoneyController;
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Roll3;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
@@ -29,8 +31,10 @@ public class Roll3CardSquare extends Square {
     @Override
     public void evaluateSquare(GameEngine gameEngine) {
         gameEngine.setRoll3(true);
+        Player currentPlayer = PlayerController.getInstance().getCurrentPlayer();
+        currentPlayer.addRoll3Card((Roll3)gameEngine.getDomainBoard().getRoll3Cards().poll());
         gameEngine.publishEvent("rollDice");
-
+        
         RegularDie die = gameEngine.getRegularDie();
         ArrayList<Integer> diceValues = die.getLastValues();
         while (diceValues.size() != 3) {
@@ -65,7 +69,9 @@ public class Roll3CardSquare extends Square {
                 }
             }
         }
+        gameEngine.setRoll3(false);
         gameEngine.publishEvent("empty");
+        CommunicationController.getInstance().sendClientMessage(gameEngine.getPlayerController());
     }
 
 

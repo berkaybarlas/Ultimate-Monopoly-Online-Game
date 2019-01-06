@@ -1,8 +1,10 @@
 package com.nullPointer.UI;
 
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Observer;
+import com.nullPointer.Utils.ColorSet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +16,13 @@ public class PlayerPanel extends JPanel implements Observer {
 
     private JPanel panel;
     private JScrollPane scrollPane;
-    private JPanel userPanel, displayPanel;
-    private JTextField textField;
+    private JPanel userPanel;
     private GameEngine gameEngine = GameEngine.getInstance();
+    private PlayerController playerController = PlayerController.getInstance();
     private JTextArea textArea;
     ArrayList<Player> pList;
     private int lastSelected = 0;
+    ArrayList<JButton> playerButtons = new ArrayList<JButton>();
 
     public PlayerPanel() {
         this.setOpaque(false);
@@ -41,10 +44,10 @@ public class PlayerPanel extends JPanel implements Observer {
         textArea.setPreferredSize(new Dimension(380, 300));
         textArea.setEditable(false);
 
-       addPlayerButtons();
-       this.add(panel);
-       this.add(textArea);
-       gameEngine.subscribe(this);
+        addPlayerButtons();
+        this.add(panel);
+        this.add(textArea);
+        gameEngine.subscribe(this);
     }
 
     public void paint(Graphics g) {
@@ -55,25 +58,43 @@ public class PlayerPanel extends JPanel implements Observer {
         //g.drawRect(800, 800, 1000, 100);
     }
 
-    public void addPlayerButtons() {
-        pList = gameEngine.getPlayerController().getPlayers();
-        ArrayList<JButton> pButtons = new ArrayList<JButton>();
+    public void refreshPlayerButtons() {
 
         for (int i = 0; i < pList.size(); i++) {
-            pButtons.add(new JButton(pList.get(i).getName()));
-            pButtons.get(i).setPreferredSize(new Dimension(100, 100));
             int currentPlayerIndex = i;
             Player player = pList.get(i);
-            pButtons.get(i).addActionListener(new ActionListener() {
+
+            if (player == playerController.getCurrentPlayer()) {
+                playerButtons.get(i).setForeground(Color.GREEN);
+            } else {
+                playerButtons.get(i).setForeground(Color.BLACK);
+            }
+            userPanel.validate();
+        }
+    }
+
+    public void addPlayerButtons() {
+        pList = playerController.getPlayers();
+
+        for (int i = 0; i < pList.size(); i++) {
+            playerButtons.add(new JButton(pList.get(i).getName()));
+            playerButtons.get(i).setPreferredSize(new Dimension(100, 100));
+            int currentPlayerIndex = i;
+            Player player = pList.get(i);
+            if (player == playerController.getCurrentPlayer()) {
+                playerButtons.get(i).setForeground(Color.GREEN);
+            } else {
+                playerButtons.get(i).setForeground(Color.BLACK);
+            }
+            playerButtons.get(i).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Player currentPlayer = pList.get(currentPlayerIndex);
-//                    System.out.println(.getName());
                     textArea.setText(currentPlayer.toString());
                     lastSelected = currentPlayerIndex;
-                    gameEngine.getPlayerController().setChosen(player);
+                    PlayerController.getInstance().setChosen(player);
                 }
             });
-            userPanel.add(pButtons.get(i));
+            userPanel.add(playerButtons.get(i));
             userPanel.validate();
         }
     }
@@ -81,6 +102,7 @@ public class PlayerPanel extends JPanel implements Observer {
     @Override
     public void onEvent(String message) {
         if (message.equals("refresh")) {
+            refreshPlayerButtons();
             if (pList != null && pList.size() > 0) {
                 textArea.setText(pList.get(lastSelected).toString());
                 this.repaint();

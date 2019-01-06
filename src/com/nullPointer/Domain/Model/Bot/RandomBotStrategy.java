@@ -1,17 +1,15 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Model.Bot;
 
 import com.nullPointer.Domain.Controller.PlayerController;
-import com.nullPointer.Domain.Model.Cards.Card;
 import com.nullPointer.Domain.Model.Player;
 import com.nullPointer.Domain.Model.Square.PropertySquare;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class RandomBotStrategy extends BasicBotBehaviors implements BotBehaviourStrategy {
     private PlayerController playerController = PlayerController.getInstance();
-    private Random rand = new Random();
+
 
     @Override
     public void buyAction() {
@@ -21,6 +19,7 @@ public class RandomBotStrategy extends BasicBotBehaviors implements BotBehaviour
         } else {
             sendMessage("I'm not buying B*tches!");
         }
+        randomMessage();
     }
 
     @Override

@@ -25,7 +25,7 @@ public class GameServer extends Thread {
         try {
             serverSocket = new ServerSocket(portNumber);
             while (true) {
-
+                Thread.sleep(100);
                 Socket socket = serverSocket.accept();
                 responseController.addSocket(socket);
                 responseController.sendGameData(socket);
@@ -42,6 +42,9 @@ public class GameServer extends Thread {
             System.out.println("[Server]: Exception caught when trying to listen on port "
                     + portNumber);
             System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("[Server]: server error");
         }
         System.out.println("[Server]: server Out");
     }

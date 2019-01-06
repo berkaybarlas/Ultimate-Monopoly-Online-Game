@@ -1,7 +1,6 @@
 package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
-import com.nullPointer.Utils.ColorSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,7 +17,6 @@ public class MenuWindow extends JPanel {
     private JButton serverCreateButton = null;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private Navigator navigator = Navigator.getInstance();
-    private static String[] playerNumOptions = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
 
     private Image logo;
     private File logoSrc = new File("./assets/monopoly_logo.png");
@@ -32,8 +30,6 @@ public class MenuWindow extends JPanel {
     private JLabel logoIcon;
 
     public MenuWindow() {
-        JLayeredPane contentPane = new JLayeredPane();
-
         buttonPanel = new JPanel();
         //buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
         buttonPanel.setPreferredSize(new Dimension(buttonWidth, 3 * buttonHeight));
@@ -110,6 +106,12 @@ public class MenuWindow extends JPanel {
                 if (validateIP(ip)) {
                     communicationController.createClient(ip);
                     navigator.serverScreen();
+                } else {
+                    ip = "172.20." + ip;
+                    if (validateIP(ip)) {
+                        communicationController.createClient(ip);
+                        navigator.serverScreen();
+                    }
                 }
             }
         });

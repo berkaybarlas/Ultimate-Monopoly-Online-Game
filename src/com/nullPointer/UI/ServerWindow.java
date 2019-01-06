@@ -25,7 +25,6 @@ import java.util.Random;
 
 
 public class ServerWindow extends JPanel implements Observer {
-    private int botCounter = 0;
     private JButton startGame, addPlayer, loadGame, quitServer, rightButton, leftButton;
     private CommunicationController communicationController = CommunicationController.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
@@ -214,7 +213,6 @@ public class ServerWindow extends JPanel implements Observer {
                         player.setBot();
                         player.setBotBehaviourNumber();
                         player.setClientID("bot");
-                        player.setBotBehaviourNumberManually(3);             // If you want to set this manually, there is also a function for that: 1->Lazy, 2->Random, 3->Semi-Intelligent
                     }
                     communicationController.sendClientMessage(player);
                     textField.setText("Enter player name here!");
@@ -326,6 +324,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 cnt++;
                 countMod = cnt % pawnImages.size();
+                cnt = countMod;
                 dispImg = new ImageIcon(pawnImages.get(countMod));
 
                 buffer.setIcon(dispImg);
@@ -339,6 +338,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 cnt--;
                 countMod = (cnt + pawnImages.size()) % pawnImages.size();
+                cnt = countMod;
                 dispImg = new ImageIcon(pawnImages.get(countMod));
                 buffer.setIcon(dispImg);
                 validate();
@@ -372,13 +372,8 @@ public class ServerWindow extends JPanel implements Observer {
         int clientPosition = clientList.indexOf(player.getClientID());
         if (clientPosition == -1) {
             clientPosition = 12;
-            /**
-             *
-             *
-             * this client does not exits if nobody choose this player it should be bot automaticly
-             *
-             *
-             */ //hata
+            player.setPerson();
+            player.setBot();
         }
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientPosition));
         newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));

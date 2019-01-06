@@ -1,12 +1,13 @@
 package com.nullPointer.Domain.Server;
 
 import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Model.GameEngine;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 //Singleton
@@ -16,7 +17,6 @@ public class ResponseController {
     private static ResponseController _instance;
     private ArrayList<Socket> listenerClients;
     private ArrayList<ObjectOutputStream> listenerClientOutputs;
-    private PrintWriter out;
     private ObjectOutputStream outObject;
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private PlayerController playerController = PlayerController.getInstance();
@@ -42,17 +42,20 @@ public class ResponseController {
         }
     }
 
-    public void sendResponse(Object message) {
+    public synchronized void sendResponse(Object message) {
 
-        listenerClientOutputs.forEach(socketOutput -> {
+
+        for (Iterator<ObjectOutputStream> iterator = listenerClientOutputs.iterator(); iterator.hasNext();) {
+            ObjectOutputStream socketOutput = iterator.next();
             try {
                 socketOutput.writeObject(message);
                 socketOutput.reset();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("[ResponseController]:" + " error during sendResponse: " + e);
+                System.out.println("[ResponseController]:" + " error during sendResponse: " + e);;
+                iterator.remove();
             }
-        });
+        }
     }
 
     public void sendGameData(Socket socket) throws IOException {
@@ -65,6 +68,7 @@ public class ResponseController {
             outObject.writeObject(clientList);
             //outObject.writeObject(PlayerController.getInstance());
             outObject.writeObject(playerController);
+            outObject.writeObject(GameEngine.getInstance().getDomainBoard());
             outObject.writeObject("loadData");
             outObject.reset();
         } catch (IOException e) {
