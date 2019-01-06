@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Card;
@@ -176,9 +177,7 @@ public class GameEngine {
         if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
             doublesCnt++;
             if (doublesCnt == 3) {
-                playerController.putInJail();
-                playerController.movePlayer(jail);
-                publishEvent("teleport" + jail);
+                CommunicationController.getInstance().sendClientMessage("penalty");
             }
         }
         return list;
