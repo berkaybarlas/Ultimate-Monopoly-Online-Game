@@ -28,6 +28,7 @@ public class GameEngine {
     private DomainBoard domainBoard;
     private boolean paused = false;
     private boolean roll3 = false;
+    private boolean gameStarted = false;
     private int chosenSquareIndex = -1;
     int doublesCnt = 0;
     int jail = 66;
@@ -89,9 +90,20 @@ public class GameEngine {
     }
 
     public void startGame() {
-        publishEvent("screen/gameScreen");
-        initPlayers();
-        publishEvent("rollDice");
+        if (!isGameStarted()) {
+            publishEvent("screen/gameScreen");
+            initPlayers();
+            publishEvent("rollDice");
+        }
+        gameStarted();
+    }
+
+    public void gameStarted() {
+        gameStarted = true;
+    }
+
+    public boolean isGameStarted() {
+        return isGameStarted();
     }
 
     public LinkedList<Integer> calculatePath() {
@@ -116,19 +128,15 @@ public class GameEngine {
             }
 
 
-
             //playerController.changeCurrentPosition(currentPlayer, placeToGo);
             path.add(placeToGo);
             target = placeToGo;
             playerController.movePlayer(target);
         }
 
-        if(path.getLast() == 114)
-        {
+        if (path.getLast() == 114) {
             path.add(14);
-        }
-        else if (path.getLast() == 14)
-        {
+        } else if (path.getLast() == 14) {
             path.add(114);
         }
 
@@ -164,7 +172,7 @@ public class GameEngine {
         list.add(speedDie.getLastValues().get(0));
         if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
             doublesCnt++;
-            if(doublesCnt == 3) {
+            if (doublesCnt == 3) {
                 playerController.putInJail();
                 playerController.movePlayer(jail);
                 publishEvent("teleport" + jail);
@@ -217,7 +225,7 @@ public class GameEngine {
                 card = domainBoard.getCCCards().remove();
             } else if (type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().remove();
-            } else{
+            } else {
                 card = domainBoard.getRoll3Cards().remove();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
@@ -258,9 +266,9 @@ public class GameEngine {
     public void improveProperty(int propertySquareIndex) {
         Square square = domainBoard.getSquareAt(propertySquareIndex);
         PropertySquare propertySquare = ((PropertySquare) square);
-        System.out.println("Chose "+propertySquare.getName());
+        System.out.println("Chose " + propertySquare.getName());
         Player currentPlayer = playerController.getCurrentPlayer();
-        MoneyController.getInstance().decreaseMoney(currentPlayer,propertySquare.getRentList()[8]);
+        MoneyController.getInstance().decreaseMoney(currentPlayer, propertySquare.getRentList()[8]);
         propertySquare.improve();
         setSquareUnselected();
         publishEvent("refresh");
@@ -312,7 +320,7 @@ public class GameEngine {
     {
         HashMap<Integer, Square> squareMap = domainBoard.getSquareMap();
         for (int i = 0; i < squareMap.size(); i++) {
-            if(squareMap.get(i).getName().equals(p.getName())){
+            if (squareMap.get(i).getName().equals(p.getName())) {
                 chosenSquareIndex = i;
                 tryImproveProperty();
                 return;
@@ -332,8 +340,8 @@ public class GameEngine {
      * the square is added to propertyList or utilityList of currentPlayer
      */
     public void buy() {
-    	//playerController.getCurrentPlayer().setTargetPosition(86);
-    	//domainBoard.getSquareAt(86).evaluateSquare(this);
+        //playerController.getCurrentPlayer().setTargetPosition(86);
+        //domainBoard.getSquareAt(86).evaluateSquare(this);
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
