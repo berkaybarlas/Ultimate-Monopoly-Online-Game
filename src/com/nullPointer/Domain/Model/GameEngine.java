@@ -103,7 +103,7 @@ public class GameEngine {
     }
 
     public boolean isGameStarted() {
-        return isGameStarted();
+        return gameStarted;
     }
 
     public LinkedList<Integer> calculatePath() {
