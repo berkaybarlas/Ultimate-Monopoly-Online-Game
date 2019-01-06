@@ -324,6 +324,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 cnt++;
                 countMod = cnt % pawnImages.size();
+                cnt = countMod;
                 dispImg = new ImageIcon(pawnImages.get(countMod));
 
                 buffer.setIcon(dispImg);
@@ -337,6 +338,7 @@ public class ServerWindow extends JPanel implements Observer {
             public void actionPerformed(ActionEvent e) {
                 cnt--;
                 countMod = (cnt + pawnImages.size()) % pawnImages.size();
+                cnt = countMod;
                 dispImg = new ImageIcon(pawnImages.get(countMod));
                 buffer.setIcon(dispImg);
                 validate();

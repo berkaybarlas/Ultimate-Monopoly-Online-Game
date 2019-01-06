@@ -48,7 +48,7 @@ public class ResponseController {
                 socketOutput.reset();
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("[ResponseController]:" + " error during sendResponse: " + e);
+                System.out.println("[ResponseController]:" + " error during sendResponse: " + e);;
                 listenerClientOutputs.remove(socketOutput);
             }
         });
