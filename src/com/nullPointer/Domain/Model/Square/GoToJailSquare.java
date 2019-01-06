@@ -1,5 +1,5 @@
 package com.nullPointer.Domain.Model.Square;
-import com.nullPointer.Domain.Controller.PlayerController;
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Model.GameEngine;
 
 public class GoToJailSquare extends Square {
@@ -17,10 +17,7 @@ public class GoToJailSquare extends Square {
 	 */
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		int jail = 66;
-		PlayerController playerController = PlayerController.getInstance();
-		playerController.putInJail();
-		playerController.movePlayer(jail);
-		gameEngine.publishEvent("teleport" + jail);
+		CommunicationController.getInstance().sendClientMessage("penalty");
+		gameEngine.publishEvent("empty");
 	}
 }
