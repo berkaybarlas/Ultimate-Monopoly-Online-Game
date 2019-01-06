@@ -105,6 +105,9 @@ public class CommunicationController {
                 }
             } else if (input.contains("improve/")) {
                 gameEngine.improveProperty(Integer.parseInt(rest(input)));
+            } else if (input.contains("teleport/")) {
+                PlayerController.getInstance().movePlayer(Integer.parseInt(rest(input)));
+                gameEngine.publishEvent("teleport" + Integer.parseInt(rest(input)));
             } else if (input.contains("demolished/")) {
                 gameEngine.downgradeProperty(Integer.parseInt(rest(input)));
             } else if (input.contains("improveProperty")) {
