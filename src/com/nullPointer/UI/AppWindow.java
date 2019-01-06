@@ -2,7 +2,7 @@ package com.nullPointer.UI;
 
 import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.SaveLoadController;
-import com.nullPointer.Domain.BotBehaviour;
+import com.nullPointer.Domain.Model.Bot.BotBehaviour;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Observer;
 import com.nullPointer.Domain.Server.ServerInfo;

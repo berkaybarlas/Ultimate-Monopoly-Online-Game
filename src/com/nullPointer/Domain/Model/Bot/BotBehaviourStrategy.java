@@ -1,4 +1,4 @@
-package com.nullPointer.Domain;
+package com.nullPointer.Domain.Model.Bot;
 
 public interface BotBehaviourStrategy {
 
