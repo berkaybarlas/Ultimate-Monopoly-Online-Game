@@ -115,15 +115,26 @@ public class GameEngine {
                 else System.out.println("[GameEngine]: There seems to be a problem.");
             }
 
+
+
             //playerController.changeCurrentPosition(currentPlayer, placeToGo);
             path.add(placeToGo);
             target = placeToGo;
             playerController.movePlayer(target);
+        }
 
+        if(path.getLast() == 114)
+        {
+            path.add(14);
+        }
+        else if (path.getLast() == 14)
+        {
+            path.add(114);
         }
 
         publishEvent("path/" + path);
         playerController.movePlayer(target);
+
         playerController.setPath(currentPlayer, path);
         for (int j = 0; j < path.size() - 1; j++) {
             int i = path.get(j);
@@ -132,6 +143,7 @@ public class GameEngine {
                 onTheWay.evaluateSquare(this, "flyover");
             }
         }
+
         evaluateSquare();
         return path;
     }
