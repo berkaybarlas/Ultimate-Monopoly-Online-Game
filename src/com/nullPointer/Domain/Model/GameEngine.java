@@ -13,7 +13,6 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * @overview This class contains the main flow of the game logic, i.e. the game controller.
@@ -30,6 +29,8 @@ public class GameEngine {
     private boolean paused = false;
     private boolean roll3 = false;
     private int chosenSquareIndex = -1;
+    int doublesCnt = 0;
+    int jail = 66;
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -149,6 +150,14 @@ public class GameEngine {
         list.add(regularDie.getLastValues().get(0));
         list.add(regularDie.getLastValues().get(1));
         list.add(speedDie.getLastValues().get(0));
+        if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+            doublesCnt++;
+            if(doublesCnt == 3) {
+                playerController.putInJail();
+                playerController.movePlayer(jail);
+                publishEvent("teleport" + jail);
+            }
+        }
         return list;
     }
 
@@ -196,7 +205,7 @@ public class GameEngine {
                 card = domainBoard.getCCCards().remove();
             } else if (type.equals("ChanceCardSquare")) {
                 card = domainBoard.getChanceCards().remove();
-            } else {
+            } else{
                 card = domainBoard.getRoll3Cards().remove();
             }
             publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
@@ -213,7 +222,11 @@ public class GameEngine {
             } else {
                 playerController.addCardToCurrentPlayer(card);
             }
-            publishEvent("endTurn");
+            if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+                publishEvent("doubles");
+            } else {
+                publishEvent("endTurn");
+            }
         } else {
             System.out.println("Error: drawCard has been called while player is outside Community Chest or Chance squares.");
         }
@@ -307,6 +320,8 @@ public class GameEngine {
      * the square is added to propertyList or utilityList of currentPlayer
      */
     public void buy() {
+    	//playerController.getCurrentPlayer().setTargetPosition(86);
+    	//domainBoard.getSquareAt(86).evaluateSquare(this);
         Player currentPlayer = playerController.getCurrentPlayer();
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         String type = square.getType();
@@ -329,6 +344,7 @@ public class GameEngine {
 
     public void nextTurn() {
         playerController.nextPlayer();
+        doublesCnt = 0;
         publishEvent("rollDice");
         publishEvent("refresh");
     }
@@ -391,8 +407,13 @@ public class GameEngine {
         Square square = domainBoard.getSquareAt(currentPlayer.getTargetPosition());
         square.evaluateSquare(this);
         if (square.getType() != "ChanceCardSquare" && square.getType() != "CommunityChestCardSquare") {
-            publishEvent("endTurn");
+            if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
+                publishEvent("doubles");
+            } else {
+                publishEvent("endTurn");
+            }
         }
+
     }
 
     public void loadData() {

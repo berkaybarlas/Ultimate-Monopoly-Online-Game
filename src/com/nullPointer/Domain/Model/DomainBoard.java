@@ -146,6 +146,14 @@ public class DomainBoard implements Serializable {
     	Roll3Cards.add(card3);
     	Roll3 card4 = new Roll3("Roll 3 Card", false, 1, 2, 6);
     	Roll3Cards.add(card4);
+    	Roll3 card5 = new Roll3("Roll 3 Card", false, 1, 3, 4);
+    	Roll3Cards.add(card5);
+    	Roll3 card6 = new Roll3("Roll 3 Card", false, 1, 3, 5);
+    	Roll3Cards.add(card6);
+    	Roll3 card7 = new Roll3("Roll 3 Card", false, 1, 3, 6);
+    	Roll3Cards.add(card7);
+    	Roll3 card8 = new Roll3("Roll 3 Card", false, 1, 4, 5);
+    	Roll3Cards.add(card8);
     }
     
 
