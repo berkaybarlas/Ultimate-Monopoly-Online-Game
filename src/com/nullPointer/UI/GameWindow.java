@@ -78,33 +78,34 @@ public class GameWindow extends JPanel implements Observer {
 		//board.paint(g);
 	}
 
-    @Override
-    public void onEvent(String message) {
-        if (gameEngine.isMyTurn() && !gameEngine.isBot()) {
-            if (message.equals("buy")) {
-                buttonPanel.purchaseButton.setEnabled(true);
-            }
-            if (message.equals("rollDice")) {
-                buttonPanel.rollDice.setEnabled(true);
-                buttonPanel.endTurn.setEnabled(false);
-                buttonPanel.purchaseButton.setEnabled(false);
-                buttonPanel.improveButton.setEnabled(true);
-            }
-            if(message.equals("doubles")) {
-                buttonPanel.rollDice.setEnabled(true);
-            }
-            if(message.equals("endTurn")) {
-                buttonPanel.endTurn.setEnabled(true);
-            }
-            if (message.equals("drawCard")) {
-                buttonPanel.drawButton.setEnabled(true);
-                buttonPanel.endTurn.setEnabled(false);
-            }
-            if (message.equals("playCard")) {
-                buttonPanel.playCardButton.setEnabled(true);
-            }
-            if (message.equals("save")) {
-                try {
+	@Override
+	public void onEvent(String message) {
+		if (gameEngine.isMyTurn() && !gameEngine.isBot()) {
+			if (message.equals("buy")) {
+				buttonPanel.purchaseButton.setEnabled(true);
+			}
+			if (message.equals("rollDice")) {
+				buttonPanel.rollDice.setEnabled(true);
+				if(gameEngine.getRoll3())
+					buttonPanel.endTurn.setEnabled(false);
+				buttonPanel.purchaseButton.setEnabled(false);
+				buttonPanel.improveButton.setEnabled(true);
+			}
+			if(message.equals("doubles")) {
+				buttonPanel.rollDice.setEnabled(true);
+			}
+			if(message.equals("endTurn")) {
+				buttonPanel.endTurn.setEnabled(true);
+			}
+			if (message.equals("drawCard")) {
+				buttonPanel.drawButton.setEnabled(true);
+				buttonPanel.endTurn.setEnabled(false);
+			}
+			if (message.equals("playCard")) {
+				buttonPanel.playCardButton.setEnabled(true);
+			}
+			if (message.equals("save")) {
+				try {
 					saveLoadController.saveGame();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

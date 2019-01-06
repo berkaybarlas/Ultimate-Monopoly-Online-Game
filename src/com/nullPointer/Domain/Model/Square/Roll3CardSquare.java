@@ -1,5 +1,6 @@
 package com.nullPointer.Domain.Model.Square;
 
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.MoneyController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.Cards.Roll3;
@@ -70,6 +71,7 @@ public class Roll3CardSquare extends Square {
         }
         gameEngine.setRoll3(false);
         gameEngine.publishEvent("empty");
+        CommunicationController.getInstance().sendClientMessage(gameEngine.getPlayerController());
     }
 
 
