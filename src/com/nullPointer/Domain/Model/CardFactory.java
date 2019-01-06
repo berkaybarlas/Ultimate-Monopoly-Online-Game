@@ -136,8 +136,8 @@ public class CardFactory implements Serializable {
 //                return new ChancePropertyTaxes(ChanceCard_names[index], propTaxesImmediate);
 //            case 18:
 //                return new ChanceRideTheSubway(ChanceCard_names[index], rideTheSubwayImmediate);
-//            case 19:
-//                return new ChanceSeeUInCourt(ChanceCard_names[index], CUInCourtImmediate);
+            case 19:
+                return new ChanceSeeUInCourt(ChanceCard_names[index], CUInCourtImmediate);
 //            case 20:
 //                return new ChanceSocialMediaFail(ChanceCard_names[index], socialMediaFailImmediate);
 //            case 21:
