@@ -110,11 +110,13 @@ public class ButtonPanel extends JPanel {
 
         rollDice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!gameEngine.getRoll3())
+                if (!gameEngine.getRoll3()){
                     gameEngine.rollDice();
+                    communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                }
                 else
                     gameEngine.roll3Dice();
-                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                
                 rollDice.setEnabled(false);
             }
         });
