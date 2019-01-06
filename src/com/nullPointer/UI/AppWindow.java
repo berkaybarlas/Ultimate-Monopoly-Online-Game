@@ -55,7 +55,7 @@ public class AppWindow extends JFrame implements Observer {
         menuWindow = new MenuWindow();
         gameWindow = new GameWindow(width, height);
         serverWindow = new ServerWindow();
-
+        new BotBehaviour();
         //scrollPane = new JScrollPane(gameWindow);
 
         JPanel contentPane = new JPanel();
