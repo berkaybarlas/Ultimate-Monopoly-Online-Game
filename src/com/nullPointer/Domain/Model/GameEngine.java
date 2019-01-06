@@ -230,20 +230,22 @@ public class GameEngine {
             } else {
                 card = domainBoard.getRoll3Cards().remove();
             }
-            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
-            if (card.getImmediate()) {
-                card.playCard(this);
-                if (type.equals("CommunityChestCardSquare")) {
-                    domainBoard.getCCCards().add(card);
-                } else if (type.equals("ChanceCardSquare")) {
-                    domainBoard.getChanceCards().add(card);
+            if(card != null){
+                if (card.getImmediate()) {
+                    card.playCard(this);
+                    if (type.equals("CommunityChestCardSquare")) {
+                        domainBoard.getCCCards().add(card);
+                    } else if (type.equals("ChanceCardSquare")) {
+                        domainBoard.getChanceCards().add(card);
+                    } else {
+                        domainBoard.getRoll3Cards().add(card);
+                    }
                 } else {
-                    domainBoard.getRoll3Cards().add(card);
+                    playerController.addCardToCurrentPlayer(card);
                 }
-                System.out.println();
-            } else {
-                playerController.addCardToCurrentPlayer(card);
             }
+            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
+
             if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
                 publishEvent("doubles");
             } else {
