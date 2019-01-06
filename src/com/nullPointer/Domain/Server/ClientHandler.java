@@ -37,7 +37,12 @@ class ClientHandler extends Thread {
             System.out.println(inputLine);
             System.out.println(oin);
             e.printStackTrace();
-            
+            try {
+                clientSocket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

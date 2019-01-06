@@ -44,6 +44,7 @@ public class GameServer extends Thread {
             System.out.println(e.getMessage());
         } catch (InterruptedException e) {
             e.printStackTrace();
+            System.out.println("[Server]: server error");
         }
         System.out.println("[Server]: server Out");
     }
