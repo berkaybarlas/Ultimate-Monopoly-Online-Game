@@ -1,4 +1,5 @@
 package com.nullPointer.Domain.Model.Square;
+import com.nullPointer.Domain.Controller.CommunicationController;
 import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
 import com.nullPointer.Domain.Model.Player;
@@ -21,8 +22,7 @@ public class SubwaySquare extends Square {
 					e.printStackTrace();
 				}
 			}
-			PlayerController.getInstance().movePlayer(gameEngine.getChosenSquareIndex());
-			gameEngine.publishEvent("teleport" + gameEngine.getChosenSquareIndex());
+			CommunicationController.getInstance().sendClientMessage("teleport/"+gameEngine.getChosenSquareIndex());
 		}
 		gameEngine.setSquareUnselected();
 	}
