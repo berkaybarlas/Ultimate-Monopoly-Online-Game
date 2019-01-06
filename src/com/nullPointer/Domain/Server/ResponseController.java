@@ -4,7 +4,6 @@ import com.nullPointer.Domain.Controller.PlayerController;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ public class ResponseController {
     private static ResponseController _instance;
     private ArrayList<Socket> listenerClients;
     private ArrayList<ObjectOutputStream> listenerClientOutputs;
-    private PrintWriter out;
     private ObjectOutputStream outObject;
     private ServerInfo serverInfo = ServerInfo.getInstance();
     private PlayerController playerController = PlayerController.getInstance();

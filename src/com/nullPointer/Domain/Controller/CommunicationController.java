@@ -6,7 +6,6 @@ import com.nullPointer.Domain.Server.GameServer;
 import com.nullPointer.Domain.Server.ServerInfo;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class CommunicationController {
 
@@ -85,7 +84,6 @@ public class CommunicationController {
             } else if (input.contains("dice")) {
                 ArrayList<Integer> regularDice = new ArrayList<>();
                 ArrayList<Integer> speedDice = new ArrayList<>();
-                LinkedList<Integer> path = new LinkedList<Integer>();
                 String[] values = input.split("/");
                 regularDice.add(Integer.parseInt(values[1]));
                 regularDice.add(Integer.parseInt(values[2]));
