@@ -91,7 +91,11 @@ public class CommunicationController {
                 regularDie.setLastValues(regularDice);
                 speedDie.setLastValues(speedDice);
                 gameEngine.calculatePath();
-            } else if (input.contains("purchase")) {
+            } else if (input.contains("penalty")) {
+                PlayerController.getInstance().putInJail();
+                PlayerController.getInstance().movePlayer(66);
+                GameEngine.getInstance().publishEvent("teleport"+66);
+            }else if (input.contains("purchase")) {
                 gameEngine.buy();
             } else if (input.contains("card")) {
                 if (rest(input).contains("draw")) {
