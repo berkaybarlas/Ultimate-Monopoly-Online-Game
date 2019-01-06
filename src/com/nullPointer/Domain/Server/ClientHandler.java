@@ -7,6 +7,7 @@ class ClientHandler extends Thread {
     private Socket clientSocket;
     private ResponseController responseController;
     private ObjectInputStream oin;
+    private ServerInfo serverInfo = ServerInfo.getInstance();
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -32,10 +33,8 @@ class ClientHandler extends Thread {
             }
         } catch (IOException e) {
             System.out.println("[ClientHandler]: Exception caught when trying to listen on port ");
-            //
-            //delete client from list
-            //hata
-            ServerInfo.getInstance().getClientList().remove(clientSocket.getInetAddress().getHostAddress()+":"+clientSocket.getPort());
+            String brokenIP = clientSocket.getInetAddress().getHostAddress()+":"+clientSocket.getPort();
+            serverInfo.removeClient(brokenIP);
             responseController.sendResponse("refreshList");
             System.out.println(inputLine);
             System.out.println(oin);
@@ -45,5 +44,7 @@ class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
+
+
 }
 

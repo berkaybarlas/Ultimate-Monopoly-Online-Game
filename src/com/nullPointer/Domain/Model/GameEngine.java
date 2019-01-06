@@ -32,7 +32,6 @@ public class GameEngine {
     private boolean gameStarted = false;
     private int chosenSquareIndex = -1;
     int doublesCnt = 0;
-    int jail = 66;
     private static GameEngine _instance;
     ArrayList<Observer> observers = new ArrayList<Observer>();
 

@@ -372,13 +372,8 @@ public class ServerWindow extends JPanel implements Observer {
         int clientPosition = clientList.indexOf(player.getClientID());
         if (clientPosition == -1) {
             clientPosition = 12;
-            /**
-             *
-             *
-             * this client does not exits if nobody choose this player it should be bot automaticly
-             *
-             *
-             */ //hata
+            player.setPerson();
+            player.setBot();
         }
         newButton.setPrimaryColor(ColorSet.getPlayerColors().get(clientPosition));
         newButton.setPreferredSize(new Dimension(pButtonWidth + 47, pButtonHeight));

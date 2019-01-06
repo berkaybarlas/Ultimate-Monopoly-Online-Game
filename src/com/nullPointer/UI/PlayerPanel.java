@@ -59,13 +59,11 @@ public class PlayerPanel extends JPanel implements Observer {
     }
 
     public void refreshPlayerButtons() {
-//        userPanel.removeAll();
-//        addPlayerButtons();
-//        userPanel.validate();
-//
+
         for (int i = 0; i < pList.size(); i++) {
             int currentPlayerIndex = i;
             Player player = pList.get(i);
+
             if (player == playerController.getCurrentPlayer()) {
                 playerButtons.get(i).setForeground(Color.GREEN);
             } else {
@@ -93,7 +91,7 @@ public class PlayerPanel extends JPanel implements Observer {
                     Player currentPlayer = pList.get(currentPlayerIndex);
                     textArea.setText(currentPlayer.toString());
                     lastSelected = currentPlayerIndex;
-                    gameEngine.getPlayerController().setChosen(player);
+                    PlayerController.getInstance().setChosen(player);
                 }
             });
             userPanel.add(playerButtons.get(i));

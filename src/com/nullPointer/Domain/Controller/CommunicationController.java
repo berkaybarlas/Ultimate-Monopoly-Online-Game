@@ -147,11 +147,4 @@ public class CommunicationController {
         return (sentence.indexOf(word) != -1);
     }
 
-    public GameServer getGameServer() {
-        return this.gameServer;
-    }
-
-    public Client getClient() {
-        return this.client;
-    }
 }
