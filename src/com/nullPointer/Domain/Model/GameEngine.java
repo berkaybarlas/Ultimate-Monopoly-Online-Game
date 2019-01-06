@@ -120,43 +120,44 @@ public class GameEngine {
         int currentPos;
         int regularDiceTotal = calculateMoveAmount();
         int target = -2;
+        if (currentPlayer != null) {
+
+            for (int i = 0; i < regularDiceTotal; i++) {
+                currentPos = currentPlayer.getTargetPosition();
+
+                int placeToGo = connections.get(currentPos).get(0);
+
+                if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
+                    if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
+                    else System.out.println("[GameEngine]: There seems to be a problem.");
+                }
 
 
-        for (int i = 0; i < regularDiceTotal; i++) {
-            currentPos = currentPlayer.getTargetPosition();
-
-            int placeToGo = connections.get(currentPos).get(0);
-
-            if (domainBoard.getSquareAt(currentPos).getType().equals("RailroadTransitSquare") && regularDiceTotal % 2 == 0) {
-                if (connections.get(currentPos).get(1) != -1) placeToGo = connections.get(currentPos).get(1);
-                else System.out.println("[GameEngine]: There seems to be a problem.");
+                //playerController.changeCurrentPosition(currentPlayer, placeToGo);
+                path.add(placeToGo);
+                target = placeToGo;
+                playerController.movePlayer(target);
             }
 
-
-            //playerController.changeCurrentPosition(currentPlayer, placeToGo);
-            path.add(placeToGo);
-            target = placeToGo;
             playerController.movePlayer(target);
-        }
 
-        playerController.movePlayer(target);
+            if (path.getLast() == 114) {
+                path.add(14);
+                playerController.movePlayer(14);
+            } else if (path.getLast() == 14) {
+                path.add(114);
+                playerController.movePlayer(114);
+            }
 
-        if (path.getLast() == 114) {
-            path.add(14);
-            playerController.movePlayer(14);
-        } else if (path.getLast() == 14) {
-            path.add(114);
-            playerController.movePlayer(114);
-        }
+            publishEvent("path/" + path);
 
-        publishEvent("path/" + path);
-
-        playerController.setPath(currentPlayer, path);
-        for (int j = 0; j < path.size() - 1; j++) {
-            int i = path.get(j);
-            Square onTheWay = squares.get(i);
-            if (onTheWay.getFlyover()) {
-                onTheWay.evaluateSquare(this, "flyover");
+            playerController.setPath(currentPlayer, path);
+            for (int j = 0; j < path.size() - 1; j++) {
+                int i = path.get(j);
+                Square onTheWay = squares.get(i);
+                if (onTheWay.getFlyover()) {
+                    onTheWay.evaluateSquare(this, "flyover");
+                }
             }
         }
 

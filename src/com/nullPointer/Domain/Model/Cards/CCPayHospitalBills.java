@@ -17,7 +17,7 @@ public class CCPayHospitalBills extends CommunityChestCard {
 	@Override
 	public void playCard(GameEngine gameEngine) {
 		moneyController.decreaseMoney(playerController.getCurrentPlayer(), hospitalBill);
-		System.out.println(playerController.getCurrentPlayer().getName() + " lost " + hospitalBill + "$.");
+//		System.out.println(playerController.getCurrentPlayer().getName() + " lost " + hospitalBill + "$.");
 	}
 
 }
