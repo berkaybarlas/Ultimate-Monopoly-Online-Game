@@ -231,6 +231,7 @@ public class GameEngine {
                 card = domainBoard.getRoll3Cards().remove();
             }
             if(card != null){
+                publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
                 if (card.getImmediate()) {
                     card.playCard(this);
                     if (type.equals("CommunityChestCardSquare")) {
@@ -244,7 +245,6 @@ public class GameEngine {
                     playerController.addCardToCurrentPlayer(card);
                 }
             }
-            publishEvent("message/" + "[System]: " + currentPlayer.getName() + " drew " + card.getTitle());
 
             if (regularDie.getLastValues().get(0) == regularDie.getLastValues().get(1)) {
                 publishEvent("doubles");
