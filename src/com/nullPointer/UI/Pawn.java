@@ -76,6 +76,7 @@ public class Pawn implements Drawable {
 
     public void draw(Graphics g) {
 
+
         if (myPath != null && myPath.hasMoreSteps()) {
             position = myPath.nextPosition();
         } else {
@@ -83,12 +84,12 @@ public class Pawn implements Drawable {
                 int i = 0;
                 PlayerController.getInstance().getCurrentPlayer().setPosition(path.get(i));
                 int numberOfSteps = (int) (10.0);
-
                 myPath = new StraightLinePath(position.x, position.y
                         , (squareMap.get(path.get(i))[0].x + squareMap.get(path.get(i))[1].x) / 2
                         , (squareMap.get(path.get(i))[0].y + squareMap.get(path.get(i))[1].y) / 2
                         , numberOfSteps);
                 position = myPath.nextPosition();
+
                 path.remove(i);
             }
         }
