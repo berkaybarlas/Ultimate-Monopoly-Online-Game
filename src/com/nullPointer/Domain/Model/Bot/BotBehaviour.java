@@ -110,6 +110,8 @@ public class BotBehaviour implements Observer {
                 communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
             } else if (message.equals("doubles")) {
                 gameEngine.rollDice();
+                communicationController.sendClientMessage("dice/" + gameEngine.getLastDiceValues());
+                System.out.println("[BotBehavior]: double.");
             } else if (message.equals("drawCard")) {
                 communicationController.sendClientMessage("card/draw");
             } else if (message.contains("buy") || message.contains("improve") || message.contains("gained") || message.contains("empty")) {
