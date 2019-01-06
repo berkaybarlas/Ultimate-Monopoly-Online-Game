@@ -125,7 +125,6 @@ public class ButtonPanel extends JPanel {
                 endTurn.setEnabled(false);
                 purchaseButton.setEnabled(false);
                 improveButton.setEnabled(false);
-
             }
         });
 
