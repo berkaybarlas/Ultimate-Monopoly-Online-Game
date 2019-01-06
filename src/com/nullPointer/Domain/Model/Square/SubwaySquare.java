@@ -1,5 +1,7 @@
 package com.nullPointer.Domain.Model.Square;
+import com.nullPointer.Domain.Controller.PlayerController;
 import com.nullPointer.Domain.Model.GameEngine;
+import com.nullPointer.Domain.Model.Player;
 
 public class SubwaySquare extends Square {
 
@@ -10,9 +12,19 @@ public class SubwaySquare extends Square {
 
 	@Override
 	public void evaluateSquare(GameEngine gameEngine) {
-		// TODO Auto-generated method stub
-//		gameEngine.publishEvent("chooseTeleportatDestination");
-		gameEngine.publishEvent("empty");
+		Player currentPlayer = PlayerController.getInstance().getCurrentPlayer();
+		if(gameEngine.isMyTurn() && !currentPlayer.isBot()) {
+			while (gameEngine.getChosenSquareIndex() == -1) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			PlayerController.getInstance().movePlayer(gameEngine.getChosenSquareIndex());
+			gameEngine.publishEvent("teleport" + gameEngine.getChosenSquareIndex());
+		}
+		gameEngine.setSquareUnselected();
 	}
 
 }
