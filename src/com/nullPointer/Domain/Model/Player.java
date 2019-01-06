@@ -57,10 +57,9 @@ public class Player implements Serializable {
     public Player(String name) {
         this.name = name;
         propertyCardsMap = new HashMap<>();
-        propertySquares = new ArrayList<PropertySquare>();
-        utilityList = new ArrayList<UtilitySquare>();
-        cardList = new ArrayList<Card>();
-//        this.direction = true;
+        propertySquares = new ArrayList<>();
+        utilityList = new ArrayList<>();
+        cardList = new ArrayList<>();
     }
 
     public int getRentMultiplier()
@@ -72,7 +71,6 @@ public class Player implements Serializable {
     {
         this.rentMultiplier = newRentMultiplier;
     }
-
 
     public String getName() {
         if(bot){
@@ -87,14 +85,6 @@ public class Player implements Serializable {
 
     public void setPosition(int newPosition) {
         position = newPosition;
-    }
-
-    public int getLayer() {
-        return layer;
-    }
-
-    public void setLayer(int layer) {
-        this.layer = layer;
     }
 
     public int getTargetPosition() {
@@ -121,16 +111,8 @@ public class Player implements Serializable {
         return cardList;
     }
 
-    public void setCardList(ArrayList<Card> cardList) {
-        this.cardList = cardList;
-    }
-
     public ArrayList<PropertySquare> getPropertySquares() {
         return propertySquares;
-    }
-
-    public void setPropertySquares(ArrayList<PropertySquare> properties) {
-        this.propertySquares = properties;
     }
 
     public boolean isInJail() {
@@ -170,10 +152,6 @@ public class Player implements Serializable {
         return placeHolder;
     }
 
-    public void setPlaceHolder(int placeHolder) {
-        this.placeHolder = placeHolder;
-    }
-
     public void addCard(Card card) {
         cardList.add(card);
     }
@@ -185,7 +163,6 @@ public class Player implements Serializable {
     public void setClientID(String clientID) {
         ClientID = clientID;
     }
-
 
     public LinkedList<Integer> getPath()
     {

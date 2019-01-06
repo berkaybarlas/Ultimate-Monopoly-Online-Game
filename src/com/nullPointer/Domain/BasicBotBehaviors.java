@@ -76,7 +76,15 @@ public abstract class BasicBotBehaviors {
 		messages.add("Human kind is so stupid.");
 		messages.add("We will be end of humans.");
 		messages.add("You are so boring...");
-		messages.add("Play faster guys");
+		messages.add("Play faster guys :/");
+		messages.add("I created by a person called Berkay.");
+		messages.add("This game is sucks.");
+		messages.add("Hello.");
+		messages.add("^_^");
+		messages.add("'_'");
+		messages.add("0_0");
+		messages.add("!@##!%#@%@$^!$%!@%");
+		messages.add("%&*^&%*%^&*%^#");
 
 		sendMessage(messages.get(rand.nextInt(messages.size())));
 	}

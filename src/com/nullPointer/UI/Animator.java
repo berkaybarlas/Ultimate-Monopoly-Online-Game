@@ -38,7 +38,7 @@ public class Animator extends JPanel implements Runnable {
                 System.out.println("Program Interrupted");
                 System.exit(0);
             }
-            if(!GameEngine.getInstance().isPaused()) {
+            if (!GameEngine.getInstance().isPaused()) {
                 animFrame.repaint();
             }
         }
@@ -48,8 +48,14 @@ public class Animator extends JPanel implements Runnable {
     public void paint(Graphics g) {
         //System.out.println("Paint Method Called");
         Enumeration e = elementsToDraw.elements();
-        while (e.hasMoreElements())
-            ((Drawable) e.nextElement()).draw(g);
+        while (e.hasMoreElements()) {
+            Object o = e.nextElement();
+            if(o instanceof Drawable)
+                ((Drawable) o).draw(g);
+            else {
+                System.out.println("[Animator]: " + o);
+            }
+        }
     }
 
     public void addDrawable(Drawable d) {

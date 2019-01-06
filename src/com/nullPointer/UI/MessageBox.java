@@ -7,6 +7,8 @@ import com.nullPointer.Domain.Server.ServerInfo;
 import com.nullPointer.Utils.ColorSet;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class MessageBox extends JPanel implements Observer {
@@ -44,13 +46,16 @@ public class MessageBox extends JPanel implements Observer {
         textEnter = new JTextField();
         textEnter.setPreferredSize(new Dimension(width - 110, 30));
         //textEnter.setBounds(0, 0, 400, 30);
-        textEnter.addActionListener(e -> {
+        ActionListener  actionListener = e -> {
             if (textEnter.getText() != "") {
-                String message = textEnter.getText().substring(0,100);
+                String message = textEnter.getText();
+                if(message.length()>100)
+                    message = message.substring(0,100);
                 communicationController.sendClientMessage("message/" + messageWithClient(message));
                 textEnter.setText("");
             }
-        });
+        };
+        textEnter.addActionListener(actionListener);
         enterPane.add(textEnter);
 
         submit = new JButton();
@@ -59,13 +64,7 @@ public class MessageBox extends JPanel implements Observer {
         submit.setMaximumSize(new Dimension(100, 30));
         submit.setMinimumSize(new Dimension(100, 30));
         submit.setText("Submit");
-        submit.addActionListener(e -> {
-            if (textEnter.getText() != "") {
-                String message = textEnter.getText().substring(0,100);
-                communicationController.sendClientMessage("message/" + messageWithClient(message));
-                textEnter.setText("");
-            }
-        });
+        submit.addActionListener(actionListener);
         enterPane.add(submit);
 
         this.add(enterPane);
