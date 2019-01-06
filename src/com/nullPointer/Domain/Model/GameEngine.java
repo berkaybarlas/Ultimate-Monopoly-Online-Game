@@ -89,6 +89,10 @@ public class GameEngine {
         publishEvent("newPlayer");
     }
 
+    public void gameStopped() {
+        gameStarted = false;
+    }
+
     public void startGame() {
         if (!isGameStarted()) {
             publishEvent("screen/gameScreen");

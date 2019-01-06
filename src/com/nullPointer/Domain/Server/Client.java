@@ -20,6 +20,7 @@ public class Client extends Thread {
     private ObjectOutputStream outObject;
     private ObjectInputStream inObject;
     private CommunicationController communicationController = CommunicationController.getInstance();
+    private GameEngine gameEngine = GameEngine.getInstance();
     private ServerInfo serverInfo = ServerInfo.getInstance();
 
     public Client(String name) {
@@ -92,9 +93,11 @@ public class Client extends Thread {
     }
 
     public void createOrJoin() {
+
         try {
             String nextServerIP = serverInfo.next();
-            GameEngine.getInstance().publishEvent("serverScreen");
+            gameEngine.gameStopped();
+            gameEngine.publishEvent("serverScreen");
             if (nextServerIP.equals(localIp)) {
                 communicationController.startServer();
                 hostName = "localhost";

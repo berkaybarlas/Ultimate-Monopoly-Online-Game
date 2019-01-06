@@ -22,6 +22,7 @@ class ClientHandler extends Thread {
             //bak
             // out.println("[ClientHandler]: Listening with socket: " + clientSocket.toString());
             while (true) {
+
                 if ((inputLine = oin.readObject()) != null) {
                     //System.out.println("[ClientHandler]: Client -> " + inputLine);
                     System.out.println("[ClientHandler]: Client -> " + inputLine);
@@ -33,15 +34,12 @@ class ClientHandler extends Thread {
             System.out.println("[ClientHandler]: Exception caught when trying to listen on port ");
             //
             //delete client from list
-            //
+            //hata
+            ServerInfo.getInstance().getClientList().remove(clientSocket.getInetAddress().getHostAddress()+":"+clientSocket.getPort());
+            responseController.sendResponse("refreshList");
             System.out.println(inputLine);
             System.out.println(oin);
             e.printStackTrace();
-            try {
-                clientSocket.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

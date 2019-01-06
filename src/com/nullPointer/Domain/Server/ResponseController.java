@@ -41,10 +41,10 @@ public class ResponseController {
         }
     }
 
-    public void sendResponse(Object message) {
+    public synchronized void sendResponse(Object message) {
 
-        Iterator<ObjectOutputStream> iterator = listenerClientOutputs.iterator();
-        while (iterator.hasNext()){
+
+        for (Iterator<ObjectOutputStream> iterator = listenerClientOutputs.iterator(); iterator.hasNext();) {
             ObjectOutputStream socketOutput = iterator.next();
             try {
                 socketOutput.writeObject(message);
@@ -52,8 +52,7 @@ public class ResponseController {
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("[ResponseController]:" + " error during sendResponse: " + e);;
-                listenerClientOutputs.remove(socketOutput);
-                sendResponse(message);
+                iterator.remove();
             }
         }
     }
