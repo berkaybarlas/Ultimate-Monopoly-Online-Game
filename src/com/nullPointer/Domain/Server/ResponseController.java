@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 //Singleton
@@ -42,7 +43,9 @@ public class ResponseController {
 
     public void sendResponse(Object message) {
 
-        listenerClientOutputs.forEach(socketOutput -> {
+        Iterator<ObjectOutputStream> iterator = listenerClientOutputs.iterator();
+        while (iterator.hasNext()){
+            ObjectOutputStream socketOutput = iterator.next();
             try {
                 socketOutput.writeObject(message);
                 socketOutput.reset();
@@ -50,8 +53,9 @@ public class ResponseController {
                 e.printStackTrace();
                 System.out.println("[ResponseController]:" + " error during sendResponse: " + e);;
                 listenerClientOutputs.remove(socketOutput);
+                sendResponse(message);
             }
-        });
+        }
     }
 
     public void sendGameData(Socket socket) throws IOException {
