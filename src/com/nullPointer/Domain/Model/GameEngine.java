@@ -134,6 +134,8 @@ public class GameEngine {
             playerController.movePlayer(target);
         }
 
+        playerController.movePlayer(target);
+
         if (path.getLast() == 114) {
             path.add(14);
         } else if (path.getLast() == 14) {
