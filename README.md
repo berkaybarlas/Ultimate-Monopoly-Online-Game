@@ -23,9 +23,6 @@ This project is developed by
 # Video of Game
 ![game](https://raw.githubusercontent.com/berkaybarlas/Ultimate-Monopoly-Online-Game/master/game.gif)
 
-# Image of Board 
-![boardImage](https://raw.githubusercontent.com/berkaybarlas/Ultimate-Monopoly-Online-Game/master/assets/ultimate_monopoly.png)
-
  # How to Play the Game:
 	 You can either start a new server by clicking the Start Server button or join to an already existing server by clicking the Join Button. 
     If you click on the Join Server button instead, the address that you want to join into will be asked. So, if the game is played between different computers, their IP addresses should be known. 
