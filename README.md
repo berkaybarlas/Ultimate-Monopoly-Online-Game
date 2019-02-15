@@ -16,7 +16,7 @@ This project is developed by
 
 
 # Project Report
-<a href="https://raw.githubusercontent.com/berkaybarlas/Ultimate-Monopoly-Online-Game/master/Final_Project_Report.pdf" target="_blank">Project Report PDF</a>
+<a href="https://github.com/berkaybarlas/Ultimate-Monopoly-Online-Game/blob/master/Final_Project_Report.pdf" target="_blank">Project Report PDF</a>
 # Video of Menu
 ![menu](https://raw.githubusercontent.com/berkaybarlas/Ultimate-Monopoly-Online-Game/master/menu.gif)
 
