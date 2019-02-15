@@ -2,15 +2,11 @@ package com.nullPointer.Domain.Controller;
 
 import com.nullPointer.Domain.Model.DomainBoard;
 import com.nullPointer.Domain.Model.GameEngine;
-import com.nullPointer.Domain.Model.Player;
-import com.nullPointer.Domain.Controller.PlayerController;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 
 // about loading:
 //Previous ServerInfo
@@ -106,11 +102,8 @@ public class SaveLoadController {
     public ArrayList<String> getSavedFiles() {
         File dir = new File("./saveFiles/");
 
-        File[] matches = dir.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.startsWith("save");
-            }
-        });
+        File[] matches = dir.listFiles((dir1, name) -> name.startsWith("save"));
+
         ArrayList<String> fileList = new ArrayList<>();
         for (int i = 0; i < matches.length; i++) {
             File match = matches[i];

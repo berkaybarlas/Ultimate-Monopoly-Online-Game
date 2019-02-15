@@ -7,6 +7,15 @@ This project is developed by
  * Berkay Barlas 
  * Alihan Zorlu
  
+| Video of Game |
+|:---:|:---:|
+| ![feedPage](https://raw.githubusercontent.com/berkaybarlas/friendYol/master/images/feedPage.gif) | ![OtherPages](https://raw.githubusercontent.com/berkaybarlas/friendYol/master/images/otherPages.gif) |
+
+# Image of Board 
+
+![boardImage](https://raw.githubusercontent.com/berkaybarlas/Ultimate-Monopoly-Online-Game/tree/master/assets/ultimate_monopoly.png)
+
+
  # Changelog[18.11.2018]:
  - Several changes to methods of the Observer interface have been made, and several methods have been added to the GameEngine and UI classes in order to correctly subscribe, publish, and perform events.For example, DiceDisplay and PlayerPanel subscribed to GameEngine, and GameEngine is publishing by publisEvent(message) method and all observers's onEvent(message) methods are being called, then observers are doing something or not according to the message inside publishEvent method.
  - Constructors of various classes have been modified, depending on their needs. Most importantly, Player's constructor and fields changed such as player now has layer because game has 3 layers totally and we wanted to keep the layer info of the player's position, also player now has targetPosition.
