@@ -71,3 +71,8 @@ We added also a rentIndex to PropertySquare to show which rent now is the curren
  
 # Credit
 This is a project from Comp 302: Engineering course of Koç University instructed by Prof. Atilla Gürsoy.
+
+# Code of Conduct
+Koç University students who are currently taking this course, see Code of Conduct.
+
+
