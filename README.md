@@ -1,10 +1,10 @@
 Ultimate Monopoly by NullPointer 
 
 This project is developed by 
+ * Berkay Barlas (Team leader)
  * Baran Berkay Hökelek
  * Furkan Sahbaz
  * Tumay Ozdemir
- * Berkay Barlas 
  * Alihan Zorlu
 
 # Main Features
@@ -68,3 +68,6 @@ We added also a rentIndex to PropertySquare to show which rent now is the curren
  - **ServerProtocol** class is not deleted because it does not needed.
  - **ServerInfo** class is added to store number of connected clients and their IPs.
  - A variable added to Player class in order to check which client it is from.
+ 
+# Credit
+This is a project from Comp 302: Engineering course of Koç University instructed by Prof. Atilla Gürsoy.
